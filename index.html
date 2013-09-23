@@ -4,13 +4,14 @@
 <script src="phonegap.js"></script>
 </head>
 <body>
-<h>Hello World!</h1>
+<h1>Hello World!</h1>
 <script>
+document.write('<br />script began<br />');
 function mediaSuccess(){
   document.write(' success ');
 }
 function mediaError(error){
-  document.write(' error '+error);
+  document.write(' error ');
   }
 var media = new Media("http://radiokstreams.cce.umn.edu:8056", mediaSuccess, mediaError);
 
