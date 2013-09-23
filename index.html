@@ -6,15 +6,19 @@
 <body>
 <h>Hello World!</h1>
 <script>
-function mediaSuccess(){  document.write(' success ');
+function mediaSuccess(){
+  document.write(' success ');
 }
 function mediaError(error){
   document.write(' error '+error);
   }
-document.write('http://radiokstreams.cce.umn.edu:8056/listen.pls');
-testScript();
-var media = new Media("http://radiokstreams.cce.umn.edu:8056/listen.pls", mediaSuccess, mediaError);
+var media = new Media("http://radiokstreams.cce.umn.edu:8056", mediaSuccess, mediaError);
+
+document.write('<br />media = http://radiokstreams.cce.umn.edu:8056<br />');
+
 media.play();
+document.write('<br />script completed');
+
 
 </script>
 </body>
