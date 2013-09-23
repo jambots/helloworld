@@ -3,14 +3,19 @@
 <script type="text/javascript" charset="utf-8" src="testscript.js"></script>
 <script src="phonegap.js"></script>
 </head>
-</head>
 <body>
 <h>Hello World!</h1>
 <script>
+function mediaSuccess(){  document.write(' success ');
+}
+function mediaError(error){
+  document.write(' error '+error);
+  }
 document.write('http://radiokstreams.cce.umn.edu:8056/listen.pls');
 testScript();
-var media = new Media("http://radiokstreams.cce.umn.edu:8056/listen.pls");
+var media = new Media("http://radiokstreams.cce.umn.edu:8056/listen.pls", mediaSuccess, mediaError);
 media.play();
+
 </script>
 </body>
 </html>
