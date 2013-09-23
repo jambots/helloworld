@@ -1,9 +1,15 @@
 <html>
+<head>
+<script type="text/javascript" charset="utf-8" src="testscript.js"></script>
+<script type="text/javascript" charset="utf-8" src="phonegap.0.9.5.js"></script>
+</head>
+</head>
 <body>
 <h>Hello World!</h1>
 <script>
-document.write('http://radiokstreams.cce.umn.edu:8056');
-var media = new Media("http://radiokstreams.cce.umn.edu:8056");
+document.write('http://radiokstreams.cce.umn.edu:8056/listen.pls');
+testScript();
+var media = new Media("http://radiokstreams.cce.umn.edu:8056/listen.pls");
 media.play();
 </script>
 </body>
