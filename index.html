@@ -4,20 +4,22 @@
 <script src="phonegap.js"></script>
 </head>
 <body style="background-image:url('images/doom.jpg'); color:white;">
-<h1>Hello World! Forked edition</h1>
+<h1>Hello World! Audio edition</h1>
 <script>
 document.write('<br />script began<br />');
-function mediaSuccess(){
-  document.write(' success ');
+var myaudio;
+function playStream() {
+  try {
+    myaudio = new Audio('http://radiokstreams.cce.umn.edu:8128/');
+    myaudio.id = 'playerMyAdio';
+    myaudio.play();
+  } catch (e) {
+    document.write('no audio support!');
+  } 
 }
-function mediaError(error){
-  document.write(' error ');
-  }
-var media = new Media("http://radiokstreams.cce.umn.edu:8056", mediaSuccess, mediaError);
+document.write('<br />audio = http://radiokstreams.cce.umn.edu:8128/<br />');
 
-document.write('<br />media = http://radiokstreams.cce.umn.edu:8056<br />');
-
-media.play();
+playStream();
 document.write('<br />script completed');
 
 
