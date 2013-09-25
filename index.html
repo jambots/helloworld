@@ -8,16 +8,18 @@
 <script>
 document.write('<br />script began<br />');
 var myaudio;
+//http://radiokstreams.cce.umn.edu:8128
 function playStream() {
   try {
-    myaudio = new Audio('http://radiokstreams.cce.umn.edu:8128/');
-    myaudio.id = 'playerMyAdio';
+    myaudio = new Audio('sounds/inthistown.mp3');
+    myaudio.id = 'playerMyAudio';
     myaudio.play();
+    document.write('<br />played');
   } catch (e) {
-    document.write('no audio support!');
+    document.write('<br />no audio support!');
   } 
 }
-document.write('<br />audio = http://radiokstreams.cce.umn.edu:8128/<br />');
+document.write('<br />audio = sounds/inthistown.mp3<br />');
 
 playStream();
 document.write('<br />script completed');
