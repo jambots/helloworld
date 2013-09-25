@@ -10,7 +10,7 @@
     <name>RadioK Streaming</name>
 
 <gap:platform name="android" />
-<preference name="orienation" value="portrait" />
+
 <preference name="fullscreen" value="true" />
 <gap:splash src="splash.png" />
 </widget>
