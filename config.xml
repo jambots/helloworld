@@ -10,7 +10,7 @@
     <name>RadioK Streaming</name>
 
 <gap:platform name="android" />
-
+<feature name="http://api.phonegap.com/1.0/media"/>
 <preference name="fullscreen" value="true" />
 <gap:splash src="splash.png" />
 </widget>
