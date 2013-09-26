@@ -4,16 +4,24 @@
 </head>
 <body>
 <h1>Hello World! Audio edition</h1>
+<!--
+-->
 <script>
+/*
+var Media=new function(sourceFile,errorFunc, successFunc){
+  return {"name":"test"};
+  }
+*/
 document.write('<br />script began<br />');
 //http://radiokstreams.cce.umn.edu:8128
 
 var myMedia = null;
 document.addEventListener("deviceready",onDeviceReady,false);
 
+  document.write(JSON.stringify(Media));
 function onDeviceReady(){
   document.write('<br />onDeviceReady()<br />');
-  myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", onSuccess, onError);
+  //myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", onSuccess, onError);
   }
 function onError(theError){
   document.write('<br />onError '+theError.code);
