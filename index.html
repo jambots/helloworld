@@ -16,7 +16,7 @@ function onSuccess(){
   }
 function playStream(){
   document.write('<br />playStream 0');
-  myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", "onSuccess", "onError");
+  myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", onSuccess, onError);
   document.write('<br />playStream 1');
   myMedia.play();
   document.write('<br />playStream 2');
