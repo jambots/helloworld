@@ -1,6 +1,5 @@
 <html>
 <head>
-<script type="text/javascript" charset="utf-8" src="testscript.js"></script>
 <script src="phonegap.js"></script>
 </head>
 <body>
@@ -10,17 +9,17 @@ document.write('<br />script began<br />');
 var myMedia;
 //http://radiokstreams.cce.umn.edu:8128
 function onError(theError){
-  document.write('<br />onError);
+  document.write('<br />onError');
   }
 function onSuccess(){
-  document.write('<br />onSuccess);
+  document.write('<br />onSuccess');
   }
 function playStream(){
-  document.write('<br />playStream 0);
+  document.write('<br />playStream 0');
   myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", "onSuccess", "onError");
-  document.write('<br />playStream 1);
+  document.write('<br />playStream 1');
   myMedia.play();
-  document.write('<br />playStream 2);
+  document.write('<br />playStream 2');
   }
 document.write('<br />media = http://radiokstreams.cce.umn.edu:8128<br />');
 
