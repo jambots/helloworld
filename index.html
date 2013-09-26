@@ -6,14 +6,25 @@
 <h1>Hello World! Audio edition</h1>
 <script>
 document.write('<br />script began<br />');
-var myMedia;
 //http://radiokstreams.cce.umn.edu:8128
+
+var myMedia = null;
+document.addEventListener("deviceready",onDeviceReady,false);
+
+function onDeviceReady(){
+  document.write('<br />onDeviceReady()<br />');
+  myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", onSuccess, onError);
+  }
 function onError(theError){
-  document.write('<br />onError');
+  document.write('<br />onError '+theError.code);
   }
 function onSuccess(){
   document.write('<br />onSuccess');
+  myMedia.play();
+  document.write('<br />myMedia.play() ran');
   }
+
+/*
 function playStream(){
   document.write('<br />playStream 0');
   myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", onSuccess, onError);
@@ -22,11 +33,10 @@ function playStream(){
   document.write('<br />playStream 2');
   }
 document.write('<br />media = http://radiokstreams.cce.umn.edu:8128<br />');
-
 playStream();
+*/
+
 document.write('<br />script completed');
-
-
 </script>
 </body>
 </html>
