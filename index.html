@@ -1,48 +1,32 @@
 <html>
 <head>
 <script src="phonegap.js"></script>
-</head>
-<body>
-<h1>Hello World! Audio edition</h1>
-<!--
--->
-<script>
-
-
-
-document.write('<br />script began<br />');
+<script type="text/javascript">
 //http://radiokstreams.cce.umn.edu:8128
-
 var myMedia = null;
+var testVar="global";
 document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady(){
-  document.write('<br />G onDeviceReady()<br />');
+  document.write(testVar +'=testVar<br />');
+  document.write('G onDeviceReady()<br />');
   myMedia = new Media("app/www/test.mp3", onSuccess, onError);
   }
 function onError(theError){
-  alert('onError '+theError.code);
+  document.write('onError '+theError.code+'<br />');
   return false;
   }
 function onSuccess(){
-  alert('<br />onSuccess');
+  document.write('onSuccess'+'<br />');
   myMedia.play();
   document.write('<br />myMedia.play() ran');
   }
-
-/*
-function playStream(){
-  document.write('<br />playStream 0');
-  myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", onSuccess, onError);
-  document.write('<br />playStream 1');
-  myMedia.play();
-  document.write('<br />playStream 2');
-  }
-document.write('<br />media = http://radiokstreams.cce.umn.edu:8128<br />');
-playStream();
-*/
-
-document.write('<br />script completed');
+</script>
+</head>
+<body>
+<h1>Hello World! Audio edition</h1>
+<script>
+document.write('<br />Body Script');
 </script>
 </body>
 </html>
