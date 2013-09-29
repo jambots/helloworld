@@ -17,8 +17,10 @@ var myMedia = null;
 document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady(){
-  document.write('<br />E onDeviceReady()<br />');
+  document.write('<br />F onDeviceReady()<br />');
+  console.log('1');
   var boggitty=boog;
+  console.log('2');
   document.write('<br />buh()<br />');
   myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", onSuccess, onError);
   }
