@@ -8,9 +8,7 @@
 -->
 <script>
 
-var Media=new function(sourceFile,errorFunc, successFunc){
-  return {"name":"test"};
-  }
+
 
 document.write('<br />script began<br />');
 //http://radiokstreams.cce.umn.edu:8128
@@ -19,10 +17,9 @@ var myMedia = null;
 document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady(){
-  document.write('<br />Z onDeviceReady()<br />');
-  document.write(JSON.stringify(Media));
+  document.write('<br />E onDeviceReady()<br />');
 
-  //myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", onSuccess, onError);
+  myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", onSuccess, onError);
   }
 function onError(theError){
   document.write('<br />onError '+theError.code);
