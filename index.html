@@ -4,29 +4,28 @@
 <script type="text/javascript">
 //http://radiokstreams.cce.umn.edu:8128
 var myMedia = null;
-var testVar="global";
 document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady(){
-  document.write(testVar +'=testVar<br />');
   document.write('G onDeviceReady()<br />');
   myMedia = new Media("app/www/test.mp3", onSuccess, onError);
+  document.write('myMedia created<br />');
   }
 function onError(theError){
-  document.write('onError '+theError.code+'<br />');
+  document.write('onError '+theError.code+' '+theError.message+' <br />');
   return false;
   }
 function onSuccess(){
   document.write('onSuccess'+'<br />');
   myMedia.play();
-  document.write('<br />myMedia.play() ran');
+  document.write('myMedia.play() ran <br />');
   }
 </script>
 </head>
 <body>
 <h1>Hello World! Audio edition</h1>
 <script>
-document.write('<br />Body Script');
+document.write('Body Script<br />');
 </script>
 </body>
 </html>
