@@ -21,11 +21,11 @@ function onDeviceReady(){
   myMedia = new Media("http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3", onSuccess, onError);
   }
 function onError(theError){
-  document.write('<br />onError '+theError.code);
+  alert('onError '+theError.code);
   return false;
   }
 function onSuccess(){
-  document.write('<br />onSuccess');
+  alert('<br />onSuccess');
   myMedia.play();
   document.write('<br />myMedia.play() ran');
   }
