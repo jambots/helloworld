@@ -7,11 +7,11 @@
 <!--
 -->
 <script>
-/*
+
 var Media=new function(sourceFile,errorFunc, successFunc){
   return {"name":"test"};
   }
-*/
+
 document.write('<br />script began<br />');
 //http://radiokstreams.cce.umn.edu:8128
 
@@ -19,7 +19,7 @@ var myMedia = null;
 document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady(){
-  document.write('<br />onDeviceReady()<br />');
+  document.write('<br />Z onDeviceReady()<br />');
   document.write(JSON.stringify(Media));
 
   //myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", onSuccess, onError);
