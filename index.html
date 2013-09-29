@@ -17,11 +17,12 @@ var myMedia = null;
 document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady(){
-  document.write('<br />F onDeviceReady()<br />');
+  document.write('<br />G onDeviceReady()<br />');
   myMedia = new Media("http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3", onSuccess, onError);
   }
 function onError(theError){
   document.write('<br />onError '+theError.code);
+  return false;
   }
 function onSuccess(){
   document.write('<br />onSuccess');
