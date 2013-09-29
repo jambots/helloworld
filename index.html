@@ -8,7 +8,7 @@ document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady(){
   document.write('G onDeviceReady()<br />');
-  myMedia = new Media("app/www/test.mp3", onSuccess, onError, onStatus);
+  myMedia = new Media("/android_asset/www/test.mp3", onSuccess, onError, onStatus);
   document.write('myMedia created<br />');
   }
 function onError(theError){
