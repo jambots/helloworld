@@ -8,7 +8,7 @@ document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady(){
   document.write('G onDeviceReady()<br />');
-  myMedia = new Media("app/www/test.mp3", onSuccess, onError);
+  myMedia = new Media("app/www/test.mp3", onSuccess, onError, onStatus);
   document.write('myMedia created<br />');
   }
 function onError(theError){
@@ -19,6 +19,16 @@ function onSuccess(){
   document.write('onSuccess'+'<br />');
   myMedia.play();
   document.write('myMedia.play() ran <br />');
+  }
+function onStatus(theStatus){
+  document.write('onStatus('+theStatus+')<br />');
+/*
+    Media.MEDIA_NONE = 0;
+    Media.MEDIA_STARTING = 1;
+    Media.MEDIA_RUNNING = 2;
+    Media.MEDIA_PAUSED = 3;
+    Media.MEDIA_STOPPED = 4;
+*/
   }
 </script>
 </head>
