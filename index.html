@@ -18,7 +18,7 @@ document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady(){
   document.write('<br />G onDeviceReady()<br />');
-  myMedia = new Media("http://audio.ibeat.org/content/p1rj1s/p1rj1s_-_rockGuitar.mp3", onSuccess, onError);
+  myMedia = new Media("app/www/test.mp3", onSuccess, onError);
   }
 function onError(theError){
   alert('onError '+theError.code);
