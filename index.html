@@ -18,9 +18,10 @@ document.write('<br />script began<br />');
 var myMedia = null;
 document.addEventListener("deviceready",onDeviceReady,false);
 
-  document.write(JSON.stringify(Media));
 function onDeviceReady(){
   document.write('<br />onDeviceReady()<br />');
+  document.write(JSON.stringify(Media));
+
   //myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", onSuccess, onError);
   }
 function onError(theError){
