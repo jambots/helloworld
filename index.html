@@ -18,7 +18,8 @@ document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady(){
   document.write('<br />E onDeviceReady()<br />');
-
+  var boggitty=boog;
+  document.write('<br />buh()<br />');
   myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", onSuccess, onError);
   }
 function onError(theError){
