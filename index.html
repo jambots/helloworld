@@ -5,12 +5,15 @@
 //http://radiokstreams.cce.umn.edu:8128
 var myMedia = null;
 document.addEventListener("deviceready",onDeviceReady,false);
+var connectTimeout;
 
 function onDeviceReady(){
-  document.write('G onDeviceReady()<br />');
-  //myMedia = new Media("/android_asset/www/echolead_sample.mp3", successCallback, errorCallback, statusCallback);
-  myMedia = new Media("http://audio.ibeat.org/?ccm=/download/p1rj1s/15", successCallback, errorCallback, statusCallback);
-
+  document.write('onDeviceReady() set connectTimeout<br />');
+  connectTimeout=window.setTimeout("connectStream()", 1000);
+  }
+function connectStream(){
+  document.write('connectStream() <br />');
+  myMedia = new Media("http://radiokstreams.cce.umn.edu:8128", successCallback, errorCallback, statusCallback);
   document.write('myMedia created<br />');
   }
 function errorCallback(theError){
