@@ -14,16 +14,16 @@ function onDeviceReady(){
   document.write('myMedia created<br />');
   }
 function errorCallback(theError){
-  document.write('onError '+theError.code+' '+theError.message+' <br />');
+  document.write('errorCallback '+theError.code+' '+theError.message+' <br />');
   return false;
   }
-function statusCallback(){
-  document.write('onSuccess'+'<br />');
+function successCallback(){
+  document.write('successCallback <br />');
   myMedia.play();
   document.write('myMedia.play() ran <br />');
   }
 function statusCallback(theStatus){
-  document.write('onStatus('+theStatus+')<br />');
+  document.write('statusCallback('+theStatus+')<br />');
 /*
     Media.MEDIA_NONE = 0;
     Media.MEDIA_STARTING = 1;
