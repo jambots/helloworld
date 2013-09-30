@@ -8,19 +8,21 @@ document.addEventListener("deviceready",onDeviceReady,false);
 
 function onDeviceReady(){
   document.write('G onDeviceReady()<br />');
-  myMedia = new Media("/android_asset/www/echolead_sample.mp3", onSuccess, onError, onStatus);
+  //myMedia = new Media("/android_asset/www/echolead_sample.mp3", successCallback, errorCallback, statusCallback);
+  myMedia = new Media("http://audio.ibeat.org/?ccm=/download/p1rj1s/15", successCallback, errorCallback, statusCallback);
+
   document.write('myMedia created<br />');
   }
-function onError(theError){
+function errorCallback(theError){
   document.write('onError '+theError.code+' '+theError.message+' <br />');
   return false;
   }
-function onSuccess(){
+function statusCallback(){
   document.write('onSuccess'+'<br />');
   myMedia.play();
   document.write('myMedia.play() ran <br />');
   }
-function onStatus(theStatus){
+function statusCallback(theStatus){
   document.write('onStatus('+theStatus+')<br />');
 /*
     Media.MEDIA_NONE = 0;
