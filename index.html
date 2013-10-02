@@ -678,7 +678,9 @@ var pages=[
 }];
 function dbuga(theString){
   document.getElementById('debugDiv').style.display="block";
-  document.getElementById('debugDiv').innerHTML+="<br />"+theString;
+  document.getElementById('debugDiv').innerHTML+=theString+"<br />";
+  document.getElementById('debugDiv').style.width=(window.innerWidth+rnd(50))+"px";
+  document.getElementById('debugDiv').style.top=rnd(30)+"px";
   }
 
 function dbug(theString){
