@@ -4,7 +4,6 @@
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<meta name="apple-mobile-web-app-capable" content="yes">
 <script src="phonegap.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 
@@ -175,7 +174,7 @@ elem.scrollTop = elem.scrollHeight - elem.offsetHeight - 1;
 
 
 function init(){
-  //dbuga('init 0');
+  dbuga('init 0');
   currentPage="listen";
   populateContainer();
   if(scrollAdded==false){
@@ -735,7 +734,12 @@ function buttonOn(thePage, theButton){
 function buttonOff(thePage, theButton){
   document.getElementById('page_'+thePage+'_button_'+theButton+'_on').style.opacity="0";
   }
-var urlByQuality={"low":"http://radiokstreams.cce.umn.edu:8056", "medium":"http://radiokstreams.cce.umn.edu:8128", "high":"http://radiokstreams.cce.umn.edu:8256", "higher":"http://radiokstreams.cce.umn.edu:8256"};
+var urlByQuality={
+  "low":"http://radiokstreams.cce.umn.edu:8056", 
+  "medium":"http://radiokstreams.cce.umn.edu:8128", 
+  "high":"http://radiokstreams.cce.umn.edu:8256",
+  "higher":"http://radiokstreams.cce.umn.edu:8256"
+  };
 function shop(artist, album, song){
   //dbuga("shop("+artist+", "+album+", "+song+")");
   selectPage("shop");
@@ -945,16 +949,16 @@ function handleButton(pageName, buttonName){
 
 var myMedia=null;
 function errorCallback(theError){
-  alert('errorCallback '+theError.code+' '+theError.message+' <br />');
+  dbuga('errorCallback '+theError.code+' '+theError.message+' <br />');
   return false;
   }
 function successCallback(){
-  //alert('successCallback <br />');
+  dbuga('successCallback <br />');
   myMedia.play();
   dbuga('myMedia.play() ran <br />');
   }
 function statusCallback(theStatus){
-  alert('statusCallback('+theStatus+')<br />');
+  dbuga('statusCallback('+theStatus+')<br />');
 /*
     Media.MEDIA_NONE = 0;
     Media.MEDIA_STARTING = 1;
@@ -1082,6 +1086,7 @@ function togglePlaying(){
     clearInterval(minuteInterval);
     minuteInterval=setInterval('minuteTick()', 15000);
     ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
+    dbuga(urlByQuality[persistenceObject.quality]);
     myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
     }
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
