@@ -1100,6 +1100,7 @@ function connectMedia(){
   }
 function tryPlay(){
   dbuga('tryPlay()');
+  myMedia.stop();
   myMedia.play();
 //  clearTimeout(playTimeout);
 //  playTimeout=window.setTimeout('tryPlay()', 1000);
