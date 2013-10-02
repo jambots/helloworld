@@ -191,8 +191,6 @@ function init(){
   buttonOn("footnav", "listen");
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
-  ////comQueue.push("action=manageSound|channel=1|mode=prepare|loop=false|file=sounds/click.wav");
-  ////updateNowPlaying();
   minuteTick();
   getFaqs();
   //dbuga('init completed');
@@ -884,6 +882,7 @@ function handleButton(pageName, buttonName){
       requestSavePersistenceData();
       if(playing){
         ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
+        myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
         }
       }
     if(buttonName=="higher"){
@@ -893,6 +892,7 @@ function handleButton(pageName, buttonName){
       requestSavePersistenceData();
       if(playing){
         ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
+        myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
         }
       }
     }
@@ -941,6 +941,27 @@ function handleButton(pageName, buttonName){
       updatePlaylist();
       }
     }
+  }
+
+var myMedia=null;
+function errorCallback(theError){
+  alert('errorCallback '+theError.code+' '+theError.message+' <br />');
+  return false;
+  }
+function successCallback(){
+  //alert('successCallback <br />');
+  myMedia.play();
+  dbuga('myMedia.play() ran <br />');
+  }
+function statusCallback(theStatus){
+  alert('statusCallback('+theStatus+')<br />');
+/*
+    Media.MEDIA_NONE = 0;
+    Media.MEDIA_STARTING = 1;
+    Media.MEDIA_RUNNING = 2;
+    Media.MEDIA_PAUSED = 3;
+    Media.MEDIA_STOPPED = 4;
+*/
   }
 var connecting=false;
 var interrupted=false;
@@ -1050,6 +1071,7 @@ function togglePlaying(){
     interrupted=false;
     buttonOff("listen", "playpause");
     ////comQueue.push('action=manageStream|mode=stop');
+    myMedia.stop();
     }
   else{
     buttonOn("listen", "playpause");
@@ -1060,6 +1082,7 @@ function togglePlaying(){
     clearInterval(minuteInterval);
     minuteInterval=setInterval('minuteTick()', 15000);
     ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
+    myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
     }
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
@@ -1069,6 +1092,7 @@ function retryTick(){
     connecting=true;
     interrupted=false;
     ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
+    myMedia.play()
     }
   }
 var lastTouchId="";
