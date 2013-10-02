@@ -948,12 +948,16 @@ function handleButton(pageName, buttonName){
       }
     }
   }
-
+var playTimeout;
 var myMedia=null;
 function errorCallback(theError){
   dbuga('errorCallback '+theError.code+' '+theError.message+' <br />');
+  clearTimeout(playTimeout);
+  playTimeout=window.setTimeout('myMedia.play()', 1000);
+  dbuga('err, timeout set<br />');
   return false;
   }
+
 function successCallback(){
   dbuga('successCallback <br />');
   myMedia.play();
