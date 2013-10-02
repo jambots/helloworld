@@ -3,7 +3,11 @@
 <title>Dev RadioK</title>
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
+<script type="text/javascript">
+    window.onerror = function(message, url, lineNumber) {
+        console.log("Error: "+message+" in "+url+" at line "+lineNumber);
+    }
+</script>
 <script src="phonegap.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 
@@ -950,28 +954,25 @@ function handleButton(pageName, buttonName){
   }
 var playTimeout;
 var myMedia=null;
+
 function errorCallback(theError){
   dbuga('errorCallback '+theError.code+' '+theError.message+' <br />');
+/*
   clearTimeout(playTimeout);
   playTimeout=window.setTimeout('myMedia.play()', 1000);
   dbuga('err, timeout set<br />');
+*/
   return false;
   }
 
 function successCallback(){
   dbuga('successCallback <br />');
   myMedia.play();
-  dbuga('myMedia.play() ran <br />');
+  dbuga('success myMedia.play() ran <br />');
   }
 function statusCallback(theStatus){
-  dbuga('statusCallback('+theStatus+')<br />');
-/*
-    Media.MEDIA_NONE = 0;
-    Media.MEDIA_STARTING = 1;
-    Media.MEDIA_RUNNING = 2;
-    Media.MEDIA_PAUSED = 3;
-    Media.MEDIA_STOPPED = 4;
-*/
+  var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
+  dbuga('statusCallback('+theStatus+') '+statusArray[theStatus]);
   }
 var connecting=false;
 var interrupted=false;
