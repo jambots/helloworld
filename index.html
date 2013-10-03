@@ -966,27 +966,16 @@ var urlByQuality={
   "higher":"http://radiokstreams.cce.umn.edu:8256"
   };
 
-function successMediumCallback(){
-  dbuga('successMediumCallback <br />');
+function successCallback(){
+  dbuga('successCallback <br />');
   }
-function errorMediumCallback(theError){
-  dbuga('errorMediumCallback '+theError.code+' '+theError.message);
+function errorCallback(theError){
+  dbuga('errorCallback '+theError.code+' '+theError.message);
   return false;
   }
-function statusMediumCallback(theStatus){
+function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  dbuga('statusMedium '+statusArray[theStatus]);
-  }
-function successHigherCallback(){
-  dbuga('successHigherCallback <br />');
-  }
-function errorHigherCallback(theError){
-  dbuga('errorHigherCallback '+theError.code+' '+theError.message);
-  return false;
-  }
-function statusHigherCallback(theStatus){
-  var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  dbuga('statusHigher '+statusArray[theStatus]);
+  dbuga('status '+statusArray[theStatus]);
   }
 
 var connecting=false;
