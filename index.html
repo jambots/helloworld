@@ -4,9 +4,9 @@
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script type="text/javascript">
-    window.onerror = function(message, url, lineNumber) {
-        console.log("Error: "+message+" in "+url+" at line "+lineNumber);
-    }
+window.onerror = function(message, url, lineNumber) {
+  console.log("Error: "+message+" in "+url+" at line "+lineNumber);
+  }
 </script>
 <script src="phonegap.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
@@ -115,7 +115,6 @@ background-color:rgba(0,255,255,.5);
 var minuteInterval;
 var defaultPersistenceObject={"quality":"higher", "playing":false};
 var persistenceObject={"quality":"higher", "playing":false};
-var playing=false;
 function requestLoadPersistenceData(){
   //dbuga('requestLoadPersistenceData()');
   ////comQueue.push("action=loadPersistenceData");
@@ -148,8 +147,7 @@ function savePersistenceData(){
   }
 
 var dimensionInterval;
-var retryInterval;
-var streamStatus=false;
+
 var scrollAdded=false;
 
 var ScrollFix = function(elem) {
@@ -197,7 +195,7 @@ function init(){
   minuteTick();
   getFaqs();
   //dbuga('init completed');
-  window.setTimeout('connectMedias()',500);
+  window.setTimeout('connectMedia()',500);
   }
 var songs=[];
 function getRecentSongs(){
@@ -741,12 +739,6 @@ function buttonOn(thePage, theButton){
 function buttonOff(thePage, theButton){
   document.getElementById('page_'+thePage+'_button_'+theButton+'_on').style.opacity="0";
   }
-var urlByQuality={
-  "low":"http://radiokstreams.cce.umn.edu:8056", 
-  "medium":"http://radiokstreams.cce.umn.edu:8128", 
-  "high":"http://radiokstreams.cce.umn.edu:8256",
-  "higher":"http://radiokstreams.cce.umn.edu:8256"
-  };
 function shop(artist, album, song){
   //dbuga("shop("+artist+", "+album+", "+song+")");
   selectPage("shop");
@@ -889,12 +881,15 @@ function handleButton(pageName, buttonName){
     if(buttonName=="medium"){
       buttonOn("settings", "medium");
       buttonOff("settings", "higher");
-      persistenceObject.quality="medium";
+      persistenceObject.quality="low";
       requestSavePersistenceData();
+      myMedia.src=urlByQuality[persistenceObject.quality];
       if(playing){
-        ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
-        ////connectMedia();
-        ////tryPlay();
+        stopMedia();
+        playMedia();      
+        }
+      else{
+        stopMedia();
         }
       }
     if(buttonName=="higher"){
@@ -902,10 +897,13 @@ function handleButton(pageName, buttonName){
       buttonOn("settings", "higher");
       persistenceObject.quality="higher";
       requestSavePersistenceData();
+      myMedia.src=urlByQuality[persistenceObject.quality];
       if(playing){
-        ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
-        ////connectMedia();
-        ////tryPlay();
+        stopMedia();
+        playMedia();      
+        }
+      else{
+        stopMedia();
         }
       }
     }
@@ -957,28 +955,38 @@ function handleButton(pageName, buttonName){
   }
 var playTimeout;
 var mediaByQuality={"medium":null, "higher":null};
+var playing=false;
+var retryInterval;
+var streamStatus=false;
+
+var urlByQuality={
+  "low":"http://radiokstreams.cce.umn.edu:8056", 
+  "medium":"http://radiokstreams.cce.umn.edu:8128", 
+  "high":"http://radiokstreams.cce.umn.edu:8256",
+  "higher":"http://radiokstreams.cce.umn.edu:8256"
+  };
 
 function successMediumCallback(){
   dbuga('successMediumCallback <br />');
   }
 function errorMediumCallback(theError){
-  dbuga('errorCallback '+theError.code+' '+theError.message+' <br />');
+  dbuga('errorMediumCallback '+theError.code+' '+theError.message);
   return false;
   }
 function statusMediumCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  dbuga('statusMediumCallback('+theStatus+') '+statusArray[theStatus]);
+  dbuga('statusMedium '+statusArray[theStatus]);
   }
 function successHigherCallback(){
   dbuga('successHigherCallback <br />');
   }
 function errorHigherCallback(theError){
-  dbuga('errorCallback '+theError.code+' '+theError.message+' <br />');
+  dbuga('errorHigherCallback '+theError.code+' '+theError.message);
   return false;
   }
 function statusHigherCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  dbuga('statusHigherCallback('+theStatus+') '+statusArray[theStatus]);
+  dbuga('statusHigher '+statusArray[theStatus]);
   }
 
 var connecting=false;
@@ -1083,18 +1091,10 @@ function remoteControlPlay(){
   buttonOn("listen", "playpause");
   }
 function stopMedia(){
-  mediaByQuality.medium.stop();
-  mediaByQuality.higher.stop();
+  myMedia.stop();
   }
-function playMedia(quality){
-  if((quality=="medium")){
-    mediaByQuality.higher.stop();
-    mediaByQuality.medium.play();
-    }
-  if((quality=="higher")){
-  mediaByQuality.medium.stop();
-    mediaByQuality.higher.play();
-    }
+function playMedia(){
+  myMedia.play();
   }
 function togglePlaying(){
   document.getElementById('page_listen_content_djDiv').innerHTML="";
@@ -1103,8 +1103,6 @@ function togglePlaying(){
     connecting=false;
     interrupted=false;
     buttonOff("listen", "playpause");
-    ////comQueue.push('action=manageStream|mode=stop');
-    ////myMedia.stop();
     stopMedia();
     }
   else{
@@ -1115,16 +1113,13 @@ function togglePlaying(){
     playing=true;
     clearInterval(minuteInterval);
     minuteInterval=setInterval('minuteTick()', 15000);
-    ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
-    ////dbuga(urlByQuality[persistenceObject.quality]);
-    playMedia(persistenceObject.quality);
+    playMedia();
     }
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
-function connectMedias(){
-  dbuga('connectMedias()');
-  mediaByQuality.medium = new Media(urlByQuality["medium"], successMediumCallback, errorMediumCallback, statusMediumCallback);
-  mediaByQuality.higher = new Media(urlByQuality["higher"], successHigherCallback, errorHigherCallback, statusHigherCallback);
+function connectMedia(){
+  dbuga('connectMedia()');
+  myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
   }
 function retryTick(){
   if((connecting==false)&&(playing==true)&&(streamStatus==false)){
