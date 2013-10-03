@@ -996,7 +996,6 @@ var connectFails=0;
   var isStreaming=false;
   if((theStatus==1)||(theStatus==2)){isStreaming=true;}
   streamStatus=isStreaming;
-  dbuga('playing='+playing+' isStreaming='+isStreaming+' interrupted='+interrupted+' connecting='+connecting);
   var message="";
   var update=false;
   if(playing==true){ // only care if we're playing
@@ -1093,8 +1092,9 @@ function playMedia(){
   myMedia.play();
   }
 function togglePlaying(){
+  dbuga('togglePlaying()');
   document.getElementById('page_listen_content_djDiv').innerHTML="";
-  if(playing){
+  if(playing==true){
     playing=false;
     connecting=false;
     interrupted=false;
@@ -1118,6 +1118,7 @@ function connectMedia(){
   myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
   }
 function retryTick(){
+  dbuga('retryTick()');
   if((connecting==false)&&(playing==true)&&(streamStatus==false)){
     document.getElementById('page_listen_content_djDiv').innerHTML="Retrying...";
     connecting=true;
