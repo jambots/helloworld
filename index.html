@@ -43,7 +43,7 @@ overflow-y: scroll;
 .loading{color:black; font-family:akzibold;}
 .playlistItem{color:black; font-family:akzibold; position:static; text-align:center;}
 #debugDiv{display:none; position:absolute; width:100%; top:200px;}
-#stateDiv{position:absolute; width:100%; top:0px;}
+#stateDiv{position:absolute; width:100%; width:100%; top:0px;}
 background-color:rgba(0,0,0,.6); color:white; font-family: akziregular; font-size:18px;}
 div{
 position:absolute;
@@ -177,7 +177,7 @@ elem.scrollTop = elem.scrollHeight - elem.offsetHeight - 1;
 
 
 function init(){
-  dbuga('init 0');
+  dbuga('init 12');
   currentPage="listen";
   populateContainer();
   if(scrollAdded==false){
@@ -693,8 +693,6 @@ var pages=[
 function dbuga(theString){
   document.getElementById('debugDiv').style.display="block";
   document.getElementById('debugDiv').innerHTML+=theString+"<br />";
-  document.getElementById('debugDiv').style.width=(window.innerWidth+rnd(50))+"px";
-  document.getElementById('debugDiv').style.top=rnd(30)+"px";
   }
 
 function dbug(theString){
