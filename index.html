@@ -42,9 +42,8 @@ overflow-y: scroll;
 }
 .loading{color:black; font-family:akzibold;}
 .playlistItem{color:black; font-family:akzibold; position:static; text-align:center;}
-#debugDiv{display:none; position:absolute; width:100%; top:200px;}
-#stateDiv{display:none; position:absolute; width:100%; width:100%; top:0px;}
-background-color:rgba(0,0,0,.6); color:white; font-family: akziregular; font-size:18px;}
+#debugDiv{display:none; position:absolute; width:100%; top:70px; background-color:rgba(0,0,0,.6); color:white; font-family: akziregular; font-size:18px;}
+#stateDiv{display:block; position:absolute; width:100%; top:0px; background-color:rgba(0,0,0,.3); color:yellow; font-family: akziregular; font-size:18px;}
 div{
 position:absolute;
 -webkit-user-select: none;
@@ -177,7 +176,7 @@ elem.scrollTop = elem.scrollHeight - elem.offsetHeight - 1;
 
 
 function init(){
-  dbuga('init 12');
+  dbuga('init 0');
   currentPage="listen";
   populateContainer();
   if(scrollAdded==false){
@@ -398,12 +397,12 @@ function dimensionTick(){
   }
 function stateTick(){
   var theString="";
-  theString+="playing: "+playing+"<br />";
-  theString+="interrupted: "+interrupted+"<br />";
-  theString+="connecting: "+connecting;
+  theString+='playing='+playing+'<br />';
+  theString+='interrupted='+interrupted+'<br />';
+  theString+='connecting='+connecting;
   document.getElementById('stateDiv').innerHTML=theString;
-  }
 
+  }
 var currentPage="";
 
 function selectCurrentPage(){
@@ -997,6 +996,7 @@ var connectFails=0;
   var isStreaming=false;
   if((theStatus==1)||(theStatus==2)){isStreaming=true;}
   streamStatus=isStreaming;
+  dbuga('playing='+playing+' isStreaming='+isStreaming+' interrupted='+interrupted+' connecting='+connecting);
   var message="";
   var update=false;
   if(playing==true){ // only care if we're playing
@@ -1170,7 +1170,7 @@ function handleTouchEvent(e){
   <div id="container">
   </div>
   <div id="debugDiv"></div>
-  <div id="stateDiv">FUVCK</div>
+  <div id="stateDiv">stateDiv</div>
 </div>
 </body>
 </html>
