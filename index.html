@@ -737,8 +737,8 @@ function touchEnd(event){
   handleTouchEvent(event);
   }
 function moused(e){
-  //dbug('moused '+ e.target.id);
-  handleTouchEvent({"type":"touchstart", "touches":[{"pageX":e.clientX, "pageY":e.clientY, "target":e.target}]});
+  dbuga('moused '+ e.target.id);
+  //handleTouchEvent({"type":"touchstart", "touches":[{"pageX":e.clientX, "pageY":e.clientY, "target":e.target}]});
   }
 function buttonOn(thePage, theButton){
   document.getElementById('page_'+thePage+'_button_'+theButton+'_on').style.opacity="1";
@@ -1129,6 +1129,7 @@ function retryTick(){
   }
 var lastTouchId="";
 function handleTouchEvent(e){
+  dbuga("e.type="+e.type);
   if(e.type=="touchstart"){
     if(e.touches.length==3){dbug('');}
     px=e.touches[0].pageX-leftOffset;
