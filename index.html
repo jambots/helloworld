@@ -197,6 +197,7 @@ function init(){
   minuteTick();
   getFaqs();
   //dbuga('init completed');
+  window.setTimeout('connectMedias()',500);
   }
 var songs=[];
 function getRecentSongs(){
@@ -892,8 +893,8 @@ function handleButton(pageName, buttonName){
       requestSavePersistenceData();
       if(playing){
         ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
-        connectMedia();
-        tryPlay();
+        ////connectMedia();
+        ////tryPlay();
         }
       }
     if(buttonName=="higher"){
@@ -903,8 +904,8 @@ function handleButton(pageName, buttonName){
       requestSavePersistenceData();
       if(playing){
         ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
-        connectMedia();
-        tryPlay();
+        ////connectMedia();
+        ////tryPlay();
         }
       }
     }
@@ -955,26 +956,36 @@ function handleButton(pageName, buttonName){
     }
   }
 var playTimeout;
-var myMedia=null;
+var mediaByQuality={"medium":null, "higher":null};
 
-function errorCallback(theError){
+function successMediumCallback(){
+  dbuga('successMediumCallback <br />');
+  }
+function errorMediumCallback(theError){
   dbuga('errorCallback '+theError.code+' '+theError.message+' <br />');
   return false;
+  }
+function statusMediumCallback(theStatus){
+  var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
+  dbuga('statusMediumCallback('+theStatus+') '+statusArray[theStatus]);
+  }
+function successHigherCallback(){
+  dbuga('successHigherCallback <br />');
+  }
+function errorHigherCallback(theError){
+  dbuga('errorCallback '+theError.code+' '+theError.message+' <br />');
+  return false;
+  }
+function statusHigherCallback(theStatus){
+  var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
+  dbuga('statusHigherCallback('+theStatus+') '+statusArray[theStatus]);
   }
 
 var connecting=false;
 var interrupted=false;
 var connectFails=0;
 
-function successCallback(){
-  dbuga('successCallback <br />');
-  //myMedia.play();
-  //dbuga('success myMedia.play() ran <br />');
-  }
-function statusCallback(theStatus){
-  var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  dbuga('statusCallback('+theStatus+') '+statusArray[theStatus]);
-
+/*
   clearInterval(retryInterval);
   retryInterval=setInterval('retryTick()', 5000);
 
@@ -1041,6 +1052,8 @@ function statusCallback(theStatus){
     getRecentSongs();
     }
   }
+*/
+
 var bufferTimeout;
 function minuteTick(){
   //dbuga('minuteTick() playing='+playing+' interrupted='+interrupted);
@@ -1069,7 +1082,20 @@ function remoteControlPlay(){
   interrupted=false;
   buttonOn("listen", "playpause");
   }
-
+function stopMedia(){
+  mediaByQuality.medium.stop();
+  mediaByQuality.higher.stop();
+  }
+function playMedia(quality){
+  if((quality=="medium")){
+    mediaByQuality.higher.stop();
+    mediaByQuality.medium.play();
+    }
+  if((quality=="higher")){
+  mediaByQuality.medium.stop();
+    mediaByQuality.higher.play();
+    }
+  }
 function togglePlaying(){
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   if(playing){
@@ -1078,7 +1104,8 @@ function togglePlaying(){
     interrupted=false;
     buttonOff("listen", "playpause");
     ////comQueue.push('action=manageStream|mode=stop');
-    myMedia.stop();
+    ////myMedia.stop();
+    stopMedia();
     }
   else{
     buttonOn("listen", "playpause");
@@ -1090,23 +1117,14 @@ function togglePlaying(){
     minuteInterval=setInterval('minuteTick()', 15000);
     ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
     ////dbuga(urlByQuality[persistenceObject.quality]);
-    connectMedia();
-    tryPlay();
+    playMedia(persistenceObject.quality);
     }
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
-function connectMedia(){
-  myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
-  }
-function tryPlay(){
-  dbuga('tryPlay()');
-  if(!myMedia === null){
-    myMedia.release();
-    dbuga(' -- release myMedia');
-    }
-  myMedia.play();
-//  clearTimeout(playTimeout);
-//  playTimeout=window.setTimeout('tryPlay()', 1000);
+function connectMedias(){
+  dbuga('connectMedias()');
+  mediaByQuality.medium = new Media(urlByQuality["medium"], successMediumCallback, errorMediumCallback, statusMediumCallback);
+  mediaByQuality.higher = new Media(urlByQuality["higher"], successHigherCallback, errorHigherCallback, statusHigherCallback);
   }
 function retryTick(){
   if((connecting==false)&&(playing==true)&&(streamStatus==false)){
@@ -1114,7 +1132,7 @@ function retryTick(){
     connecting=true;
     interrupted=false;
     ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
-    myMedia.play()
+    ////myMedia.play()
     }
   }
 var lastTouchId="";
