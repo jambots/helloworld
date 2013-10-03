@@ -42,7 +42,8 @@ overflow-y: scroll;
 }
 .loading{color:black; font-family:akzibold;}
 .playlistItem{color:black; font-family:akzibold; position:static; text-align:center;}
-#debugDiv{display:none; position:absolute; width:100%; top:100px;
+#debugDiv{display:none; position:absolute; width:100%; top:200px;
+#stateDiv{position:absolute; width:100%; top:0px;
 background-color:rgba(0,0,0,.6); color:white; font-family: akziregular; font-size:18px;}
 div{
 position:absolute;
@@ -393,7 +394,17 @@ function dimensionTick(){
     clearInterval(dimensionInterval);
     populateContainer();
     }
+  stateTick();
   }
+function stateTick(){
+  var theString="";
+  theString+="playing: "+playing+"<br />";
+  theString+="isStreaming: "+isStreaming+"<br />";
+  theString+="interrupted: "+interrupted+"<br />";
+  theString+="connecting: "+connecting;
+  document.getElementById('stateDiv').innerHTML=theString;
+  }
+
 var currentPage="";
 
 function selectCurrentPage(){
@@ -989,7 +1000,6 @@ var connectFails=0;
   var isStreaming=false;
   if((theStatus==1)||(theStatus==2)){isStreaming=true;}
   streamStatus=isStreaming;
-  dbuga('playing='+playing+' isStreaming='+isStreaming+' interrupted='+interrupted+' connecting='+connecting);
   var message="";
   var update=false;
   if(playing==true){ // only care if we're playing
@@ -1163,6 +1173,7 @@ function handleTouchEvent(e){
   <div id="container">
   </div>
   <div id="debugDiv"></div>
+  <div id="stateDiv"></div>
 </div>
 </body>
 </html>
