@@ -8,20 +8,24 @@
 <link rel="stylesheet" type="text/css" href="reset-min.css">
 <style type="text/css">
 #resultsHolder{
+//-webkit-overflow-scrolling: touch;
 overflow-y: scroll;
--webkit-overflow-scrolling: touch;
+zindex: 0;
 }
 #playlistHolder{
+//-webkit-overflow-scrolling: touch;
 overflow-y: scroll;
--webkit-overflow-scrolling: touch;
+zindex: 0;
 }
 #calendarHolder{
+//-webkit-overflow-scrolling: touch;
 overflow-y: scroll;
--webkit-overflow-scrolling: touch;
+zindex: 0;
 }
+* { -webkit-tap-highlight-color: rgba(0,0,0,0); } 
 </style>
 <script type="text/javascript">
-var debugging=false;
+var debugging=true;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -30,7 +34,7 @@ var mediaRunning=false;
 var mediaStatusNum=0;
 function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  dbuga('status '+statusArray[theStatus]);
+  //dbuga('status '+statusArray[theStatus]);
   if(statusArray[theStatus]=='MEDIA_RUNNING'){
     mediaRunning=true;
     retrying=false;
@@ -105,7 +109,7 @@ function highSelected(){
     }
   }
 function togglePlaying(){
-  dbuga('togglePlaying()');
+  //dbuga('togglePlaying()');
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   if(uiPlaying==true){
     uiPlaying=false;
@@ -128,7 +132,7 @@ function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
 function connectMedia(){
-  dbuga('connectMedia()');
+  //dbuga('connectMedia()');
   myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
   }
 /*
@@ -273,7 +277,7 @@ elem.scrollTop = elem.scrollHeight - elem.offsetHeight - 1;
 
 
 function init(){
-  dbuga('init 0');
+  //dbuga('init 0');
   currentPage="listen";
   populateContainer();
   if(scrollAdded==false){
