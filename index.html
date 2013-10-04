@@ -14,32 +14,15 @@ var retryAttempts=0;
 var uiPlaying=false;
 var mediaRunning=false;
 var mediaStatusNum=0;
-function reachableCallback(reachability) {
-    // There is no consistency on the format of reachability
-    var networkState = reachability.code || reachability;
-
-    var states = {};
-    states[NetworkStatus.NOT_REACHABLE]                      = 'No network connection';
-    states[NetworkStatus.REACHABLE_VIA_CARRIER_DATA_NETWORK] = 'Carrier data connection';
-    states[NetworkStatus.REACHABLE_VIA_WIFI_NETWORK]         = 'WiFi connection';
-
-    connection=('Connection type: ' + states[networkState]);
-}
-var connection="unknown";
 function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
   dbuga('status '+statusArray[theStatus]);
   if(statusArray[theStatus]=='MEDIA_RUNNING'){
-    if(mediaStatusNum != 1){
-      dbuga("not really started");
-      }
-    else{
-      mediaRunning=true;
-      retrying=false;
-      retryAttempts=0;
-      interrupted=false;
-      getRecentSongs();
-      }
+    mediaRunning=true;
+    retrying=false;
+    retryAttempts=0;
+    interrupted=false;
+    getRecentSongs();
     }
   else{
     if((uiPlaying)&&(mediaRunning)){// was playing and running, so interrupted
@@ -63,12 +46,7 @@ function retryTick(){
     }
   }
 function stateTick(){
-  if(retrying==true){
-    retryAttempts++;
-    myMedia.play();
-    }
   var theString="";
-  theString+="connection="+connection+"<br />";
   theString+="uiPlaying="+uiPlaying+"<br />";
   theString+="mediaRunning="+mediaRunning+"<br />";
   theString+="mediaStatusNum="+mediaStatusNum+"<br />";
@@ -76,8 +54,6 @@ function stateTick(){
   theString+="retrying="+retrying+"<br />";
   theString+="retryAttempts="+retryAttempts;
   document.getElementById("stateDiv").innerHTML=theString;
-  navigator.network.isReachable('radiokstreams.cce.umn.edu', reachableCallback);
-
   }
 // -------------- events --------------------
 function mediumSelected(){
@@ -272,6 +248,7 @@ if(startTopScroll + elem.offsetHeight >= elem.scrollHeight)
 elem.scrollTop = elem.scrollHeight - elem.offsetHeight - 1;
 }, false);
 };
+
 
 
 
