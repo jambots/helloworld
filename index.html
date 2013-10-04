@@ -7,7 +7,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css">
 <script type="text/javascript">
-
+var debugging=false;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -46,6 +46,8 @@ function retryTick(){
     }
   }
 function stateTick(){
+  if(debugging==false){return false;}
+
   var theString="";
   theString+="uiPlaying="+uiPlaying+"<br />";
   theString+="mediaRunning="+mediaRunning+"<br />";
@@ -760,13 +762,20 @@ var pages=[
   ]
 }];
 function dbuga(theString){
-  document.getElementById('debugDiv').style.display="block";
-  document.getElementById('debugDiv').style.top="120px";
-  document.getElementById('debugDiv').innerHTML+=theString+"<br />";
+  if(debugging){
+    document.getElementById('debugDiv').style.display="block";
+    document.getElementById('debugDiv').style.top="120px";
+    document.getElementById('debugDiv').innerHTML+=theString+"<br />";
+    }
+  else{
+    document.getElementById('debugDiv').style.display="none";
+    }
   }
 
 function dbug(theString){
-  document.getElementById('debugDiv').innerHTML=theString;
+  if(debugging){
+    document.getElementById('debugDiv').innerHTML=theString; 
+    }
   }
 
 function gestureStart(event) {
