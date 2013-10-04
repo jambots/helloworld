@@ -3,118 +3,185 @@
 <title>Dev RadioK</title>
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<script type="text/javascript">
-window.onerror = function(message, url, lineNumber) {
-  console.log("Error: "+message+" in "+url+" at line "+lineNumber);
-  }
-</script>
 <script src="phonegap.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-
 <link rel="stylesheet" type="text/css" href="reset-min.css">
-
-<style type="text/css">
-html{
-  height: 100%;
-}
-
-@font-face
-{
-font-family: akziregular;
-src: url('akzidenzgroteskregular.ttf');
-} 
-@font-face
-{
-font-family: akzibold;
-src: url('akzidenzgroteskbold.ttf');
-}
-#resultsHolder{
-overflow-y: scroll;
--webkit-overflow-scrolling: touch;
-}
-#playlistHolder{
-overflow-y: scroll;
--webkit-overflow-scrolling: touch;
-}
-#calendarHolder{
-overflow-y: scroll;
--webkit-overflow-scrolling: touch;
-}
-.loading{color:black; font-family:akzibold;}
-.playlistItem{color:black; font-family:akzibold; position:static; text-align:center;}
-#debugDiv{display:none; position:absolute; width:100%; top:70px; background-color:rgba(0,0,0,.6); color:white; font-family: akziregular; font-size:18px;}
-#stateDiv{display:block; position:absolute; width:100%; top:0px; background-color:rgba(0,0,0,.3); color:yellow; font-family: akziregular; font-size:18px;}
-div{
-position:absolute;
--webkit-user-select: none;
--webkit-backface-visibility:hidden;
-}
-.buttons{
--webkit-transition:opacity 50ms linear;
--webkit-background-size:100% 100%; 
-background-repeat:no-repeat;
--webkit-background-size:cover;
-background-position:center center;
-}
-
-.questionHolder{
-  -webkit-transition:opacity 100ms linear;
-  overflow:hidden; position:static; 
-  float:left; 
-  //background-color:#110; 
-  //-webkit-transition:height 1000ms linear, max-height 1000ms linear; 
-}
-.twistie{
-  overflow:hidden;  position:relative; font-family:akzibold;
-  background-repeat:no-repeat;
-  background-position:center right;
-  //-webkit-transition:height 1000ms linear, max-height 1000ms linear; 
-}
-.answer{
-  position:absolute; font-family:akziregular;
-  //float:left; 
-  //background-color:#336;
-  display:none; 
-  //-webkit-transition:height 100ms linear, max-height 100ms linear; 
-}
-a:link{color:#2BBED8; font-family:akzibold; text-decoration:none;}
-a:visited{color:#2BBED8; font-family:akzibold; text-decoration:none;}
-.pages{
-opacity:0;
--webkit-transition:opacity 350ms linear;
--webkit-background-size:100% 100%; 
-background-repeat:no-repeat;
-background-color:#000;
-//-webkit-background-size:contain;
-background-position:top center;
-}
-body{
-background-color:#000;
--webkit-user-select: none;
-width:100%;
-max-height:100%;
-height:100%;
-}
-#wrapper{
-position:absolute;
-width:100%;
-height:100%;
-overflow:hidden;
-}
-#container{
-position:absolute;
-background-color:rgba(0,255,255,.5);
-}
-
-
-
-
-</style>
-
 <script type="text/javascript">
+
+var connecting=false;
+var interrupted=false;
+var connectFails=0;
+var uiPlaying=false;
+var mediaRunning=false;
+var mediaStatusNum=0;
+var retryInterval;
+
+function statusCallback(theStatus){
+  var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
+  mediaStatusNum=theStatus;
+  dbuga('status '+statusArray[theStatus]);
+  if(statusArray[theStatus]=='MEDIA_RUNNING'){mediaRunning=true;}
+  else{mediaRunning=false;}
+  }
+
+
+function stateTick(){
+  var theString="";
+  theString+="uiPlaying="+uiPlaying+"<br />";
+  theString+="mediaRunning="+mediaRunning+"<br />";
+  theString+="mediaStatusNum="+mediaStatusNum+"<br />";
+  theString+="interrupted="+interrupted+"<br />";
+  theString+="connecting="+connecting;
+  document.getElementById("stateDiv").innerHTML=theString;
+  }
+function mediumSelected(){
+  buttonOn("settings", "medium");
+  buttonOff("settings", "higher");
+  persistenceObject.quality="low";
+  requestSavePersistenceData();
+  myMedia.src=urlByQuality[persistenceObject.quality];
+  if(uiPlaying){
+    stopMedia();
+    playMedia();      
+    }
+  else{
+    stopMedia();
+    }
+  }
+function highSelected(){
+  buttonOff("settings", "medium");
+  buttonOn("settings", "higher");
+  persistenceObject.quality="higher";
+  requestSavePersistenceData();
+  myMedia.src=urlByQuality[persistenceObject.quality];
+  if(uiPlaying){
+    stopMedia();
+    playMedia();      
+    }
+  else{
+    stopMedia();
+    }
+  }
+// -------------- events --------------------
+function togglePlaying(){
+  dbuga('togglePlaying()');
+  document.getElementById('page_listen_content_djDiv').innerHTML="";
+  if(uiPlaying==true){
+    uiPlaying=false;
+    connecting=false;
+    interrupted=false;
+    buttonOff("listen", "playpause");
+    stopMedia();
+    }
+  else{
+    buttonOn("listen", "playpause");
+    document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
+    connecting=true;
+    interrupted=false;
+    uiPlaying=true;
+    clearInterval(minuteInterval);
+    minuteInterval=setInterval('minuteTick()', 15000);
+    playMedia();
+    }
+  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
+  }
+function connectMedia(){
+  dbuga('connectMedia()');
+  myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
+  }
+function retryTick(){
+  dbuga('retryTick()');
+  if((connecting==false)&&(uiPlaying==true)&&(mediaRunning==false)){
+    document.getElementById('page_listen_content_djDiv').innerHTML="Retrying...";
+    connecting=true;
+    interrupted=false;
+    ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
+    ////myMedia.play()
+    }
+  }
+
+/*
+  clearInterval(retryInterval);
+  retryInterval=setInterval('retryTick()', 5000);
+
+  var isStreaming=false;
+  if((theStatus==1)||(theStatus==2)){isStreaming=true;}
+  mediaRunning=isStreaming;
+  var message="";
+  var update=false;
+  if(uiPlaying==true){ // only care if we're playing
+    if(isStreaming==true){
+      if(interrupted==true){
+        message="Resuming...";
+        }
+      else{
+        if(connecting==true){
+          message="Connected.";
+          connectFails=0;
+          }
+        else{
+          message="Connected.";
+          connectFails=0;
+          }
+        }   
+      update=true;
+      connecting=false;
+      interrupted=false;
+      }
+    else{ // isStreaming was false)
+      if(connecting==true){
+        connectFails++;
+        if(connectFails>2){
+          message="OMG. We're like totally not connecting...embarrassing. Like, try again in a bit k?  Radio K - Real College Radio.";
+          }
+        else{
+          message="Unable to connect. Retrying...";
+          }
+        connecting=false;
+        interrupted=false;
+        }
+      else{
+        if(interrupted==true){
+          if(remoteControlPaused==false){
+            message="Paused";
+            }
+          else{
+            message="Connecting...";
+            }
+          connecting=false;
+          interrupted=false;
+          }           
+        else{
+          message="Connecting...";
+          connecting=false;
+          interrupted=true;
+          }
+        }
+      }
+    }// end of playing
+  //dbuga(' - '+message);
+  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
+  document.getElementById('page_listen_content_djDiv').innerHTML=message;
+  if(update==true){
+    getRecentSongs();
+    }
+  }
+*/
+
+function successCallback(){
+  //dbuga('successCallback <br />');
+  }
+function errorCallback(theError){
+  //dbuga('errorCallback '+theError.code+' '+theError.message);
+  //return false;
+  }
+
+// ----------------------------------------------------------------------------
+
+
 var minuteInterval;
-var defaultPersistenceObject={"quality":"higher", "playing":false};
-var persistenceObject={"quality":"higher", "playing":false};
+var defaultPersistenceObject={"quality":"higher", "uiPlaying":false};
+var persistenceObject={"quality":"higher", "uiPlaying":false};
 function requestLoadPersistenceData(){
   //dbuga('requestLoadPersistenceData()');
   ////comQueue.push("action=loadPersistenceData");
@@ -219,7 +286,7 @@ function parseRecentSongs(theData){
   songKeys.reverse();
   if(songKeys.length>0){
     nowData={"dj":recentSongs[songKeys[0]].dj, "time":recentSongs[songKeys[0]].song_timestamp, "artist":recentSongs[songKeys[0]].song_artist, "song":recentSongs[songKeys[0]].song_title, "album":recentSongs[songKeys[0]].song_album};
-    if((playing==true)&&(streamStatus==true)){
+    if((uiPlaying==true)&&(mediaRunning==true)){
       updateNowPlaying();
       }
     }
@@ -394,14 +461,6 @@ function dimensionTick(){
     populateContainer();
     }
   stateTick();
-  }
-function stateTick(){
-  var theString="";
-  theString+='playing='+playing+'<br />';
-  theString+='interrupted='+interrupted+'<br />';
-  theString+='connecting='+connecting;
-  document.getElementById('stateDiv').innerHTML=theString;
-
   }
 var currentPage="";
 
@@ -690,6 +749,7 @@ var pages=[
 }];
 function dbuga(theString){
   document.getElementById('debugDiv').style.display="block";
+  document.getElementById('debugDiv').style.top="100px";
   document.getElementById('debugDiv').innerHTML+=theString+"<br />";
   }
 
@@ -886,32 +946,10 @@ function handleButton(pageName, buttonName){
       window.setTimeout('buttonOff("settings", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
       }
     if(buttonName=="medium"){
-      buttonOn("settings", "medium");
-      buttonOff("settings", "higher");
-      persistenceObject.quality="low";
-      requestSavePersistenceData();
-      myMedia.src=urlByQuality[persistenceObject.quality];
-      if(playing){
-        stopMedia();
-        playMedia();      
-        }
-      else{
-        stopMedia();
-        }
+      mediumSelected();
       }
     if(buttonName=="higher"){
-      buttonOff("settings", "medium");
-      buttonOn("settings", "higher");
-      persistenceObject.quality="higher";
-      requestSavePersistenceData();
-      myMedia.src=urlByQuality[persistenceObject.quality];
-      if(playing){
-        stopMedia();
-        playMedia();      
-        }
-      else{
-        stopMedia();
-        }
+      highSelected();
       }
     }
   if(pageName=="faqs"){
@@ -960,11 +998,6 @@ function handleButton(pageName, buttonName){
       }
     }
   }
-var playTimeout;
-var mediaByQuality={"medium":null, "higher":null};
-var playing=false;
-var retryInterval;
-var streamStatus=false;
 
 var urlByQuality={
   "low":"http://radiokstreams.cce.umn.edu:8056", 
@@ -973,94 +1006,10 @@ var urlByQuality={
   "higher":"http://radiokstreams.cce.umn.edu:8256"
   };
 
-function successCallback(){
-  dbuga('successCallback <br />');
-  }
-function errorCallback(theError){
-  dbuga('errorCallback '+theError.code+' '+theError.message);
-  return false;
-  }
-function statusCallback(theStatus){
-  var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  dbuga('status '+statusArray[theStatus]);
-  }
-
-var connecting=false;
-var interrupted=false;
-var connectFails=0;
-
-/*
-  clearInterval(retryInterval);
-  retryInterval=setInterval('retryTick()', 5000);
-
-  var isStreaming=false;
-  if((theStatus==1)||(theStatus==2)){isStreaming=true;}
-  streamStatus=isStreaming;
-  var message="";
-  var update=false;
-  if(playing==true){ // only care if we're playing
-    if(isStreaming==true){
-      if(interrupted==true){
-        message="Resuming...";
-        }
-      else{
-        if(connecting==true){
-          message="Connected.";
-          connectFails=0;
-          }
-        else{
-          message="Connected.";
-          connectFails=0;
-          }
-        }   
-      update=true;
-      connecting=false;
-      interrupted=false;
-      }
-    else{ // isStreaming was false)
-      if(connecting==true){
-        connectFails++;
-        if(connectFails>2){
-          message="OMG. We're like totally not connecting...embarrassing. Like, try again in a bit k?  Radio K - Real College Radio.";
-          }
-        else{
-          message="Unable to connect. Retrying...";
-          }
-        connecting=false;
-        interrupted=false;
-        }
-      else{
-        if(interrupted==true){
-          if(remoteControlPaused==false){
-            message="Paused";
-            }
-          else{
-            message="Connecting...";
-            }
-          connecting=false;
-          interrupted=false;
-          }           
-        else{
-          message="Connecting...";
-          connecting=false;
-          interrupted=true;
-          }
-        }
-      }
-    }// end of playing
-  //dbuga(' - '+message);
-  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
-  document.getElementById('page_listen_content_djDiv').innerHTML=message;
-  if(update==true){
-    getRecentSongs();
-    }
-  }
-*/
-
 var bufferTimeout;
 function minuteTick(){
-  //dbuga('minuteTick() playing='+playing+' interrupted='+interrupted);
-  //if((playing==true)&&(streamStatus==true)){
+  //dbuga('minuteTick() uiPlaying='+uiPlaying+' interrupted='+interrupted);
+  //if((uiPlaying==true)&&(mediaStatusNum==true)){
   //  updateNowPlaying();
   //  }
   getRecentSongs();
@@ -1073,14 +1022,14 @@ function resumeGame(){
 var remoteControlPaused=false;
 function remoteControlPause(){
   remoteControlPaused=true;
-  playing=false;
+  uiPlaying=false;
   connecting=false;
   interrupted=false;
   buttonOff("listen", "playpause");
   }
 function remoteControlPlay(){
   remoteControlPaused=false;
-  playing=true;
+  uiPlaying=true;
   connecting=false;
   interrupted=false;
   buttonOn("listen", "playpause");
@@ -1090,42 +1039,6 @@ function stopMedia(){
   }
 function playMedia(){
   myMedia.play();
-  }
-function togglePlaying(){
-  dbuga('togglePlaying()');
-  document.getElementById('page_listen_content_djDiv').innerHTML="";
-  if(playing==true){
-    playing=false;
-    connecting=false;
-    interrupted=false;
-    buttonOff("listen", "playpause");
-    stopMedia();
-    }
-  else{
-    buttonOn("listen", "playpause");
-    document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
-    connecting=true;
-    interrupted=false;
-    playing=true;
-    clearInterval(minuteInterval);
-    minuteInterval=setInterval('minuteTick()', 15000);
-    playMedia();
-    }
-  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
-  }
-function connectMedia(){
-  dbuga('connectMedia()');
-  myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
-  }
-function retryTick(){
-  dbuga('retryTick()');
-  if((connecting==false)&&(playing==true)&&(streamStatus==false)){
-    document.getElementById('page_listen_content_djDiv').innerHTML="Retrying...";
-    connecting=true;
-    interrupted=false;
-    ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
-    ////myMedia.play()
-    }
   }
 var lastTouchId="";
 function handleTouchEvent(e){
