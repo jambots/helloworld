@@ -8,9 +8,9 @@
 <link rel="stylesheet" type="text/css" href="reset-min.css">
 <script type="text/javascript">
 
-var connecting=false;
+var retrying=false;
 var interrupted=false;
-var connectFails=0;
+var retryAttempts=0;
 var uiPlaying=false;
 var mediaRunning=false;
 var mediaStatusNum=0;
@@ -20,20 +20,37 @@ function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
   mediaStatusNum=theStatus;
   dbuga('status '+statusArray[theStatus]);
-  if(statusArray[theStatus]=='MEDIA_RUNNING'){mediaRunning=true;}
-  else{mediaRunning=false;}
+  if(statusArray[theStatus]=='MEDIA_RUNNING'){
+    mediaRunning=true;
+    retrying=false;
+    retryAttempts=0;
+    interrupted=false;
+    }
+  else{
+    if((uiPlaying)&&(mediaRunning)){// was playing and running, so interrupted
+      interrupted=true;
+      retrying=true;
+      }
+    mediaRunning=false;
+    }
   }
 
 
 function stateTick(){
+  if(retrying==true){
+    retryAttempts++;
+    myMedia.play();
+    }
   var theString="";
   theString+="uiPlaying="+uiPlaying+"<br />";
   theString+="mediaRunning="+mediaRunning+"<br />";
   theString+="mediaStatusNum="+mediaStatusNum+"<br />";
   theString+="interrupted="+interrupted+"<br />";
-  theString+="connecting="+connecting;
+  theString+="retrying="+retrying;
+  theString+="retryAttempts="+retryAttempts;
   document.getElementById("stateDiv").innerHTML=theString;
   }
+// -------------- events --------------------
 function mediumSelected(){
   buttonOn("settings", "medium");
   buttonOff("settings", "higher");
@@ -62,21 +79,21 @@ function highSelected(){
     stopMedia();
     }
   }
-// -------------- events --------------------
 function togglePlaying(){
   dbuga('togglePlaying()');
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   if(uiPlaying==true){
     uiPlaying=false;
-    connecting=false;
+    retrying=false;
     interrupted=false;
     buttonOff("listen", "playpause");
     stopMedia();
     }
   else{
     buttonOn("listen", "playpause");
-    document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
-    connecting=true;
+    document.getElementById('page_listen_content_djDiv').innerHTML="connecting...";
+    retrying=true;
+    retryAttempts=0;
     interrupted=false;
     uiPlaying=true;
     clearInterval(minuteInterval);
@@ -89,17 +106,6 @@ function connectMedia(){
   dbuga('connectMedia()');
   myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
   }
-function retryTick(){
-  dbuga('retryTick()');
-  if((connecting==false)&&(uiPlaying==true)&&(mediaRunning==false)){
-    document.getElementById('page_listen_content_djDiv').innerHTML="Retrying...";
-    connecting=true;
-    interrupted=false;
-    ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[persistenceObject.quality]+"");
-    ////myMedia.play()
-    }
-  }
-
 /*
   clearInterval(retryInterval);
   retryInterval=setInterval('retryTick()', 5000);
@@ -115,29 +121,29 @@ function retryTick(){
         message="Resuming...";
         }
       else{
-        if(connecting==true){
+        if(retrying==true){
           message="Connected.";
-          connectFails=0;
+          retryAttempts=0;
           }
         else{
           message="Connected.";
-          connectFails=0;
+          retryAttempts=0;
           }
         }   
       update=true;
-      connecting=false;
+      retrying=false;
       interrupted=false;
       }
     else{ // isStreaming was false)
-      if(connecting==true){
-        connectFails++;
-        if(connectFails>2){
-          message="OMG. We're like totally not connecting...embarrassing. Like, try again in a bit k?  Radio K - Real College Radio.";
+      if(retrying==true){
+        retryAttempts++;
+        if(retryAttempts>2){
+          message="OMG. We're like totally not retrying...embarrassing. Like, try again in a bit k?  Radio K - Real College Radio.";
           }
         else{
           message="Unable to connect. Retrying...";
           }
-        connecting=false;
+        retrying=false;
         interrupted=false;
         }
       else{
@@ -146,14 +152,14 @@ function retryTick(){
             message="Paused";
             }
           else{
-            message="Connecting...";
+            message="retrying...";
             }
-          connecting=false;
+          retrying=false;
           interrupted=false;
           }           
         else{
-          message="Connecting...";
-          connecting=false;
+          message="retrying...";
+          retrying=false;
           interrupted=true;
           }
         }
@@ -749,7 +755,7 @@ var pages=[
 }];
 function dbuga(theString){
   document.getElementById('debugDiv').style.display="block";
-  document.getElementById('debugDiv').style.top="100px";
+  document.getElementById('debugDiv').style.top="120px";
   document.getElementById('debugDiv').innerHTML+=theString+"<br />";
   }
 
@@ -1023,14 +1029,14 @@ var remoteControlPaused=false;
 function remoteControlPause(){
   remoteControlPaused=true;
   uiPlaying=false;
-  connecting=false;
+  retrying=false;
   interrupted=false;
   buttonOff("listen", "playpause");
   }
 function remoteControlPlay(){
   remoteControlPaused=false;
   uiPlaying=true;
-  connecting=false;
+  retrying=false;
   interrupted=false;
   buttonOn("listen", "playpause");
   }
