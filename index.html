@@ -34,8 +34,8 @@ function statusCallback(theStatus){
     if((uiPlaying)&&(mediaRunning)){// was playing and running, so interrupted
       interrupted=true;
       retrying=true;
-      myMedia.stop();
-      myMedia.release();
+      //myMedia.stop();
+      //myMedia.release();
       document.getElementById('page_listen_content_djDiv').innerHTML="reconnecting...";
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       }
