@@ -6,6 +6,20 @@
 <script src="phonegap.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css">
+<style type="text/css">
+#resultsHolder{
+overflow-y: scroll;
+-webkit-overflow-scrolling: touch;
+}
+#playlistHolder{
+overflow-y: scroll;
+-webkit-overflow-scrolling: touch;
+}
+#calendarHolder{
+overflow-y: scroll;
+-webkit-overflow-scrolling: touch;
+}
+</style>
 <script type="text/javascript">
 var debugging=false;
 var retrying=false;
@@ -46,16 +60,20 @@ function retryTick(){
     }
   }
 function stateTick(){
-  if(debugging==false){return false;}
-
-  var theString="";
-  theString+="uiPlaying="+uiPlaying+"<br />";
-  theString+="mediaRunning="+mediaRunning+"<br />";
-  theString+="mediaStatusNum="+mediaStatusNum+"<br />";
-  theString+="interrupted="+interrupted+"<br />";
-  theString+="retrying="+retrying+"<br />";
-  theString+="retryAttempts="+retryAttempts;
-  document.getElementById("stateDiv").innerHTML=theString;
+  if(debugging==false){
+    document.getElementById("stateDiv").style.display="none";
+    }
+  else{
+    document.getElementById("stateDiv").style.display="block";
+    var theString="";
+    theString+="uiPlaying="+uiPlaying+"<br />";
+    theString+="mediaRunning="+mediaRunning+"<br />";
+    theString+="mediaStatusNum="+mediaStatusNum+"<br />";
+    theString+="interrupted="+interrupted+"<br />";
+    theString+="retrying="+retrying+"<br />";
+    theString+="retryAttempts="+retryAttempts;
+    document.getElementById("stateDiv").innerHTML=theString;
+    }
   }
 // -------------- events --------------------
 function mediumSelected(){
@@ -259,10 +277,10 @@ function init(){
   currentPage="listen";
   populateContainer();
   if(scrollAdded==false){
-    new ScrollFix(document.getElementById("playlistHolder"));
-    new ScrollFix(document.getElementById("calendarHolder"));
-    new ScrollFix(document.getElementById("resultsHolder"));
-    scrollAdded=true;
+    ////new ScrollFix(document.getElementById("playlistHolder"));
+    ////new ScrollFix(document.getElementById("calendarHolder"));
+    ////new ScrollFix(document.getElementById("resultsHolder"));
+    ////scrollAdded=true;
     }
 
   requestLoadPersistenceData();

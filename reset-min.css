@@ -19,18 +19,6 @@ src: url('akzidenzgroteskregular.ttf');
 font-family: akzibold;
 src: url('akzidenzgroteskbold.ttf');
 }
-#resultsHolder{
-overflow-y: scroll;
--webkit-overflow-scrolling: touch;
-}
-#playlistHolder{
-overflow-y: scroll;
--webkit-overflow-scrolling: touch;
-}
-#calendarHolder{
-overflow-y: scroll;
--webkit-overflow-scrolling: touch;
-}
 .loading{color:black; font-family:akzibold;}
 .playlistItem{color:black; font-family:akzibold; position:static; text-align:center;}
 #debugDiv{display:none; position:absolute; width:100%; top:70px; background-color:rgba(0,0,0,.6); color:white; font-family: akziregular; font-size:18px;}
