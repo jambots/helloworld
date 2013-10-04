@@ -8,24 +8,24 @@
 <link rel="stylesheet" type="text/css" href="reset-min.css">
 <style type="text/css">
 #resultsHolder{
-//-webkit-overflow-scrolling: touch;
+-webkit-overflow-scrolling: touch;
 overflow-y: scroll;
 zindex: 0;
 }
 #playlistHolder{
-//-webkit-overflow-scrolling: touch;
+-webkit-overflow-scrolling: touch;
 overflow-y: scroll;
 zindex: 0;
 }
 #calendarHolder{
-//-webkit-overflow-scrolling: touch;
+-webkit-overflow-scrolling: touch;
 overflow-y: scroll;
 zindex: 0;
 }
 * { -webkit-tap-highlight-color: rgba(0,0,0,0); } 
 </style>
 <script type="text/javascript">
-var debugging=true;
+var debugging=false;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -248,44 +248,10 @@ function savePersistenceData(){
 
 var dimensionInterval;
 
-var scrollAdded=false;
-
-var ScrollFix = function(elem) {
-// Variables to track inputs
-var startY, startTopScroll;
-
-elem = elem || document.querySelector(elem);
-
-// If there is no element, then do nothing
-if(!elem)
-return;
-
-// Handle the start of interactions
-elem.addEventListener('touchstart', function(event){
-startY = event.touches[0].pageY;
-startTopScroll = elem.scrollTop;
-
-if(startTopScroll <= 0)
-elem.scrollTop = 1;
-
-if(startTopScroll + elem.offsetHeight >= elem.scrollHeight)
-elem.scrollTop = elem.scrollHeight - elem.offsetHeight - 1;
-}, false);
-};
-
-
-
-
 function init(){
   //dbuga('init 0');
   currentPage="listen";
   populateContainer();
-  if(scrollAdded==false){
-    ////new ScrollFix(document.getElementById("playlistHolder"));
-    ////new ScrollFix(document.getElementById("calendarHolder"));
-    ////new ScrollFix(document.getElementById("resultsHolder"));
-    ////scrollAdded=true;
-    }
 
   requestLoadPersistenceData();
   //dbuga('persistenceData.quality='+persistenceObject.quality);
@@ -832,6 +798,7 @@ function touchMove(event){
     event.preventDefault();
     }
   if(lastTouchId.indexOf("page_")>-1){
+    dbuga("lastTouchId="+lastTouchId);
     event.preventDefault();
     }
   }
@@ -1123,7 +1090,7 @@ function handleTouchEvent(e){
 
 </script>
 </head>
-<body onload="init()" onmousedown="moused(event);" ongesturestart="gestureStart(event);" ongesturechange="gestureChange(event);"  ongestureend="gestureEnd(event);"  ontouchstart="touchStart(event);" ontouchmove="touchMove(event);" ontouchend="touchEnd(event);" ontouchcancel="touchCancel(event);">
+<body onload="init()" onmousedown="moused(event);" ontouchstart="touchStart(event);" ontouchmove="touchMove(event);" ontouchend="touchEnd(event);" ontouchcancel="touchCancel(event);">
 
 <div id="wrapper">
   <div id="container">
