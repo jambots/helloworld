@@ -14,32 +14,43 @@ var retryAttempts=0;
 var uiPlaying=false;
 var mediaRunning=false;
 var mediaStatusNum=0;
-var retryInterval;
 
 function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  mediaStatusNum=theStatus;
   dbuga('status '+statusArray[theStatus]);
   if(statusArray[theStatus]=='MEDIA_RUNNING'){
-    mediaRunning=true;
-    retrying=false;
-    retryAttempts=0;
-    interrupted=false;
-    getRecentSongs();
+    if(mediaStatusNum != 1){
+      dbuga("not really started");
+      }
+    else{
+      mediaRunning=true;
+      retrying=false;
+      retryAttempts=0;
+      interrupted=false;
+      getRecentSongs();
+      }
     }
   else{
     if((uiPlaying)&&(mediaRunning)){// was playing and running, so interrupted
       interrupted=true;
       retrying=true;
       myMedia.stop();
+      myMedia.release();
       document.getElementById('page_listen_content_djDiv').innerHTML="reconnecting...";
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       }
     mediaRunning=false;
     }
+  mediaStatusNum=theStatus;
   }
 
 
+function retryTick(){
+  if(retrying==true){
+    retryAttempts++;
+    myMedia.play();
+    }
+  }
 function stateTick(){
   if(retrying==true){
     retryAttempts++;
@@ -111,8 +122,6 @@ function connectMedia(){
   myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
   }
 /*
-  clearInterval(retryInterval);
-  retryInterval=setInterval('retryTick()', 5000);
 
   var isStreaming=false;
   if((theStatus==1)||(theStatus==2)){isStreaming=true;}
@@ -273,7 +282,9 @@ function init(){
   getFaqs();
   //dbuga('init completed');
   window.setTimeout('connectMedia()',500);
+  retryInterval=setInterval("retryTick()", 5000);
   }
+var retryInterval;
 var songs=[];
 function getRecentSongs(){
   //var feedUrl="http://www.radiok.org/";
@@ -302,7 +313,7 @@ function parseRecentSongs(theData){
     }
   }
 function updateNowPlaying(){
-  dbuga('updateNowPlaying()')
+  //dbuga('updateNowPlaying()')
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
   document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
   }
@@ -807,7 +818,8 @@ function touchEnd(event){
   handleTouchEvent(event);
   }
 function moused(e){
-  dbuga('moused '+ e.target.id);
+  //dbuga('moused '+ e.target.id);
+  if(e.target.id=="stateDiv"){dbug'');}
   //handleTouchEvent({"type":"touchstart", "touches":[{"pageX":e.clientX, "pageY":e.clientY, "target":e.target}]});
   }
 function buttonOn(thePage, theButton){
