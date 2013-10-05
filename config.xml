@@ -12,4 +12,5 @@
 <gap:platform name="android" />
 <preference name="fullscreen" value="true" />
 <gap:splash src="splash.png" />
+<icon src="icon.png" />
 </widget>
