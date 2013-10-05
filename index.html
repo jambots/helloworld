@@ -120,8 +120,7 @@ function stateTick(){
 function mediumSelected(){
   buttonOn("settings", "medium");
   buttonOff("settings", "higher");
-  persistenceObject.quality="low";
-  requestSavePersistenceData();
+  localStorage.setItem("quality", "low");
   mediaStack[0].stop();
   mediaStack[0].release();
   connectMedia();
@@ -132,8 +131,7 @@ function mediumSelected(){
 function highSelected(){
   buttonOff("settings", "medium");
   buttonOn("settings", "higher");
-  persistenceObject.quality="higher";
-  requestSavePersistenceData();
+  localStorage.setItem("higher");
   mediaStack[0].stop();
   mediaStack[0].release();
   connectMedia();
@@ -165,8 +163,12 @@ function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
 function connectMedia(){
-  var thisMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
+  var thisMedia = new Media(urlByQuality[localStorage.getItem("quality")], successCallback, errorCallback, statusCallback);
   mediaStack.unshift(thisMedia);
+  for (var m=1; m<mediaStack.length; m++){
+    mediaStack[m].stop();
+    mediaStack[m].release();
+    }
   }
 /*
       if(retrying==true){
@@ -210,49 +212,16 @@ function errorCallback(theError){
 
 
 var minuteInterval;
-var defaultPersistenceObject={"quality":"higher", "uiPlaying":false};
-var persistenceObject={"quality":"higher", "uiPlaying":false};
-function requestLoadPersistenceData(){
-  //dbuga('requestLoadPersistenceData()');
-  ////comQueue.push("action=loadPersistenceData");
-  }
-
-function loadPersistenceData(theData){
-  //dbuga('app called loadPersistenceData()');
-  if((theData == "")||(theData == "{}")){
-    //dbuga('<br>theData is empty so requestSavePersistenceData()');
-    requestSavePersistenceData();
-    }
-  else{
-    newPersistenceObject = eval('(' + theData + ')');
-    if(newPersistenceObject.hasOwnProperty('quality')){persistenceObject.quality=newPersistenceObject.quality;}
-    if(persistenceObject.quality=="low"){persistenceObject.quality="medium";}
-    if(persistenceObject.quality=="high"){persistenceObject.quality="higher";}
-    }
-  return true;
-  }
-
-function requestSavePersistenceData(){
-  //dbug4('requestSavePersistenceData()');
-  ////comQueue.push("action=savePersistenceData");
-  }
-function savePersistenceData(){
-  //dbug4('<br>app called savePersistenceData()');
-  json=JSON.stringify(persistenceObject);
-  //dbug('return json:'+json);
-  return json;
-  }
-
 var dimensionInterval;
 
 function init(){
   //dbuga('init 0');
   currentPage="listen";
   populateContainer();
-
-  requestLoadPersistenceData();
-  //dbuga('persistenceData.quality='+persistenceObject.quality);
-  buttonOn("settings", persistenceObject.quality);
+  if (localStorage.getItem("quality") === null) {
+    localStorage.setItem("quality", "higher");
+    }
+  buttonOn("settings", localStorage.getItem("quality"));
   buttonOn("footnav", "listen");
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
