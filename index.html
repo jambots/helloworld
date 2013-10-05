@@ -67,11 +67,17 @@ function releaseNullRetry(){
   window.setTimeout('nullRetry()',5000);
   }
 function nullRetry(){
+  dbuga("nullRetry(), reset myMedia");
   myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
-  //retrying=true;
+  window.setTimeout('startRetrying()',5000);
+  }
+function startRetrying(){
+  dbuga("startRetrying()");
+  retrying=true;
   }
 function retryTick(){
   if(retrying==true){
+    dbuga('retry - play()');
     retryAttempts++;
     myMedia.play();
     }
@@ -218,7 +224,7 @@ function successCallback(){
   dbuga('successCallback <br />');
   }
 function errorCallback(theError){
-  dbuga('errorCallback '+theError.code+' '+theError.message);
+  dbuga('errorCallback '+JSON.stringify(theError));
   //return false;
   }
 
