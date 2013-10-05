@@ -32,6 +32,7 @@ var retryAttempts=0;
 var uiPlaying=false;
 var mediaRunning=false;
 var mediaStatusNum=0;
+var mediaStack=[];
 function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
   dbuga('status '+statusArray[theStatus]);
@@ -58,17 +59,17 @@ function statusCallback(theStatus){
 
 function stopReleaseNullRetry(){
   dbuga("stopReleaseNullRetry()");
-  myMedia.stop();
+  mediaStack[0].stop();
   window.setTimeout('releaseNullRetry()',5000);
   }
 function releaseNullRetry(){
   dbuga("releaseNullRetry()");
-  myMedia.release();
+  mediaStack[0].release();
   window.setTimeout('nullRetry()',5000);
   }
 function nullRetry(){
-  dbuga("nullRetry(), reset myMedia");
-  myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
+  dbuga("nullRetry(), connectMedia()");
+  connectMedia();
   window.setTimeout('startRetrying()',5000);
   }
 function startRetrying(){
@@ -77,9 +78,11 @@ function startRetrying(){
   }
 function retryTick(){
   if(retrying==true){
-    dbuga('retry - play()');
-    retryAttempts++;
-    myMedia.play();
+    if(connection=="online"){
+      dbuga('retry - play()');
+      retryAttempts++;
+      mediaStack[0].play();
+      }
     }
   }
 var connection=-1;
@@ -110,7 +113,7 @@ function mediumSelected(){
   buttonOff("settings", "higher");
   persistenceObject.quality="low";
   requestSavePersistenceData();
-  myMedia.src=urlByQuality[persistenceObject.quality];
+  ////myMedia.src=urlByQuality[persistenceObject.quality];
   if(uiPlaying){
     stopMedia();
     playMedia();      
@@ -124,7 +127,7 @@ function highSelected(){
   buttonOn("settings", "higher");
   persistenceObject.quality="higher";
   requestSavePersistenceData();
-  myMedia.src=urlByQuality[persistenceObject.quality];
+////  myMedia.src=urlByQuality[persistenceObject.quality];
   if(uiPlaying){
     stopMedia();
     playMedia();      
@@ -157,8 +160,8 @@ function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
 function connectMedia(){
-  //dbuga('connectMedia()');
-  myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
+  var thisMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
+  mediaStack.unshift[thisMedia];
   }
 /*
 
@@ -1071,10 +1074,10 @@ function remoteControlPlay(){
   buttonOn("listen", "playpause");
   }
 function stopMedia(){
-  myMedia.stop();
+  mediaStack[0].stop();
   }
 function playMedia(){
-  myMedia.play();
+  mediaStack[0].play();
   }
 var lastTouchId="";
 function handleTouchEvent(e){
