@@ -25,7 +25,7 @@ zindex: 0;
 * { -webkit-tap-highlight-color: rgba(0,0,0,0); } 
 </style>
 <script type="text/javascript">
-var debugging=true;
+var debugging=false;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -44,7 +44,7 @@ function statusCallback(theStatus){
     getRecentSongs();
     }
   else{
-    if((uiPlaying)&&(mediaRunning)){// was playing and running, so interrupted
+    if((navigator.onLine ==false)&&(uiPlaying)&&(mediaRunning)){// is offline and was playing and running, so interrupted
       dbuga(" INT uiPlaying:"+uiPlaying+" mediaRunning:"+mediaRunning);
       //interrupted=true;
       //retrying=true;
