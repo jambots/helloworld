@@ -68,7 +68,7 @@ function releaseNullRetry(){
   }
 function nullRetry(){
   myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
-  retrying=true;
+  //retrying=true;
   }
 function retryTick(){
   if(retrying==true){
@@ -215,10 +215,10 @@ function connectMedia(){
 */
 
 function successCallback(){
-  //dbuga('successCallback <br />');
+  dbuga('successCallback <br />');
   }
 function errorCallback(theError){
-  //dbuga('errorCallback '+theError.code+' '+theError.message);
+  dbuga('errorCallback '+theError.code+' '+theError.message);
   //return false;
   }
 
@@ -811,7 +811,7 @@ function touchMove(event){
     event.preventDefault();
     }
   if(lastTouchId.indexOf("page_")>-1){
-    dbuga("lastTouchId="+lastTouchId);
+    //dbuga("lastTouchId="+lastTouchId);
     event.preventDefault();
     }
   }
@@ -1066,7 +1066,7 @@ function playMedia(){
   }
 var lastTouchId="";
 function handleTouchEvent(e){
-  dbuga("e.type="+e.type);
+  //dbuga("e.type="+e.type);
   if(e.type=="touchstart"){
     if(e.touches.length==3){dbug('');}
     px=e.touches[0].pageX-leftOffset;
