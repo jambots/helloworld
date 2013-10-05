@@ -78,11 +78,20 @@ function startRetrying(){
   }
 function retryTick(){
   if(retrying==true){
+    var message="";
+    retryAttempts++;
     if(navigator.onLine){
+      message="retrying...";
       dbuga('retry - play()');
-      retryAttempts++;
       mediaStack[0].play();
       }
+    else{
+      message="no connection.";
+      }
+    if(retryAttempts>2){
+      message="OMG. We're like totally not retrying...embarrassing. Like, try again in a bit k?  Radio K - Real College Radio.";
+      }
+    document.getElementById('page_listen_content_djDiv').innerHTML=message;
     }
   }
 //var connection=-1;
@@ -113,13 +122,11 @@ function mediumSelected(){
   buttonOff("settings", "higher");
   persistenceObject.quality="low";
   requestSavePersistenceData();
-  ////myMedia.src=urlByQuality[persistenceObject.quality];
+  mediaStack[0].stop();
+  mediaStack[0].release();
+  connectMedia();
   if(uiPlaying){
-    stopMedia();
-    playMedia();      
-    }
-  else{
-    stopMedia();
+    retrying=true;
     }
   }
 function highSelected(){
@@ -127,13 +134,11 @@ function highSelected(){
   buttonOn("settings", "higher");
   persistenceObject.quality="higher";
   requestSavePersistenceData();
-////  myMedia.src=urlByQuality[persistenceObject.quality];
+  mediaStack[0].stop();
+  mediaStack[0].release();
+  connectMedia();
   if(uiPlaying){
-    stopMedia();
-    playMedia();      
-    }
-  else{
-    stopMedia();
+    retrying=true;
     }
   }
 function togglePlaying(){
@@ -164,32 +169,6 @@ function connectMedia(){
   mediaStack.unshift(thisMedia);
   }
 /*
-
-  var isStreaming=false;
-  if((theStatus==1)||(theStatus==2)){isStreaming=true;}
-  mediaRunning=isStreaming;
-  var message="";
-  var update=false;
-  if(uiPlaying==true){ // only care if we're playing
-    if(isStreaming==true){
-      if(interrupted==true){
-        message="Resuming...";
-        }
-      else{
-        if(retrying==true){
-          message="Connected.";
-          retryAttempts=0;
-          }
-        else{
-          message="Connected.";
-          retryAttempts=0;
-          }
-        }   
-      update=true;
-      retrying=false;
-      interrupted=false;
-      }
-    else{ // isStreaming was false)
       if(retrying==true){
         retryAttempts++;
         if(retryAttempts>2){
@@ -217,16 +196,6 @@ function connectMedia(){
           retrying=false;
           interrupted=true;
           }
-        }
-      }
-    }// end of playing
-  //dbuga(' - '+message);
-  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
-  document.getElementById('page_listen_content_djDiv').innerHTML=message;
-  if(update==true){
-    getRecentSongs();
-    }
-  }
 */
 
 function successCallback(){
