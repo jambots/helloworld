@@ -77,6 +77,7 @@ function startRetrying(){
   retrying=true;
   }
 function retryTick(){
+  dbuga('retryTick()');
   if(retrying==true){
     var message="retrying...";
     retryAttempts++;
@@ -91,11 +92,9 @@ function retryTick(){
       }
     document.getElementById('page_listen_content_djDiv').innerHTML=message;
     }
+  dbuga('retryTick() completed');
   }
-//var connection=-1;
-//$(document).on('offline online', function (event) {
-//    connection=event.type;
-//});
+
 
 function stateTick(){
   if(debugging==false){
@@ -226,7 +225,7 @@ function init(){
   minuteTick();
   getFaqs();
   connectMedia();
-  retryInterval=setInterval("retryTick()", 2000);
+  retryInterval=window.setInterval("retryTick()", 2000);
   dbuga('init completed');
   }
 var retryInterval;
