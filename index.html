@@ -45,10 +45,10 @@ function statusCallback(theStatus){
   else{
     if((uiPlaying)&&(mediaRunning)){// was playing and running, so interrupted
       dbuga(" INT uiPlaying:"+uiPlaying+" mediaRunning:"+mediaRunning);
-      interrupted=true;
-      retrying=true;
-      window.setTimeout('stopAndRelease()',500);
-      document.getElementById('page_listen_content_djDiv').innerHTML="reconnecting...";
+      //interrupted=true;
+      //retrying=true;
+      window.setTimeout('stopReleaseNullRetry()',5000);
+      document.getElementById('page_listen_content_djDiv').innerHTML="interrupted...";
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       }
     mediaRunning=false;
@@ -56,11 +56,20 @@ function statusCallback(theStatus){
   mediaStatusNum=theStatus;
   }
 
-function stopAndRelease(){
+function stopReleaseNullRetry(){
+  dbuga("stopReleaseNullRetry()");
   myMedia.stop();
-  window.setTimeout('myMedia.release()',500);
+  window.setTimeout('releaseNullRetry()',5000);
   }
-
+function releaseNullRetry(){
+  dbuga("releaseNullRetry()");
+  myMedia.release();
+  window.setTimeout('nullRetry()',5000);
+  }
+function nullRetry(){
+  myMedia = new Media(urlByQuality[persistenceObject.quality], successCallback, errorCallback, statusCallback);
+  retrying=true;
+  }
 function retryTick(){
   if(retrying==true){
     retryAttempts++;
