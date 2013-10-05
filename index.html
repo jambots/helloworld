@@ -25,7 +25,7 @@ zindex: 0;
 * { -webkit-tap-highlight-color: rgba(0,0,0,0); } 
 </style>
 <script type="text/javascript">
-var debugging=false;
+var debugging=true;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -34,7 +34,7 @@ var mediaRunning=false;
 var mediaStatusNum=0;
 function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  //dbuga('status '+statusArray[theStatus]);
+  dbuga('status '+statusArray[theStatus]);
   if(statusArray[theStatus]=='MEDIA_RUNNING'){
     mediaRunning=true;
     retrying=false;
@@ -44,10 +44,10 @@ function statusCallback(theStatus){
     }
   else{
     if((uiPlaying)&&(mediaRunning)){// was playing and running, so interrupted
+      dbuga(" INT uiPlaying:"+uiPlaying+" mediaRunning:"+mediaRunning);
       interrupted=true;
       retrying=true;
-      //myMedia.stop();
-      //myMedia.release();
+      window.setTimeout('stopAndRelease()',500);
       document.getElementById('page_listen_content_djDiv').innerHTML="reconnecting...";
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       }
@@ -56,6 +56,10 @@ function statusCallback(theStatus){
   mediaStatusNum=theStatus;
   }
 
+function stopAndRelease(){
+  myMedia.stop();
+  window.setTimeout('myMedia.release()',500);
+  }
 
 function retryTick(){
   if(retrying==true){
