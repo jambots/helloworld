@@ -48,7 +48,7 @@ function statusCallback(theStatus){
       dbuga(" INT uiPlaying:"+uiPlaying+" mediaRunning:"+mediaRunning);
       //interrupted=true;
       //retrying=true;
-      window.setTimeout('stopReleaseNullRetry()',5000);
+      window.setTimeout('stopReleaseNullRetry()',500);
       document.getElementById('page_listen_content_djDiv').innerHTML="interrupted...";
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       }
@@ -60,17 +60,17 @@ function statusCallback(theStatus){
 function stopReleaseNullRetry(){
   dbuga("stopReleaseNullRetry()");
   mediaStack[0].stop();
-  window.setTimeout('releaseNullRetry()',5000);
+  window.setTimeout('releaseNullRetry()',500);
   }
 function releaseNullRetry(){
   dbuga("releaseNullRetry()");
   mediaStack[0].release();
-  window.setTimeout('nullRetry()',5000);
+  window.setTimeout('nullRetry()',500);
   }
 function nullRetry(){
   dbuga("nullRetry(), connectMedia()");
   connectMedia();
-  window.setTimeout('startRetrying()',5000);
+  window.setTimeout('startRetrying()',500);
   }
 function startRetrying(){
   dbuga("startRetrying()");
@@ -78,18 +78,16 @@ function startRetrying(){
   }
 function retryTick(){
   if(retrying==true){
-    var message="";
+    var message="retrying...";
     retryAttempts++;
+    if(retryAttempts>3){
+      message="OMG. We're like totally not retrying...embarrassing. Like, try again in a bit k?  Radio K - Real College Radio.";
+      }
     if(navigator.onLine){
-      message="retrying...";
-      dbuga('retry - play()');
       mediaStack[0].play();
       }
     else{
       message="no connection.";
-      }
-    if(retryAttempts>2){
-      message="OMG. We're like totally not retrying...embarrassing. Like, try again in a bit k?  Radio K - Real College Radio.";
       }
     document.getElementById('page_listen_content_djDiv').innerHTML=message;
     }
@@ -120,7 +118,7 @@ function stateTick(){
 function mediumSelected(){
   buttonOn("settings", "medium");
   buttonOff("settings", "higher");
-  localStorage.setItem("quality", "low");
+  localStorage.setItem("quality", "medium");
   mediaStack[0].stop();
   mediaStack[0].release();
   connectMedia();
@@ -131,7 +129,7 @@ function mediumSelected(){
 function highSelected(){
   buttonOff("settings", "medium");
   buttonOn("settings", "higher");
-  localStorage.setItem("higher");
+  localStorage.setItem("quality", "higher");
   mediaStack[0].stop();
   mediaStack[0].release();
   connectMedia();
@@ -229,7 +227,7 @@ function init(){
   getFaqs();
   //dbuga('init completed');
   window.setTimeout('connectMedia()',500);
-  retryInterval=setInterval("retryTick()", 5000);
+  retryInterval=setInterval("retryTick()", 2000);
   }
 var retryInterval;
 var songs=[];
