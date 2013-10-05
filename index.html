@@ -82,6 +82,11 @@ function retryTick(){
     myMedia.play();
     }
   }
+var connection=-1;
+$(document).on('offline online', function (event) {
+    connection=event.type;
+});
+
 function stateTick(){
   if(debugging==false){
     document.getElementById("stateDiv").style.display="none";
@@ -89,6 +94,7 @@ function stateTick(){
   else{
     document.getElementById("stateDiv").style.display="block";
     var theString="";
+    theString+="connection="+connection+"<br />";
     theString+="uiPlaying="+uiPlaying+"<br />";
     theString+="mediaRunning="+mediaRunning+"<br />";
     theString+="mediaStatusNum="+mediaStatusNum+"<br />";
@@ -771,7 +777,7 @@ var pages=[
 function dbuga(theString){
   if(debugging){
     document.getElementById('debugDiv').style.display="block";
-    document.getElementById('debugDiv').style.top="120px";
+    document.getElementById('debugDiv').style.top="140px";
     document.getElementById('debugDiv').innerHTML+=theString+"<br />";
     }
   else{
