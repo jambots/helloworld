@@ -77,7 +77,6 @@ function startRetrying(){
   retrying=true;
   }
 function retryTick(){
-  dbuga('retryTick()');
   if(retrying==true){
     var message="retrying...";
     retryAttempts++;
@@ -92,7 +91,6 @@ function retryTick(){
       }
     document.getElementById('page_listen_content_djDiv').innerHTML=message;
     }
-  dbuga('retryTick() completed');
   }
 
 
@@ -103,11 +101,11 @@ function stateTick(){
   else{
     document.getElementById("stateDiv").style.display="block";
     var theString="";
+    theString+="quality="+localStorage.getItem("quality")+"<br />";
     theString+="navigator.onLine="+navigator.onLine+"<br />";
     theString+="uiPlaying="+uiPlaying+"<br />";
     theString+="mediaRunning="+mediaRunning+"<br />";
     theString+="mediaStatusNum="+mediaStatusNum+"<br />";
-    theString+="interrupted="+interrupted+"<br />";
     theString+="retrying="+retrying+"<br />";
     theString+="retryAttempts="+retryAttempts;
     document.getElementById("stateDiv").innerHTML=theString;
