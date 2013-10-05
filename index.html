@@ -78,17 +78,17 @@ function startRetrying(){
   }
 function retryTick(){
   if(retrying==true){
-    if(connection=="online"){
+    if(navigator.onLine){
       dbuga('retry - play()');
       retryAttempts++;
       mediaStack[0].play();
       }
     }
   }
-var connection=-1;
-$(document).on('offline online', function (event) {
-    connection=event.type;
-});
+//var connection=-1;
+//$(document).on('offline online', function (event) {
+//    connection=event.type;
+//});
 
 function stateTick(){
   if(debugging==false){
@@ -97,7 +97,7 @@ function stateTick(){
   else{
     document.getElementById("stateDiv").style.display="block";
     var theString="";
-    theString+="connection="+connection+"<br />";
+    theString+="navigator.onLine="+navigator.onLine+"<br />";
     theString+="uiPlaying="+uiPlaying+"<br />";
     theString+="mediaRunning="+mediaRunning+"<br />";
     theString+="mediaStatusNum="+mediaStatusNum+"<br />";
