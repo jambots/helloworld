@@ -8,7 +8,7 @@
     <!-- versionCode is optional and Android only -->
 
     <name>RadioK Streaming</name>
-
+    <description>Radio K, the award-winning radio station of the University of Minnesota, is nationally recognized as one of the best student-run college radio stations in the country, playing an eclectic variety of independent music both old and new. Radio K educates students, breaks ground in musical programming, and provides cutting-edge cultural coverage through our specialty shows, web content and Culture Queue.</description>
 <gap:platform name="android" />
 <preference name="fullscreen" value="true" />
 <gap:splash src="splash.png" />
