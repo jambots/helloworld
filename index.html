@@ -305,8 +305,13 @@ function updatePlaylist(){
   document.getElementById('scroller').innerHTML=''+htmlBlock+''; 
   document.getElementById('playlistHolder').style.width=grid*48+'px'; 
   document.getElementById('playlistHolder').style.height=grid*51+'px'; 
+  playlistScrollerTimeout=window.setTimeout("refreshPlaylistHolderScroll()", 100);
   }
 
+var playlistScrollerTimeout;
+function refreshPlaylistHolderScroll(){
+  playlistHolderScroll.refresh();
+  }
 function populateCalendar(){
   //dbuga('populateCalendar() '+calendar.length);
 
