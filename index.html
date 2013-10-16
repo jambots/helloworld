@@ -447,7 +447,7 @@ function selectPage(selectedPage){
 
 function showPage(thePage){
   var pageStyle=document.getElementById('page_'+thePage).style;  
-  pageStyle.display="block";
+  pageStyle.left="0px";
   window.setTimeout('currentOpacity1()', 10);
   }
 function currentOpacity1(){
@@ -463,7 +463,7 @@ function hidePage(thePage){
 function hideTick(){
   for(var p=1; p<pageArray.length; p++){
     if(pageArray[p]!=currentPage){
-      document.getElementById('page_'+pageArray[p]).style.display="none";  
+      document.getElementById('page_'+pageArray[p]).style.left="1000px";  
       }
     }
   }
