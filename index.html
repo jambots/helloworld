@@ -14,10 +14,11 @@ overflow-y: scroll;
 zindex: 0;
 }
 #playlistHolder{
--webkit-overflow-scrolling: touch;
-overflow-y: scroll;
-position:absolute;
-z-index: 1;
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
 }
 #calendarHolder{
 -webkit-overflow-scrolling: touch;
@@ -304,7 +305,7 @@ function updatePlaylist(){
   document.getElementById('playlistHolder').innerHTML=htmlBlock; 
   document.getElementById('playlistHolder').style.width=grid*48+'px'; 
   document.getElementById('playlistHolder').style.height=grid*51+'px'; 
-  playlistHolderScroll=new iScroll('resultsHolder');
+  playlistHolderScroll=new iScroll('playlistHolder');
   }
 function populateCalendar(){
   //dbuga('populateCalendar() '+calendar.length);
@@ -692,7 +693,7 @@ var pages=[
     {"name":"refresh", "top":0, "left":36, "height":7, "width":12},
   ],
   "contents":[
-    {"name":"playlist", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="playlistHolder" style="width:100%; height:100%; overflow:auto; background-color:white;"></div>'}
+    {"name":"playlist", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="playlistHolder"></div>'}
   ]
 },
 {"name":"calendar", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
