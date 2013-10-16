@@ -1051,10 +1051,10 @@ function handleTouchEvent(e){
       }
     }
   }
-
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 </script>
 </head>
-<body onload="init()" onmousedown="moused(event);" ontouchstart="touchStart(event);" ontouchmove="touchMove(event);" ontouchend="touchEnd(event);" ontouchcancel="touchCancel(event);">
+<body onload="init()" onmousedown="moused(event);" ontouchstart="touchStart(event);" ontouchcancel="touchCancel(event);">
 
 <div id="wrapper">
   <div id="container">
