@@ -7,7 +7,7 @@
 
     <!-- versionCode is optional and Android only -->
 
-    <name>RadioK Streaming</name>
+    <name>Radio K Streaming</name>
     <description>Radio K, the award-winning radio station of the University of Minnesota.</description>
 <gap:platform name="android" />
 <preference name="fullscreen" value="true" />
