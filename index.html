@@ -569,6 +569,7 @@ function populateContainer(){
   clearInterval(dimensionInterval);
   dimensionInterval=setInterval('dimensionTick()', 1000);
   selectCurrentPage();
+  resultsHolderScroll=new iScroll('resultsHolder');
   playlistHolderScroll=new iScroll('playlistHolder');
   calendarHolderScroll=new iScroll('calendarHolder');
   }
