@@ -302,7 +302,7 @@ function updatePlaylist(){
     htmlBlock+='</div>';
    }
 
-  document.getElementById('playlistHolder').innerHTML='<div id="playlistScroller">'+htmlBlock+'</div>'; 
+  document.getElementById('scroller').innerHTML=''+htmlBlock+''; 
   document.getElementById('playlistHolder').style.width=grid*48+'px'; 
   document.getElementById('playlistHolder').style.height=grid*51+'px'; 
   }
@@ -694,7 +694,7 @@ var pages=[
     {"name":"refresh", "top":0, "left":36, "height":7, "width":12},
   ],
   "contents":[
-    {"name":"playlist", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="playlistHolder"></div>'}
+    {"name":"playlist", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="playlistHolder"><div id="scroller"></div></div>'}
   ]
 },
 {"name":"calendar", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
