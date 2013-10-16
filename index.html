@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script src="phonegap.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+<script type="text/javascript" src="iscroll-lite.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css">
 <style type="text/css">
 #resultsHolder{
@@ -15,7 +16,8 @@ zindex: 0;
 #playlistHolder{
 -webkit-overflow-scrolling: touch;
 overflow-y: scroll;
-zindex: 0;
+position:absolute;
+z-index: 1;
 }
 #calendarHolder{
 -webkit-overflow-scrolling: touch;
@@ -302,7 +304,7 @@ function updatePlaylist(){
   document.getElementById('playlistHolder').innerHTML=htmlBlock; 
   document.getElementById('playlistHolder').style.width=grid*48+'px'; 
   document.getElementById('playlistHolder').style.height=grid*51+'px'; 
-
+  playlistHolderScroll=new iScroll('resultsHolder');
   }
 function populateCalendar(){
   //dbuga('populateCalendar() '+calendar.length);
@@ -835,7 +837,8 @@ function parseItunesResults(theData){
   document.getElementById('resultsHolder').style.width=grid*48+'px'; 
   document.getElementById('resultsHolder').style.height=grid*51+'px'; 
   }
-
+var resultsHolderScroll;
+var playlistHolderScroll;
 
 function handleButton(pageName, buttonName){
   //dbug('handleButton('+pageName+', '+buttonName+')');
