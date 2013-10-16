@@ -305,7 +305,7 @@ function updatePlaylist(){
   document.getElementById('playlistHolder').innerHTML='<div id="playlistScroller">'+htmlBlock+'</div>'; 
   document.getElementById('playlistHolder').style.width=grid*48+'px'; 
   document.getElementById('playlistHolder').style.height=grid*51+'px'; 
-  playlistHolderScroll=new iScroll('playlistHolder');
+  setTimeout( function(){playlistHolderScroll.refresh();} , 100 ) ;
   }
 function populateCalendar(){
   //dbuga('populateCalendar() '+calendar.length);
@@ -554,6 +554,7 @@ function populateContainer(){
   clearInterval(dimensionInterval);
   dimensionInterval=setInterval('dimensionTick()', 1000);
   selectCurrentPage();
+  playlistHolderScroll=new iScroll('playlistHolder');
   }
 function populateFaqs(){
   var htmlString="";
