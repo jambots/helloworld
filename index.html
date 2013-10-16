@@ -9,9 +9,11 @@
 <link rel="stylesheet" type="text/css" href="reset-min.css">
 <style type="text/css">
 #resultsHolder{
--webkit-overflow-scrolling: touch;
-overflow-y: scroll;
-zindex: 0;
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
 }
 #playlistHolder{
   position:absolute;
@@ -21,9 +23,11 @@ zindex: 0;
   overflow:auto;
 }
 #calendarHolder{
--webkit-overflow-scrolling: touch;
-overflow-y: scroll;
-zindex: 0;
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
 }
 * { -webkit-tap-highlight-color: rgba(0,0,0,0); } 
 </style>
@@ -329,10 +333,16 @@ function populateCalendar(){
     htmlBlock+='</div>';
     }
 
-  document.getElementById('calendarHolder').innerHTML=htmlBlock; 
+  document.getElementById('calendarScroller').innerHTML=htmlBlock; 
   document.getElementById('calendarHolder').style.width=grid*48+'px'; 
   document.getElementById('calendarHolder').style.height=grid*51+'px'; 
+  calendarScrollerTimeout=window.setTimeout("refreshCalendarHolderScroll()", 100);
   }
+var calendarScrollerTimeout;
+function refreshCalendarHolderScroll(){
+  calendarHolderScroll.refresh();
+  }
+
 function getFaqs(){
   faqs=[];
   var feedUrl="http://www.radiok.org/app-faq/";
@@ -560,6 +570,7 @@ function populateContainer(){
   dimensionInterval=setInterval('dimensionTick()', 1000);
   selectCurrentPage();
   playlistHolderScroll=new iScroll('playlistHolder');
+  calendarHolderScroll=new iScroll('calendarHolder');
   }
 function populateFaqs(){
   var htmlString="";
@@ -672,7 +683,7 @@ var pages=[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
   ],
   "contents":[
-    {"name":"results", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="resultsHolder" style="width:100%; height:100%; overflow:auto; background-color:white;"></div>'}
+    {"name":"results", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="resultsHolder"><div id="resultsScroller"></div></div>'}
   ]
 },
 {"name":"settings", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
@@ -707,7 +718,7 @@ var pages=[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
   ],
   "contents":[
-    {"name":"calendar", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="calendarHolder" style="width:100%; height:100%; overflow:auto; background-color:white;"></div>'}
+    {"name":"calendar", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="calendarHolder"><div id="calendarScroller"></div></div>'}
   ]
 },
 {"name":"faqs", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
@@ -792,7 +803,7 @@ function shop(artist, album, song){
   selectPage("shop");
   var artistAlbumSong=artist+" "+album+" "+song;
   var terms=artistAlbumSong.replace(/ /g, "+");
-  document.getElementById('resultsHolder').innerHTML="searching: "+artist+"<br>"+album;
+  document.getElementById('resultsScroller').innerHTML="searching: "+artist+"<br>"+album;
   var feedUrl="https://itunes.apple.com/search?limit=20&term="+terms;
   $.ajax({
     url: feedUrl,
@@ -840,11 +851,19 @@ function parseItunesResults(theData){
   else{
     htmlBlock="Sorry, no items found.";
     }
-  document.getElementById('resultsHolder').innerHTML=htmlBlock;
+  document.getElementById('resultsScroller').innerHTML=htmlBlock;
   document.getElementById('resultsHolder').style.width=grid*48+'px'; 
   document.getElementById('resultsHolder').style.height=grid*51+'px'; 
+  resultsScrollerTimeout=window.setTimeout("refreshResultsHolderScroll()", 100);
   }
+
+var resultsScrollerTimeout;
+function refreshResultsHolderScroll(){
+  resultsHolderScroll.refresh();
+  }
+
 var resultsHolderScroll;
+var calendarHolderScroll;
 var playlistHolderScroll;
 
 function handleButton(pageName, buttonName){
