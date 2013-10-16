@@ -302,7 +302,7 @@ function updatePlaylist(){
     htmlBlock+='</div>';
    }
 
-  document.getElementById('playlistHolder').innerHTML=htmlBlock; 
+  document.getElementById('playlistHolder').innerHTML='<div id="playlistScroller">'+htmlBlock+'</div>'; 
   document.getElementById('playlistHolder').style.width=grid*48+'px'; 
   document.getElementById('playlistHolder').style.height=grid*51+'px'; 
   playlistHolderScroll=new iScroll('playlistHolder');
