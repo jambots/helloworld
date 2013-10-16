@@ -11,6 +11,7 @@
     <description>Radio K, the award-winning radio station of the University of Minnesota.</description>
 <gap:platform name="android" />
 <preference name="fullscreen" value="true" />
+<preference name="orientation" value="portrait" />
 <gap:splash src="splash.png" />
 <icon src="icon.png" />
 </widget>
