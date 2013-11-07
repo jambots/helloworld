@@ -4,7 +4,7 @@
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script src="phonegap.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="iscroll-lite.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css">
 <style type="text/css">
@@ -281,7 +281,7 @@ function dateTimeToTime(theDateTime){
   return textTime;
   }
 function updatePlaylist(){
-  //dbuga('updatePlaylist()');
+  dbuga('updatePlaylist()');
   var songKeys=Object.keys(recentSongs);
   songKeys.sort();
   songKeys.reverse();
@@ -449,7 +449,7 @@ function selectCurrentPage(){
   selectPage(currentPage);
   }
 function selectPage(selectedPage){
-  //dbuga(selectedPage);
+  dbuga(selectedPage);
   currentPage=selectedPage;
   for(var p=0; p<pageArray.length; p++){
     if(pageArray[p]==selectedPage){showPage(pageArray[p]);}
