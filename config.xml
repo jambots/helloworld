@@ -13,5 +13,6 @@
 <preference name="fullscreen" value="true" />
 <preference name="orientation" value="portrait" />
 <gap:splash src="splash.png" />
+<access origin="*" />
 <icon src="icon.png" />
 </widget>
