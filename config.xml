@@ -14,5 +14,7 @@
 <preference name="orientation" value="portrait" />
 <gap:splash src="splash.png" />
 <access origin="*" />
+<feature name="http://api.phonegap.com/1.0/media"/>
+<feature name="http://api.phonegap.com/1.0/network"/>
 <icon src="icon.png" />
 </widget>
