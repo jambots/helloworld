@@ -4,6 +4,7 @@
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script src="phonegap.js"></script>
+<script src="childbrowser.js"></script>
 <script type="text/javascript" src="jquerymin.js"></script>
 <script type="text/javascript" src="iscroll-lite.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css">
@@ -989,7 +990,8 @@ function handleButton(pageName, buttonName){
     if(buttonName=="tweet"){
       buttonOn("request", "tweet");
       window.setTimeout('buttonOff("request", "tweet")', navDelay*2);
-      window.location='https://twitter.com/intent/tweet?source=webclient&text=%40RadioK+%23Request';
+      window.plugins.childBrowser.openExternal('https://twitter.com/intent/tweet?source=webclient&text=%40RadioK+%23Request');
+      //window.location='https://twitter.com/intent/tweet?source=webclient&text=%40RadioK+%23Request';
       }
     }
   if(pageName=="playlist"){

@@ -17,4 +17,5 @@
 <feature name="http://api.phonegap.com/1.0/media"/>
 <feature name="http://api.phonegap.com/1.0/network"/>
 <icon src="icon.png" />
+<gap:plugin name="com.phonegap.plugins.childbrowser" />
 </widget>
