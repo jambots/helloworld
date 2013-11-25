@@ -33,7 +33,7 @@
 * { -webkit-tap-highlight-color: rgba(0,0,0,0); } 
 </style>
 <script type="text/javascript">
-var debugging=true;
+var debugging=false;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -351,7 +351,7 @@ function populateCalendar(){
       performersFixed+=part; 
       }
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  ''+eventData.performers;
+    htmlBlock+=  ''+performersFixed;
     htmlBlock+=  '<br />'+eventData.venue+'';
     htmlBlock+=  ' &mdash; '+eventData.date;
     htmlBlock+=  '<br /><span style="font-family:akziregular;">'+eventData.time+' '+ eventData.age +'</span>';
@@ -429,7 +429,7 @@ var calendar=[];
 function getCalendar(){
   calendar=[];
   var feedUrl="http://www.radiok.org/events/";
-  //dbuga('getCalendar()');
+  dbuga('getCalendar()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // <=== new bit
