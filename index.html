@@ -33,7 +33,7 @@
 * { -webkit-tap-highlight-color: rgba(0,0,0,0); } 
 </style>
 <script type="text/javascript">
-var debugging=false;
+var debugging=true;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -43,7 +43,7 @@ var mediaStatusNum=0;
 var mediaStack=[];
 function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  dbuga('status '+statusArray[theStatus]);
+  //dbuga('status '+statusArray[theStatus]);
   if(statusArray[theStatus]=='MEDIA_RUNNING'){
     mediaRunning=true;
     retrying=false;
@@ -53,7 +53,7 @@ function statusCallback(theStatus){
     }
   else{
     if((navigator.onLine ==false)&&(uiPlaying)&&(mediaRunning)){// is offline and was playing and running, so interrupted
-      dbuga(" INT uiPlaying:"+uiPlaying+" mediaRunning:"+mediaRunning);
+      //dbuga(" INT uiPlaying:"+uiPlaying+" mediaRunning:"+mediaRunning);
       //interrupted=true;
       //retrying=true;
       window.setTimeout('stopReleaseNullRetry()',500);
@@ -66,22 +66,22 @@ function statusCallback(theStatus){
   }
 
 function stopReleaseNullRetry(){
-  dbuga("stopReleaseNullRetry()");
+  //dbuga("stopReleaseNullRetry()");
   mediaStack[0].stop();
   window.setTimeout('releaseNullRetry()',500);
   }
 function releaseNullRetry(){
-  dbuga("releaseNullRetry()");
+  //dbuga("releaseNullRetry()");
   mediaStack[0].release();
   window.setTimeout('nullRetry()',500);
   }
 function nullRetry(){
-  dbuga("nullRetry(), connectMedia()");
+  //dbuga("nullRetry(), connectMedia()");
   connectMedia();
   window.setTimeout('startRetrying()',500);
   }
 function startRetrying(){
-  dbuga("startRetrying()");
+  //dbuga("startRetrying()");
   retrying=true;
   }
 function retryTick(){
@@ -204,10 +204,10 @@ function connectMedia(){
 */
 
 function successCallback(){
-  dbuga('successCallback <br />');
+  //dbuga('successCallback <br />');
   }
 function errorCallback(theError){
-  dbuga('errorCallback '+JSON.stringify(theError));
+  //dbuga('errorCallback '+JSON.stringify(theError));
   //return false;
   }
 
@@ -243,14 +243,14 @@ window.plugins.childBrowser.onOpenExternal = function () {
   getFaqs();
   connectMedia();
   retryInterval=window.setInterval("retryTick()", 2000);
-  dbuga('init completed');
+  //dbuga('init completed');
   }
 var retryInterval;
 var songs=[];
 function getRecentSongs(){
   //var feedUrl="http://www.radiok.org/";
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_songs";
-  dbug('getRecentSongs()');
+  //dbug('getRecentSongs()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // <=== new bit
@@ -261,7 +261,7 @@ function getRecentSongs(){
 var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
 var recentSongs={};
 function parseRecentSongs(theData){
-  dbuga("parseRecentSongs "+theData);
+  //dbuga("parseRecentSongs "+theData);
   recentSongs=JSON.parse(theData);
   var songKeys=Object.keys(recentSongs);
   songKeys.sort();
@@ -274,7 +274,7 @@ function parseRecentSongs(theData){
     }
   }
 function updateNowPlaying(){
-  dbuga('updateNowPlaying()')
+  //dbuga('updateNowPlaying()')
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
   document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
   }
@@ -293,7 +293,7 @@ function dateTimeToTime(theDateTime){
   return textTime;
   }
 function updatePlaylist(){
-  dbuga('updatePlaylist()');
+  //dbuga('updatePlaylist()');
   var songKeys=Object.keys(recentSongs);
   songKeys.sort();
   songKeys.reverse();
@@ -358,7 +358,7 @@ function refreshCalendarHolderScroll(){
 function getFaqs(){
   faqs=[];
   var feedUrl="http://www.radiok.org/app-faq/";
-  dbuga('getFaqs()');
+  //dbuga('getFaqs()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // <=== new bit
@@ -379,7 +379,7 @@ var faqs=[
 ];
 function parseFaqs(theScrape){
   var faqBlocks=theScrape.split('<div class="faq_item">');
-  dbuga('parseFaqs faqBlocks.length=' +faqBlocks.length);
+  //dbuga('parseFaqs faqBlocks.length=' +faqBlocks.length);
   if(faqBlocks.length>1){
     faqs=[];
     for (var s=1; s<faqBlocks.length; s++){
@@ -431,7 +431,7 @@ function parseCalendar(theScrape){
   var tableContents=tableSplit[0];
   
   var trBlocks=tableContents.split('<tr valign="top">');
-  dbuga('parseCalendar trBlocks.length=' +trBlocks.length);
+  //dbuga('parseCalendar trBlocks.length=' +trBlocks.length);
   if(trBlocks.length>2){
     for (var tr=2; tr<trBlocks.length; tr++){
       var trBlock=trBlocks[tr];
@@ -473,7 +473,7 @@ function selectCurrentPage(){
   selectPage(currentPage);
   }
 function selectPage(selectedPage){
-  dbuga(selectedPage);
+  //dbuga(selectedPage);
   currentPage=selectedPage;
   for(var p=0; p<pageArray.length; p++){
     if(pageArray[p]==selectedPage){showPage(pageArray[p]);}
@@ -891,7 +891,7 @@ var resultsHolderScroll;
 var calendarHolderScroll;
 var playlistHolderScroll;
 function remoteLink(theUrl){
-  //window.plugins.childBrowser.openExternal(theUrl);
+  window.plugins.childBrowser.openExternal(theUrl);
   }
 function handleButton(pageName, buttonName){
   //dbug('handleButton('+pageName+', '+buttonName+')');
