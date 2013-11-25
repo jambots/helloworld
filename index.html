@@ -218,6 +218,17 @@ var minuteInterval;
 var dimensionInterval;
 
 function init(){
+
+window.plugins.childBrowser.onClose = function () {
+    alert('childBrowser has closed');
+};
+window.plugins.childBrowser.onLocationChange = function (url) {
+    alert('childBrowser has loaded ' + url);
+};
+window.plugins.childBrowser.onOpenExternal = function () {
+    alert('opening Mobile Safari');
+};
+
   //dbuga('init 0');
   currentPage="listen";
   populateContainer();
