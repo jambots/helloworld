@@ -33,7 +33,7 @@
 * { -webkit-tap-highlight-color: rgba(0,0,0,0); } 
 </style>
 <script type="text/javascript">
-var debugging=true;
+var debugging=false;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -337,6 +337,19 @@ function populateCalendar(){
 
   for(var e=0; e<calendar.length; e++){
     var eventData=calendar[e];
+    var performersText=eventData.performers;
+    var quoteParts=performersText.split('"');
+    var performersFixed=quoteParts[0];
+    for (var q=1; q<quoteParts.length; q++){
+      performersFixed+='"';
+      var prevPart=quoteParts[q-1];
+      var part=quoteParts[q];
+      if(prevPart.indexOf('href=')>-1){
+        part="javascript:remoteLink('"+part+"');";
+        }
+      performersFixed+=part; 
+      //dbuga(part);
+      }
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  ''+eventData.performers;
     htmlBlock+=  '<br />'+eventData.venue+'';
