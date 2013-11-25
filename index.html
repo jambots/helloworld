@@ -393,7 +393,19 @@ function parseFaqs(theScrape){
       var contentTemp=contentTempParts[1];
       var contentParts=contentTemp.split('</p></div>');
       var contentText=contentParts[0];
-      var thisEntry={"q":headingText, "a":contentText};
+      var quoteParts=contentText.split('"');
+      var contentFixed=quoteParts[0];
+      for (var q=1; q<quoteParts.length; q++){
+        contentFixed+='"';
+        var prevPart=quoteParts[q-1];
+        var part=quoteParts[q];
+        if(prevPart.indexOf('href=')>-1){
+          part="javascript:remoteLink('"+part+"');";
+          }
+        contentFixed+=part; 
+        dbuga(part);
+        }
+      var thisEntry={"q":headingText, "a":contentFixed};
       faqs.push(thisEntry);
       //dbuga('<h2>'+headingText+'</h2><p>'+contentText+'</p>');
       }
