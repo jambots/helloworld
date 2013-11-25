@@ -33,7 +33,7 @@
 * { -webkit-tap-highlight-color: rgba(0,0,0,0); } 
 </style>
 <script type="text/javascript">
-var debugging=false;
+var debugging=true;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -329,7 +329,7 @@ function refreshPlaylistHolderScroll(){
   playlistHolderScroll.refresh();
   }
 function populateCalendar(){
-  //dbuga('populateCalendar() '+calendar.length);
+  dbuga('populateCalendar() '+calendar.length);
 
   var gradStyle="background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0%, #F2F2F2), color-stop(2%, #F2F2F2), color-stop(3%, #EDEDED), color-stop(50%, #fff), color-stop(100%, #fff));";
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
@@ -345,10 +345,10 @@ function populateCalendar(){
       var prevPart=quoteParts[q-1];
       var part=quoteParts[q];
       if(prevPart.indexOf('href=')>-1){
+        dbuga(part);
         part="javascript:remoteLink('"+part+"');";
         }
       performersFixed+=part; 
-      //dbuga(part);
       }
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  ''+eventData.performers;
@@ -416,7 +416,7 @@ function parseFaqs(theScrape){
           part="javascript:remoteLink('"+part+"');";
           }
         contentFixed+=part; 
-        dbuga(part);
+        //dbuga(part);
         }
       var thisEntry={"q":headingText, "a":contentFixed};
       faqs.push(thisEntry);
