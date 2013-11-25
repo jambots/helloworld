@@ -218,7 +218,7 @@ var minuteInterval;
 var dimensionInterval;
 
 function init(){
-
+/*
 window.plugins.childBrowser.onClose = function () {
     alert('childBrowser has closed');
 };
@@ -228,7 +228,7 @@ window.plugins.childBrowser.onLocationChange = function (url) {
 window.plugins.childBrowser.onOpenExternal = function () {
     alert('opening Mobile Safari');
 };
-
+*/
   //dbuga('init 0');
   currentPage="listen";
   populateContainer();
@@ -368,7 +368,7 @@ function getFaqs(){
   }
 var faqs=[
   {"q":"What is Radio K?", "a":"Radio K, the award-winning radio station of the University of Minnesota, is nationally recognized as one of the best student-run college radio stations in the country, playing an eclectic variety of independent music both old and new.<br /><br />Radio K educates students, breaks ground in musical programming, and provides cutting-edge cultural coverage through our specialty shows, web content and Culture Queue."},
-  {"q":"How can I contact Radio K?", "a":"Email: <a href=\"mailto:radiok@umn.edu\">radiok@umn.edu</a><br /><br />Phone: <a href=\"tel:+16126253500\">612-625-3500</a><br /><br />Web: <a href=\"http://www.radiok.org/\">www.radiok.org</a><br /><br />Mobile:<br /><a href=\"http://twitter.com/radiok\"><img src=\"social/twitter.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"https://www.facebook.com/20658369592\"><img src=\"social/facebook.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"http://www.youtube.com/user/RadioK770?feature=watch\"><img src=\"social/youtube.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"https://plus.google.com/u/0/106019319997650127214/about\"><img src=\"social/googleplus.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"http://www.radiok.org/blogs/new/tag/track%20of%20the%20day\"><img src=\"social/rss.png\" width=\"socialSize\" height=\"socialSize\" /></a>"},
+  {"q":"How can I contact Radio K?", "a":"Email: <a href=\"javascript:remoteLink('mailto:radiok@umn.edu);\">radiok@umn.edu</a><br /><br />Phone: <a href=\"tel:+16126253500\">612-625-3500</a><br /><br />Web: <a href=\"http://www.radiok.org/\">www.radiok.org</a><br /><br />Mobile:<br /><a href=\"http://twitter.com/radiok\"><img src=\"social/twitter.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"https://www.facebook.com/20658369592\"><img src=\"social/facebook.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"http://www.youtube.com/user/RadioK770?feature=watch\"><img src=\"social/youtube.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"https://plus.google.com/u/0/106019319997650127214/about\"><img src=\"social/googleplus.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"http://www.radiok.org/blogs/new/tag/track%20of%20the%20day\"><img src=\"social/rss.png\" width=\"socialSize\" height=\"socialSize\" /></a>"},
   {"q":"How can I keep Radio K playing music?","a":"You can keep your already rad support going by <a href=\"http://www.radiok.org/donate/\">donating</a> to the station and becoming a member. And, we like to keep it chill so donating literally any amount makes you a member. Got a spare $10? Throw it our way and we can keep the CDs spinning."},
   {"q":"How do I get my band's music on Radio K?","a":"Head over to <a href=\"http://www.radiok.org/about/contact-information/music-submissions/\">RadioK.org</a>"},
   {"q":"How can I download the Track of the Day?","a":"Radio K\'s Track of the Day can be found <a href=\"http://www.radiok.org/blogs/new/tag/track%20of%20the%20day\">here</a>."},
@@ -855,9 +855,9 @@ function parseItunesResults(theData){
       var result=results[r];
       //dbuga(result.artistName+" "+result.collectionName);
       htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-      htmlBlock+=  '<a href="'+result.collectionViewUrl+'"><img src="'+result.artworkUrl100+'" style="'+imgStyle+'" /></a>';
+      htmlBlock+=  '<a href="javascript:remoteLink(\''+result.collectionViewUrl+'\'); return false;"><img src="'+result.artworkUrl100+'" style="'+imgStyle+'" /></a>';
       htmlBlock+=  '<br /><span style="font-family:akziregular;">'+result.artistName+'</span>';
-      htmlBlock+=  '<br /><a href="'+result.collectionViewUrl+'"><span style="">'+result.collectionName+'</span></a>';
+      htmlBlock+=  '<br /><a href="javascript:remoteLink(\''+result.collectionViewUrl+'\'); return false;"><span style="">'+result.collectionName+'</span></a>';
       htmlBlock+='</div>';
       }
     }
@@ -878,7 +878,9 @@ function refreshResultsHolderScroll(){
 var resultsHolderScroll;
 var calendarHolderScroll;
 var playlistHolderScroll;
-
+function remoteLink(theUrl){
+  window.plugins.childBrowser.openExternal(theUrl);
+  }
 function handleButton(pageName, buttonName){
   //dbug('handleButton('+pageName+', '+buttonName+')');
   if(pageName=="footnav"){
@@ -895,7 +897,7 @@ function handleButton(pageName, buttonName){
     if(buttonName=="donate"){
       buttonOn("footnav", "donate");
       window.setTimeout('buttonOff("footnav", "donate")', navDelay*2);
-      window.location.href="http://www.radiok.org/donate/";
+      window.plugins.childBrowser.openExternal('http://www.radiok.org/donate/');
       }
     }
   if(pageName=="listen"){
@@ -991,18 +993,17 @@ function handleButton(pageName, buttonName){
     if(buttonName=="phone"){
       buttonOn("request", "phone");
       window.setTimeout('buttonOff("request", "phone")', navDelay*2);
-      window.location='tel:+16126264770';
+      window.plugins.childBrowser.openExternal('tel:+16126264770');
       }
     if(buttonName=="email"){
       buttonOn("request", "email");
       window.setTimeout('buttonOff("request", "email")', navDelay*2);
-      window.location='mailto:request@radiok.org?subject=Request from Radio K app';
+      window.plugins.childBrowser.openExternal('mailto:request@radiok.org?subject=Request from Radio K app');
       }
     if(buttonName=="tweet"){
       buttonOn("request", "tweet");
       window.setTimeout('buttonOff("request", "tweet")', navDelay*2);
       window.plugins.childBrowser.openExternal('https://twitter.com/intent/tweet?source=webclient&text=%40RadioK+%23Request');
-      //window.location='https://twitter.com/intent/tweet?source=webclient&text=%40RadioK+%23Request';
       }
     }
   if(pageName=="playlist"){
