@@ -405,7 +405,7 @@ var sleepSeconds=0;
 var dialInterval;
 
 function getRecentSongs(){
-  //dbuga('getRecentSongs()');
+  dbuga('getRecentSongs()');
   //return false;
   //var feedUrl="http://www.radiok.org/";
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_songs";
@@ -420,7 +420,7 @@ function getRecentSongs(){
 var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
 var recentSongs={};
 function parseRecentSongs(theData){
-  //dbuga("parseRecentSongs ");
+  dbuga("parseRecentSongs ");
   recentSongs=JSON.parse(theData);
   var songKeys=Object.keys(recentSongs);
   songKeys.sort();
