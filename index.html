@@ -368,7 +368,7 @@ function init(){
   retryInterval=window.setInterval("retryTick()", 2000);
   selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
-  singMedia = new Media("file:///android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
+  singMedia = new Media("/assets/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
   dbuga('init okay');
   }
 function singStatusCallback(theStatus){
