@@ -160,7 +160,7 @@ background-color:#000;
 </style>
 <script type="text/javascript">
 var platform="android";
-var debugging=false;
+var debugging=true;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -228,13 +228,15 @@ function retryTick(){
     }
   }
 
-
+function dbugState(theString){
+  document.getElementById("stateDiv").innerHTML=theString;  }
 function stateTick(){
   if(debugging==false){
     document.getElementById("stateDiv").style.display="none";
     }
   else{
     document.getElementById("stateDiv").style.display="block";
+ /*
     var theString="";
     theString+="quality="+genericGet("quality")+"<br />";
     theString+="navigator.onLine="+navigator.onLine+"<br />";
@@ -244,6 +246,7 @@ function stateTick(){
     theString+="retrying="+retrying+"<br />";
     theString+="retryAttempts="+retryAttempts;
     document.getElementById("stateDiv").innerHTML=theString;
+ */
     }
   }
 // -------------- events --------------------
@@ -912,7 +915,7 @@ function updateAlarmDisplay(){
     //dbuga(dials[0].atVal+" "+dials[1].atVal+" "+dials[2].atVal+" "+dials[3].atVal);
     var list=dials[touchingDial].history;
     //dbuga(list.join('|'));
-    dbug("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
+    dbugState("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
     }
   else{
     var moved=false;
@@ -930,8 +933,8 @@ function updateAlarmDisplay(){
         dials[d].atVal=dials[d].initVal+prog*(dials[d].destVal-dials[d].initVal);
         }
       }
-    if(moved){dbug('moved');}
-    else{dbug('no move');}
+    if(moved){dbugState('moved');}
+    else{dbugState('no move');}
     }
   document.getElementById('alarmTimeHourDial').style.top=(.75-dials[0].atVal)*lineHeight+"px";
   document.getElementById('alarmTimeMinDial').style.top=(.75-dials[1].atVal)*lineHeight+"px";
@@ -1452,25 +1455,28 @@ function endDialTouch(){
   dbuga(' -- endDialTouch() touchingDial='+touchingDial);
   if(touchingDial>-1){
 
-    //alert('mouseup');
     //set up inertial docking
     dials[touchingDial].initVal=dials[touchingDial].atVal;
     dials[touchingDial].speed=1/20;
     var totalDelta=0;
+    dbuga(' -- 1 endDialTouch() touchingDial='+touchingDial);
     for (var h=0; h<dials[touchingDial].history.length; h++){
       totalDelta+=dials[touchingDial].history[h];
       }
     var toss=0-totalDelta/(grid*4);
     //alert(toss);
+    dbuga(' -- endDialTouch() touchingDial='+touchingDial);
     dials[touchingDial].destVal=Math.floor(dials[touchingDial].initVal+toss+.5);
     dials[touchingDial].prog=1;
     if(dials[touchingDial].destVal<0){dials[touchingDial].destVal=0;}
     if(dials[touchingDial].destVal>dials[touchingDial].maxVal){dials[touchingDial].destVal=dials[touchingDial].maxVal;}
     var hour=(dials[0].destVal+1)%12;
+    dbuga(' --  6 endDialTouch() touchingDial='+touchingDial);
     genericSet("alarmMinuteOfDay", 60*hour+dials[1].destVal+dials[2].destVal*60*12);
-    dbuga("amod:"+genericGet("alarmMinuteOfDay"));
+    dbuga("amod 7 :"+genericGet("alarmMinuteOfDay"));
     touchingDial=-1;
-    }
+      dbuga(' -- 8 endDialTouch() touchingDial='+touchingDial);
+      }
   }
 
 function buttonOn(thePage, theButton){
