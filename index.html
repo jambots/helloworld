@@ -358,7 +358,7 @@ function init(){
   buttonOn("footnav", "listen");
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
-  dialInterval=setInterval('dialTick()', 25);
+  dialInterval=setInterval('dialTick()', 400);
   minuteTick();
   getFaqs();
   connectMedia();
@@ -1427,7 +1427,7 @@ function touchMove(event){
   }
 
 function touchEnd(event){
-  //dbuga('touchEnd(event) touchingDial='+touchingDial);
+  dbuga('touchEnd(event) touchingDial='+touchingDial);
   //event.preventDefault();
   if(touchingDial==-1){
     handleTouchEvent(event);
@@ -1449,7 +1449,7 @@ function mouseup(e){
   endDialTouch();
   }
 function endDialTouch(){
-  //dbuga(' -- endDialTouch() touchingDial='+touchingDial);
+  dbuga(' -- endDialTouch() touchingDial='+touchingDial);
   if(touchingDial>-1){
 
     //alert('mouseup');
