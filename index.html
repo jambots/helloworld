@@ -370,10 +370,9 @@ function init(){
   document.addEventListener("backbutton", onBackKeyDown, false);
   singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
   //singMedia = new Media("http://jambots.com/apps/ios/radiok1.2/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
-  
-  singMedia.play();
   dbuga('init okay');
   }
+var singing=false;
 function singStatusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
   dbuga('singMedia status '+statusArray[theStatus]);
@@ -383,7 +382,7 @@ function singError(er){
   dbuga("singError "+JSON.stringify(er))
   }
 function singSuccess(){
-  dbuga('singSuccess');
+  //dbuga('singSuccess');
   //singMedia.play();
   }
 function onBackKeyDown() {
@@ -845,9 +844,8 @@ function secondTick(){
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
       mediaStack[0].play();
-
-      ////comQueue.push("action=manageSound|channel=0|mode=play|file=sounds/singing.mp3|loop=true");
-
+      singMedia.play();
+      singing=true;
       selectPage("wakeup");
       }
     }
@@ -1657,7 +1655,7 @@ function handleButton(pageName, buttonName){
       stopMedia();
       
       //dbug("action=setAlarm|minute="+mil);
-      ////comQueue.push("action=manageSound|channel=0|mode=play|file=sounds/singing.mp3|loop=false");
+      singMedia.play();
       }
     if(buttonName=="cancel"){
       buttonOn("alarm", "cancel");
@@ -1674,8 +1672,8 @@ function handleButton(pageName, buttonName){
       buttonOff("listen", "playpause");
 
       stopMedia();
-      ////comQueue.push("action=manageSound|mode=pause|channel=0");
-
+      singMedia.stop();
+      singing=false;
       buttonOn("wakeup", "alarmoff");
       window.setTimeout('buttonOff("wakeup", "alarmoff"); selectPage("listen");', navDelay);
       }
@@ -1695,8 +1693,8 @@ function handleButton(pageName, buttonName){
       interrupted=false;
       buttonOff("listen", "playpause");
       stopMedia();
-      ////comQueue.push("action=manageSound|mode=pause|channel=0");
-
+      singMedia.stop();
+      singing=false;
       buttonOn("wakeup", "snooze");
       window.setTimeout('buttonOff("wakeup", "snooze"); selectPage("armed");', navDelay);
       }
@@ -1861,7 +1859,6 @@ function handleButton(pageName, buttonName){
       genericSet("quality", "broken");
       if(playing){
         ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
-        ////comTick();
         }
       }
 */
@@ -1962,7 +1959,6 @@ function retryTick(){
     connecting=true;
     interrupted=false;
     ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
-    ////comTick();
     }
   }
 */
