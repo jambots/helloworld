@@ -912,6 +912,7 @@ function updateAlarmDisplay(){
     //dbuga(dials[0].atVal+" "+dials[1].atVal+" "+dials[2].atVal+" "+dials[3].atVal);
     var list=dials[touchingDial].history;
     //dbuga(list.join('|'));
+    dbug("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
     }
   else{
     // go through moving dials
@@ -1422,7 +1423,7 @@ function touchMove(event){
   }
 
 function touchEnd(event){
-  dbuga('touchEnd(event) touchingDial='+touchingDial);
+  //dbuga('touchEnd(event) touchingDial='+touchingDial);
   //event.preventDefault();
   if(touchingDial==-1){
     handleTouchEvent(event);
@@ -1444,7 +1445,7 @@ function mouseup(e){
   endDialTouch();
   }
 function endDialTouch(){
-  dbuga(' -- endDialTouch() touchingDial='+touchingDial);
+  //dbuga(' -- endDialTouch() touchingDial='+touchingDial);
   if(touchingDial>-1){
 
     //alert('mouseup');
@@ -1463,6 +1464,7 @@ function endDialTouch(){
     if(dials[touchingDial].destVal>dials[touchingDial].maxVal){dials[touchingDial].destVal=dials[touchingDial].maxVal;}
     var hour=(dials[0].destVal+1)%12;
     genericSet("alarmMinuteOfDay", 60*hour+dials[1].destVal+dials[2].destVal*60*12);
+    dbug("amod:"+genericGet("alarmMinuteOfDay"));
     touchingDial=-1;
     }
   }
