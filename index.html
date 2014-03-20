@@ -182,9 +182,9 @@ function statusCallback(theStatus){
     }
   else{
     if((navigator.onLine ==false)&&(uiPlaying)&&(mediaRunning)){// is offline and was playing and running, so interrupted
-      //dbuga(" INT uiPlaying:"+uiPlaying+" mediaRunning:"+mediaRunning);
-      //interrupted=true;
-      //retrying=true;
+      dbuga(" INT uiPlaying:"+uiPlaying+" mediaRunning:"+mediaRunning);
+      interrupted=true;
+      retrying=true;
       window.setTimeout('stopReleaseNullRetry()',500);
       document.getElementById('page_listen_content_djDiv').innerHTML="Interrupted...";
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
@@ -420,7 +420,7 @@ function getRecentSongs(){
 var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
 var recentSongs={};
 function parseRecentSongs(theData){
-  dbuga("parseRecentSongs ");
+  dbuga("parseRecentSongs "+mediaRunning);
   recentSongs=JSON.parse(theData);
   var songKeys=Object.keys(recentSongs);
   songKeys.sort();
@@ -1920,9 +1920,9 @@ var connectFails=0;
 var bufferTimeout;
 function minuteTick(){
   //dbuga('minuteTick() playing='+playing+' interrupted='+interrupted);
-  //if((playing==true)&&(streamStatus==true)){
-  //  updateNowPlaying();
-  //  }
+  if((playing==true)&&(mediaRunning==true)){
+    updateNowPlaying();
+    }
   getRecentSongs();
   }
 
