@@ -297,6 +297,7 @@ function connectMedia(){
   dbuga('connectMedia q='+genericGet("quality"));
   dbuga('url='+urlByQuality[genericGet("quality")]);
   var thisMedia = new Media(urlByQuality[genericGet("quality")], successCallback, errorCallback, statusCallback);
+  dbuga('thisMedia');
   mediaStack.unshift(thisMedia);
   for (var m=1; m<mediaStack.length; m++){
     mediaStack[m].stop();
@@ -305,11 +306,11 @@ function connectMedia(){
   dbuga("mediaStack.length: "+mediaStack.length);
   }
 function successCallback(){
-  //dbuga('successCallback <br />');
+  dbuga('successCallback <br />');
   }
 function errorCallback(theError){
-  //dbuga('errorCallback '+JSON.stringify(theError));
-  //return false;
+  dbuga('errorCallback '+JSON.stringify(theError));
+  return false;
   }
 
 // ----------------------------------------------------------------------------
