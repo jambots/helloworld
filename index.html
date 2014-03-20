@@ -183,9 +183,9 @@ function statusCallback(theStatus){
   else{
     if((navigator.onLine ==false)&&(uiPlaying)&&(mediaRunning)){// is offline and was playing and running, so interrupted
       dbuga(" INT uiPlaying:"+uiPlaying+" mediaRunning:"+mediaRunning);
-      interrupted=true;
-      retrying=true;
-      window.setTimeout('stopReleaseNullRetry()',500);
+      ///interrupted=true;
+      ///retrying=true;
+      ///window.setTimeout('stopReleaseNullRetry()',500);
       document.getElementById('page_listen_content_djDiv').innerHTML="Interrupted...";
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       }
@@ -299,7 +299,7 @@ function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
 function connectMedia(){
-  //dbuga('connectMedia q='+genericGet("quality"));
+  dbuga('connectMedia q='+genericGet("quality"));
   //dbuga('url='+urlByQuality[genericGet("quality")]);
   var thisMedia = new Media(urlByQuality[genericGet("quality")], successCallback, errorCallback, statusCallback);
   //dbuga('thisMedia');
@@ -308,7 +308,7 @@ function connectMedia(){
     mediaStack[m].stop();
     mediaStack[m].release();
     }
-  //dbuga("mediaStack.length: "+mediaStack.length);
+  dbuga("mediaStack.length: "+mediaStack.length);
   }
 function successCallback(){
   dbuga('successCallback <br />');
@@ -372,7 +372,7 @@ function init(){
   document.addEventListener("backbutton", onBackKeyDown, false);
   singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
   //singMedia = new Media("http://jambots.com/apps/ios/radiok1.2/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
-  //dbuga('init okay');
+  dbuga('init okay');
   }
 var singing=false;
 function singStatusCallback(theStatus){
@@ -1946,7 +1946,7 @@ function remoteControlPlay(){
   buttonOn("listen", "playpause");
   }
 function stopMedia(){
-  //dbuga('stopMedia()');
+  dbuga('stopMedia()');
   mediaStack[0].stop();
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   }
