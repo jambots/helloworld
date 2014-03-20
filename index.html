@@ -371,12 +371,12 @@ function init(){
   document.addEventListener("backbutton", onBackKeyDown, false);
   singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
   //singMedia = new Media("http://jambots.com/apps/ios/radiok1.2/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
-  dbuga('init okay');
+  //dbuga('init okay');
   }
 var singing=false;
 function singStatusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  dbuga('singMedia status '+statusArray[theStatus]);
+  //dbuga('singMedia status '+statusArray[theStatus]);
   if((theStatus==4)&&(singing==true)){
     singMedia.play();
     }
@@ -419,14 +419,14 @@ function getRecentSongs(){
 var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
 var recentSongs={};
 function parseRecentSongs(theData){
-  //dbuga("parseRecentSongs "+theData);
+  dbuga("parseRecentSongs "+theData);
   recentSongs=JSON.parse(theData);
   var songKeys=Object.keys(recentSongs);
   songKeys.sort();
   songKeys.reverse();
   if(songKeys.length>0){
     nowData={"dj":recentSongs[songKeys[0]].dj, "time":recentSongs[songKeys[0]].song_timestamp, "artist":recentSongs[songKeys[0]].song_artist, "song":recentSongs[songKeys[0]].song_title, "album":recentSongs[songKeys[0]].song_album};
-    if((playing==true)&&(streamStatus==true)){
+    if((playing==true)&&(mediaRunning==true)){
       updateNowPlaying();
       }
     }
