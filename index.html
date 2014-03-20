@@ -170,8 +170,9 @@ var mediaStatusNum=0;
 var mediaStack=[];
 function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  //dbuga('status '+statusArray[theStatus]);
+  dbuga('status '+statusArray[theStatus]);
   if(statusArray[theStatus]=='MEDIA_RUNNING'){
+    singing=false;
     mediaRunning=true;
     retrying=false;
     retryAttempts=0;
@@ -376,6 +377,9 @@ var singing=false;
 function singStatusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
   dbuga('singMedia status '+statusArray[theStatus]);
+  if((theStatus==4)&&(singing==true)){
+    singMedia.play();
+    }
   }
 var singMedia;
 function singError(er){
