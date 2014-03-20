@@ -194,7 +194,7 @@ function statusCallback(theStatus){
 
 function stopReleaseNullRetry(){
   //dbuga("stopReleaseNullRetry()");
-  mediaStack[0].stop();
+  stopMedia();
   window.setTimeout('releaseNullRetry()',500);
   }
 function releaseNullRetry(){
@@ -254,7 +254,7 @@ function mediumSelected(){
   buttonOn("settings", "medium");
   buttonOff("settings", "higher");
   genericSet("quality", "medium");
-  mediaStack[0].stop();
+  stopMedia();
   mediaStack[0].release();
   connectMedia();
   if(uiPlaying){
@@ -265,7 +265,7 @@ function highSelected(){
   buttonOff("settings", "medium");
   buttonOn("settings", "higher");
   genericSet("quality", "higher");
-  mediaStack[0].stop();
+  stopMedia();
   mediaStack[0].release();
   connectMedia();
   if(uiPlaying){
@@ -368,8 +368,17 @@ function init(){
   retryInterval=window.setInterval("retryTick()", 2000);
   selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
-  }
+  singMedia = new Media("sounds/singing.mp3", singSuccess, singError);
 
+  }
+var singMedia;
+function singError(er){
+  dbuga("singError "+JSON.stringify(er))
+  }
+function singSuccess(){
+  dbuga('singSuccess');
+  singMedia.play();
+  }
 function onBackKeyDown() {
   // Handle the back button
       selectPage("listen");
@@ -822,7 +831,7 @@ function secondTick(){
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Real College Radio";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       buttonOn("listen", "playpause");
-      document.getElementById('page_listen_content_djDiv').innerHTML="st Connecting...";
+      document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
       connecting=true;
       interrupted=false;
       playing=true;
@@ -1638,7 +1647,8 @@ function handleButton(pageName, buttonName){
       interrupted=false;
       buttonOff("listen", "playpause");
 
-      mediaStack[0].stop();
+      stopMedia();
+      
       //dbug("action=setAlarm|minute="+mil);
       ////comQueue.push("action=manageSound|channel=0|mode=play|file=sounds/singing.mp3|loop=false");
       }
@@ -1656,7 +1666,7 @@ function handleButton(pageName, buttonName){
       interrupted=false;
       buttonOff("listen", "playpause");
 
-      mediaStack[0].stop();
+      stopMedia();
       ////comQueue.push("action=manageSound|mode=pause|channel=0");
 
       buttonOn("wakeup", "alarmoff");
@@ -1677,7 +1687,7 @@ function handleButton(pageName, buttonName){
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
-      mediaStack[0].stop();
+      stopMedia();
       ////comQueue.push("action=manageSound|mode=pause|channel=0");
 
       buttonOn("wakeup", "snooze");
@@ -1930,6 +1940,7 @@ function remoteControlPlay(){
 function stopMedia(){
   //dbuga('stopMedia()');
   mediaStack[0].stop();
+  document.getElementById('page_listen_content_djDiv').innerHTML="";
   }
 function playMedia(){
   //dbuga('playMedia()');
