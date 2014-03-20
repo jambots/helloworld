@@ -184,8 +184,7 @@ function statusCallback(theStatus){
     if((navigator.onLine ==false)&&(uiPlaying)&&(mediaRunning)){// is offline and was playing and running, so interrupted
       dbuga(" INT uiPlaying:"+uiPlaying+" mediaRunning:"+mediaRunning);
       ///interrupted=true;
-      ///retrying=true;
-      ///window.setTimeout('stopReleaseNullRetry()',500);
+      window.setTimeout('stopReleaseNullRetry()',500);
       document.getElementById('page_listen_content_djDiv').innerHTML="Interrupted...";
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       }
@@ -195,22 +194,22 @@ function statusCallback(theStatus){
   }
 
 function stopReleaseNullRetry(){
-  //dbuga("stopReleaseNullRetry()");
+  dbuga("stopReleaseNullRetry()");
   stopMedia();
   window.setTimeout('releaseNullRetry()',500);
   }
 function releaseNullRetry(){
-  //dbuga("releaseNullRetry()");
+  dbuga("releaseNullRetry()");
   mediaStack[0].release();
   window.setTimeout('nullRetry()',500);
   }
 function nullRetry(){
-  //dbuga("nullRetry(), connectMedia()");
+  dbuga("nullRetry(), connectMedia()");
   connectMedia();
   window.setTimeout('startRetrying()',500);
   }
 function startRetrying(){
-  //dbuga("startRetrying()");
+  dbuga("startRetrying()");
   retrying=true;
   }
 function retryTick(){
@@ -238,7 +237,7 @@ function stateTick(){
     }
   else{
     document.getElementById("stateDiv").style.display="block";
- /*
+ 
     var theString="";
     theString+="quality="+genericGet("quality")+"<br />";
     theString+="navigator.onLine="+navigator.onLine+"<br />";
@@ -248,7 +247,7 @@ function stateTick(){
     theString+="retrying="+retrying+"<br />";
     theString+="retryAttempts="+retryAttempts;
     document.getElementById("stateDiv").innerHTML=theString;
- */
+ 
     }
   }
 // -------------- events --------------------
