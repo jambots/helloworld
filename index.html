@@ -366,7 +366,7 @@ function init(){
   minuteInterval=setInterval('minuteTick()', 15000);
   dialInterval=setInterval('dialTick()', 25);
   dbuga(' init 4');
-  minuteTick();
+  //minuteTick();
   getFaqs();
   dbuga(' init 5');
   connectMedia();
@@ -1924,11 +1924,12 @@ var connectFails=0;
 
 var bufferTimeout;
 function minuteTick(){
-  //dbuga('minuteTick() playing='+playing+' interrupted='+interrupted);
+  dbuga('minuteTick() playing='+playing+' interrupted='+interrupted);
   if((playing==true)&&(mediaRunning==true)){
     updateNowPlaying();
     }
   getRecentSongs();
+  dbuga('end of minuteTick()');
   }
 
 function resumeGame(){
