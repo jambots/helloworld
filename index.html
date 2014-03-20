@@ -331,6 +331,16 @@ function genericGet(itemName){
   if(platform=="android"){
     value=localStorage.getItem(itemName);
     }
+  var valueNumber=Number(value);
+  var valueNumberString=""+valueNumber+"";
+  if(value==valueNumberString){
+    value=Number(value);
+    dbuga(itemName+" is a Number");
+    }
+  else{
+    dbuga(itemName+" is a String");
+    }
+  
   return value;
   }
 var minuteInterval;
@@ -885,8 +895,7 @@ function dialTick(){
 var prevDeltaY=0;
 function updateAlarmDisplay(){
   var pMod=genericGet("alarmMinuteOfDay");
-  dbug("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
-dbuga(rnd(10));
+  //dbug("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
   var lineHeight=Math.floor(pages[3].contents[0].lineHeight*grid);
   var nowDate=new Date();
   var nowMod=nowDate.getHours()*60+nowDate.getMinutes();
@@ -926,7 +935,7 @@ dbuga(rnd(10));
   if(touchingDial==-1){
     //dbuga(pMod+" alarm is set to "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
     }
-  dbuga('okay');
+  //dbuga('okay');
   }
 var initHistory=[0,0,0,0,0,0,0,0];
 function populateDials(){
@@ -1413,7 +1422,7 @@ function touchMove(event){
   }
 
 function touchEnd(event){
-  //dbuga('touchEnd(event) touchingDial='+touchingDial);
+  dbuga('touchEnd(event) touchingDial='+touchingDial);
   //event.preventDefault();
   if(touchingDial==-1){
     handleTouchEvent(event);
