@@ -170,7 +170,7 @@ var mediaStatusNum=0;
 var mediaStack=[];
 function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  dbuga('status '+statusArray[theStatus]);
+  //dbuga('status '+statusArray[theStatus]);
   if(statusArray[theStatus]=='MEDIA_RUNNING'){
     mediaRunning=true;
     retrying=false;
@@ -193,22 +193,22 @@ function statusCallback(theStatus){
   }
 
 function stopReleaseNullRetry(){
-  dbuga("stopReleaseNullRetry()");
+  //dbuga("stopReleaseNullRetry()");
   mediaStack[0].stop();
   window.setTimeout('releaseNullRetry()',500);
   }
 function releaseNullRetry(){
-  dbuga("releaseNullRetry()");
+  //dbuga("releaseNullRetry()");
   mediaStack[0].release();
   window.setTimeout('nullRetry()',500);
   }
 function nullRetry(){
-  dbuga("nullRetry(), connectMedia()");
+  //dbuga("nullRetry(), connectMedia()");
   connectMedia();
   window.setTimeout('startRetrying()',500);
   }
 function startRetrying(){
-  dbuga("startRetrying()");
+  //dbuga("startRetrying()");
   retrying=true;
   }
 function retryTick(){
@@ -271,7 +271,7 @@ function highSelected(){
   }
 
 function togglePlaying(){
-  dbuga('togglePlaying()');
+  //dbuga('togglePlaying()');
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   if(uiPlaying==true){
     uiPlaying=false;
@@ -294,22 +294,22 @@ function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
 function connectMedia(){
-  dbuga('connectMedia q='+genericGet("quality"));
-  dbuga('url='+urlByQuality[genericGet("quality")]);
+  //dbuga('connectMedia q='+genericGet("quality"));
+  //dbuga('url='+urlByQuality[genericGet("quality")]);
   var thisMedia = new Media(urlByQuality[genericGet("quality")], successCallback, errorCallback, statusCallback);
-  dbuga('thisMedia');
+  //dbuga('thisMedia');
   mediaStack.unshift(thisMedia);
   for (var m=1; m<mediaStack.length; m++){
     mediaStack[m].stop();
     mediaStack[m].release();
     }
-  dbuga("mediaStack.length: "+mediaStack.length);
+  //dbuga("mediaStack.length: "+mediaStack.length);
   }
 function successCallback(){
-  dbuga('successCallback <br />');
+  //dbuga('successCallback <br />');
   }
 function errorCallback(theError){
-  dbuga('errorCallback '+JSON.stringify(theError));
+  //dbuga('errorCallback '+JSON.stringify(theError));
   return false;
   }
 
@@ -898,7 +898,7 @@ function dialTick(){
 var prevDeltaY=0;
 function updateAlarmDisplay(){
   var pMod=genericGet("alarmMinuteOfDay");
-  //dbuga(pMod+" alarm is set to "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
+  dbug("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
   var lineHeight=Math.floor(pages[3].contents[0].lineHeight*grid);
   var nowDate=new Date();
   var nowMod=nowDate.getHours()*60+nowDate.getMinutes();
@@ -1946,11 +1946,11 @@ function remoteControlPlay(){
   buttonOn("listen", "playpause");
   }
 function stopMedia(){
-  dbuga('stopMedia()');
+  //dbuga('stopMedia()');
   mediaStack[0].stop();
   }
 function playMedia(){
-  dbuga('playMedia()');
+  //dbuga('playMedia()');
   mediaStack[0].play();
   }
 var noStatusTimeout;
@@ -2046,7 +2046,7 @@ document.addEventListener('touchmove', function (e) { e.preventDefault(); }, fal
 
 </script>
 </head>
-<body onload="init()" onmousedown="moused(event);" ontouchstart="touchStart(event);" ontouchcancel="touchCancel(event);">
+<body onload="init()" onmousedown="moused(event);" ontouchstart="touchStart(event);" ontouchmove="touchMove(event);" ontouchend="touchEnd(event);" ontouchcancel="touchCancel(event);">
 
 <div id="wrapper">
   <div id="container">
