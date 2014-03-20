@@ -271,7 +271,7 @@ function highSelected(){
   }
 
 function togglePlaying(){
-  //dbuga('togglePlaying()');
+  dbuga('togglePlaying()');
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   if(uiPlaying==true){
     uiPlaying=false;
@@ -294,7 +294,8 @@ function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
 function connectMedia(){
-  dbuga('connectMedia');
+  dbuga('connectMedia q='+genericGet("quality"));
+  dbuga('url='+urlByQuality[genericGet("quality")]);
   var thisMedia = new Media(urlByQuality[genericGet("quality")], successCallback, errorCallback, statusCallback);
   mediaStack.unshift(thisMedia);
   for (var m=1; m<mediaStack.length; m++){
