@@ -1,6 +1,7 @@
+<!DOCTYPE HTML>
 <html>
 <head>
-<title>Android RadioK</title>
+<title>KUOM Radio K</title>
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script src="phonegap.js"></script>
@@ -8,8 +9,57 @@
 <script type="text/javascript" src="jquerymin.js"></script>
 <script type="text/javascript" src="iscroll-lite.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css">
+
 <style type="text/css">
+html{
+  height: 100%;
+  background-color:#000;
+  user-select: none;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+
+}
+
+@font-face
+{
+font-family: akzilight;
+src: url('fonts/akzidenzgrotesklight.ttf');
+} 
+@font-face
+{
+font-family: akziregular;
+src: url('fonts/akzidenzgroteskregular.ttf');
+} 
+@font-face
+{
+font-family: akzibold;
+src: url('fonts/akzidenzgroteskbold.ttf');
+}
 #resultsHolder{
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
+}
+#totdHolder{
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
+}
+#wrsHolder{
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
+}
+#cqHolder{
   position:absolute;
   z-index:1;
   width:100%;
@@ -30,9 +80,86 @@
   background:#aaa;
   overflow:auto;
 }
-* { -webkit-tap-highlight-color: rgba(0,0,0,0); } 
+
+#alarmTimeHour{overflow:hidden;}
+#alarmTimeMin{overflow:hidden;}
+#alarmTimeAmPm{overflow:hidden;}
+#sleepTime{overflow:hidden;}
+
+.loading{color:black; font-family:akzibold;}
+.playlistItem{color:black; font-family:akzibold; position:static; text-align:center;}
+#debugDiv{display:none; position:absolute; width:100%; top:0px;
+background-color:rgba(0,0,0,.6); color:white; font-family: akziregular; font-size:18px;}
+div{
+position:absolute;
+user-select: none;
+-webkit-backface-visibility:hidden;
+}
+.buttons{
+-webkit-transition:opacity 50ms linear;
+-webkit-background-size:100% 100%; 
+background-repeat:no-repeat;
+-webkit-background-size:cover;
+background-position:center center;
+}
+
+.questionHolder{
+  -webkit-transition:opacity 100ms linear;
+  overflow:hidden; position:static; 
+  float:left; 
+  //background-color:#110; 
+  //-webkit-transition:height 1000ms linear, max-height 1000ms linear; 
+}
+.twistie{
+  overflow:hidden;  position:relative; font-family:akzibold;
+  background-repeat:no-repeat;
+  background-position:center right;
+  //-webkit-transition:height 1000ms linear, max-height 1000ms linear; 
+}
+.answer{
+  position:absolute; font-family:akziregular;
+  //float:left; 
+  //background-color:#336;
+  display:none; 
+  //-webkit-transition:height 100ms linear, max-height 100ms linear; 
+}
+//a:link{color:#2BBED8; font-family:akzibold; text-decoration:none;}
+a:link{color:#00f; font-family:akzibold; text-decoration:none;}
+
+//a:visited{color:#2BBED8; font-family:akzibold; text-decoration:none;}
+a:visited{color:#00f; font-family:akzibold; text-decoration:none;}
+.pages{
+opacity:0;
+-webkit-transition:opacity 350ms linear;
+-webkit-background-size:100% 100%; 
+background-repeat:no-repeat;
+background-color:#000;
+//-webkit-background-size:contain;
+background-position:top center;
+}
+body{
+user-select: none;
+width:100%;
+max-height:100%;
+height:100%;
+zbackground-image:url('red.png');
+}
+#wrapper{
+position:absolute;
+width:100%;
+height:100%;
+overflow:hidden;
+background-color:#000;
+user-select: none;
+}
+#container{
+position:absolute;
+background-color:#000;
+//background-image:url('blue.png');
+}
 </style>
 <script type="text/javascript">
+var platform="android";
 var debugging=false;
 var retrying=false;
 var interrupted=false;
@@ -109,7 +236,7 @@ function stateTick(){
   else{
     document.getElementById("stateDiv").style.display="block";
     var theString="";
-    theString+="quality="+localStorage.getItem("quality")+"<br />";
+    theString+="quality="+genericGet("quality")+"<br />";
     theString+="navigator.onLine="+navigator.onLine+"<br />";
     theString+="uiPlaying="+uiPlaying+"<br />";
     theString+="mediaRunning="+mediaRunning+"<br />";
@@ -123,7 +250,7 @@ function stateTick(){
 function mediumSelected(){
   buttonOn("settings", "medium");
   buttonOff("settings", "higher");
-  localStorage.setItem("quality", "medium");
+  genericSet("quality", "medium");
   mediaStack[0].stop();
   mediaStack[0].release();
   connectMedia();
@@ -134,7 +261,7 @@ function mediumSelected(){
 function highSelected(){
   buttonOff("settings", "medium");
   buttonOn("settings", "higher");
-  localStorage.setItem("quality", "higher");
+  genericSet("quality", "higher");
   mediaStack[0].stop();
   mediaStack[0].release();
   connectMedia();
@@ -142,6 +269,7 @@ function highSelected(){
     retrying=true;
     }
   }
+
 function togglePlaying(){
   //dbuga('togglePlaying()');
   document.getElementById('page_listen_content_djDiv').innerHTML="";
@@ -166,43 +294,13 @@ function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
 function connectMedia(){
-  var thisMedia = new Media(urlByQuality[localStorage.getItem("quality")], successCallback, errorCallback, statusCallback);
+  var thisMedia = new Media(urlByQuality[genericGet("quality")], successCallback, errorCallback, statusCallback);
   mediaStack.unshift(thisMedia);
   for (var m=1; m<mediaStack.length; m++){
     mediaStack[m].stop();
     mediaStack[m].release();
     }
   }
-/*
-      if(retrying==true){
-        retryAttempts++;
-        if(retryAttempts>2){
-          message="OMG. We're like totally not retrying...embarrassing. Like, try again in a bit k?  Radio K - Real College Radio.";
-          }
-        else{
-          message="Unable to connect. Retrying...";
-          }
-        retrying=false;
-        interrupted=false;
-        }
-      else{
-        if(interrupted==true){
-          if(remoteControlPaused==false){
-            message="Paused";
-            }
-          else{
-            message="retrying...";
-            }
-          retrying=false;
-          interrupted=false;
-          }           
-        else{
-          message="retrying...";
-          retrying=false;
-          interrupted=true;
-          }
-*/
-
 function successCallback(){
   //dbuga('successCallback <br />');
   }
@@ -212,56 +310,72 @@ function errorCallback(theError){
   }
 
 // ----------------------------------------------------------------------------
-
-
+function genericDefault(itemName, defaultValue){
+  if(platform=="android"){
+    if (localStorage.getItem(itemName) === null) {
+      localStorage.setItem(itemName, defaultValue);
+      }
+    }
+  }
+function genericSet(itemName, newValue){
+  if(platform=="android"){
+    localStorage.setItem(itemName, defaultValue);
+    }
+  }
+function genericGet(itemName){
+  var value="notSet";
+  if(platform=="android"){
+    value=localStorage.getItem(itemName);
+    }
+  return value;
+  }
 var minuteInterval;
 var dimensionInterval;
-
 function init(){
-/*
-window.plugins.childBrowser.onClose = function () {
-    alert('childBrowser has closed');
-};
-window.plugins.childBrowser.onLocationChange = function (url) {
-    alert('childBrowser has loaded ' + url);
-};
-window.plugins.childBrowser.onOpenExternal = function () {
-    alert('opening Mobile Safari');
-};
-*/
-  //dbuga('init 0');
+  //dbuga('init 0.0');
   currentPage="listen";
+
   populateContainer();
-  if (localStorage.getItem("quality") === null) {
-    localStorage.setItem("quality", "higher");
-    }
-  buttonOn("settings", localStorage.getItem("quality"));
+  genericDefault("alarmMinuteOfDay", 11*60+30);
+  genericDefault("sleepMinutesDefault", 10);
+  genericDefault("quality", "higher");
+
+  buttonOn("settings", genericGet("quality"));
   buttonOn("footnav", "listen");
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
+  dialInterval=setInterval('dialTick()', 25);
   minuteTick();
   getFaqs();
   connectMedia();
   retryInterval=window.setInterval("retryTick()", 2000);
-  //dbuga('init completed');
+  selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
   }
+
 function onBackKeyDown() {
   // Handle the back button
       selectPage("listen");
       buttonOn("footnav", "listen");
       buttonOff("footnav", "request");
   }
- 
 var retryInterval;
 var songs=[];
+
+var secondInterval;
+var streamStatus=false;
+var sleepSeconds=0;
+var dialInterval;
+
 function getRecentSongs(){
+  //dbuga('getRecentSongs()');
+  //return false;
   //var feedUrl="http://www.radiok.org/";
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_songs";
-  //dbug('getRecentSongs()');
+  //var feedUrl="recent_songs.txt";
   $.ajax({
     url: feedUrl,
-    dataType: "text",        // <=== new bit
+    dataType: "text",        //  new bit
     success: function(data) {parseRecentSongs(data);}
     });
   }
@@ -276,11 +390,227 @@ function parseRecentSongs(theData){
   songKeys.reverse();
   if(songKeys.length>0){
     nowData={"dj":recentSongs[songKeys[0]].dj, "time":recentSongs[songKeys[0]].song_timestamp, "artist":recentSongs[songKeys[0]].song_artist, "song":recentSongs[songKeys[0]].song_title, "album":recentSongs[songKeys[0]].song_album};
-    if((uiPlaying==true)&&(mediaRunning==true)){
+    if((playing==true)&&(streamStatus==true)){
       updateNowPlaying();
       }
     }
   }
+var totdDownloads=[];
+var wrsDownloads=[];
+var cqDownloads=[];
+var spotlightImage="";
+function getDownloads(){
+  //dbuga("getDownloads()");
+  totdDownloads=[];
+  wrsDownloads=[];
+  cqDownloads=[];
+  document.getElementById('totdHolder').innerHTML=""; 
+  document.getElementById('totdHolder').style.width=grid*48+'px'; 
+  document.getElementById('totdHolder').style.height=grid*51+'px'; 
+  document.getElementById('wrsHolder').innerHTML=""; 
+  document.getElementById('wrsHolder').style.width=grid*48+'px'; 
+  document.getElementById('wrsHolder').style.height=grid*51+'px'; 
+  document.getElementById('cqHolder').innerHTML=""; 
+  document.getElementById('cqHolder').style.width=grid*48+'px'; 
+  document.getElementById('cqHolder').style.height=grid*51+'px'; 
+
+  $.ajax({
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/rss?bID=12137&cID=2237&arHandle=Main",
+    dataType: "xml",        
+    success: function(xml) {parseDownloads(xml, "Weekly Release Spotlight");}
+    });
+  $.ajax({
+    url: "http://www.radiok.org/tools/packages/radiok/mediamill_xml?cID=963&bID=201",
+    dataType: "xml",        
+    success: function(xml) {parseDownloads(xml, "Culture Queue");}
+    });
+  $.ajax({
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/rss?bID=11364&cID=2121&arHandle=Main",
+    dataType: "xml",        
+    success: function(xml) {parseDownloads(xml, "Track of the Day");}
+    });
+
+
+
+
+
+  }
+// remove errors on publish
+var monToMM={"Jan":"01", "Feb":"02", "Mar":"03", "Apr":"04", "May":"05", "Jun":"06", "Jul":"07", "Aug":"08", "Sep":"09", "Oct":"10", "Nov":"11", "Dec":"12"};
+var monToMonth={"Jan":"January", "Feb":"February", "Mar":"March", "Apr":"April", "May":"May", "Jun":"June", "Jul":"July", "Aug":"August", "Sep":"September", "Oct":"October", "Nov":"November", "Dec":"December"};
+function parseDownloads(theXml, source){
+  //dbuga("parseDownloads() "+source);
+
+  $(theXml).find('item').each(function(){
+    //convert Tue, 11 Mar 2014 00:01:00 CDT to yyyymmddhhmmss
+    var dateStr=$(this).find('pubDate').text();
+    var parts=dateStr.split(" ");
+    var yyyy=parts[3];
+    var mm=monToMM[parts[2]];
+    var dd=parts[1];
+    var timeCode=parts[4];
+    var timeParts=timeCode.split(":");
+    var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
+    var sortNum=yyyy+mm+dd+hhmmss;
+    var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
+    var item={"sort":sortNum, "source":source, "date":dispDate, "image":"", "title":$(this).find('title').text(), "description":"", "link":""};
+    var descData=$(this).find('description').text();
+    var quoteParts=descData.split('"');
+    if(source=="Culture Queue"){
+      //dbuga("Culture Queue 0");
+      item.image="social/culturequeue.jpg";
+      //dbuga("Culture Queue 1");
+      var mp3Link=$(this).find('guid').text();
+      mp3Link=mp3Link.replace(/\?/g, "%3f");
+
+      //dbuga("Culture Queue 2");
+      var sum=$(this).find('itunes\\:summary, summary').text();
+      //dbuga("Culture Queue 3");
+      var fullTitle=item.title;
+      var titleParts=fullTitle.split(":");
+      item.description=titleParts[1];
+      item.title=titleParts[0];
+      item.date="skip";
+      //dbuga("Culture Queue 6");
+
+      item.link="http://www.radiok.org/cq-archiver/";
+      //dbuga("Culture Queue 7");
+      item.link+="?title="+encodeURI(fullTitle);
+      //dbuga("Culture Queue 8");
+      item.link+="&ep="+mp3Link;
+      //dbuga("Culture Queue 9");
+      item.link+="&summary="+encodeURI(sum);
+      //dbuga('okay');
+      }
+    if(source=="Track of the Day"){
+      item.image="social/trackoftheday.jpg";
+      var strongParts=descData.split('<strong>');
+      var descPlus=strongParts[1];
+      strongParts=descPlus.split('</strong>');
+      item.description=strongParts[0];
+/*
+      for (var q=0; q<quoteParts.length; q++){
+        if(quoteParts[q].indexOf('mp3')>-1){
+          item.link=quoteParts[q];
+          }
+        }
+*/
+      }
+    if(source=="Weekly Release Spotlight"){
+      //item.date="skip";
+      //item.title+="<br />";
+      for (var q=0; q<quoteParts.length; q++){
+        if((quoteParts[q].indexOf('jpg')>-1)&&(quoteParts[q].indexOf('/files/cache/')>-1)){
+          item.image=quoteParts[q];
+          if(item.image.indexOf("http")==-1){item.image="http://www.radiok.org"+item.image;}
+          }
+        //if(quoteParts[q].indexOf('mp3')>-1){
+        //  item.link=quoteParts[q];
+        //  }
+        }
+      }
+    if(item.link==""){
+      item.link=$(this).find('link').text();
+      }
+    if(item.link.indexOf("http")==-1){item.link="http://www.radiok.org"+item.link;}
+
+    
+
+    if(item.description==""){
+      var link=item.link;
+      var linkParts=link.split("/");
+      if(linkParts.length>0){
+        item.description=linkParts.pop();
+        }
+      if((item.description=="")&&(linkParts.length>0)){
+        item.description=linkParts.pop();
+        }
+      item.description=item.description.replace(/\-/g, " ");
+      //item.description=item.description.replace(/\_/g, " ");
+      }
+    if(item.description==""){item.description="Read more...";}
+
+    if(source=="Weekly Release Spotlight"){wrsDownloads.push(item);}
+    if(source=="Track of the Day"){totdDownloads.push(item);}
+    if(source=="Culture Queue"){cqDownloads.push(item);}
+
+    });
+
+  if(source=="Weekly Release Spotlight"){updateWrsDownloads();}
+  if(source=="Track of the Day"){updateTotdDownloads();}
+  if(source=="Culture Queue"){updateCqDownloads();}
+  }
+function updateWrsDownloads(){
+  //dbuga('updateWrsDownloads()');
+  var sortedDownloads=wrsDownloads.sort(function(a, b){
+      // furthest to nearest
+      return b.sort-a.sort
+    });
+
+  var gradStyle="background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0%, #F2F2F2), color-stop(2%, #F2F2F2), color-stop(3%, #EDEDED), color-stop(50%, #fff), color-stop(100%, #fff));";
+  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
+  var htmlBlock="";
+  spotlightImage=sortedDownloads[0].image;
+  //dbuga("spotlightImage="+spotlightImage);
+  document.getElementById("page_extras_button_wrs").style.backgroundImage='url('+spotlightImage+')';
+  document.getElementById("page_extras_button_wrs_on").style.backgroundImage='url('+spotlightImage+')';
+  for(var d=0; d<sortedDownloads.length; d++){
+    var downloadItem=sortedDownloads[d];
+    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
+    htmlBlock+=  '<a href="'+downloadItem.link+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
+    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
+    if(downloadItem.date != "skip"){htmlBlock+=  '<br />'+downloadItem.date+'<br />';}
+    htmlBlock+=  ' <a href="'+downloadItem.link+'">'+downloadItem.title+'</a>';
+    htmlBlock+='</div></div>';
+    }
+  document.getElementById('wrsHolder').innerHTML=htmlBlock; 
+  }
+function updateTotdDownloads(){
+  //dbuga('updateTotdDownloads()');
+  var sortedDownloads=totdDownloads.sort(function(a, b){
+      // furthest to nearest
+      return b.sort-a.sort
+    });
+
+  var gradStyle="background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0%, #F2F2F2), color-stop(2%, #F2F2F2), color-stop(3%, #EDEDED), color-stop(50%, #fff), color-stop(100%, #fff));";
+  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
+  var htmlBlock="";
+  for(var d=0; d<sortedDownloads.length; d++){
+    var downloadItem=sortedDownloads[d];
+    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
+    htmlBlock+=  '<a href="'+downloadItem.link+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
+    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
+    if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
+    htmlBlock+=  downloadItem.title+' - <a href="'+downloadItem.link+'">'+downloadItem.description+'</a>';
+    htmlBlock+='</div></div>';
+    }
+  document.getElementById('totdHolder').innerHTML=htmlBlock; 
+  }
+function updateCqDownloads(){
+  //dbuga('updateCqDownloads()');
+  var sortedDownloads=cqDownloads.sort(function(a, b){
+      // furthest to nearest
+      return b.sort-a.sort
+    });
+
+  var gradStyle="background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0%, #F2F2F2), color-stop(2%, #F2F2F2), color-stop(3%, #EDEDED), color-stop(50%, #fff), color-stop(100%, #fff));";
+  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
+  var htmlBlock="";
+  for(var d=0; d<sortedDownloads.length; d++){
+    var downloadItem=sortedDownloads[d];
+    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
+    htmlBlock+=  '<a href="'+downloadItem.link+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
+    htmlBlock+=  downloadItem.title+'<br />';
+    htmlBlock+=  '<a href="'+downloadItem.link+'">'+downloadItem.description+'</a>';
+    htmlBlock+='</div></div>';
+    if(d>9){d=sortedDownloads.length;}
+    }
+  document.getElementById('cqHolder').innerHTML=htmlBlock; 
+  }
+
 function updateNowPlaying(){
   //dbuga('updateNowPlaying()')
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
@@ -326,18 +656,17 @@ function updatePlaylist(){
     htmlBlock+='</div>';
    }
 
-  document.getElementById('playlistScroller').innerHTML=''+htmlBlock+''; 
+  document.getElementById('playlistHolder').innerHTML=htmlBlock; 
   document.getElementById('playlistHolder').style.width=grid*48+'px'; 
   document.getElementById('playlistHolder').style.height=grid*51+'px'; 
   playlistScrollerTimeout=window.setTimeout("refreshPlaylistHolderScroll()", 100);
   }
-
 var playlistScrollerTimeout;
 function refreshPlaylistHolderScroll(){
   playlistHolderScroll.refresh();
   }
 function populateCalendar(){
-  dbuga('populateCalendar() '+calendar.length);
+  //dbuga('populateCalendar() '+calendar.length);
 
   var gradStyle="background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0%, #F2F2F2), color-stop(2%, #F2F2F2), color-stop(3%, #EDEDED), color-stop(50%, #fff), color-stop(100%, #fff));";
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
@@ -345,28 +674,15 @@ function populateCalendar(){
 
   for(var e=0; e<calendar.length; e++){
     var eventData=calendar[e];
-    var performersText=eventData.performers;
-    var quoteParts=performersText.split('"');
-    var performersFixed=quoteParts[0];
-    for (var q=1; q<quoteParts.length; q++){
-      performersFixed+='"';
-      var prevPart=quoteParts[q-1];
-      var part=quoteParts[q];
-      if(prevPart.indexOf('href=')>-1){
-        dbuga(part);
-        part="javascript:remoteLink('"+part+"');";
-        }
-      performersFixed+=part; 
-      }
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  ''+performersFixed;
+    htmlBlock+=  ''+eventData.performers;
     htmlBlock+=  '<br />'+eventData.venue+'';
     htmlBlock+=  ' &mdash; '+eventData.date;
     htmlBlock+=  '<br /><span style="font-family:akziregular;">'+eventData.time+' '+ eventData.age +'</span>';
     htmlBlock+='</div>';
     }
 
-  document.getElementById('calendarScroller').innerHTML=htmlBlock; 
+  document.getElementById('calendarHolder').innerHTML=htmlBlock; 
   document.getElementById('calendarHolder').style.width=grid*48+'px'; 
   document.getElementById('calendarHolder').style.height=grid*51+'px'; 
   calendarScrollerTimeout=window.setTimeout("refreshCalendarHolderScroll()", 100);
@@ -375,27 +691,27 @@ var calendarScrollerTimeout;
 function refreshCalendarHolderScroll(){
   calendarHolderScroll.refresh();
   }
-
 function getFaqs(){
   faqs=[];
   var feedUrl="http://www.radiok.org/app-faq/";
+  //var feedUrl="app-faq.txt";
   //dbuga('getFaqs()');
   $.ajax({
     url: feedUrl,
-    dataType: "text",        // <=== new bit
+    dataType: "text",        // < new bit
     success: function(data) {parseFaqs(data);}
     });
   //dbuga('getFaqs() completed');
   }
 var faqs=[
   {"q":"What is Radio K?", "a":"Radio K, the award-winning radio station of the University of Minnesota, is nationally recognized as one of the best student-run college radio stations in the country, playing an eclectic variety of independent music both old and new.<br /><br />Radio K educates students, breaks ground in musical programming, and provides cutting-edge cultural coverage through our specialty shows, web content and Culture Queue."},
-  {"q":"How can I contact Radio K?", "a":"Email: <a href=\"javascript:remoteLink('mailto:radiok@umn.edu');\">radiok@umn.edu</a><br /><br />Phone: <a href=\"tel:+16126253500\">612-625-3500</a><br /><br />Web: <a href=\"javascript:remoteLink('http://www.radiok.org/\');\">www.radiok.org</a><br /><br />Mobile:<br /><a href=\"javascript:remoteLink('http://twitter.com/radiok');\"><img src=\"social/twitter.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"javascript:remoteLink('https://www.facebook.com/20658369592'); return false(0);\"><img src=\"social/facebook.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"javascript:remoteLink('http://www.youtube.com/user/RadioK770?feature=watch');\"><img src=\"social/youtube.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"javascript:remoteLink('https://plus.google.com/u/0/106019319997650127214/about');\"><img src=\"social/googleplus.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"javascript:remoteLink('http://www.radiok.org/blogs/new/tag/track%20of%20the%20day');\"><img src=\"social/rss.png\" width=\"socialSize\" height=\"socialSize\" /></a>"},
-  {"q":"How can I keep Radio K playing music?","a":"You can keep your already rad support going by <a href=\"javascript:remoteLink('http://www.radiok.org/donate/');\">donating</a> to the station and becoming a member. And, we like to keep it chill so donating literally any amount makes you a member. Got a spare $10? Throw it our way and we can keep the CDs spinning."},
-  {"q":"How do I get my band's music on Radio K?","a":"Head over to <a href=\"javascript:remoteLink('http://www.radiok.org/about/contact-information/music-submissions/');\">RadioK.org</a>"},
-  {"q":"How can I download the Track of the Day?","a":"Radio K\'s Track of the Day can be found <a href=\"javascript:remoteLink('http://www.radiok.org/blogs/new/tag/track%20of%20the%20day');\">here</a>."},
-  {"q":"What cool things do you have going on?","a":"We love live music even more than we love recorded music&mdash;check out our <a href=\"javascript:remoteLink('http://www.radiok.org/events/');\">Events Calendar</a>."},
+  {"q":"How can I contact Radio K?", "a":"Email: <a href=\"mailto:radiokdj@umn.edu\">radiokdj@umn.edu</a><br /><br />Phone: <a href=\"tel:+16126253500\">612-625-3500</a><br /><br />Web: <a href=\"http://www.radiok.org/\">www.radiok.org</a><br /><br />Mobile:<br /><a href=\"http://twitter.com/radiok\"><img src=\"social/twitter.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"https://www.facebook.com/20658369592\"><img src=\"social/facebook.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"http://www.youtube.com/user/RadioK770?feature=watch\"><img src=\"social/youtube.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"https://plus.google.com/u/0/106019319997650127214/about\"><img src=\"social/googleplus.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"http://www.radiok.org/blogs/new/tag/track%20of%20the%20day\"><img src=\"social/rss.png\" width=\"socialSize\" height=\"socialSize\" /></a>"},
+  {"q":"How can I keep Radio K playing music?","a":"You can keep your already rad support going by <a href=\"http://www.radiok.org/donate/\">donating</a> to the station and becoming a member. And, we like to keep it chill so donating literally any amount makes you a member. Got a spare $10? Throw it our way and we can keep the CDs spinning."},
+  {"q":"How do I get my band's music on Radio K?","a":"Head over to <a href=\"http://www.radiok.org/about/contact-information/music-submissions/\">RadioK.org</a>"},
+  {"q":"How can I download the Track of the Day?","a":"Radio K\'s Track of the Day can be found <a href=\"http://www.radiok.org/blogs/new/tag/track%20of%20the%20day\">here</a>."},
+  {"q":"What cool things do you have going on?","a":"We love live music even more than we love recorded music&mdash;check out our <a href=\"http://www.radiok.org/events/\">Events Calendar</a>."},
   {"q":"When is that awesome local show,<br>Off The Record?","a":"Off The Record is every Friday from 3 p.m. to 5 p.m. CST. Local music and local trivia comin&apos; at you for two hours, not to mention an interview and studio session with a local band during each show!"},
-  {"q":"You wanna be a DJ, too?","a":"University of Minnesota student taking 1 credit or more? If so then just email <a href=\"javascript:remoteLink('mailto:volunteer@radiok.org');\">volunteer@radiok.org</a> and you&apos;ll be on your way to becoming a rich, fabulous, glamorous DJ. (OK, we know those adjectives are, like, kind of an exaggeration but whatever, right?)"},
+  {"q":"You wanna be a DJ, too?","a":"University of Minnesota student taking 1 credit or more? If so then just email <a href=\"mailto:volunteer@radiok.org\">volunteer@radiok.org</a> and you&apos;ll be on your way to becoming a rich, fabulous, glamorous DJ. (OK, we know those adjectives are, like, kind of an exaggeration but whatever, right?)"},
   {"q":"Your Mom listens to commercial radio.<br>What&apos;s the deal with that?","a":"You heard wrong&mdash;our moms totally listen to us. They appreciate the fact that we&apos;re trying to keep &apos;em \"hip and groovy\" (their words, not ours). Real College Radio is for the cutting edge, the risk takers, the people who know that music matters most. That&apos;s you. That&apos;s us. That&apos;s them&mdash;&apos;cause we&apos;ve taught our mothers well."}
 ];
 function parseFaqs(theScrape){
@@ -414,19 +730,7 @@ function parseFaqs(theScrape){
       var contentTemp=contentTempParts[1];
       var contentParts=contentTemp.split('</p></div>');
       var contentText=contentParts[0];
-      var quoteParts=contentText.split('"');
-      var contentFixed=quoteParts[0];
-      for (var q=1; q<quoteParts.length; q++){
-        contentFixed+='"';
-        var prevPart=quoteParts[q-1];
-        var part=quoteParts[q];
-        if(prevPart.indexOf('href=')>-1){
-          part="javascript:remoteLink('"+part+"');";
-          }
-        contentFixed+=part; 
-        //dbuga(part);
-        }
-      var thisEntry={"q":headingText, "a":contentFixed};
+      var thisEntry={"q":headingText, "a":contentText};
       faqs.push(thisEntry);
       //dbuga('<h2>'+headingText+'</h2><p>'+contentText+'</p>');
       }
@@ -437,10 +741,10 @@ var calendar=[];
 function getCalendar(){
   calendar=[];
   var feedUrl="http://www.radiok.org/events/";
-  dbuga('getCalendar()');
+  //dbuga('getCalendar()');
   $.ajax({
     url: feedUrl,
-    dataType: "text",        // <=== new bit
+    dataType: "text",        // < new bit
     success: function(data) {parseCalendar(data);}
     });
   //dbuga('getCalendar() completed');
@@ -480,7 +784,62 @@ function parseCalendar(theScrape){
   //dbuga('parseCalendar completed');
   populateCalendar();
   }
+var snoozeMinutes=0;
+function secondTick(){
+  var nowDate=new Date();
+  var nowMod=nowDate.getHours()*60+nowDate.getMinutes();
+  var sec=nowDate.getSeconds();
+  if(sec<10){sec="0"+sec;}
+  var nowText=minuteOfDayToHour(nowMod)+":"+minuteOfDayToMM(nowMod)+":"+sec;//+" "+minuteOfDayToAmPm(nowMod);
+  var amPmText=minuteOfDayToAmPm(nowMod);
+  if(currentPage=="armed"){
+    if(sleepSeconds>0){
+      sleepSeconds--;
+      var SS=sleepSeconds%60;
+      if(SS<10){SS="0"+SS;}
+      nowText="-"+Math.floor(sleepSeconds/60)+":"+SS;
+      if(sleepSeconds<=0){
+        nowText="SLEEP";
+        playing=false;
+        connecting=false;
+        interrupted=false;
+        buttonOff("listen", "playpause");
+        ////comQueue.push('action=manageStream|mode=stop');
+        window.setTimeout('comTick()', 10); 
+        ////pause();
+        }
+      }
 
+    if((nowMod+1440>=genericGet("alarmMinuteOfDay")+1440+snoozeMinutes)&&(nowMod+1440<genericGet("alarmMinuteOfDay")+1500+snoozeMinutes)){
+      //dbuga('alarm');
+      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Real College Radio";
+      document.getElementById('page_listen_content_djDiv').innerHTML="";
+      buttonOn("listen", "playpause");
+      document.getElementById('page_listen_content_djDiv').innerHTML="st Connecting...";
+      connecting=true;
+      interrupted=false;
+      playing=true;
+      clearInterval(minuteInterval);
+      minuteInterval=setInterval('minuteTick()', 15000);
+      ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
+      ////window.setTimeout('comTick()', 10);
+
+      ////comQueue.push("action=manageSound|channel=0|mode=play|file=sounds/singing.mp3|loop=true");
+      ////comTick();
+
+
+      selectPage("wakeup");
+      }
+    }
+  document.getElementById("page_armed_content_nowtime").innerHTML=nowText;
+  document.getElementById("page_armed_content_nowAmPm").innerHTML=amPmText;
+  document.getElementById("page_wakeup_content_nowtime").innerHTML=nowText;
+  document.getElementById("page_wakeup_content_nowAmPm").innerHTML=amPmText;
+  if((ww!=window.innerWidth)||(wh!=window.innerHeight)){
+    clearInterval(secondInterval);
+    populateContainer();
+    }
+  }
 function dimensionTick(){
   if((ww!=window.innerWidth)||(wh!=window.innerHeight)){
     clearInterval(dimensionInterval);
@@ -493,8 +852,147 @@ var currentPage="";
 function selectCurrentPage(){
   selectPage(currentPage);
   }
+function minuteOfDayToHH(mod){
+  hour=Math.floor(mod/60)%24;
+  if(hour<10){hour="0"+hour;}
+  return hour;
+  }
+function minuteOfDayToHour(mod){
+  var hr=Math.floor(mod/60)%12;
+  if(hr==0){hr=12;}
+  return hr;
+  }
+function minuteOfDayToMin(mod){
+  var min=mod%60;
+  return min;
+  }
+function minuteOfDayToMM(mod){
+  var min=mod%60;
+  if(min<10){min="0"+min;}
+  return min;
+  }
+function minuteOfDayToAmPm(mod){
+  var ampm="PM";
+  if(Math.floor(mod/60)%12==Math.floor(mod/60)%24){ampm="AM";}
+  return ampm;
+  }
+function minuteOfDayToHalf(mod){
+  var ampm=1;
+  if(Math.floor(mod/60)%12==Math.floor(mod/60)%24){ampm=0;}
+  return ampm;
+  }
+var dials=[];
+function dialTick(){
+  //dbug('');
+  //dbuga("mouse: "+mouseX+" "+mouseY);
+
+  if(currentPage=="alarm"){
+    //dbuga("deltaY: "+(mouseY-mouseStartY));
+    updateAlarmDisplay();
+    }
+  }
+var prevDeltaY=0;
+function updateAlarmDisplay(){
+  var pMod=genericGet("alarmMinuteOfDay");
+  //dbuga(pMod+" alarm is set to "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
+  var lineHeight=Math.floor(pages[3].contents[0].lineHeight*grid);
+  var nowDate=new Date();
+  var nowMod=nowDate.getHours()*60+nowDate.getMinutes();
+  if(touchingDial>-1){
+    var deltaY=(mouseY-mouseStartY);
+    var dy=deltaY-prevDeltaY;
+    prevDeltaY=deltaY;
+    var junk=dials[touchingDial].history.shift();
+    dials[touchingDial].history.push(dy);
+    dials[touchingDial].atVal=dials[touchingDial].initVal-(deltaY/lineHeight);
+    if(dials[touchingDial].atVal>dials[touchingDial].maxVal){dials[touchingDial].atVal=dials[touchingDial].maxVal;}
+    if(dials[touchingDial].atVal<0){dials[touchingDial].atVal=0;}
+
+    //dbuga(dials[0].atVal+" "+dials[1].atVal+" "+dials[2].atVal+" "+dials[3].atVal);
+    var list=dials[touchingDial].history;
+    //dbuga(list.join('|'));
+    }
+  else{
+    // go through moving dials
+    for (var d=0; d<dials.length; d++){
+      if(dials[d].prog>0){
+        //dbuga(d+" prog "+dials[d].prog);
+        dials[d].prog-=dials[d].speed;
+        if(dials[d].prog<=0){
+          dials[d].prog=0;
+          //dbug(pMod+" alarm is set to "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
+          }
+        var prog=1-Math.abs(dials[d].prog)*dials[d].prog;
+        dials[d].atVal=dials[d].initVal+prog*(dials[d].destVal-dials[d].initVal);
+        }
+      }
+    }
+  document.getElementById('alarmTimeHourDial').style.top=(.75-dials[0].atVal)*lineHeight+"px";
+  document.getElementById('alarmTimeMinDial').style.top=(.75-dials[1].atVal)*lineHeight+"px";
+  document.getElementById('alarmTimeAmPmDial').style.top=(.75-dials[2].atVal)*lineHeight+"px";
+  ////document.getElementById('sleepTimeDial').style.top=1*(.75-dials[3].atVal)*lineHeight+"px";
+  //dbuga('touchingDial='+touchingDial);
+  if(touchingDial==-1){
+    //dbuga(pMod+" alarm is set to "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
+    }
+
+  }
+var initHistory=[0,0,0,0,0,0,0,0];
+function populateDials(){
+  //dbuga("populateDials() 0");
+
+  var mod=genericGet("alarmMinuteOfDay");
+  dials=[];
+  for (var d=0; d<pages[3].contents.length; d++){
+    var pane=pages[3].contents[d];
+    var dial={"name":pane.name+"Dial", "touchStart":0, "initVal":0, "atVal":0, "destVal":0, "maxVal":0, "speed":0, "prog":0, "history":initHistory, "max":0}; 
+    dials.push(dial);
+    }
+  dials[0].initVal=(minuteOfDayToHour(mod)+11)%12;
+  dials[1].initVal=minuteOfDayToMin(mod);
+  //alert(mod+" "+minuteOfDayToMin(mod));
+  dials[2].initVal=minuteOfDayToHalf(mod);
+  //dials[3].initVal=genericGet("sleepMinutesDefault")/5-1;
+  dials[0].atVal=dials[0].initVal;
+  dials[1].atVal=dials[1].initVal;
+  dials[2].atVal=dials[2].initVal;
+  //dials[3].atVal=dials[3].initVal;
+  dials[0].destVal=dials[0].initVal;
+  dials[1].destVal=dials[1].initVal;
+  dials[2].destVal=dials[2].initVal;
+  //dials[3].destVal=dials[3].initVal;
+  dials[0].maxVal=11;
+  dials[1].maxVal=59;
+  dials[2].maxVal=1;
+  //dials[3].maxVal=12;
+
+  var dialCode='<div id="alarmTimeHourDial" style="position:relative;">1<br />2<br />3<br />4<br />5<br />6<br />7<br />8<br />9<br />10<br />11<br />12</div>';
+  document.getElementById('page_alarm_content_alarmTimeHour').innerHTML=dialCode;
+  var dialCode='<div id="alarmTimeMinDial" style="position:relative; text-align:center;">';
+  for (var m=0; m<60; m++){
+    if(m<10){dialCode+="0"+m+"<br />";}
+    else{dialCode+=m+"<br />";}
+    }
+
+  dialCode+="</div>";
+  document.getElementById('page_alarm_content_alarmTimeMin').innerHTML=dialCode;
+
+  var dialCode='<div id="alarmTimeAmPmDial" style="position:relative; text-align:center;">AM<br />PM</div>';
+  document.getElementById('page_alarm_content_alarmTimeAmPm').innerHTML=dialCode;
+
+  var dialCode='<div id="sleepTimeDial" style="position:relative; text-align:center;">';
+  for (var m=5; m<=60; m+=5){
+    dialCode+=m+"<br />";
+    }
+  dialCode+="</div>";
+
+  ////document.getElementById('page_alarm_content_sleepTime').innerHTML=dialCode;
+  }
 function selectPage(selectedPage){
-  //dbuga(selectedPage);
+  //dbuga("selectPage "+selectedPage);
+  if(selectedPage=="extras"){
+    getDownloads();
+    }
   currentPage=selectedPage;
   for(var p=0; p<pageArray.length; p++){
     if(pageArray[p]==selectedPage){showPage(pageArray[p]);}
@@ -507,7 +1005,7 @@ function selectPage(selectedPage){
 
 function showPage(thePage){
   var pageStyle=document.getElementById('page_'+thePage).style;  
-  pageStyle.left="0px";
+  pageStyle.display="block";
   window.setTimeout('currentOpacity1()', 10);
   }
 function currentOpacity1(){
@@ -523,7 +1021,7 @@ function hidePage(thePage){
 function hideTick(){
   for(var p=1; p<pageArray.length; p++){
     if(pageArray[p]!=currentPage){
-      document.getElementById('page_'+pageArray[p]).style.left="1000px";  
+      document.getElementById('page_'+pageArray[p]).style.display="none";  
       }
     }
   }
@@ -534,7 +1032,7 @@ var leftOffset=0;
 var topOffset=0;
 var grid=32;
 var navDelay=400;
-var imagePath="images_large";
+var imagePath="images_small";
 function populateContainer(){
   hideByPage={};
   buttonMap=[];
@@ -542,10 +1040,9 @@ function populateContainer(){
   ww=window.innerWidth;
   wh=window.innerHeight;
 
-  //dbug(ww);
-  imagePath="images_large";//ipad retina
-  if(ww<1536){imagePath="images_medium";}// ipad, iPhone retina can handle 768
-  if(ww<640){imagePath="images_small";}//iphone, quarter scale is 384
+  imagePath="images_small";//ipad retina
+  //if(ww<1536){imagePath="images_medium";}// ipad, iPhone retina can handle 768
+  //if(ww<640){imagePath="images_small";}//iphone, quarter scale is 384
   //dbuga(imagePath);
   var wAspect=ww/wh;
   leftOffset=0;
@@ -568,14 +1065,20 @@ function populateContainer(){
     leftOffset=(ww-cw)/2;
     grid=cw/48;
     }
+  document.getElementById('debugDiv').style.top=grid*6+"px";
+  document.getElementById('wrapper').style.backgroundSize=grid*4+"px";
   document.getElementById('container').style.width=cw+"px";
   document.getElementById('container').style.height=ch+"px";
   document.getElementById('container').style.left=leftOffset+"px";
   document.getElementById('container').style.top=topOffset+"px";
 
   var htmlString="";
+
   for(var p=0; p<pages.length; p++){
+
     page=pages[p];
+    //dbuga("populateContainer() "+page.name);
+
     heightsByPage[page.name]=grid*page.height;
     hideStyle='top:'+(grid*page.hideTop+page.hideTopMargin*topOffset)+'px; left:'+(grid*page.hideLeft+page.hideLeftMargin*leftOffset)+'px; opacity:'+page.hideOpac+';';
     htmlString+='<div id="page_'+page.name+'" class="pages" style="background-image:url('+imagePath+'/bg_'+page.name+'.jpg); width:'+ grid*48 +'px; height:'+ grid*page.height +'px; '+hideStyle+'">';
@@ -591,8 +1094,8 @@ function populateContainer(){
         }
       else{
         buttonMap.push({"page":page.name, "name":button.name, "left":grid*button.left, "right":grid*button.left+grid*button.width, "top":grid*button.top, "bottom":grid*button.top+grid*button.height});
-        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'" class="buttons" style="background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_off.png); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:'+ grid*button.left +'px; top:'+ grid*button.top +'px;">';
-        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'_on" class="buttons" style="opacity:0; background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_on.png); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:0px; top:0px;">';
+        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'" class="buttons" style="background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_off.png?1); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:'+ grid*button.left +'px; top:'+ grid*button.top +'px;">';
+        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'_on" class="buttons" style="opacity:0; background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_on.png?1); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:0px; top:0px;">';
         htmlString+='</div>'
         htmlString+='</div>'
         }
@@ -601,7 +1104,7 @@ function populateContainer(){
     for(var c=0; c<contents.length; c++){
       content=contents[c];
       htmlString+='<div id="page_'+page.name+'_content_'+content.name+'" style="overflow:hidden; ';
-      htmlString+='width:'+ grid*content.width +'px; height:'+ grid*content.height +'px;  line-height:'+ grid*content.lineHeight +'px;  ';
+      htmlString+='width:'+ grid*content.width +'px; height:'+ grid*content.height +'px;  line-height:'+ Math.floor(grid*content.lineHeight) +'px;  ';
       htmlString+='font-size:'+ grid*content.fontSize +'px; text-align:'+content.textAlign+'; ';
       htmlString+='color:'+content.color +'; left:'+grid*content.left+'px;  ';
       htmlString+='font-family:'+ content.fontFamily +'; top:'+ grid*content.top +'px;">';
@@ -611,8 +1114,11 @@ function populateContainer(){
     htmlString+='</div>'
     }
   document.getElementById('container').innerHTML=htmlString;
+  clearInterval(secondInterval);
   clearInterval(dimensionInterval);
   dimensionInterval=setInterval('dimensionTick()', 1000);
+  secondInterval=setInterval('secondTick()', 1000);
+  populateDials();
   selectCurrentPage();
   resultsHolderScroll=new iScroll('resultsHolder');
   playlistHolderScroll=new iScroll('playlistHolder');
@@ -629,7 +1135,7 @@ function populateFaqs(){
     a=a.replace(/socialSize/g, (7*grid)+"px");
     htmlString+='<div id="question_'+f+'" class="questionHolder" style="width:'+48*grid+'px; max-height:'+10*grid+'px; '+grad+'">';
     htmlString+=  '<div id="twistie_'+f+'" class="twistie" style="padding-top:'+1.1*grid+'px; padding-bottom:'+1.1*grid+'px; width:'+40*grid+'px; ';
-    htmlString+=  'padding-left:'+grid*3+'px; padding-right:'+grid*6+'px; line-height:'+2.4*grid+'px; font-size:'+1.8*grid+'px; ';
+    htmlString+=  'padding-left:'+grid*3+'px; padding-right:'+grid*6+'px; line-height:'+2.4*grid+'px; font-size:'+1.9*grid+'px; ';
     htmlString+=  'background-image:url('+imagePath+'/page_faqs_button_twistie_on.png); background-size:'+7*grid+'px '+7*grid+'px;">'+q+'</div>'; 
     htmlString+='</div>'
     answersString+='<div id="answer_'+f+'" class="answer"  style="width:'+40*grid+'px; margin-left:'+grid*3+'px; top:'+grid*10+'px; line-height:'+2.6*grid+'px; font-size:'+2*grid+'px;">'+a+'</div>';
@@ -644,7 +1150,7 @@ function populateFaqs(){
   htmlString+=  'padding-bottom:'+1*grid+'px; width:'+44*grid+'px; ';
   htmlString+=  'padding-left:'+grid*3+'px; padding-right:'+grid*2+'px; ';
   htmlString+=  'line-height:'+1.8*grid+'px; font-size:'+1.6*grid+'px;">';
-  htmlString+=  '&copy; Regents of the University of Minnesota 2013.<br>All rights reserved. Developed by <a href="javascript:remoteLink(\'http://jambots.com\');">Jambots.com</a>'; 
+  htmlString+=  '&copy; Regents of the University of Minnesota 2013.<br>All rights reserved. Developed by <a href="http://jambots.com">Jambots.com</a>'; 
   htmlString+='</div>'
   document.getElementById('page_faqs_content_regentsDiv').innerHTML=htmlString;
   }
@@ -710,18 +1216,52 @@ var pages=[
     {"name":"playpause", "top":38, "left":12, "height":12, "width":24}
   ],
   "contents":[
-    {"name":"nowPlayingDiv", "top":29.5, "left":1, "width":46, "height":8, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":""},
+    {"name":"nowPlayingDiv", "top":29.5, "left":1, "width":46, "height":8, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"Real College Radio"},
     {"name":"djDiv", "top":51, "left":1, "width":46, "height":8, "lineHeight":2.5, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":""}
   ]
 },
 {"name":"more", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
-    {"name":"calendar", "top":11, "left":9, "height":6, "width":30},
-    {"name":"faqs", "top":18, "left":9, "height":6, "width":30},
-    {"name":"settings", "top":25, "left":9, "height":6, "width":30}
+    {"name":"extras", "top":11, "left":9, "height":6, "width":30},
+    {"name":"calendar", "top":18, "left":9, "height":6, "width":30},
+    {"name":"alarm", "top":25, "left":9, "height":6, "width":30},
+    {"name":"settings", "top":32, "left":9, "height":6, "width":30},
+    {"name":"faqs", "top":39, "left":9, "height":6, "width":30}
   ],
   "contents":[
+  ]
+},
+{"name":"alarm", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
+  "buttons":[
+    {"name":"cancel", "top":0, "left":36, "height":7, "width":12},
+    {"name":"timeset", "top":21, "left":9, "height":12, "width":30},
+    {"name":"set", "top":35, "left":9, "height":6, "width":30},
+  ],
+  "contents":[
+    {"name":"alarmTimeHour", "top":22, "left":15, "width":6, "height":10, "lineHeight":4, "fontSize":4, "fontFamily":"akzibold", "color":"black", "textAlign":"right", "defaultText":"hh"},
+    {"name":"alarmTimeMin", "top":22, "left":21, "width":6, "height":10, "lineHeight":4, "fontSize":4, "fontFamily":"akzibold", "color":"black", "textAlign":"left", "defaultText":"mm"},
+    {"name":"alarmTimeAmPm", "top":22, "left":27, "width":8, "height":10, "lineHeight":4, "fontSize":4, "fontFamily":"akzibold", "color":"black", "textAlign":"center", "defaultText":"ampm"},
+  ]
+},
+{"name":"armed", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":64,
+  "buttons":[
+    {"name":"cancelalarm", "top":17, "left":9, "height":6, "width":30},
+  ],
+  "contents":[
+    {"name":"nowtime", "top":30, "left":8, "width":32, "height":14, "lineHeight":8, "fontSize":8, "fontFamily":"akzilight", "color":"#fff", "textAlign":"center", "defaultText":"00:00:00"},
+    {"name":"nowAmPm", "top":34, "left":39, "width":8, "height":7, "lineHeight":4, "fontSize":2.9, "fontFamily":"akzilight", "color":"#fff", "textAlign":"center", "defaultText":"AM"},
+    {"name":"alarmtext", "top":47, "left":1, "width":46, "height":12, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzilight", "color":"white", "textAlign":"center", "defaultText":"alarmtext"}
+  ]
+},
+{"name":"wakeup", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":64,
+  "buttons":[
+    {"name":"alarmoff", "top":17, "left":9, "height":6, "width":30},
+    {"name":"snooze", "top":47, "left":9, "height":6, "width":30},
+  ],
+  "contents":[
+    {"name":"nowtime", "top":30, "left":8, "width":32, "height":14, "lineHeight":8, "fontSize":8, "fontFamily":"akzilight", "color":"#fff", "textAlign":"center", "defaultText":"00:00:00"},
+    {"name":"nowAmPm", "top":34, "left":39, "width":8, "height":7, "lineHeight":4, "fontSize":2.9, "fontFamily":"akzilight", "color":"#fff", "textAlign":"center", "defaultText":"AM"}
   ]
 },
 {"name":"shop", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
@@ -767,6 +1307,45 @@ var pages=[
     {"name":"calendar", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="calendarHolder"><div id="calendarScroller"></div></div>'}
   ]
 },
+{"name":"extras", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "buttons":[
+    {"name":"done", "top":0, "left":39, "height":7, "width":9},
+    {"name":"cq", "top":9, "left":2, "height":11, "width":11},
+    {"name":"totd", "top":21, "left":2, "height":11, "width":11},
+    {"name":"wrs", "top":33, "left":2, "height":11, "width":11},
+    {"name":"vc", "top":45, "left":2, "height":11, "width":11},
+  ],
+  "contents":[
+    {"name":"cqDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"CULTURE QUEUE<br />Radio K's award-winning Arts and Culture program, dedicated to telling stories about the many wonders of the Twin Cities that you won't hear anywhere else."},
+    {"name":"totdDesc", "top":21, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"TRACK OF THE DAY<br />Every day Radio K offers up a fresh new track for you to download. It's just one more way that Real College Radio makes Real Life (a little more) Rockin'."},
+    {"name":"wrsDesc", "top":33, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"WEEKLY RELEASE SPOTLIGHT<br />Each week we comb through mountains of new music to find that one perfect album that we (and you) almost missed."},
+    {"name":"vcDesc", "top":45, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"VINYL CLOSET<br />A digitized archive of Studio K performances from 1994 to 2006 that feature seminal Minnesota artists that have left an indelible mark on the Minnesota music scene."},
+  ]
+},
+{"name":"totd", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "buttons":[
+    {"name":"done", "top":0, "left":39, "height":7, "width":9},
+  ],
+  "contents":[
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="totdHolder" style="width:100%; height:100%; overflow:auto; background-color:white;"></div>'}
+  ]
+},
+{"name":"wrs", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "buttons":[
+    {"name":"done", "top":0, "left":39, "height":7, "width":9},
+  ],
+  "contents":[
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="wrsHolder" style="width:100%; height:100%; overflow:auto; background-color:white;"></div>'}
+  ]
+},
+{"name":"cq", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "buttons":[
+    {"name":"done", "top":0, "left":39, "height":7, "width":9},
+  ],
+  "contents":[
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="cqHolder" style="width:100%; height:100%; overflow:auto; background-color:white;"></div>'}
+  ]
+},
 {"name":"faqs", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9}
@@ -776,34 +1355,18 @@ var pages=[
     {"name":"regentsDiv", "top":53, "left":0, "height":5, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":"How do I become a rich and<br>famous Radio K DJ?"}
   ]
 }];
+// test broken button
+//    {"name":"broken", "top":28, "left":9, "height":6, "width":30}
+
 function dbuga(theString){
-  if(debugging){
-    document.getElementById('debugDiv').style.display="block";
-    document.getElementById('debugDiv').style.top="140px";
-    document.getElementById('debugDiv').innerHTML+=theString+"<br />";
-    }
-  else{
-    document.getElementById('debugDiv').style.display="none";
-    }
+  document.getElementById('debugDiv').style.display="block";
+  document.getElementById('debugDiv').innerHTML+="<br />"+theString;
   }
 
 function dbug(theString){
-  if(debugging){
-    document.getElementById('debugDiv').innerHTML=theString; 
-    }
+  document.getElementById('debugDiv').style.display="block";
+  document.getElementById('debugDiv').innerHTML=theString;
   }
-
-function gestureStart(event) {
-  //  event.preventDefault(); 
-  }
-function gestureChange(event) {
-  //  event.preventDefault(); 
-  }
-
-function gestureEnd(event) {
-  //  event.preventDefault(); 
-  }
-
 function rnd(theSeed){
   //return 0;
   return Math.floor(Math.random()*theSeed);
@@ -813,47 +1376,115 @@ function range(theRange){
   return rnd(theRange)-theRange/2;
   }
 
+function gestureStart(event) {
+  //event.preventDefault(); 
+  }
+function gestureChange(event) {
+  //event.preventDefault(); 
+  }
+function gestureEnd(event) {
+  //event.preventDefault(); 
+  }
+
 function touchCancel(event){
   event.preventDefault(); 
   }
+
 function touchStart(event){
+  //dbug('touchStart(event) touchingDial='+touchingDial);
+  mouseX=event.touches[0].pageX;
+  mouseY=event.touches[0].pageY;
   //event.preventDefault(); 
   handleTouchEvent(event);
   }
+function mousedown(e){
+  //dbug('mousedown(e) touchingDial='+touchingDial);
+  mouseX=e.pageX;
+  mouseY=e.pageY;
+  //dbug('moused '+ e.target.id);
+  handleTouchEvent({"type":"touchstart", "touches":[{"pageX":e.clientX, "pageY":e.clientY, "target":e.target}]});
+  }
+
+function mousemove(e){
+  mouseX=e.pageX;
+  mouseY=e.pageY;
+  }
 function touchMove(event){
-  if((currentPage !="playlist")&&(currentPage !="calendar")&&(currentPage !="shop")){
+  if((currentPage !="totd")&&(currentPage !="wrs")&&(currentPage !="cq")&&(currentPage !="playlist")&&(currentPage !="calendar")&&(currentPage !="shop")){
     event.preventDefault();
     }
+  if(currentPage =="alarm"){
+    mouseX=event.touches[0].pageX;
+    mouseY=event.touches[0].pageY; 
+    }
   if(lastTouchId.indexOf("page_")>-1){
-    //dbuga("lastTouchId="+lastTouchId);
     event.preventDefault();
     }
   }
+
 function touchEnd(event){
+  //dbuga('touchEnd(event) touchingDial='+touchingDial);
   //event.preventDefault();
-  handleTouchEvent(event);
+  if(touchingDial==-1){
+    handleTouchEvent(event);
+    }
+  else{
+    endDialTouch();
+    }
   }
 function moused(e){
   //dbuga('moused '+ e.target.id);
   if(e.target.id=="stateDiv"){dbug('');}
   //handleTouchEvent({"type":"touchstart", "touches":[{"pageX":e.clientX, "pageY":e.clientY, "target":e.target}]});
   }
+
+var touchingDial=-1;
+
+function mouseup(e){
+  //dbuga('mouseup(e) touchingDial='+touchingDial);
+  endDialTouch();
+  }
+function endDialTouch(){
+  //dbuga(' -- endDialTouch() touchingDial='+touchingDial);
+  if(touchingDial>-1){
+
+    //alert('mouseup');
+    //set up inertial docking
+    dials[touchingDial].initVal=dials[touchingDial].atVal;
+    dials[touchingDial].speed=1/20;
+    var totalDelta=0;
+    for (var h=0; h<dials[touchingDial].history.length; h++){
+      totalDelta+=dials[touchingDial].history[h];
+      }
+    var toss=0-totalDelta/(grid*4);
+    //alert(toss);
+    dials[touchingDial].destVal=Math.floor(dials[touchingDial].initVal+toss+.5);
+    dials[touchingDial].prog=1;
+    if(dials[touchingDial].destVal<0){dials[touchingDial].destVal=0;}
+    if(dials[touchingDial].destVal>dials[touchingDial].maxVal){dials[touchingDial].destVal=dials[touchingDial].maxVal;}
+    var hour=(dials[0].destVal+1)%12;
+    genericSet("alarmMinuteOfDay", 60*hour+dials[1].destVal+dials[2].destVal*60*12);
+    touchingDial=-1;
+    }
+  }
+
 function buttonOn(thePage, theButton){
   document.getElementById('page_'+thePage+'_button_'+theButton+'_on').style.opacity="1";
   }
 function buttonOff(thePage, theButton){
   document.getElementById('page_'+thePage+'_button_'+theButton+'_on').style.opacity="0";
   }
+var urlByQuality={"low":"http://radiokstreams.cce.umn.edu:8056", "medium":"http://radiokstreams.cce.umn.edu:8128", "high":"http://radiokstreams.cce.umn.edu:8256", "higher":"http://radiokstreams.cce.umn.edu:8256", "broken":"http://radiokstreams.cce.umn.edu:8168"};
 function shop(artist, album, song){
   //dbuga("shop("+artist+", "+album+", "+song+")");
   selectPage("shop");
   var artistAlbumSong=artist+" "+album+" "+song;
   var terms=artistAlbumSong.replace(/ /g, "+");
-  document.getElementById('resultsScroller').innerHTML="searching: "+artist+"<br>"+album;
+  document.getElementById('resultsHolder').innerHTML="searching: "+artist+"<br>"+album;
   var feedUrl="https://itunes.apple.com/search?limit=20&term="+terms;
   $.ajax({
     url: feedUrl,
-    dataType: "text",        // <=== new bit
+    dataType: "text",        //  new bit
     success: function(data) {parseItunesResults(data);}
     });
   }
@@ -888,16 +1519,16 @@ function parseItunesResults(theData){
       var result=results[r];
       //dbuga(result.artistName+" "+result.collectionName);
       htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-      htmlBlock+=  '<a href="javascript:remoteLink(\''+result.collectionViewUrl+'\'); return false;"><img src="'+result.artworkUrl100+'" style="'+imgStyle+'" /></a>';
+      htmlBlock+=  '<a href="'+result.collectionViewUrl+'"><img src="'+result.artworkUrl100+'" style="'+imgStyle+'" /></a>';
       htmlBlock+=  '<br /><span style="font-family:akziregular;">'+result.artistName+'</span>';
-      htmlBlock+=  '<br /><a href="javascript:remoteLink(\''+result.collectionViewUrl+'\'); return false;"><span style="">'+result.collectionName+'</span></a>';
+      htmlBlock+=  '<br /><a href="'+result.collectionViewUrl+'"><span style="">'+result.collectionName+'</span></a>';
       htmlBlock+='</div>';
       }
     }
   else{
     htmlBlock="Sorry, no items found.";
     }
-  document.getElementById('resultsScroller').innerHTML=htmlBlock;
+  document.getElementById('resultsHolder').innerHTML=htmlBlock;
   document.getElementById('resultsHolder').style.width=grid*48+'px'; 
   document.getElementById('resultsHolder').style.height=grid*51+'px'; 
   resultsScrollerTimeout=window.setTimeout("refreshResultsHolderScroll()", 100);
@@ -911,11 +1542,164 @@ function refreshResultsHolderScroll(){
 var resultsHolderScroll;
 var calendarHolderScroll;
 var playlistHolderScroll;
+function alarmStatusChanged(alarmIsSet){
+  //dbuga("app says alarmStatusChanged("+alarmIsSet+")");
+  }
+var mouseX=0;
+var mouseY=0;
+var mouseStartX=0;
+var mouseStartY=0;
+var alarmFailsafeTimeout;
 function remoteLink(theUrl){
   window.plugins.childBrowser.openExternal(theUrl);
   }
+
 function handleButton(pageName, buttonName){
-  //dbug('handleButton('+pageName+', '+buttonName+')');
+
+  if(pageName=="alarm"){
+    if(buttonName=="timeset"){
+      mouseStartX=mouseX;
+      mouseStartY=mouseY;
+      var buttLeft=pages[3].buttons[1].left*grid+leftOffset;
+      var buttWidth=pages[3].buttons[1].width*grid;
+      deltaX=mouseX-buttLeft;
+      var xFrac=deltaX/buttWidth;
+      touchingDial=1;
+      if(xFrac<.45){touchingDial=0;}
+      if(xFrac>.65){touchingDial=2;}
+      //alert("mouseX="+ mouseX+" buttLeft="+ buttLeft+ " deltax:"+deltaX+" / buttWidth:"+buttWidth+" = xFrac:"+xFrac);
+
+      var mod=genericGet("alarmMinuteOfDay");
+      if(touchingDial!=0){
+        dials[0].initVal=(minuteOfDayToHour(mod)+11)%12;
+        }
+      else{
+        dials[0].initVal=dials[0].atVal;
+        }
+
+      if(touchingDial!=1){
+        dials[1].initVal=minuteOfDayToMin(mod);
+        }
+      else{
+        dials[1].initVal=dials[1].atVal;
+        }
+      if(touchingDial!=2){
+        dials[2].initVal=minuteOfDayToHalf(mod);
+        }
+      else{
+        dials[2].initVal=dials[2].atVal;
+        }
+      dials[0].atVal=dials[0].initVal;
+      dials[1].atVal=dials[1].initVal;
+      dials[2].atVal=dials[2].initVal;
+      dials[0].destVal=dials[0].initVal;
+      dials[1].destVal=dials[1].initVal;
+      dials[2].destVal=dials[2].initVal;
+
+      dials[0].history=initHistory;
+      dials[1].history=initHistory;
+      dials[2].history=initHistory;
+        
+      }
+    if(buttonName=="sleepset"){
+      mouseStartX=mouseX;
+      mouseStartY=mouseY;
+      touchingDial=3;
+
+      dials[3].initVal=dials[3].atVal;
+      dials[3].atVal=dials[3].initVal;
+      dials[3].destVal=dials[3].initVal;
+      dials[3].history=initHistory;
+      }
+    if(buttonName=="set"){
+      sleepSeconds=0;
+      var mil=""+minuteOfDayToHH(genericGet("alarmMinuteOfDay"))+minuteOfDayToMM(genericGet("alarmMinuteOfDay"));
+      buttonOn("alarm", "set");
+      var textTime=minuteOfDayToHour(genericGet("alarmMinuteOfDay"))+":"+minuteOfDayToMM(genericGet("alarmMinuteOfDay"))+" "+minuteOfDayToAmPm(genericGet("alarmMinuteOfDay"));
+      document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
+      window.setTimeout('buttonOff("alarm", "set"); selectPage("armed");', navDelay);
+      snoozeMinutes=0;
+
+      playing=false;
+      connecting=false;
+      interrupted=false;
+      buttonOff("listen", "playpause");
+      ////comQueue.push('action=manageStream|mode=stop');
+      ////window.setTimeout('comTick()', 10); 
+
+      //dbug("action=setAlarm|minute="+mil);
+      ////comQueue.push("action=manageSound|channel=0|mode=play|file=sounds/singing.mp3|loop=false");
+      ////comTick();
+      }
+    if(buttonName=="sleep"){
+      snoozeMinutes=0;
+      sleepSeconds=genericGet("sleepMinutesDefault")*60;
+      var textTime=minuteOfDayToHour(genericGet("alarmMinuteOfDay"))+":"+minuteOfDayToMM(genericGet("alarmMinuteOfDay"))+" "+minuteOfDayToAmPm(genericGet("alarmMinuteOfDay"));
+      document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
+      buttonOn("alarm", "sleep");
+      window.setTimeout('buttonOff("alarm", "sleep");  selectPage("armed");', navDelay);
+      buttonOn("listen", "playpause");
+      document.getElementById('page_listen_content_djDiv').innerHTML="sl Connecting...";
+      if(playing == false){
+        connecting=true;
+        interrupted=false;
+        playing=true;
+        clearInterval(minuteInterval);
+        minuteInterval=setInterval('minuteTick()', 15000);
+        ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
+        ////window.setTimeout('comTick()', 10);
+        }
+      }
+    if(buttonName=="cancel"){
+      buttonOn("alarm", "cancel");
+      window.setTimeout('buttonOff("alarm", "cancel"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
+      }
+    //dbuga('handleButton('+pageName+', '+buttonName+')');
+    }
+  if(pageName=="wakeup"){
+    if(buttonName=="alarmoff"){
+
+      playing=false;
+      connecting=false;
+      interrupted=false;
+      buttonOff("listen", "playpause");
+      ////comQueue.push('action=manageStream|mode=stop');
+      ////comQueue.push("action=manageSound|mode=pause|channel=0");
+      ////window.setTimeout('comTick()', 10); 
+
+      buttonOn("wakeup", "alarmoff");
+      window.setTimeout('buttonOff("wakeup", "alarmoff"); selectPage("listen");', navDelay);
+      }
+    if(buttonName=="snooze"){
+
+      var nowDate=new Date();
+      var nowMod=nowDate.getHours()*60+nowDate.getMinutes();
+
+      snoozeMinutes=nowMod-genericGet("alarmMinuteOfDay")+5;
+
+
+      var textTime=minuteOfDayToHour(genericGet("alarmMinuteOfDay")+snoozeMinutes)+":"+minuteOfDayToMM(genericGet("alarmMinuteOfDay")+snoozeMinutes)+" "+minuteOfDayToAmPm(genericGet("alarmMinuteOfDay")+snoozeMinutes);
+      document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
+
+        playing=false;
+        connecting=false;
+        interrupted=false;
+        buttonOff("listen", "playpause");
+        ////comQueue.push('action=manageStream|mode=stop');
+        ////comQueue.push("action=manageSound|mode=pause|channel=0");
+
+        ////window.setTimeout('comTick()', 10);
+
+      buttonOn("wakeup", "snooze");
+      window.setTimeout('buttonOff("wakeup", "snooze"); selectPage("armed");', navDelay);
+      }
+    }
+  if(pageName=="armed"){
+    if(buttonName=="cancelalarm"){
+      buttonOn("armed", "cancelalarm");
+      window.setTimeout('buttonOff("armed", "cancelalarm"); selectPage("alarm");', navDelay);
+      }
+    }
   if(pageName=="footnav"){
     if(buttonName=="listen"){
       selectPage("listen");
@@ -930,7 +1714,7 @@ function handleButton(pageName, buttonName){
     if(buttonName=="donate"){
       buttonOn("footnav", "donate");
       window.setTimeout('buttonOff("footnav", "donate")', navDelay*2);
-      window.plugins.childBrowser.openExternal('http://www.radiok.org/donate/');
+      window.location.href="http://www.radiok.org/donate/";
       }
     }
   if(pageName=="listen"){
@@ -960,6 +1744,16 @@ function handleButton(pageName, buttonName){
       buttonOn("more", "settings");
       window.setTimeout('buttonOff("more", "settings"); selectPage("settings");', navDelay);
       }
+    if(buttonName=="extras"){
+      buttonOff("footnav", "listen");
+      buttonOn("more", "extras");
+      window.setTimeout('buttonOff("more", "extras"); selectPage("extras");', navDelay);
+      }
+    if(buttonName=="alarm"){
+      buttonOff("footnav", "listen");
+      buttonOn("more", "alarm");
+      window.setTimeout('buttonOff("more", "alarm"); selectPage("alarm");', navDelay);
+      }
     if(buttonName=="faqs"){
       buttonOff("footnav", "listen");
       buttonOn("more", "faqs");
@@ -985,6 +1779,45 @@ function handleButton(pageName, buttonName){
       window.setTimeout('buttonOff("shop", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
       }
     }
+  if(pageName=="extras"){
+    if(buttonName=="done"){
+      buttonOn("extras", "done");
+      window.setTimeout('buttonOff("extras", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
+      }
+    if(buttonName=="totd"){
+      buttonOn("extras", "totd");
+      window.setTimeout('buttonOff("extras", "totd"); selectPage("totd");', navDelay);
+      }
+    if(buttonName=="wrs"){
+      buttonOn("extras", "wrs");
+      window.setTimeout('buttonOff("extras", "wrs"); selectPage("wrs");', navDelay);
+      }
+    if(buttonName=="cq"){
+      buttonOn("extras", "cq");
+      window.setTimeout('buttonOff("extras", "cq"); selectPage("cq");', navDelay);
+      }
+    if(buttonName=="vc"){
+      window.setTimeout('window.location.href="http://www.radiok.org/vinylcloset/"', navDelay);
+      }
+    }
+  if(pageName=="totd"){
+    if(buttonName=="done"){
+      buttonOn("totd", "done");
+      window.setTimeout('buttonOff("totd", "done"); selectPage("extras");', navDelay);
+      }
+    }
+  if(pageName=="wrs"){
+    if(buttonName=="done"){
+      buttonOn("wrs", "done");
+      window.setTimeout('buttonOff("wrs", "done"); selectPage("extras");', navDelay);
+      }
+    }
+  if(pageName=="cq"){
+    if(buttonName=="done"){
+      buttonOn("cq", "done");
+      window.setTimeout('buttonOff("cq", "done"); selectPage("extras");', navDelay);
+      }
+    }
   if(pageName=="settings"){
     if(buttonName=="faqs"){
       buttonOn("settings", "faqs");
@@ -995,11 +1828,40 @@ function handleButton(pageName, buttonName){
       window.setTimeout('buttonOff("settings", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
       }
     if(buttonName=="medium"){
-      mediumSelected();
+      buttonOn("settings", "medium");
+      buttonOff("settings", "higher");
+      //buttonOff("settings", "broken");
+      genericSet("quality", "medium");
+      requestSavePersistenceData();
+      if(playing){
+        ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
+        ////comTick();
+        }
       }
     if(buttonName=="higher"){
-      highSelected();
+      buttonOff("settings", "medium");
+      buttonOn("settings", "higher");
+      //buttonOff("settings", "broken");
+      genericSet("quality", "higher");
+      requestSavePersistenceData();
+      if(playing){
+        ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
+        ////comTick();
+        }
       }
+/*
+    if(buttonName=="broken"){
+      buttonOff("settings", "medium");
+      buttonOff("settings", "higher");
+      buttonOn("settings", "broken");
+      genericSet("quality", "broken");
+      requestSavePersistenceData();
+      if(playing){
+        ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
+        ////comTick();
+        }
+      }
+*/
     }
   if(pageName=="faqs"){
     if(buttonName=="done"){
@@ -1026,17 +1888,17 @@ function handleButton(pageName, buttonName){
     if(buttonName=="phone"){
       buttonOn("request", "phone");
       window.setTimeout('buttonOff("request", "phone")', navDelay*2);
-      window.plugins.childBrowser.openExternal('tel:+16126264770');
+      window.location='tel:+16126264770';
       }
     if(buttonName=="email"){
       buttonOn("request", "email");
       window.setTimeout('buttonOff("request", "email")', navDelay*2);
-      window.plugins.childBrowser.openExternal('mailto:request@radiok.org?subject=Request from Radio K app');
+      window.location='mailto:request@radiok.org?subject=Request from Radio K app';
       }
     if(buttonName=="tweet"){
       buttonOn("request", "tweet");
       window.setTimeout('buttonOff("request", "tweet")', navDelay*2);
-      window.plugins.childBrowser.openExternal('https://twitter.com/intent/tweet?source=webclient&text=%40RadioK+%23Request');
+      window.location='https://twitter.com/intent/tweet?source=webclient&text=%40RadioK+%23Request';
       }
     }
   if(pageName=="playlist"){
@@ -1048,17 +1910,13 @@ function handleButton(pageName, buttonName){
     }
   }
 
-var urlByQuality={
-  "low":"http://radiokstreams.cce.umn.edu:8056", 
-  "medium":"http://radiokstreams.cce.umn.edu:8128", 
-  "high":"http://radiokstreams.cce.umn.edu:8256",
-  "higher":"http://radiokstreams.cce.umn.edu:8256"
-  };
+var connecting=false;
+var connectFails=0;
 
 var bufferTimeout;
 function minuteTick(){
-  //dbuga('minuteTick() uiPlaying='+uiPlaying+' interrupted='+interrupted);
-  //if((uiPlaying==true)&&(mediaStatusNum==true)){
+  //dbuga('minuteTick() playing='+playing+' interrupted='+interrupted);
+  //if((playing==true)&&(streamStatus==true)){
   //  updateNowPlaying();
   //  }
   getRecentSongs();
@@ -1089,9 +1947,49 @@ function stopMedia(){
 function playMedia(){
   mediaStack[0].play();
   }
+var noStatusTimeout;
+/*
+function togglePlaying(){
+  //dbuga('togglePlaying() ');
+  document.getElementById('page_listen_content_djDiv').innerHTML="";
+  if(playing){
+    playing=false;
+    connecting=false;
+    interrupted=false;
+    buttonOff("listen", "playpause");
+    ////comQueue.push('action=manageStream|mode=stop');
+    ////window.setTimeout('comTick()', 10);
+    }
+  else{
+    buttonOn("listen", "playpause");
+    document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
+    clearTimeout(noStatusTimeout);
+    noStatusTimeout=setTimeout('noStatusTick()', 10000);
+    connecting=true;
+    interrupted=false;
+    playing=true;
+    clearInterval(minuteInterval);
+    minuteInterval=setInterval('minuteTick()', 15000);
+    ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
+    ////window.setTimeout('comTick()', 10);
+    }
+  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Real College Radio";
+  }
+*/
+/*
+function retryTick(){
+  //dbuga('retryTick()');
+  if((connecting==false)&&(playing==true)&&(streamStatus==false)){
+    document.getElementById('page_listen_content_djDiv').innerHTML="Retrying...";
+    connecting=true;
+    interrupted=false;
+    ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
+    ////comTick();
+    }
+  }
+*/
 var lastTouchId="";
 function handleTouchEvent(e){
-  //dbuga("e.type="+e.type);
   if(e.type=="touchstart"){
     if(e.touches.length==3){dbug('');}
     px=e.touches[0].pageX-leftOffset;
@@ -1118,6 +2016,16 @@ function handleTouchEvent(e){
         if((px>area.left)&&(px<area.right)&&(py>area.top)&&(py<area.bottom)){
           if((currentPage==area.page)||(py>heightsByPage[currentPage])){// on page or footnav
             //dbuga('page:'+area.page+' name:'+area.name);
+            if(area.name.indexOf('timeset')>-1){
+              var mid=(area.top+area.bottom)/2;
+              var tenth=Math.floor(10*(px-area.left)/(area.right-area.left));
+              var pol=-1;
+              if(mid>py){pol=1}
+              if(tenth<4){alarmIncDec=pol*60;}
+              if((tenth==4)||(tenth==5)){alarmIncDec=pol;}
+              if(tenth>5){alarmIncDec=12*pol*60;}
+              }
+            //dbuga(area.page+" "+area.name);
             handleButton(area.page, area.name);
             }
           }
@@ -1125,7 +2033,9 @@ function handleTouchEvent(e){
       }
     }
   }
+var alarmIncDec=1;
 document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
 </script>
 </head>
 <body onload="init()" onmousedown="moused(event);" ontouchstart="touchStart(event);" ontouchcancel="touchCancel(event);">
