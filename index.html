@@ -915,9 +915,11 @@ function updateAlarmDisplay(){
     dbug("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
     }
   else{
+    var moved=false;
     // go through moving dials
     for (var d=0; d<dials.length; d++){
       if(dials[d].prog>0){
+        moved=true;
         //dbuga(d+" prog "+dials[d].prog);
         dials[d].prog-=dials[d].speed;
         if(dials[d].prog<=0){
@@ -928,6 +930,8 @@ function updateAlarmDisplay(){
         dials[d].atVal=dials[d].initVal+prog*(dials[d].destVal-dials[d].initVal);
         }
       }
+    if(moved){dbug('moved');}
+    else{dbug('no move');}
     }
   document.getElementById('alarmTimeHourDial').style.top=(.75-dials[0].atVal)*lineHeight+"px";
   document.getElementById('alarmTimeMinDial').style.top=(.75-dials[1].atVal)*lineHeight+"px";
