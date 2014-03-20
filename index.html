@@ -802,16 +802,6 @@ function secondTick(){
       var SS=sleepSeconds%60;
       if(SS<10){SS="0"+SS;}
       nowText="-"+Math.floor(sleepSeconds/60)+":"+SS;
-      if(sleepSeconds<=0){
-        nowText="SLEEP";
-        playing=false;
-        connecting=false;
-        interrupted=false;
-        buttonOff("listen", "playpause");
-        ////comQueue.push('action=manageStream|mode=stop');
-        window.setTimeout('comTick()', 10); 
-        ////pause();
-        }
       }
 
     if((nowMod+1440>=genericGet("alarmMinuteOfDay")+1440+snoozeMinutes)&&(nowMod+1440<genericGet("alarmMinuteOfDay")+1500+snoozeMinutes)){
@@ -825,12 +815,9 @@ function secondTick(){
       playing=true;
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
-      ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
-      ////window.setTimeout('comTick()', 10);
+      mediaStack[0].play();
 
       ////comQueue.push("action=manageSound|channel=0|mode=play|file=sounds/singing.mp3|loop=true");
-      ////comTick();
-
 
       selectPage("wakeup");
       }
@@ -899,6 +886,7 @@ var prevDeltaY=0;
 function updateAlarmDisplay(){
   var pMod=genericGet("alarmMinuteOfDay");
   dbug("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
+dbuga(rnd(10));
   var lineHeight=Math.floor(pages[3].contents[0].lineHeight*grid);
   var nowDate=new Date();
   var nowMod=nowDate.getHours()*60+nowDate.getMinutes();
@@ -934,12 +922,11 @@ function updateAlarmDisplay(){
   document.getElementById('alarmTimeHourDial').style.top=(.75-dials[0].atVal)*lineHeight+"px";
   document.getElementById('alarmTimeMinDial').style.top=(.75-dials[1].atVal)*lineHeight+"px";
   document.getElementById('alarmTimeAmPmDial').style.top=(.75-dials[2].atVal)*lineHeight+"px";
-  ////document.getElementById('sleepTimeDial').style.top=1*(.75-dials[3].atVal)*lineHeight+"px";
   //dbuga('touchingDial='+touchingDial);
   if(touchingDial==-1){
     //dbuga(pMod+" alarm is set to "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
     }
-
+  dbuga('okay');
   }
 var initHistory=[0,0,0,0,0,0,0,0];
 function populateDials(){
@@ -990,7 +977,6 @@ function populateDials(){
     }
   dialCode+="</div>";
 
-  ////document.getElementById('page_alarm_content_sleepTime').innerHTML=dialCode;
   }
 function selectPage(selectedPage){
   //dbuga("selectPage "+selectedPage);
@@ -1449,7 +1435,7 @@ function mouseup(e){
   endDialTouch();
   }
 function endDialTouch(){
-  //dbuga(' -- endDialTouch() touchingDial='+touchingDial);
+  dbuga(' -- endDialTouch() touchingDial='+touchingDial);
   if(touchingDial>-1){
 
     //alert('mouseup');
@@ -1623,36 +1609,14 @@ function handleButton(pageName, buttonName){
       document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
       window.setTimeout('buttonOff("alarm", "set"); selectPage("armed");', navDelay);
       snoozeMinutes=0;
-
       playing=false;
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
-      ////comQueue.push('action=manageStream|mode=stop');
-      ////window.setTimeout('comTick()', 10); 
 
+      mediaStack[0].stop();
       //dbug("action=setAlarm|minute="+mil);
       ////comQueue.push("action=manageSound|channel=0|mode=play|file=sounds/singing.mp3|loop=false");
-      ////comTick();
-      }
-    if(buttonName=="sleep"){
-      snoozeMinutes=0;
-      sleepSeconds=genericGet("sleepMinutesDefault")*60;
-      var textTime=minuteOfDayToHour(genericGet("alarmMinuteOfDay"))+":"+minuteOfDayToMM(genericGet("alarmMinuteOfDay"))+" "+minuteOfDayToAmPm(genericGet("alarmMinuteOfDay"));
-      document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
-      buttonOn("alarm", "sleep");
-      window.setTimeout('buttonOff("alarm", "sleep");  selectPage("armed");', navDelay);
-      buttonOn("listen", "playpause");
-      document.getElementById('page_listen_content_djDiv').innerHTML="sl Connecting...";
-      if(playing == false){
-        connecting=true;
-        interrupted=false;
-        playing=true;
-        clearInterval(minuteInterval);
-        minuteInterval=setInterval('minuteTick()', 15000);
-        ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
-        ////window.setTimeout('comTick()', 10);
-        }
       }
     if(buttonName=="cancel"){
       buttonOn("alarm", "cancel");
@@ -1667,9 +1631,9 @@ function handleButton(pageName, buttonName){
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
-      ////comQueue.push('action=manageStream|mode=stop');
+
+      mediaStack[0].stop();
       ////comQueue.push("action=manageSound|mode=pause|channel=0");
-      ////window.setTimeout('comTick()', 10); 
 
       buttonOn("wakeup", "alarmoff");
       window.setTimeout('buttonOff("wakeup", "alarmoff"); selectPage("listen");', navDelay);
@@ -1685,14 +1649,12 @@ function handleButton(pageName, buttonName){
       var textTime=minuteOfDayToHour(genericGet("alarmMinuteOfDay")+snoozeMinutes)+":"+minuteOfDayToMM(genericGet("alarmMinuteOfDay")+snoozeMinutes)+" "+minuteOfDayToAmPm(genericGet("alarmMinuteOfDay")+snoozeMinutes);
       document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
 
-        playing=false;
-        connecting=false;
-        interrupted=false;
-        buttonOff("listen", "playpause");
-        ////comQueue.push('action=manageStream|mode=stop');
-        ////comQueue.push("action=manageSound|mode=pause|channel=0");
-
-        ////window.setTimeout('comTick()', 10);
+      playing=false;
+      connecting=false;
+      interrupted=false;
+      buttonOff("listen", "playpause");
+      mediaStack[0].stop();
+      ////comQueue.push("action=manageSound|mode=pause|channel=0");
 
       buttonOn("wakeup", "snooze");
       window.setTimeout('buttonOff("wakeup", "snooze"); selectPage("armed");', navDelay);
@@ -1836,10 +1798,9 @@ function handleButton(pageName, buttonName){
       buttonOff("settings", "higher");
       //buttonOff("settings", "broken");
       genericSet("quality", "medium");
-      requestSavePersistenceData();
       if(playing){
+        // get code from init?
         ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
-        ////comTick();
         }
       }
     if(buttonName=="higher"){
@@ -1847,10 +1808,8 @@ function handleButton(pageName, buttonName){
       buttonOn("settings", "higher");
       //buttonOff("settings", "broken");
       genericSet("quality", "higher");
-      requestSavePersistenceData();
       if(playing){
         ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
-        ////comTick();
         }
       }
 /*
@@ -1859,7 +1818,6 @@ function handleButton(pageName, buttonName){
       buttonOff("settings", "higher");
       buttonOn("settings", "broken");
       genericSet("quality", "broken");
-      requestSavePersistenceData();
       if(playing){
         ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
         ////comTick();
@@ -1954,36 +1912,6 @@ function playMedia(){
   mediaStack[0].play();
   }
 var noStatusTimeout;
-/*
-function togglePlaying(){
-  //dbuga('togglePlaying() ');
-  document.getElementById('page_listen_content_djDiv').innerHTML="";
-  if(playing){
-    playing=false;
-    connecting=false;
-    interrupted=false;
-    buttonOff("listen", "playpause");
-    ////comQueue.push('action=manageStream|mode=stop');
-    ////window.setTimeout('comTick()', 10);
-    stopMedia();
-    }
-  else{
-    buttonOn("listen", "playpause");
-    document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
-    //clearTimeout(noStatusTimeout);
-    //noStatusTimeout=setTimeout('noStatusTick()', 10000);
-    connecting=true;
-    interrupted=false;
-    playing=true;
-    clearInterval(minuteInterval);
-    minuteInterval=setInterval('minuteTick()', 15000);
-    ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
-    ////window.setTimeout('comTick()', 10);
-    playMedia();
-    }
-  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Real College Radio";
-  }
-*/
 /*
 function retryTick(){
   //dbuga('retryTick()');
