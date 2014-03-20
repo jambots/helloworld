@@ -368,8 +368,8 @@ function init(){
   retryInterval=window.setInterval("retryTick()", 2000);
   selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
-  singMedia = new Media("sounds/singing.mp3", singSuccess, singError);
-
+  singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError);
+  dbuga('init okay');
   }
 var singMedia;
 function singError(er){
