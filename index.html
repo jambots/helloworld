@@ -368,8 +368,12 @@ function init(){
   retryInterval=window.setInterval("retryTick()", 2000);
   selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
-  singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError);
+  singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
   dbuga('init okay');
+  }
+function singStatusCallback(theStatus){
+  var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
+  dbuga('singMedia status '+statusArray[theStatus]);
   }
 var singMedia;
 function singError(er){
