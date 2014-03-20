@@ -361,7 +361,7 @@ function init(){
   buttonOn("footnav", "listen");
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
-  dialInterval=setInterval('dialTick()', 1000);
+  dialInterval=setInterval('dialTick()', 25);
   minuteTick();
   getFaqs();
   connectMedia();
@@ -1471,7 +1471,10 @@ function endDialTouch(){
     if(dials[touchingDial].destVal<0){dials[touchingDial].destVal=0;}
     if(dials[touchingDial].destVal>dials[touchingDial].maxVal){dials[touchingDial].destVal=dials[touchingDial].maxVal;}
     var hour=(dials[0].destVal+1)%12;
-    dbuga(' --  6 endDialTouch() touchingDial='+touchingDial);
+    dbuga(' --  hour='+hour);
+    dbuga(' -- dials[0].destVal='+dials[1].destVal);
+    dbuga(' -- dials[1].destVal='+dials[1].destVal);
+    dbuga(' -- dials[2].destVal='+dials[1].destVal);
     genericSet("alarmMinuteOfDay", 60*hour+dials[1].destVal+dials[2].destVal*60*12);
     dbuga("amod 7 :"+genericGet("alarmMinuteOfDay"));
     touchingDial=-1;
