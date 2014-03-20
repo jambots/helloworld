@@ -311,10 +311,10 @@ function connectMedia(){
   //dbuga("mediaStack.length: "+mediaStack.length);
   }
 function successCallback(){
-  //dbuga('successCallback <br />');
+  dbuga('successCallback <br />');
   }
 function errorCallback(theError){
-  //dbuga('errorCallback '+JSON.stringify(theError));
+  dbuga('errorCallback '+JSON.stringify(theError));
   return false;
   }
 
@@ -377,7 +377,7 @@ function init(){
 var singing=false;
 function singStatusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  //dbuga('singMedia status '+statusArray[theStatus]);
+  dbuga('singMedia status '+statusArray[theStatus]);
   if((theStatus==4)&&(singing==true)){
     singMedia.play();
     }
@@ -387,7 +387,7 @@ function singError(er){
   dbuga("singError "+JSON.stringify(er))
   }
 function singSuccess(){
-  //dbuga('singSuccess');
+  dbuga('singSuccess');
   //singMedia.play();
   }
 function onBackKeyDown() {
@@ -838,7 +838,7 @@ function secondTick(){
       }
 
     if((nowMod+1440>=genericGet("alarmMinuteOfDay")+1440+snoozeMinutes)&&(nowMod+1440<genericGet("alarmMinuteOfDay")+1500+snoozeMinutes)){
-      //dbuga('alarm');
+      dbuga('alarm');
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Real College Radio";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       buttonOn("listen", "playpause");
@@ -850,6 +850,7 @@ function secondTick(){
       minuteInterval=setInterval('minuteTick()', 15000);
       mediaStack[0].play();
       singMedia.play();
+      dbuga(' - set singing==true');
       singing=true;
       selectPage("wakeup");
       }
@@ -1458,7 +1459,7 @@ function touchEnd(event){
   }
 function moused(e){
   //dbuga('moused '+ e.target.id);
-  if(e.target.id=="stateDiv"){dbug('');}
+  //if(e.target.id=="stateDiv"){dbug('');}
   //handleTouchEvent({"type":"touchstart", "touches":[{"pageX":e.clientX, "pageY":e.clientY, "target":e.target}]});
   }
 
