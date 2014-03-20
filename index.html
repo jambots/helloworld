@@ -173,6 +173,7 @@ function statusCallback(theStatus){
   dbuga('status '+statusArray[theStatus]);
   if(statusArray[theStatus]=='MEDIA_RUNNING'){
     singing=false;
+    singMedia.stop();
     mediaRunning=true;
     retrying=false;
     retryAttempts=0;
@@ -951,8 +952,6 @@ function updateAlarmDisplay(){
         dials[d].atVal=dials[d].initVal+prog*(dials[d].destVal-dials[d].initVal);
         }
       }
-    if(moved){dbugState('moved');}
-    else{dbugState('no move');}
     }
   document.getElementById('alarmTimeHourDial').style.top=(.75-dials[0].atVal)*lineHeight+"px";
   document.getElementById('alarmTimeMinDial').style.top=(.75-dials[1].atVal)*lineHeight+"px";
@@ -2022,7 +2021,7 @@ document.addEventListener('touchmove', function (e) { e.preventDefault(); }, fal
   <div id="container">
   </div>
   <div id="debugDiv"></div>
-  <div id="stateDiv">stateDiv</div>
+  <div id="stateDiv"></div>
 </div>
 </body>
 </html>
