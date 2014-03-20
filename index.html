@@ -215,7 +215,7 @@ function startRetrying(){
   }
 function retryTick(){
   if(retrying==true){
-    var message="retrying...";
+    var message="RT retrying...";
     retryAttempts++;
     if(retryAttempts>3){
       message="OMG. We're like totally not retrying...embarrassing. Like, try again in a bit k?  Radio K - Real College Radio.";
@@ -432,7 +432,7 @@ function parseRecentSongs(theData){
   songKeys.reverse();
   if(songKeys.length>0){
     nowData={"dj":recentSongs[songKeys[0]].dj, "time":recentSongs[songKeys[0]].song_timestamp, "artist":recentSongs[songKeys[0]].song_artist, "song":recentSongs[songKeys[0]].song_title, "album":recentSongs[songKeys[0]].song_album};
-    if((playing==true)&&(mediaRunning==true)){
+    if((uiPlaying==true)&&(mediaRunning==true)){
       updateNowPlaying();
       }
     }
@@ -1925,7 +1925,7 @@ var connectFails=0;
 var bufferTimeout;
 function minuteTick(){
   dbuga('minuteTick() playing='+playing+' interrupted='+interrupted);
-  if((playing==true)&&(mediaRunning==true)){
+  if((uiPlaying==true)&&(mediaRunning==true)){
     updateNowPlaying();
     }
   getRecentSongs();
@@ -1961,17 +1961,7 @@ function playMedia(){
   mediaStack[0].play();
   }
 var noStatusTimeout;
-/*
-function retryTick(){
-  //dbuga('retryTick()');
-  if((connecting==false)&&(playing==true)&&(streamStatus==false)){
-    document.getElementById('page_listen_content_djDiv').innerHTML="Retrying...";
-    connecting=true;
-    interrupted=false;
-    ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
-    }
-  }
-*/
+
 var lastTouchId="";
 function handleTouchEvent(e){
   if(e.type=="touchstart"){
