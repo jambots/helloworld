@@ -170,7 +170,7 @@ var mediaStatusNum=0;
 var mediaStack=[];
 function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  //dbuga('status '+statusArray[theStatus]);
+  dbuga('status '+statusArray[theStatus]);
   if(statusArray[theStatus]=='MEDIA_RUNNING'){
     mediaRunning=true;
     retrying=false;
@@ -294,6 +294,7 @@ function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
 function connectMedia(){
+  dbuga('connectMedia');
   var thisMedia = new Media(urlByQuality[genericGet("quality")], successCallback, errorCallback, statusCallback);
   mediaStack.unshift(thisMedia);
   for (var m=1; m<mediaStack.length; m++){
@@ -1959,12 +1960,13 @@ function togglePlaying(){
     buttonOff("listen", "playpause");
     ////comQueue.push('action=manageStream|mode=stop');
     ////window.setTimeout('comTick()', 10);
+    stopMedia();
     }
   else{
     buttonOn("listen", "playpause");
     document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
-    clearTimeout(noStatusTimeout);
-    noStatusTimeout=setTimeout('noStatusTick()', 10000);
+    //clearTimeout(noStatusTimeout);
+    //noStatusTimeout=setTimeout('noStatusTick()', 10000);
     connecting=true;
     interrupted=false;
     playing=true;
@@ -1972,6 +1974,7 @@ function togglePlaying(){
     minuteInterval=setInterval('minuteTick()', 15000);
     ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
     ////window.setTimeout('comTick()', 10);
+    playMedia();
     }
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Real College Radio";
   }
