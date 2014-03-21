@@ -715,7 +715,7 @@ function updatePlaylist(){
     htmlBlock+='</div>';
    }
 
-  document.getElementById('playlistHolder').innerHTML=htmlBlock; 
+  document.getElementById('playlistScroller').innerHTML=htmlBlock; 
   document.getElementById('playlistHolder').style.width=grid*48+'px'; 
   document.getElementById('playlistHolder').style.height=grid*51+'px'; 
   playlistScrollerTimeout=window.setTimeout("refreshPlaylistHolderScroll()", 100);
@@ -1167,11 +1167,11 @@ function populateContainer(){
   secondInterval=setInterval('secondTick()', 1000);
   populateDials();
   selectCurrentPage();
-  dbuga('add iScrolls');
+  //dbuga('add iScrolls');
   resultsHolderScroll=new iScroll('resultsHolder');
   playlistHolderScroll=new iScroll('playlistHolder');
   calendarHolderScroll=new iScroll('calendarHolder');
-  dbuga('populate ran ok');
+  //dbuga('populate ran ok');
   }
 function populateFaqs(){
   var htmlString="";
@@ -1469,7 +1469,7 @@ function touchMove(event){
   if(lastTouchId.indexOf("page_")>-1){
     event.preventDefault();
     }
-  dbuga('end of tm'); 
+  //dbuga('end of tm'); 
  }
 
 function touchEnd(event){
