@@ -762,8 +762,21 @@ function populateCalendar(){
 
   for(var e=0; e<calendar.length; e++){
     var eventData=calendar[e];
+    var performersText=eventData.performers;
+    var quoteParts=performersText.split('"');
+    var performersFixed=quoteParts[0];
+    for (var q=1; q<quoteParts.length; q++){
+      performersFixed+='"';
+      var prevPart=quoteParts[q-1];
+      var part=quoteParts[q];
+      if(prevPart.indexOf('href=')>-1){
+        dbuga(part);
+        part="javascript:remoteLink('"+part+"'); return false;";
+        }
+      performersFixed+=part; 
+      }
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  ''+eventData.performers;
+    htmlBlock+=  ''+performersFixed;
     htmlBlock+=  '<br />'+eventData.venue+'';
     htmlBlock+=  ' &mdash; '+eventData.date;
     htmlBlock+=  '<br /><span style="font-family:akziregular;">'+eventData.time+' '+ eventData.age +'</span>';
