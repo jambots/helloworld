@@ -1666,6 +1666,7 @@ function handleButton(pageName, buttonName){
       dials[3].history=initHistory;
       }
     if(buttonName=="set"){
+      if(mediaRunning){stopMedia();}
       sleepSeconds=0;
       var mil=""+minuteOfDayToHH(genericGet("alarmMinuteOfDay"))+minuteOfDayToMM(genericGet("alarmMinuteOfDay"));
       buttonOn("alarm", "set");
@@ -1678,7 +1679,7 @@ function handleButton(pageName, buttonName){
       interrupted=false;
       buttonOff("listen", "playpause");
 
-      stopMedia();
+      
       
       dbuga("in set singMedia.play()");
       singMedia.play();
