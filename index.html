@@ -311,7 +311,10 @@ function connectMedia(){
   dbuga("mediaStack.length: "+mediaStack.length);
   }
 function successCallback(){
-  dbuga('successCallback <br />');
+  dbuga('successCallback uiPlaying='+uiPlaying);
+  if(uiPlaying){
+    mediaStack[0].play();
+    }
   }
 function errorCallback(theError){
   dbuga('errorCallback '+JSON.stringify(theError));
@@ -1973,7 +1976,8 @@ function stopMedia(){
   }
 function playMedia(){
   //dbuga('playMedia()');
-  mediaStack[0].play();
+  //mediaStack[0].play();
+  connectMedia();
   }
 var noStatusTimeout;
 
