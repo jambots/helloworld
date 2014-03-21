@@ -300,7 +300,7 @@ function togglePlaying(){
   }
 function connectMedia(){
   dbuga('connectMedia q='+genericGet("quality"));
-  //dbuga('url='+urlByQuality[genericGet("quality")]);
+  dbuga('url='+urlByQuality[genericGet("quality")]);
   var thisMedia = new Media(urlByQuality[genericGet("quality")], successCallback, errorCallback, statusCallback);
   //dbuga('thisMedia');
   mediaStack.unshift(thisMedia);
@@ -308,13 +308,15 @@ function connectMedia(){
     mediaStack[m].stop();
     mediaStack[m].release();
     }
+  dbuga('in connectMedia uiPlaying='+uiPlaying);
+  if(uiPlaying){
+    mediaStack[0].play();
+    }
+
   dbuga("mediaStack.length: "+mediaStack.length);
   }
 function successCallback(){
   dbuga('successCallback uiPlaying='+uiPlaying);
-  if(uiPlaying){
-    mediaStack[0].play();
-    }
   }
 function errorCallback(theError){
   dbuga('errorCallback '+JSON.stringify(theError));
