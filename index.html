@@ -1607,7 +1607,8 @@ var mouseStartY=0;
 var alarmFailsafeTimeout;
 function remoteLink(theUrl){
   dbuga("remoteLink("+theUrl+")");
-  window.plugins.childBrowser.openExternal(theUrl);
+  //window.plugins.childBrowser.openExternal(theUrl);
+  navigator.app.loadUrl(theUrl, {openExternal: true});
   dbuga("remoteLink ran");
   }
 
