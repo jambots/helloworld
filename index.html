@@ -231,8 +231,7 @@ function retryTick(){
     }
   }
 
-function dbugState(theString){
-  document.getElementById("stateDiv").innerHTML=theString;  }
+
 function stateTick(){
   if(debugging==false){
     document.getElementById("stateDiv").style.display="none";
@@ -378,7 +377,22 @@ function init(){
   dbuga(' init 7');
   singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
   //singMedia = new Media("http://jambots.com/apps/ios/radiok1.2/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
+  document.addEventListener("offline", onOffline, false);
+  document.addEventListener("online", onOnline, false);
+
   dbuga('init okay');
+  }
+function onOffline() {
+  dbuga('onOffline() uiPlaying='+uiPlaying;
+  if(uiPlaying){
+    stopMedia();
+    }
+  }
+function onOnline() {
+  dbuga('onOnline() uiPlaying='+uiPlaying;
+  if(uiPlaying){
+    playMedia();
+    }
   }
 var singing=false;
 function singStatusCallback(theStatus){
@@ -941,7 +955,7 @@ function updateAlarmDisplay(){
     //dbuga(dials[0].atVal+" "+dials[1].atVal+" "+dials[2].atVal+" "+dials[3].atVal);
     var list=dials[touchingDial].history;
     //dbuga(list.join('|'));
-    //dbugState("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
+    //dbuga("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
     }
   else{
     var moved=false;
@@ -1096,7 +1110,7 @@ function populateContainer(){
     leftOffset=(ww-cw)/2;
     grid=cw/48;
     }
-  document.getElementById('debugDiv').style.top=grid*6+"px";
+  document.getElementById('debugDiv').style.top=grid*20+"px";
   document.getElementById('wrapper').style.backgroundSize=grid*4+"px";
   document.getElementById('container').style.width=cw+"px";
   document.getElementById('container').style.height=ch+"px";
@@ -1925,7 +1939,7 @@ var connectFails=0;
 
 var bufferTimeout;
 function minuteTick(){
-  dbuga('minuteTick() playing='+playing+' interrupted='+interrupted);
+  dbuga('minuteTick() uiPlaying='+uiPlaying+' mediaRunning='+mediaRunning);
   if((uiPlaying==true)&&(mediaRunning==true)){
     updateNowPlaying();
     }
