@@ -624,7 +624,17 @@ function updateWrsDownloads(){
     htmlBlock+=  ' <a href="'+downloadItem.link+'">'+downloadItem.title+'</a>';
     htmlBlock+='</div></div>';
     }
-  document.getElementById('wrsHolder').innerHTML=htmlBlock; 
+  document.getElementById('wrsScroller').innerHTML=htmlBlock;
+  document.getElementById('wrsHolder').style.width=grid*48+'px'; 
+  document.getElementById('wrsHolder').style.height=grid*51+'px'; 
+  wrsScrollerTimeout=window.setTimeout("refreshWrsHolderScroll()", 100);
+  }
+
+var wrsScrollerTimeout;
+function refreshWrsHolderScroll(){
+  wrsHolderScroll.refresh();
+  }
+var wrsHolderScroll;
   }
 function updateTotdDownloads(){
   //dbuga('updateTotdDownloads()');
@@ -646,7 +656,18 @@ function updateTotdDownloads(){
     htmlBlock+=  downloadItem.title+' - <a href="'+downloadItem.link+'">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     }
-  document.getElementById('totdHolder').innerHTML=htmlBlock; 
+  document.getElementById('totdScroller').innerHTML=htmlBlock;
+  document.getElementById('totdHolder').style.width=grid*48+'px'; 
+  document.getElementById('totdHolder').style.height=grid*51+'px'; 
+  totdScrollerTimeout=window.setTimeout("refreshTotdHolderScroll()", 100);
+  }
+
+var totdScrollerTimeout;
+function refreshTotdHolderScroll(){
+  totdHolderScroll.refresh();
+  }
+var totdHolderScroll;
+
   }
 function updateCqDownloads(){
   //dbuga('updateCqDownloads()');
@@ -668,8 +689,19 @@ function updateCqDownloads(){
     htmlBlock+='</div></div>';
     if(d>9){d=sortedDownloads.length;}
     }
-  document.getElementById('cqHolder').innerHTML=htmlBlock; 
+  document.getElementById('cqScroller').innerHTML=htmlBlock;
+  document.getElementById('cqHolder').style.width=grid*48+'px'; 
+  document.getElementById('cqHolder').style.height=grid*51+'px'; 
+  cqScrollerTimeout=window.setTimeout("refreshCqHolderScroll()", 100);
   }
+
+var cqScrollerTimeout;
+function refreshCqHolderScroll(){
+  cqHolderScroll.refresh();
+  }
+var cqHolderScroll;
+
+
 function updateNowPlaying(){
   //dbuga('updateNowPlaying()')
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
@@ -741,7 +773,7 @@ function populateCalendar(){
     htmlBlock+='</div>';
     }
 
-  document.getElementById('calendarHolder').innerHTML=htmlBlock; 
+  document.getElementById('calendarScroller').innerHTML=htmlBlock; 
   document.getElementById('calendarHolder').style.width=grid*48+'px'; 
   document.getElementById('calendarHolder').style.height=grid*51+'px'; 
   calendarScrollerTimeout=window.setTimeout("refreshCalendarHolderScroll()", 100);
@@ -1585,7 +1617,7 @@ function parseItunesResults(theData){
   else{
     htmlBlock="Sorry, no items found.";
     }
-  document.getElementById('resultsHolder').innerHTML=htmlBlock;
+  document.getElementById('resultsScroller').innerHTML=htmlBlock;
   document.getElementById('resultsHolder').style.width=grid*48+'px'; 
   document.getElementById('resultsHolder').style.height=grid*51+'px'; 
   resultsScrollerTimeout=window.setTimeout("refreshResultsHolderScroll()", 100);
