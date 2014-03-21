@@ -1576,9 +1576,9 @@ function parseItunesResults(theData){
       var result=results[r];
       //dbuga(result.artistName+" "+result.collectionName);
       htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-      htmlBlock+=  '<a href="'+result.collectionViewUrl+'"><img src="'+result.artworkUrl100+'" style="'+imgStyle+'" /></a>';
+      htmlBlock+=  '<a href="javascript:remoteLink(\''+result.collectionViewUrl+'\'); return false;"><img src="'+result.artworkUrl100+'" style="'+imgStyle+'" /></a>';
       htmlBlock+=  '<br /><span style="font-family:akziregular;">'+result.artistName+'</span>';
-      htmlBlock+=  '<br /><a href="'+result.collectionViewUrl+'"><span style="">'+result.collectionName+'</span></a>';
+      htmlBlock+=  '<br /><a href="javascript:remoteLink(\''+result.collectionViewUrl+'\'); return false;"><span style="">'+result.collectionName+'</span></a>';
       htmlBlock+='</div>';
       }
     }
@@ -1786,6 +1786,10 @@ function handleButton(pageName, buttonName){
       }
     }
   if(pageName=="more"){
+    if(buttonName=="done"){
+      buttonOn("more", "done");
+      window.setTimeout('buttonOff("more", "done"); selectPage("listen");', navDelay);
+      }
     if(buttonName=="settings"){
       buttonOff("footnav", "listen");
       buttonOn("more", "settings");
