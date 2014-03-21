@@ -1680,8 +1680,9 @@ function handleButton(pageName, buttonName){
 
       stopMedia();
       
-      //dbug("action=setAlarm|minute="+mil);
+      dbuga("in set singMedia.play()");
       singMedia.play();
+      dbuga("--passed");
       }
     if(buttonName=="cancel"){
       buttonOn("alarm", "cancel");
