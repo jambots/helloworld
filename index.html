@@ -654,7 +654,7 @@ function updateCqDownloads(){
       // furthest to nearest
       return b.sort-a.sort
     });
-
+  cqDownloads=sortedDownloads;
   var gradStyle="background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0%, #F2F2F2), color-stop(2%, #F2F2F2), color-stop(3%, #EDEDED), color-stop(50%, #fff), color-stop(100%, #fff));";
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
   var htmlBlock="";
@@ -664,7 +664,7 @@ function updateCqDownloads(){
     htmlBlock+=  '<!a href="'+downloadItem.link+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /><!/a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
     htmlBlock+=  downloadItem.title+'<br />';
-    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\'); return false;">'+downloadItem.description+'</a>';
+    htmlBlock+=  '<a href="javascript:remoteCqLink(\''+d+'\'); return false;">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     if(d>9){d=sortedDownloads.length;}
     }
@@ -1605,6 +1605,14 @@ var mouseStartX=0;
 var mouseStartY=0;
 var alarmFailsafeTimeout;
 function remoteLink(theUrl){
+  //dbuga("remoteLink("+theUrl+")");
+  //window.plugins.childBrowser.openExternal(theUrl);
+  navigator.app.loadUrl(theUrl, {openExternal: true});
+  dbuga("remoteLink ran");
+  }
+function remoteCqLink(cqNum){
+  var downloadItem=cqDownloads[Number(cqNum)];
+  var theUrl=downloadItem.link;
   //dbuga("remoteLink("+theUrl+")");
   //window.plugins.childBrowser.openExternal(theUrl);
   navigator.app.loadUrl(theUrl, {openExternal: true});
