@@ -689,10 +689,13 @@ function updateCqDownloads(){
     htmlBlock+='</div></div>';
     if(d>9){d=sortedDownloads.length;}
     }
-  dbuga('cq 6');
+  dbuga('cq 5');
   document.getElementById('cqScroller').innerHTML=htmlBlock;
+  dbuga('cq 6');
   document.getElementById('cqHolder').style.width=grid*48+'px'; 
+  dbuga('cq 7');
   document.getElementById('cqHolder').style.height=grid*51+'px'; 
+  dbuga('cq 8');
   cqScrollerTimeout=window.setTimeout("refreshCqHolderScroll()", 100);
   dbuga('cq 9');
   }
