@@ -1673,7 +1673,7 @@ function handleButton(pageName, buttonName){
       document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
       window.setTimeout('buttonOff("alarm", "set"); selectPage("armed");', navDelay);
       snoozeMinutes=0;
-      playing=false;
+      uiPlaying=false;
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
@@ -1692,7 +1692,7 @@ function handleButton(pageName, buttonName){
   if(pageName=="wakeup"){
     if(buttonName=="alarmoff"){
 
-      playing=false;
+      uiPlaying=false;
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
@@ -1714,7 +1714,7 @@ function handleButton(pageName, buttonName){
       var textTime=minuteOfDayToHour(genericGet("alarmMinuteOfDay")+snoozeMinutes)+":"+minuteOfDayToMM(genericGet("alarmMinuteOfDay")+snoozeMinutes)+" "+minuteOfDayToAmPm(genericGet("alarmMinuteOfDay")+snoozeMinutes);
       document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
 
-      playing=false;
+      uiPlaying=false;
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
