@@ -296,8 +296,8 @@ function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
 function connectMedia(){
-  dbuga('connectMedia q='+genericGet("quality"));
-  dbuga('url='+urlByQuality[genericGet("quality")]);
+  //dbuga('connectMedia q='+genericGet("quality"));
+  //dbuga('url='+urlByQuality[genericGet("quality")]);
   var thisMedia = new Media(urlByQuality[genericGet("quality")], successCallback, errorCallback, statusCallback);
   //dbuga('thisMedia');
   mediaStack.unshift(thisMedia);
@@ -305,18 +305,18 @@ function connectMedia(){
     mediaStack[m].stop();
     mediaStack[m].release();
     }
-  dbuga('in connectMedia uiPlaying='+uiPlaying);
+  //dbuga('in connectMedia uiPlaying='+uiPlaying);
   if(uiPlaying){
     mediaStack[0].play();
     }
 
-  dbuga("mediaStack.length: "+mediaStack.length);
+  //dbuga("mediaStack.length: "+mediaStack.length);
   }
 function successCallback(){
-  dbuga('successCallback uiPlaying='+uiPlaying);
+  //dbuga('successCallback uiPlaying='+uiPlaying);
   }
 function errorCallback(theError){
-  dbuga('errorCallback '+JSON.stringify(theError));
+  //dbuga('errorCallback '+JSON.stringify(theError));
   return false;
   }
 
@@ -382,16 +382,16 @@ function init(){
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
 
-  dbuga('init okay');
+  //dbuga('init okay');
   }
 function onOffline() {
-  dbuga('onOffline() uiPlaying='+uiPlaying);
+  //dbuga('onOffline() uiPlaying='+uiPlaying);
   if(uiPlaying){
     stopMedia();
     }
   }
 function onOnline() {
-  dbuga('onOnline() uiPlaying='+uiPlaying);
+  //dbuga('onOnline() uiPlaying='+uiPlaying);
   if(uiPlaying){
     playMedia();
     }
@@ -399,17 +399,17 @@ function onOnline() {
 var singing=false;
 function singStatusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  dbuga('singMedia status '+statusArray[theStatus]);
+  //dbuga('singMedia status '+statusArray[theStatus]);
   if((theStatus==4)&&(singing==true)){
     singMedia.play();
     }
   }
 var singMedia;
 function singError(er){
-  dbuga("singError "+JSON.stringify(er))
+  //dbuga("singError "+JSON.stringify(er))
   }
 function singSuccess(){
-  dbuga('singSuccess');
+  //dbuga('singSuccess');
   //singMedia.play();
   }
 function onBackKeyDown() {
@@ -860,7 +860,7 @@ function secondTick(){
       }
 
     if((nowMod+1440>=genericGet("alarmMinuteOfDay")+1440+snoozeMinutes)&&(nowMod+1440<genericGet("alarmMinuteOfDay")+1500+snoozeMinutes)){
-      dbuga('alarm');
+      //dbuga('alarm');
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Real College Radio";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       buttonOn("listen", "playpause");
@@ -872,7 +872,7 @@ function secondTick(){
       minuteInterval=setInterval('minuteTick()', 15000);
       connectMedia();
       singMedia.play();
-      dbuga(' - set singing==true');
+      //dbuga(' - set singing==true');
       singing=true;
       selectPage("wakeup");
       }
@@ -1681,9 +1681,9 @@ function handleButton(pageName, buttonName){
 
       
       
-      dbuga("in set singMedia.play()");
+      //dbuga("in set singMedia.play()");
       singMedia.play();
-      dbuga("--passed");
+      //dbuga("--passed");
       }
     if(buttonName=="cancel"){
       buttonOn("alarm", "cancel");
