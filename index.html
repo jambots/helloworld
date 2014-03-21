@@ -160,7 +160,7 @@ background-color:#000;
 </style>
 <script type="text/javascript">
 var platform="android";
-var debugging=true;
+var debugging=false;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -170,7 +170,7 @@ var mediaStatusNum=0;
 var mediaStack=[];
 function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  dbuga('status '+statusArray[theStatus]);
+  //dbuga('status '+statusArray[theStatus]);
   if(statusArray[theStatus]=='MEDIA_RUNNING'){
     singing=false;
     singMedia.stop();
@@ -183,7 +183,7 @@ function statusCallback(theStatus){
   else{
     
     if((navigator.connection.type ==Connection.NONE)&&(uiPlaying)&&(mediaRunning)){// is offline and was playing and running, so interrupted
-      dbuga(" INT uiPlaying:"+uiPlaying+" mediaRunning:"+mediaRunning);
+      //dbuga(" INT uiPlaying:"+uiPlaying+" mediaRunning:"+mediaRunning);
       ///interrupted=true;
       
       window.setTimeout('stopReleaseNullRetry()',500);
@@ -196,22 +196,22 @@ function statusCallback(theStatus){
   }
 
 function stopReleaseNullRetry(){
-  dbuga("stopReleaseNullRetry()");
+  //dbuga("stopReleaseNullRetry()");
   stopMedia();
   window.setTimeout('releaseNullRetry()',500);
   }
 function releaseNullRetry(){
-  dbuga("releaseNullRetry()");
+  //dbuga("releaseNullRetry()");
   mediaStack[0].release();
   window.setTimeout('nullRetry()',500);
   }
 function nullRetry(){
-  dbuga("nullRetry(), connectMedia()");
+  //dbuga("nullRetry(), connectMedia()");
   connectMedia();
   window.setTimeout('startRetrying()',500);
   }
 function startRetrying(){
-  dbuga("startRetrying()");
+  //dbuga("startRetrying()");
   retrying=true;
   }
 function retryTick(){
@@ -222,7 +222,7 @@ function retryTick(){
       message="no connection.";
       }
     if(retryAttempts>10){
-      message="We're not connecting. Try again in a bit k?";
+      message="We're not connecting.<br />Try again in a bit k?";
       }
     document.getElementById('page_listen_content_djDiv').innerHTML=message;
     }
@@ -1865,9 +1865,8 @@ function handleButton(pageName, buttonName){
       buttonOff("settings", "higher");
       //buttonOff("settings", "broken");
       genericSet("quality", "medium");
-      if(playing){
-        // get code from init?
-        ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
+      if(uiPlaying){
+        connectMedia();
         }
       }
     if(buttonName=="higher"){
@@ -1875,8 +1874,8 @@ function handleButton(pageName, buttonName){
       buttonOn("settings", "higher");
       //buttonOff("settings", "broken");
       genericSet("quality", "higher");
-      if(playing){
-        ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
+      if(uiPlaying){
+        connectMedia();
         }
       }
 /*
@@ -1971,12 +1970,12 @@ function remoteControlPlay(){
   buttonOn("listen", "playpause");
   }
 function stopMedia(){
-  dbuga('stopMedia()');
+  //dbuga('stopMedia()');
   mediaStack[0].stop();
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   }
 function playMedia(){
-  dbuga('playMedia() so connectMedia()');
+  //dbuga('playMedia() so connectMedia()');
   //mediaStack[0].play();
   connectMedia();
   }
