@@ -216,7 +216,7 @@ function startRetrying(){
   }
 function retryTick(){
   if(retrying==true){
-    var message="RT Connecting...";
+    var message="Connecting...";
     retryAttempts++;
     if(navigator.connection.type ==Connection.NONE){
       message="no connection.";
@@ -599,6 +599,7 @@ function parseDownloads(theXml, source){
   if(source=="Track of the Day"){updateTotdDownloads();}
   if(source=="Culture Queue"){updateCqDownloads();}
   }
+
 function updateWrsDownloads(){
   //dbuga('updateWrsDownloads()');
   var sortedDownloads=wrsDownloads.sort(function(a, b){
@@ -663,7 +664,7 @@ function updateCqDownloads(){
     htmlBlock+=  '<a href="'+downloadItem.link+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
     htmlBlock+=  downloadItem.title+'<br />';
-    htmlBlock+=  '<a href="'+downloadItem.link+'">'+downloadItem.description+'</a>';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     if(d>9){d=sortedDownloads.length;}
     }
