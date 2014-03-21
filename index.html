@@ -664,14 +664,12 @@ function updateCqDownloads(){
     htmlBlock+=  '<!a href="'+downloadItem.link+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /><!/a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
     htmlBlock+=  downloadItem.title+'<br />';
-    testLink=downloadItem.link;
-    htmlBlock+=  '<a href="javascript:remoteLink(\'x\'); return false;">'+downloadItem.description+'</a>';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\'); return false;">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     if(d>9){d=sortedDownloads.length;}
     }
   document.getElementById('cqHolder').innerHTML=htmlBlock; 
   }
-var testLink="";
 function updateNowPlaying(){
   //dbuga('updateNowPlaying()')
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
@@ -1607,7 +1605,6 @@ var mouseStartX=0;
 var mouseStartY=0;
 var alarmFailsafeTimeout;
 function remoteLink(theUrl){
-  theUrl=testLink;
   //dbuga("remoteLink("+theUrl+")");
   //window.plugins.childBrowser.openExternal(theUrl);
   navigator.app.loadUrl(theUrl, {openExternal: true});
