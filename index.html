@@ -770,7 +770,7 @@ function populateCalendar(){
       var prevPart=quoteParts[q-1];
       var part=quoteParts[q];
       if(prevPart.indexOf('href=')>-1){
-        dbuga(part);
+        ///dbuga(part);
         part="javascript:remoteLink('"+part+"'); return false;";
         }
       performersFixed+=part; 
@@ -1418,7 +1418,7 @@ var pages=[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
   ],
   "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="totdHolder" style="width:100%; height:100%; overflow:auto; background-color:white;"></div>'}
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="totdHolder"<div id="totdScroller"></div></div>'}
   ]
 },
 {"name":"wrs", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
@@ -1426,7 +1426,7 @@ var pages=[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
   ],
   "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="wrsHolder" style="width:100%; height:100%; overflow:auto; background-color:white;"></div>'}
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="wrsHolder"<div id="wrsScroller"></div></div>'}
   ]
 },
 {"name":"cq", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
@@ -1434,7 +1434,7 @@ var pages=[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
   ],
   "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="cqHolder" style="width:100%; height:100%; overflow:auto; background-color:white;"></div>'}
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="cqHolder"<div id="cqScroller"></div></div>'}
   ]
 },
 {"name":"faqs", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
