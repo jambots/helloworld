@@ -372,7 +372,7 @@ function init(){
   //minuteTick();
   getFaqs();
   //dbuga(' init 5');
-  connectMedia();
+  //connectMedia();
   //dbuga(' init 6');
   retryInterval=window.setInterval("retryTick()", 2000);
   selectPage("listen");
@@ -1975,7 +1975,7 @@ function stopMedia(){
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   }
 function playMedia(){
-  //dbuga('playMedia()');
+  dbuga('playMedia() so connectMedia()');
   //mediaStack[0].play();
   connectMedia();
   }
