@@ -218,11 +218,11 @@ function retryTick(){
   if(retrying==true){
     var message="RT retrying...";
     retryAttempts++;
-    if(retryAttempts>3){
+    if(retryAttempts>10){
       message="OMG. We're like totally not retrying...embarrassing. Like, try again in a bit k?  Radio K - Real College Radio.";
       }
     if(navigator.connection.type !=Connection.NONE){
-      mediaStack[0].play();
+      //connectMedia();
       }
     else{
       message="no connection.";
@@ -871,7 +871,7 @@ function secondTick(){
       playing=true;
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
-      mediaStack[0].play();
+      connectMedia();
       singMedia.play();
       dbuga(' - set singing==true');
       singing=true;
