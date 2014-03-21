@@ -351,7 +351,7 @@ function genericGet(itemName){
 var minuteInterval;
 var dimensionInterval;
 function init(){
-  dbuga('init 0.0');
+  //dbuga('init 0.0');
   currentPage="listen";
 
   populateContainer();
@@ -361,20 +361,20 @@ function init(){
 
   buttonOn("settings", genericGet("quality"));
   buttonOn("footnav", "listen");
-  dbuga(' init 3');
+  //dbuga(' init 3');
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
   dialInterval=setInterval('dialTick()', 25);
-  dbuga(' init 4');
+  //dbuga(' init 4');
   //minuteTick();
   getFaqs();
-  dbuga(' init 5');
+  //dbuga(' init 5');
   connectMedia();
-  dbuga(' init 6');
+  //dbuga(' init 6');
   retryInterval=window.setInterval("retryTick()", 2000);
   selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
-  dbuga(' init 7');
+  //dbuga(' init 7');
   singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
   //singMedia = new Media("http://jambots.com/apps/ios/radiok1.2/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
   document.addEventListener("offline", onOffline, false);
@@ -425,7 +425,7 @@ var sleepSeconds=0;
 var dialInterval;
 
 function getRecentSongs(){
-  dbuga('getRecentSongs()');
+  //dbuga('getRecentSongs()');
   //return false;
   //var feedUrl="http://www.radiok.org/";
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_songs";
@@ -440,7 +440,7 @@ function getRecentSongs(){
 var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
 var recentSongs={};
 function parseRecentSongs(theData){
-  dbuga("parseRecentSongs "+mediaRunning);
+  //dbuga("parseRecentSongs "+mediaRunning);
   recentSongs=JSON.parse(theData);
   var songKeys=Object.keys(recentSongs);
   songKeys.sort();
@@ -1939,12 +1939,12 @@ var connectFails=0;
 
 var bufferTimeout;
 function minuteTick(){
-  dbuga('minuteTick() uiPlaying='+uiPlaying+' mediaRunning='+mediaRunning);
+  //dbuga('minuteTick() uiPlaying='+uiPlaying+' mediaRunning='+mediaRunning);
   if((uiPlaying==true)&&(mediaRunning==true)){
     updateNowPlaying();
     }
   getRecentSongs();
-  dbuga('end of minuteTick()');
+  //dbuga('end of minuteTick()');
   }
 
 function resumeGame(){
