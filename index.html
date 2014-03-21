@@ -664,7 +664,7 @@ function updateCqDownloads(){
     htmlBlock+=  '<a href="'+downloadItem.link+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
     htmlBlock+=  downloadItem.title+'<br />';
-    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');">'+downloadItem.description+'</a>';
+    htmlBlock+=  '<a href="javascript:dbuga(\'a\'); ">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     if(d>9){d=sortedDownloads.length;}
     }
