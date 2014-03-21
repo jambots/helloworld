@@ -614,11 +614,11 @@ function updateWrsDownloads(){
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="'+downloadItem.link+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\'); return false;"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
     if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
     if(downloadItem.date != "skip"){htmlBlock+=  '<br />'+downloadItem.date+'<br />';}
-    htmlBlock+=  ' <a href="'+downloadItem.link+'">'+downloadItem.title+'</a>';
+    htmlBlock+=  ' <a href="remoteLink(\''+downloadItem.link+'\'); return false;">'+downloadItem.title+'</a>';
     htmlBlock+='</div></div>';
     }
   document.getElementById('wrsScroller').innerHTML=htmlBlock;
@@ -646,11 +646,11 @@ function updateTotdDownloads(){
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="'+downloadItem.link+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<a href="remoteLink(\''+downloadItem.link+'\'); return false;"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
     if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
     if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
-    htmlBlock+=  downloadItem.title+' - <a href="'+downloadItem.link+'">'+downloadItem.description+'</a>';
+    htmlBlock+=  downloadItem.title+' - <a href="remoteLink(\''+downloadItem.link+'\'); return false;">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     }
   document.getElementById('totdScroller').innerHTML=htmlBlock;
