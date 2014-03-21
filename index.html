@@ -1167,9 +1167,11 @@ function populateContainer(){
   secondInterval=setInterval('secondTick()', 1000);
   populateDials();
   selectCurrentPage();
+  dbuga('add iScrolls');
   resultsHolderScroll=new iScroll('resultsHolder');
   playlistHolderScroll=new iScroll('playlistHolder');
   calendarHolderScroll=new iScroll('calendarHolder');
+  dbuga('populate ran ok');
   }
 function populateFaqs(){
   var htmlString="";
