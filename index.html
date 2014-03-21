@@ -216,16 +216,13 @@ function startRetrying(){
   }
 function retryTick(){
   if(retrying==true){
-    var message="RT retrying...";
+    var message="RT Connecting...";
     retryAttempts++;
-    if(retryAttempts>10){
-      message="OMG. We're like totally not retrying...embarrassing. Like, try again in a bit k?  Radio K - Real College Radio.";
-      }
-    if(navigator.connection.type !=Connection.NONE){
-      //connectMedia();
-      }
-    else{
+    if(navigator.connection.type ==Connection.NONE){
       message="no connection.";
+      }
+    if(retryAttempts>10){
+      message="We're not connecting. Try again in a bit k?";
       }
     document.getElementById('page_listen_content_djDiv').innerHTML=message;
     }
@@ -870,7 +867,7 @@ function secondTick(){
       document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
       connecting=true;
       interrupted=false;
-      playing=true;
+      uiPlaying=true;
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
       connectMedia();
