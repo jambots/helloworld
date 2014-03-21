@@ -668,7 +668,7 @@ function refreshTotdHolderScroll(){
   }
 var totdHolderScroll;
 function updateCqDownloads(){
-  //dbuga('updateCqDownloads()');
+  dbuga('updateCqDownloads()');
   var sortedDownloads=cqDownloads.sort(function(a, b){
       // furthest to nearest
       return b.sort-a.sort
@@ -691,6 +691,7 @@ function updateCqDownloads(){
   document.getElementById('cqHolder').style.width=grid*48+'px'; 
   document.getElementById('cqHolder').style.height=grid*51+'px'; 
   cqScrollerTimeout=window.setTimeout("refreshCqHolderScroll()", 100);
+  dbuga('cq');
   }
 
 var cqScrollerTimeout;
