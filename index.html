@@ -1651,7 +1651,7 @@ var mouseStartX=0;
 var mouseStartY=0;
 var alarmFailsafeTimeout;
 function remoteLink(theUrl){
-  if((theUrl.indexOf('vinylcloset')||(theUrl.indexOf('download.php')||(theUrl.indexOf('/features/weekly')||(theUrl.indexOf('/totd/')){
+  if((theUrl.indexOf('vinylcloset')>-1)||(theUrl.indexOf('download.php')>-1)||(theUrl.indexOf('/features/weekly')>-1)||(theUrl.indexOf('/totd/')>-1)){
     uiPlaying=false;
     retrying=false;
     interrupted=false;
