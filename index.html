@@ -645,7 +645,7 @@ function updateTotdDownloads(){
   var htmlBlock="";
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
-    dbuga(downloadItem.link);
+    //dbuga(downloadItem.link);
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\'); return false;"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
@@ -1657,17 +1657,17 @@ var mouseStartX=0;
 var mouseStartY=0;
 var alarmFailsafeTimeout;
 function remoteLink(theUrl){
-  if((theUrl.indexOf('vinylcloset')>-1)||(theUrl.indexOf('download.php')>-1)||(theUrl.indexOf('/features/weekly')>-1)||(theUrl.indexOf('/totd/')>-1)){
+  dbuga("remoteLink("+theUrl+")");
+  if((theUrl.indexOf('vinylcloset')>-1)||(theUrl.indexOf('download.php')>-1)||(theUrl.indexOf('/features/')>-1)||(theUrl.indexOf('/totd/')>-1)){
     uiPlaying=false;
     retrying=false;
     interrupted=false;
     buttonOff("listen", "playpause");
     stopMedia();
     }
-  //dbuga("remoteLink("+theUrl+")");
   //window.plugins.childBrowser.openExternal(theUrl);
   navigator.app.loadUrl(theUrl, {openExternal: true});
-  //dbuga("remoteLink ran");
+  dbuga("remoteLink ran");
   }
 function remoteCqLink(cqNum){
   var downloadItem=cqDownloads[Number(cqNum)];
