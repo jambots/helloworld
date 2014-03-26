@@ -1664,7 +1664,7 @@ function remoteLink(theUrl){
     retrying=false;
     interrupted=false;
     buttonOff("listen", "playpause");
-    stopMedia();
+    if(mediaRunning){stopMedia();}
     }
   //window.plugins.childBrowser.openExternal(theUrl);
   navigator.app.loadUrl(theUrl, {openExternal: true});
