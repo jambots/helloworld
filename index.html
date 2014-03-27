@@ -1785,7 +1785,7 @@ function handleButton(pageName, buttonName){
       var nowDate=new Date();
       var nowMod=nowDate.getHours()*60+nowDate.getMinutes();
 
-      snoozeMinutes=nowMod-genericGet("alarmMinuteOfDay")+5;
+      snoozeMinutes=nowMod-genericGet("alarmMinuteOfDay")+7;
 
 
       var textTime=minuteOfDayToHour(genericGet("alarmMinuteOfDay")+snoozeMinutes)+":"+minuteOfDayToMM(genericGet("alarmMinuteOfDay")+snoozeMinutes)+" "+minuteOfDayToAmPm(genericGet("alarmMinuteOfDay")+snoozeMinutes);
