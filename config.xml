@@ -11,7 +11,9 @@
     <name>Radio K - KUOM</name>
     <description>Radio K, the award-winning radio station of the University of Minnesota.</description>
 <gap:platform name="android" />
-<preference name="android-launchMode" value="singleInstance" />
+<gap:config-file platform="android" parent="/manifest/application">
+    <activity android:launchMode="singleInstance" />
+</gap:config-file>
 <preference name="fullscreen" value="true" />
 <preference name="orientation" value="portrait" />
 <gap:splash src="splash.png" />
