@@ -1657,9 +1657,9 @@ var mouseStartX=0;
 var mouseStartY=0;
 var alarmFailsafeTimeout;
 function remoteLink(theUrl){
-  //dbuga("remoteLink("+theUrl+")");
+  dbuga("remoteLink("+theUrl+")");
   if((theUrl.indexOf('cq-archiver')>-1)||(theUrl.indexOf('vinylcloset')>-1)||(theUrl.indexOf('download.php')>-1)||(theUrl.indexOf('/features/')>-1)||(theUrl.indexOf('/totd/')>-1)){
-    //dbuga('caught');
+    dbuga('caught');
     uiPlaying=false;
     retrying=false;
     interrupted=false;
