@@ -412,6 +412,8 @@ function singSuccess(){
   //dbuga('singSuccess');
   //singMedia.play();
   }
+ document.addEventListener("backbutton", onBackKeyDown, false);
+  
 function onBackKeyDown() {
   // Handle the back button
       selectPage("listen");
