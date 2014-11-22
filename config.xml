@@ -3,14 +3,15 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "com.radiok.kuom"
-        versionCode="7" 
-        version   = "2.2">
+        versionCode="8" 
+        version   = "2.3">
 
     <!-- versionCode is optional and Android only -->
 <preference name="phonegap-version" value="3.6.3" />
     <name>Radio K - KUOM</name>
     <description>Radio K, the award-winning radio station of the University of Minnesota.</description>
 <gap:platform name="android" />
+<gap:platform name="ios" />
 <gap:config-file platform="android" parent="/manifest/application">
     <activity android:launchMode="singleInstance" />
 </gap:config-file>
