@@ -473,17 +473,17 @@ function getDownloads(){
   document.getElementById('cqHolder').style.height=grid*51+'px'; 
 
   $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/rss?bID=12137&cID=2237&arHandle=Main",
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/rss_by_path?path=%2Ffeatures%2Fweekly-release-spotlight%2F",
     dataType: "xml",        
     success: function(xml) {parseDownloads(xml, "Weekly Release Spotlight");}
     });
   $.ajax({
-    url: "http://www.radiok.org/tools/packages/radiok/mediamill_xml?cID=963&bID=201",
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/rss_by_path?path=%2Ffeatures%2Fculture-queue%2F",
     dataType: "xml",        
     success: function(xml) {parseDownloads(xml, "Culture Queue");}
     });
   $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/rss?bID=11364&cID=2121&arHandle=Main",
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/rss_by_path?path=%2Ffeatures%2Ftotd%2F",
     dataType: "xml",        
     success: function(xml) {parseDownloads(xml, "Track of the Day");}
     });
