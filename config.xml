@@ -3,8 +3,8 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "com.radiok.kuom"
-        versionCode="8" 
-        version   = "2.3">
+        versionCode="9" 
+        version   = "2.4">
 
     <!-- versionCode is optional and Android only -->
 <preference name="phonegap-version" value="3.6.3" />
@@ -19,11 +19,10 @@
 <preference name="orientation" value="portrait" />
 <preference name="permissions" value="none"/>
 <gap:splash src="splash.png" />
-<gap:plugin name="com.hutchind.cordova.plugins.streamingmedia" />
+<gap:plugin name="org.apache.cordova.media" />
 <gap:plugin name="org.apache.cordova.network-information" />
 <access origin="*" />
 <!--
-<gap:plugin name="org.apache.cordova.media" />
 <feature name="http://api.phonegap.com/1.0/network"/>
 <feature name="http://api.phonegap.com/1.0/media"/>
 -->
