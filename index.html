@@ -295,6 +295,7 @@ function togglePlaying(){
     }
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
+/*
 function connectMedia(){
   dbuga('connectMedia q='+genericGet("quality"));
   dbuga('url='+urlByQuality[genericGet("quality")]);
@@ -312,6 +313,32 @@ function connectMedia(){
 
   dbuga("mediaStack.length: "+mediaStack.length);
   }
+*/
+
+/*options
+    bgColor: "#FFFFFF",
+    bgImage: "<SWEET_BACKGROUND_IMAGE>",
+    bgImageScale: "fit",
+*/
+function connectMedia(){
+  dbuga('connectMedia q='+genericGet("quality"));
+  dbuga('url='+urlByQuality[genericGet("quality")]);
+  //var thisMedia = new Media(urlByQuality[genericGet("quality")], successCallback, errorCallback, statusCallback);
+  //dbuga('thisMedia');
+    var options = {
+    successCallback: function() {
+      dbuga("Player closed without error.");
+    },
+    errorCallback: function(errMsg) {
+      dbuga("Error! " + errMsg);
+    }
+  };
+  window.plugins.streamingMedia.playAudio(urlByQuality[genericGet("quality")], options);
+}
+
+
+
+
 function successCallback(){
   dbuga('successCallback uiPlaying='+uiPlaying);
   }
