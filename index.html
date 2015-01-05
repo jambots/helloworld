@@ -13,6 +13,7 @@
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
 
 <script type="text/javascript">
+
 var platform="android";
 var debugging=true;
 var retrying=false;
@@ -212,7 +213,7 @@ function genericGet(itemName){
 var minuteInterval;
 var dimensionInterval;
 function init(){
-  //dbuga('init 0.0');
+  dbuga('init 0.0');
   currentPage="listen";
 
   populateContainer();
@@ -222,7 +223,7 @@ function init(){
 
   buttonOn("settings", genericGet("quality"));
   buttonOn("footnav", "listen");
-  //dbuga(' init 3');
+  dbuga(' init 3');
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
   dialInterval=setInterval('dialTick()', 25);
