@@ -1,0 +1,146 @@
+html{
+  height: 100%;
+  background-color:#000;
+  user-select: none;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+
+}
+
+@font-face
+{
+font-family: akzilight;
+src: url('fonts/akzidenzgrotesklight.ttf');
+} 
+@font-face
+{
+font-family: akziregular;
+src: url('fonts/akzidenzgroteskregular.ttf');
+} 
+@font-face
+{
+font-family: akzibold;
+src: url('fonts/akzidenzgroteskbold.ttf');
+}
+#resultsHolder{
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
+}
+#totdHolder{
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
+}
+#wrsHolder{
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
+}
+#cqHolder{
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
+}
+#playlistHolder{
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
+}
+#calendarHolder{
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
+}
+
+#alarmTimeHour{overflow:hidden;}
+#alarmTimeMin{overflow:hidden;}
+#alarmTimeAmPm{overflow:hidden;}
+#sleepTime{overflow:hidden;}
+
+.loading{color:black; font-family:akzibold;}
+.playlistItem{color:black; font-family:akzibold; position:static; text-align:center;}
+#debugDiv{display:none; position:absolute; width:100%; top:0px;
+background-color:rgba(0,0,0,.6); color:white; font-family: akziregular; font-size:18px;}
+div{
+position:absolute;
+user-select: none;
+-webkit-backface-visibility:hidden;
+}
+.buttons{
+-webkit-transition:opacity 50ms linear;
+-webkit-background-size:100% 100%; 
+background-repeat:no-repeat;
+-webkit-background-size:cover;
+background-position:center center;
+}
+
+.questionHolder{
+  -webkit-transition:opacity 100ms linear;
+  overflow:hidden; position:static; 
+  float:left; 
+  //background-color:#110; 
+  //-webkit-transition:height 1000ms linear, max-height 1000ms linear; 
+}
+.twistie{
+  overflow:hidden;  position:relative; font-family:akzibold;
+  background-repeat:no-repeat;
+  background-position:center right;
+  //-webkit-transition:height 1000ms linear, max-height 1000ms linear; 
+}
+.answer{
+  position:absolute; font-family:akziregular;
+  //float:left; 
+  //background-color:#336;
+  display:none; 
+  //-webkit-transition:height 100ms linear, max-height 100ms linear; 
+}
+//a:link{color:#2BBED8; font-family:akzibold; text-decoration:none;}
+a:link{color:#00f; font-family:akzibold; text-decoration:none;}
+
+//a:visited{color:#2BBED8; font-family:akzibold; text-decoration:none;}
+a:visited{color:#00f; font-family:akzibold; text-decoration:none;}
+.pages{
+opacity:0;
+-webkit-transition:opacity 350ms linear;
+-webkit-background-size:100% 100%; 
+background-repeat:no-repeat;
+background-color:#000;
+//-webkit-background-size:contain;
+background-position:top center;
+}
+body{
+user-select: none;
+width:100%;
+max-height:100%;
+height:100%;
+zbackground-image:url('red.png');
+}
+#wrapper{
+position:absolute;
+width:100%;
+height:100%;
+overflow:hidden;
+background-color:#000;
+user-select: none;
+}
+#container{
+position:absolute;
+background-color:#000;
+//background-image:url('blue.png');
+}

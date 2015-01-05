@@ -22,18 +22,19 @@ function pad2(number) {
 	return (number < 10 ? '0' : '') + number
 }
 
-var myaudioURL = 'http://stream.4zzzfm.org.au:789/;';
-var myaudio = new Audio(myaudioURL);
 var isPlaying = false;
 var readyStateInterval = null;
+
+
+var myaudioURL = urlByQuality['higher']);
+var myaudio = new Audio(myaudioURL);
 
 var html5audio = {
 	play: function()
 	{
-		isPlaying = true;
+                isPlaying = true;
 		myaudio.play();
-	
-		readyStateInterval = setInterval(function(){
+	        readyStateInterval = setInterval(function(){
 			 if (myaudio.readyState <= 2) {
 				 playButton.style.display = 'none';
 				 activityIndicator.style.display = 'block';
