@@ -240,11 +240,11 @@ function init(){
   ////singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
-  myaudioURL = urlByQuality[genericGet("quality")];
-  myaudio = new Audio(myaudioURL);
   dbuga(' init 7');
-		
-  dbuga('init okay');
+  myaudioURL = urlByQuality[genericGet("quality")]+"/;";
+  myaudio = new Audio(myaudioURL);
+  		
+  dbug('init okay');
   }
 function onOffline() {
   //dbuga('onOffline() uiPlaying='+uiPlaying);

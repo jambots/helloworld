@@ -35,8 +35,8 @@ var html5audio = {
 		myaudio.play();
 	        readyStateInterval = setInterval(function(){
 			 if (myaudio.readyState <= 2) {
-				 playButton.style.display = 'none';
-				 activityIndicator.style.display = 'block';
+				 //playButton.style.display = 'none';
+				 //activityIndicator.style.display = 'block';
 				 textPosition.innerHTML = 'loading...';
 			 }
 		},1000);
@@ -45,7 +45,7 @@ var html5audio = {
 			 var m = parseInt((myaudio.currentTime / 60) % 60);
 			 var h = parseInt(((myaudio.currentTime / 60) / 60) % 60);
 			 if (isPlaying && myaudio.currentTime > 0) {
-				 textPosition.innerHTML = pad2(h) + ':' + pad2(m) + ':' + pad2(s);
+				 //textPosition.innerHTML = pad2(h) + ':' + pad2(m) + ':' + pad2(s);
 			 }
 		}, false);
 		myaudio.addEventListener("error", function() {
@@ -57,15 +57,15 @@ var html5audio = {
 		myaudio.addEventListener("waiting", function() {
 			 //console.log('myaudio WAITING');
 			 isPlaying = false;
-			 playButton.style.display = 'none';
-			 stopButton.style.display = 'none';
-			 activityIndicator.style.display = 'block';
+			 //playButton.style.display = 'none';
+			 //stopButton.style.display = 'none';
+			 //activityIndicator.style.display = 'block';
 		}, false);
 		myaudio.addEventListener("playing", function() {
 			 isPlaying = true;
-			 playButton.style.display = 'none';
-			 activityIndicator.style.display = 'none';
-			 stopButton.style.display = 'block';
+			 //playButton.style.display = 'none';
+			 //activityIndicator.style.display = 'none';
+			 //stopButton.style.display = 'block';
 		}, false);
 		myaudio.addEventListener("ended", function() {
 			 //console.log('myaudio ENDED');
@@ -86,17 +86,17 @@ var html5audio = {
 		isPlaying = false;
 		clearInterval(readyStateInterval);
 		myaudio.pause();
-		stopButton.style.display = 'none';
-		activityIndicator.style.display = 'none';
-		playButton.style.display = 'block';
+		//stopButton.style.display = 'none';
+		//activityIndicator.style.display = 'none';
+		//playButton.style.display = 'block';
 	},
 	stop: function() {
 		isPlaying = false;
 		clearInterval(readyStateInterval);
 		myaudio.pause();
-		stopButton.style.display = 'none';
-		activityIndicator.style.display = 'none';
-		playButton.style.display = 'block';
+		//stopButton.style.display = 'none';
+		//activityIndicator.style.display = 'none';
+		//playButton.style.display = 'block';
 		myaudio = null;
 		myaudio = new Audio(myaudioURL);
 		textPosition.innerHTML = '';
