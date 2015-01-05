@@ -547,17 +547,17 @@ function parseDownloads(theXml, source){
       }
     if(source=="Track of the Day"){
       item.image="social/trackoftheday.jpg";
-      var strongParts=descData.split('<strong>');
-      var descPlus=strongParts[1];
-      strongParts=descPlus.split('</strong>');
-      item.description=strongParts[0];
-/*
+      //var strongParts=descData.split('<strong>');
+      //var descPlus=strongParts[1];
+      //strongParts=descPlus.split('</strong>');
+      //item.description=strongParts[0];
+      item.link="No Link Found";
       for (var q=0; q<quoteParts.length; q++){
         if(quoteParts[q].indexOf('mp3')>-1){
           item.link=quoteParts[q];
           }
         }
-*/
+      item.description=item.link;
       }
     if(source=="Weekly Release Spotlight"){
       //item.date="skip";
