@@ -13,17 +13,17 @@ html{
 @font-face
 {
 font-family: akzilight;
-src: url('fonts/akzidenzgrotesklight.ttf');
+src: url('akzidenzgrotesklight.ttf');
 } 
 @font-face
 {
 font-family: akziregular;
-src: url('fonts/akzidenzgroteskregular.ttf');
+src: url('akzidenzgroteskregular.ttf');
 } 
 @font-face
 {
 font-family: akzibold;
-src: url('fonts/akzidenzgroteskbold.ttf');
+src: url('akzidenzgroteskbold.ttf');
 }
 #resultsHolder{
   position:absolute;
