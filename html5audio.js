@@ -26,8 +26,8 @@ var isPlaying = false;
 var readyStateInterval = null;
 
 
-var myaudioURL = urlByQuality['higher']);
-var myaudio = new Audio(myaudioURL);
+var myaudioURL;
+var myaudio;
 
 var html5audio = {
 	play: function()
