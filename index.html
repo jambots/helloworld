@@ -203,7 +203,9 @@ function stopReleaseNullRetry(){
   }
 function releaseNullRetry(){
   //dbuga("releaseNullRetry()");
-  mediaStack[0].release();
+  if(mediaStack.length>0){
+    mediaStack[0].release();
+    }
   window.setTimeout('nullRetry()',500);
   }
 function nullRetry(){
@@ -255,7 +257,9 @@ function mediumSelected(){
   buttonOff("settings", "higher");
   genericSet("quality", "medium");
   stopMedia();
-  mediaStack[0].release();
+  if(mediaStack.length>0){
+    mediaStack[0].release();
+    }
   connectMedia();
   if(uiPlaying){
     retrying=true;
@@ -266,7 +270,9 @@ function highSelected(){
   buttonOn("settings", "higher");
   genericSet("quality", "higher");
   stopMedia();
-  mediaStack[0].release();
+  if(mediaStack.length>0){
+    mediaStack[0].release();
+    }
   connectMedia();
   if(uiPlaying){
     retrying=true;
@@ -309,6 +315,7 @@ function connectMedia(){
     }
   //dbuga('in connectMedia uiPlaying='+uiPlaying);
   if(uiPlaying){
+  if(mediaStack.length>0){
     mediaStack[0].play();
     }
 
@@ -2058,7 +2065,9 @@ function remoteControlPlay(){
   }
 function stopMedia(){
   //dbuga('stopMedia()');
-  mediaStack[0].stop();
+  if(mediaStack.length>0){
+    mediaStack[0].stop();
+    }
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   //dbuga('stopMedia() ran');
   }
