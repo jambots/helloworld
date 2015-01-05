@@ -1,5 +1,5 @@
 
-
+alert('html5audio.js');
 var progressTimer;
 
 var playButton;
