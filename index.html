@@ -8,7 +8,6 @@
 <script src="childbrowser.js"></script>
 <script type="text/javascript" src="jquerymin.js"></script>
 <script type="text/javascript" src="iscroll-lite.js"></script>
-<script type="text/javascript" charset="utf-8" src="html5audio.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css">
 
 <style type="text/css">
@@ -203,9 +202,7 @@ function stopReleaseNullRetry(){
   }
 function releaseNullRetry(){
   //dbuga("releaseNullRetry()");
-  if(mediaStack.length>0){
-    mediaStack[0].release();
-    }
+  mediaStack[0].release();
   window.setTimeout('nullRetry()',500);
   }
 function nullRetry(){
@@ -257,9 +254,7 @@ function mediumSelected(){
   buttonOff("settings", "higher");
   genericSet("quality", "medium");
   stopMedia();
-  if(mediaStack.length>0){
-    mediaStack[0].release();
-    }
+  mediaStack[0].release();
   connectMedia();
   if(uiPlaying){
     retrying=true;
@@ -270,9 +265,7 @@ function highSelected(){
   buttonOn("settings", "higher");
   genericSet("quality", "higher");
   stopMedia();
-  if(mediaStack.length>0){
-    mediaStack[0].release();
-    }
+  mediaStack[0].release();
   connectMedia();
   if(uiPlaying){
     retrying=true;
@@ -315,7 +308,6 @@ function connectMedia(){
     }
   //dbuga('in connectMedia uiPlaying='+uiPlaying);
   if(uiPlaying){
-  if(mediaStack.length>0){
     mediaStack[0].play();
     }
 
@@ -2065,9 +2057,7 @@ function remoteControlPlay(){
   }
 function stopMedia(){
   //dbuga('stopMedia()');
-  if(mediaStack.length>0){
-    mediaStack[0].stop();
-    }
+  mediaStack[0].stop();
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   //dbuga('stopMedia() ran');
   }
@@ -2124,24 +2114,19 @@ function handleTouchEvent(e){
     }
   }
 var alarmIncDec=1;
+//document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 
 </script>
 </head>
 <body onload="init()" onmousedown="moused(event);" ontouchstart="touchStart(event);" ontouchmove="touchMove(event);" ontouchend="touchEnd(event);" ontouchcancel="touchCancel(event);">
-<!--
-		  <a href="#" id="playbutton" onClick="html5audio.play();return false;"><img src="images_small/playbutton.png" /></a>
-		  <a href="#" id="activityindicator" onClick="html5audio.stop();return false;"><img src="images_small/activityindicator.gif" /></a>
-		  <a href="#" id="stopbutton" onClick="html5audio.stop();return false;"><img src="images_small/stopbutton.png" /></a>
-	  <div id="textpositiondiv">Time played: <span id="textposition">stopped</span></div>
-	  <script type="text/javascript">
-		  playButton = document.getElementById('playbutton');
-		  stopButton = document.getElementById('stopbutton');
-		  activityIndicator = document.getElementById('activityindicator');
-		  textPosition = document.getElementById('textposition');
-	  </script>
--->
 
 <div id="wrapper">
+<!--
+<audio controls>
+<source="http://radiokstreams.cce.umn.edu:8256" type="audio/mp3" />
+</audio>
+<audio style="position:absolute; top:400px;" controls src="http://radiokstreams.cce.umn.edu:8256/;"></audio>
+-->
   <div id="container">
   </div>
   <div id="debugDiv"></div>
