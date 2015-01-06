@@ -63,6 +63,7 @@ var html5audio = {
        //activityIndicator.style.display = 'block';
     }, false);
     myaudio.addEventListener("playing", function() {
+       dbuga('playing fired');
        isPlaying = true;
          buttonOn("listen", "playpause");
          updateNowPlaying();

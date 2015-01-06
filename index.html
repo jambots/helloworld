@@ -92,7 +92,9 @@ function stateTick(){
     document.getElementById("stateDiv").style.display="block";
  
     var theString=""+rnd(210);
-    theString+="quality="+genericGet("quality")+"<br />";
+    
+   theString+="myaudio.readyState="+myaudio.readyState+"<br />";
+   theString+="quality="+genericGet("quality")+"<br />";
     //theString+="navigator.connection.type="+navigator.connection.type+"<br />";
     theString+="uiPlaying="+uiPlaying+"<br />";
     theString+="isPlaying="+isPlaying+"<br />";
@@ -1923,6 +1925,16 @@ function stopMedia(){
   }
 function playMedia(){
   //dbuga('playMedia() so connectStream()');
+  connectMedia();
+  }
+function stopStream(){
+  //dbuga('stopStream()');
+  myaudio.stop();
+  document.getElementById('page_listen_content_djDiv').innerHTML="";
+  dbuga('stopStream() ran');
+  }
+function playStream(){
+  dbuga('playStream() so connectStream()');
   connectStream();
   }
 var noStatusTimeout;
