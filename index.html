@@ -93,7 +93,7 @@ function stateTick(){
  
     var theString=""+rnd(210);
     theString+="quality="+genericGet("quality")+"<br />";
-    theString+="navigator.connection.type="+navigator.connection.type+"<br />";
+    //theString+="navigator.connection.type="+navigator.connection.type+"<br />";
     theString+="uiPlaying="+uiPlaying+"<br />";
     theString+="isPlaying="+isPlaying+"<br />";
     theString+="mediaStatusNum="+mediaStatusNum+"<br />";
@@ -154,7 +154,7 @@ function togglePlaying(){
 function connectMedia(){
   //dbuga('connectMedia q='+genericGet("quality"));
   //dbuga('url='+urlByQuality[genericGet("quality")]);
-  var thisMedia = new Media(urlByQuality[genericGet("quality")], successCallback, errorCallback, statusCallback);
+  ////urlByQuality[genericGet("quality")], successCallback, errorCallback, statusCallback);
   //dbuga('thisMedia');
   mediaStack.unshift(thisMedia);
   for (var m=1; m<mediaStack.length; m++){
@@ -1920,7 +1920,6 @@ function stopMedia(){
   }
 function playMedia(){
   //dbuga('playMedia() so connectMedia()');
-  //mediaStack[0].play();
   connectMedia();
   }
 var noStatusTimeout;
