@@ -58,7 +58,7 @@ var html5audio = {
     }, false);
     myaudio.addEventListener("waiting", function() {
        dbuga('myaudio WAITING');
-       isPlaying = false;
+       isPlaying = true;
        //playButton.style.display = 'none';
        //stopButton.style.display = 'none';
        //activityIndicator.style.display = 'block';
