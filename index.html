@@ -76,6 +76,9 @@ function retryTick(){
     if(navigator.connection.type ==Connection.NONE){
       message="no connection.";
       }
+    else{
+      connectStream();
+      }
     if(retryAttempts>10){
       message="We're not connecting.<br />Try again in a bit K?";
       }
