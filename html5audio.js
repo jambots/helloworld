@@ -106,6 +106,6 @@ var html5audio = {
     //playButton.style.display = 'block';
     myaudio = null;
     myaudio = new Audio(myaudioURL);
-    textPosition.innerHTML = '';
+    //textPosition.innerHTML = '';
   }
 };
