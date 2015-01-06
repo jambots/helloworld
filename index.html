@@ -154,7 +154,7 @@ function connectStream(){
   myaudioURL=urlByQuality[genericGet("quality")]+"/;";
     myaudio = null;
     myaudio = new Audio(myaudioURL);
-  if(uiPlaying){myaudio.play();}
+  if(uiPlaying){html5audio.play();}
   }
 function connectMedia(){
   //dbuga('connectMedia q='+genericGet("quality"));
@@ -1927,7 +1927,7 @@ function playMedia(){
   }
 function stopStream(){
   //dbuga('stopStream()');
-  myaudio.stop();
+  html5audio.stop();
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   dbuga('stopStream() ran');
   }
