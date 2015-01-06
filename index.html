@@ -150,6 +150,11 @@ function togglePlaying(){
     }
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
+function initStream(){
+  myaudioURL=urlByQuality[genericGet("quality")]+"/;";
+  myaudio = new Audio(myaudioURL);
+  if(uiPlaying){html5audio.play();}
+  }
 function connectStream(){
   myaudioURL=urlByQuality[genericGet("quality")]+"/;";
     myaudio.stop();
@@ -248,7 +253,7 @@ function init(){
   document.addEventListener("online", onOnline, false);
   dbuga(' init 7');
   myaudioURL = urlByQuality[genericGet("quality")]+"/;";
-  connectStream();  		
+  initStream();  		
   dbug('init okay');
   }
 function onOffline() {
