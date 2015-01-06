@@ -156,10 +156,15 @@ function initStream(){
   if(uiPlaying){html5audio.play();}
   }
 function connectStream(){
-  myaudioURL=urlByQuality[genericGet("quality")]+"/;";
+  dbuga("typeof myaudio="+typeof myaudio);
+  if(typeof myaudio === 'undefined'){
+  }
+  else{
     myaudio.stop();
     myaudio = null;
-    myaudio = new Audio(myaudioURL);
+  }
+  myaudioURL=urlByQuality[genericGet("quality")]+"/;";
+  myaudio = new Audio(myaudioURL);
   if(uiPlaying){html5audio.play();}
   }
 function connectMedia(){
@@ -253,7 +258,7 @@ function init(){
   document.addEventListener("online", onOnline, false);
   dbuga(' init 7');
   myaudioURL = urlByQuality[genericGet("quality")]+"/;";
-  initStream();  		
+  connectStream();  		
   dbug('init okay');
   }
 function onOffline() {
