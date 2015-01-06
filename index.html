@@ -151,7 +151,7 @@ function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
 function connectStream(){
-  myaudioURL=urlByQuality[genericGet("quality")], successCallback, errorCallback, statusCallback);
+  myaudioURL=urlByQuality[genericGet("quality")];
     myaudio = null;
     myaudio = new Audio(myaudioURL);
   if(uiPlaying){myaudio.play();}
