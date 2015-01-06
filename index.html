@@ -155,6 +155,7 @@ function togglePlaying(){
   }
 
 function connectStream(){
+  if(isPlaying){html5audio.stop();}
   myaudioURL=urlByQuality[genericGet("quality")]+"/;";
   myaudio = null;
   myaudio = new Audio(myaudioURL);

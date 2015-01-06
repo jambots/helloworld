@@ -34,7 +34,7 @@ var html5audio = {
     myaudio.play();
     readyStateInterval = setInterval(function(){
       if (myaudio.readyState <= 2) {
-         document.getElementById('page_listen_content_djDiv').innerHTML="loading...";
+         document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
          retrying=true;
          buttonOn("listen", "playpause");
          //playButton.style.display = 'none';
