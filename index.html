@@ -150,20 +150,11 @@ function togglePlaying(){
     }
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
-function initStream(){
-  myaudioURL=urlByQuality[genericGet("quality")]+"/;";
-  myaudio = new Audio(myaudioURL);
-  if(uiPlaying){html5audio.play();}
-  }
-var audioCreated=false;
+
 function connectStream(){
-  if(audioCreated){
-    myaudio.stop();
-  }
   myaudioURL=urlByQuality[genericGet("quality")]+"/;";
   myaudio = null;
   myaudio = new Audio(myaudioURL);
-  audioCreated=true;
   if(uiPlaying){html5audio.play();}
   dbuga("connectStream() completed");
   }
@@ -1824,6 +1815,7 @@ function handleButton(pageName, buttonName){
       //buttonOff("settings", "broken");
       genericSet("quality", "medium");
       if(uiPlaying){
+        html5audio.stop();
         connectStream();
         }
       }
@@ -1833,6 +1825,7 @@ function handleButton(pageName, buttonName){
       //buttonOff("settings", "broken");
       genericSet("quality", "higher");
       if(uiPlaying){
+        html5audio.stop();
         connectStream();
         }
       }
