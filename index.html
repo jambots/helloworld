@@ -155,17 +155,17 @@ function initStream(){
   myaudio = new Audio(myaudioURL);
   if(uiPlaying){html5audio.play();}
   }
+var audioCreated=false;
 function connectStream(){
-  dbuga("typeof myaudio="+typeof myaudio);
-  if(typeof myaudio === 'undefined'){
-  }
-  else{
+  if(audioCreated){
     myaudio.stop();
-    myaudio = null;
   }
   myaudioURL=urlByQuality[genericGet("quality")]+"/;";
+  myaudio = null;
   myaudio = new Audio(myaudioURL);
+  audioCreated=true;
   if(uiPlaying){html5audio.play();}
+  dbuga("connectStream() completed");
   }
 function connectMedia(){
   //dbuga('connectMedia q='+genericGet("quality"));
