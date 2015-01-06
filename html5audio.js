@@ -35,6 +35,7 @@ var html5audio = {
     readyStateInterval = setInterval(function(){
       if (myaudio.readyState <= 2) {
          document.getElementById('page_listen_content_djDiv').innerHTML="loading...";
+         retrying=true;
          buttonOn("listen", "playpause");
          //playButton.style.display = 'none';
          //activityIndicator.style.display = 'block';
