@@ -66,6 +66,7 @@ var html5audio = {
        dbuga('playing fired');
        isPlaying = true;
          buttonOn("listen", "playpause");
+         retrying=false;
          updateNowPlaying();
        //playButton.style.display = 'none';
        //activityIndicator.style.display = 'none';
