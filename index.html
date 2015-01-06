@@ -52,7 +52,7 @@ function statusCallback(theStatus){
 
 function stopReleaseNullRetry(){
   //dbuga("stopReleaseNullRetry()");
-  stopMedia();
+  stopStream();
   window.setTimeout('releaseNullRetry()',500);
   }
 function releaseNullRetry(){
@@ -110,8 +110,7 @@ function mediumSelected(){
   buttonOn("settings", "medium");
   buttonOff("settings", "higher");
   genericSet("quality", "medium");
-  stopMedia();
-  mediaStack[0].release();
+  stopStream();
   connectStream();
   if(uiPlaying){
     retrying=true;
@@ -121,8 +120,7 @@ function highSelected(){
   buttonOff("settings", "medium");
   buttonOn("settings", "higher");
   genericSet("quality", "higher");
-  stopMedia();
-  mediaStack[0].release();
+  stopStream();
   connectStream();
   if(uiPlaying){
     retrying=true;
@@ -137,7 +135,7 @@ function togglePlaying(){
     retrying=false;
     interrupted=false;
     buttonOff("listen", "playpause");
-    stopMedia();
+    stopStream();
     }
   else{
     buttonOn("listen", "playpause");
@@ -148,7 +146,7 @@ function togglePlaying(){
     uiPlaying=true;
     clearInterval(minuteInterval);
     minuteInterval=setInterval('minuteTick()', 15000);
-    playMedia();
+    playStream();
     }
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
@@ -254,13 +252,13 @@ function init(){
 function onOffline() {
   //dbuga('onOffline() uiPlaying='+uiPlaying);
   if(uiPlaying){
-    stopMedia();
+    stopStream();
     }
   }
 function onOnline() {
   //dbuga('onOnline() uiPlaying='+uiPlaying);
   if(uiPlaying){
-    playMedia();
+    playStream();
     }
   }
 var singing=false;
