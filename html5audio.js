@@ -74,7 +74,7 @@ var html5audio = {
        //stopButton.style.display = 'block';
     }, false);
     myaudio.addEventListener("ended", function() {
-       dbuga'myaudio ENDED');
+       dbuga('myaudio ENDED');
        html5audio.stop();
        // navigator.notification.alert('Streaming failed. Possibly due to a network error.', null, 'Stream error', 'OK');
        // navigator.notification.confirm(
