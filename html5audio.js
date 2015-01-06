@@ -57,7 +57,7 @@ var html5audio = {
        console.log('myaudio CAN PLAY');
     }, false);
     myaudio.addEventListener("waiting", function() {
-       //console.log('myaudio WAITING');
+       dbuga('myaudio WAITING');
        isPlaying = false;
        //playButton.style.display = 'none';
        //stopButton.style.display = 'none';
@@ -74,7 +74,7 @@ var html5audio = {
        //stopButton.style.display = 'block';
     }, false);
     myaudio.addEventListener("ended", function() {
-       //console.log('myaudio ENDED');
+       dbuga'myaudio ENDED');
        html5audio.stop();
        // navigator.notification.alert('Streaming failed. Possibly due to a network error.', null, 'Stream error', 'OK');
        // navigator.notification.confirm(
