@@ -152,6 +152,7 @@ function togglePlaying(){
   }
 function connectStream(){
   myaudioURL=urlByQuality[genericGet("quality")]+"/;";
+    myaudio.stop();
     myaudio = null;
     myaudio = new Audio(myaudioURL);
   if(uiPlaying){html5audio.play();}
@@ -241,6 +242,7 @@ function init(){
   selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
   dbuga(' init 7');
+  getRecentSongs();
   ////singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
