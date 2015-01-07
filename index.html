@@ -25,7 +25,7 @@ var mediaStatusNum=0;
 var mediaStack=[];
 function statusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  //dbuga('status '+statusArray[theStatus]);
+  dbuga('status '+statusArray[theStatus]);
   if(statusArray[theStatus]=='MEDIA_RUNNING'){
     singing=false;
     singMedia.stop();
@@ -250,7 +250,15 @@ function init(){
   document.addEventListener("backbutton", onBackKeyDown, false);
   dbuga(' init 7');
   getRecentSongs();
-  ////singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
+
+  if (device.platform == "Android") {
+    var my_media = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
+  }
+  else {
+    var my_media = new Media("sounds/singing.mp3");
+  }
+
+
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
   dbuga(' init 7');
@@ -273,18 +281,18 @@ function onOnline() {
 var singing=false;
 function singStatusCallback(theStatus){
   var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-  //dbuga('singMedia status '+statusArray[theStatus]);
+  dbuga('singMedia status '+statusArray[theStatus]);
   if((theStatus==4)&&(singing==true)){
     singMedia.play();
     }
   }
 var singMedia;
 function singError(er){
-  //dbuga("singError "+JSON.stringify(er))
+  dbuga("singError "+JSON.stringify(er))
   }
 function singSuccess(){
-  //dbuga('singSuccess');
-  //singMedia.play();
+  dbuga('singSuccess');
+  singMedia.play();
   }
  document.addEventListener("backbutton", onBackKeyDown, false);
   
@@ -792,7 +800,7 @@ function secondTick(){
       uiPlaying=true;
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
-      ////connectMedia();
+      connectMedia();
       singMedia.play();
       //dbuga(' - set singing==true');
       singing=true;
@@ -1525,7 +1533,7 @@ var resultsHolderScroll;
 var calendarHolderScroll;
 var playlistHolderScroll;
 function alarmStatusChanged(alarmIsSet){
-  //dbuga("app says alarmStatusChanged("+alarmIsSet+")");
+  dbuga("app says alarmStatusChanged("+alarmIsSet+")");
   }
 var mouseX=0;
 var mouseY=0;
@@ -1560,7 +1568,7 @@ function remoteCqLink(cqNum){
   }
 
 function handleButton(pageName, buttonName){
-
+  dbug("handleButton("+pageName+", "+buttonName+")");
   if(pageName=="alarm"){
     if(buttonName=="timeset"){
       mouseStartX=mouseX;
@@ -1618,6 +1626,7 @@ function handleButton(pageName, buttonName){
       }
     if(buttonName=="set"){
       if(mediaRunning){stopMedia();}
+      if(isPlaying){stopStream();}
       sleepSeconds=0;
       var mil=""+minuteOfDayToHH(genericGet("alarmMinuteOfDay"))+minuteOfDayToMM(genericGet("alarmMinuteOfDay"));
       buttonOn("alarm", "set");
