@@ -1624,7 +1624,12 @@ function remoteLink(theUrl){
     if(mediaRunning){stopMedia();}
     }
   //window.plugins.childBrowser.openExternal(theUrl);
-  window.plugins.ChildBrowser.showWebPage(theUrl, { showLocationBar: true });
+  if(device.platform=="Android"){
+    openExternal(theUrl, false);
+    }
+  else{
+    window.plugins.ChildBrowser.showWebPage(theUrl, { showLocationBar: true });
+    }
   //navigator.app.loadUrl(theUrl, {openExternal: true});
   dbuga("remoteLink ran");
   }
