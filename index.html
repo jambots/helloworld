@@ -264,7 +264,7 @@ function init(){
   dbuga(' init 7');
   myaudioURL = urlByQuality[genericGet("quality")]+"/;";
   dbuga(' init 7');
-  connectStream();  		
+  connectStream();      
   dbug('init okay');
   }
 function onOffline() {
@@ -428,7 +428,8 @@ function parseDownloads(theXml, source){
       }
     if(source=="Track of the Day"){
       //http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Ftotd
-      dbugItem=$(this);
+      dbugItem=xmlToJson($(this));
+/*
       item.image=$(this).find("image").attr("href");
       //item.image=$(this).find("[nodeName=itunes:image]").attr("href");
                  
@@ -442,6 +443,7 @@ function parseDownloads(theXml, source){
           item.description=linkParts[p];
           }
         }
+*/
       }
     if(source=="Weekly Release Spotlight"){
       //item.date="skip";
@@ -487,6 +489,43 @@ function parseDownloads(theXml, source){
   if(source=="Track of the Day"){updateTotdDownloads();}
   if(source=="Culture Queue"){updateCqDownloads();}
   }
+function xmlToJson(xml) {
+  
+  // Create the return object
+  var obj = {};
+
+  if (xml.nodeType == 1) { // element
+    // do attributes
+    if (xml.attributes.length > 0) {
+    obj["@attributes"] = {};
+      for (var j = 0; j < xml.attributes.length; j++) {
+        var attribute = xml.attributes.item(j);
+        obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+      }
+    }
+  } else if (xml.nodeType == 3) { // text
+    obj = xml.nodeValue;
+  }
+
+  // do children
+  if (xml.hasChildNodes()) {
+    for(var i = 0; i < xml.childNodes.length; i++) {
+      var item = xml.childNodes.item(i);
+      var nodeName = item.nodeName;
+      if (typeof(obj[nodeName]) == "undefined") {
+        obj[nodeName] = xmlToJson(item);
+      } else {
+        if (typeof(obj[nodeName].push) == "undefined") {
+          var old = obj[nodeName];
+          obj[nodeName] = [];
+          obj[nodeName].push(old);
+        }
+        obj[nodeName].push(xmlToJson(item));
+      }
+    }
+  }
+  return obj;
+};
 
 function updateWrsDownloads(){
   //dbuga('updateWrsDownloads()');
