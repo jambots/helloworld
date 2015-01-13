@@ -1616,22 +1616,23 @@ var mouseStartX=0;
 var mouseStartY=0;
 var alarmFailsafeTimeout;
 function remoteLink(theUrl){
-  if((theUrl.indexOf('cq-archiver')>-1)||(theUrl.indexOf('vinylcloset')>-1)||(theUrl.indexOf('download.php')>-1)||(theUrl.indexOf('/features/')>-1)||(theUrl.indexOf('/totd/')>-1)){
+  if(theUrl.indexOf('mp3')>-1){
     uiPlaying=false;
     retrying=false;
     interrupted=false;
     buttonOff("listen", "playpause");
     if(mediaRunning){stopMedia();}
+    if(isPlaying){stopStream();}
     }
   //window.plugins.childBrowser.openExternal(theUrl);
   if(device.platform=="Android"){
-    openExternal(theUrl, false);
+    window.plugins.ChildBrowser.openExternal(theUrl, false);
     }
   else{
     window.plugins.ChildBrowser.showWebPage(theUrl, { showLocationBar: true });
     }
   //navigator.app.loadUrl(theUrl, {openExternal: true});
-  dbuga("remoteLink ran");
+  //dbuga("remoteLink ran");
   }
 function remoteCqLink(cqNum){
     uiPlaying=false;
