@@ -427,7 +427,7 @@ function parseDownloads(theXml, source){
       }
     if(source=="Track of the Day"){
       //http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Ftotd
-      item.image=$(this).find('[nodeName="itunes:image"]').attr("href");
+      item.image=$(this).find("image").attr("href");
       //item.image=$(this).find("[nodeName=itunes:image]").attr("href");
                  
       var link=$(this).find('enclosure').attr("url");
