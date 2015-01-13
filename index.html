@@ -444,17 +444,14 @@ function parseDownloads(theXml, source){
       var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
       var sortNum=yyyy+mm+dd+hhmmss;
       var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
-      var bandSong=thisObj.title["#text"];
-      var parts=bandSong.split(" - ");
-      var band=parts[0];
-      var song=parts[1];
+      var title=thisObj.title["#text"];
       var item={
         "sort":sortNum, 
         "source":source, 
         "date":dispDate, 
         "image":thisObj["itunes:image"]["@attributes"]["href"], 
-        "title":band,
-        "description":song, 
+        "title":"",
+        "description":title, 
         "link":thisObj["enclosure"]["@attributes"]["url"]
         };
       cqDownloads.push(item);
@@ -680,7 +677,9 @@ function updateCqDownloads(){
     htmlBlock+=  '<img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" />';
     htmlBlock+='</a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
-    htmlBlock+=  downloadItem.title+'<br />';
+    //htmlBlock+=  downloadItem.title+'<br />';
+    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
+    if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
     htmlBlock+=  '<a href="javascript:remoteCqLink(\''+d+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     if(d>9){d=sortedDownloads.length;}
