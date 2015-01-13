@@ -383,7 +383,9 @@ var monToMonth={"Jan":"January", "Feb":"February", "Mar":"March", "Apr":"April",
 //var dbugArray=[];
 function parseDownloads(theXml, source){
   //dbuga("parseDownloads() "+source);
-
+  if(source=="Track of the Day"){
+    dbugItem=xmlToJson(theXml);
+    }
   $(theXml).find('item').each(function(){
     //dbugArray.push($(this));
     //convert Tue, 11 Mar 2014 00:01:00 CDT to yyyymmddhhmmss
@@ -428,7 +430,6 @@ function parseDownloads(theXml, source){
       }
     if(source=="Track of the Day"){
       //http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Ftotd
-      dbugItem=xmlToJson($(this));
 /*
       item.image=$(this).find("image").attr("href");
       //item.image=$(this).find("[nodeName=itunes:image]").attr("href");
