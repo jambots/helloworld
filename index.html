@@ -263,6 +263,7 @@ function init(){
   document.addEventListener("online", onOnline, false);
   dbuga(' init 7');
   myaudioURL = urlByQuality[genericGet("quality")]+"/;";
+  dbuga(' init 7');
   connectStream();  		
   dbug('init okay');
   }
@@ -365,7 +366,7 @@ function getDownloads(){
     success: function(xml) {parseDownloads(xml, "Culture Queue");}
     });
   $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/rss_by_path?path=%2Ffeatures%2Ftotd%2F",
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Ftotd",
     dataType: "xml",        
     success: function(xml) {parseDownloads(xml, "Track of the Day");}
     });
@@ -423,18 +424,18 @@ function parseDownloads(theXml, source){
       //dbuga('okay');
       }
     if(source=="Track of the Day"){
-      item.image="social/trackoftheday.jpg";
-      //var strongParts=descData.split('<strong>');
-      //var descPlus=strongParts[1];
-      //strongParts=descPlus.split('</strong>');
-      //item.description=strongParts[0];
-      item.link="No Link Found";
-      for (var q=0; q<quoteParts.length; q++){
-        if(quoteParts[q].indexOf('mp3')>-1){
-          item.link=quoteParts[q];
+      //http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Ftotd
+      item.image=$(this).find('itunes:image').href;
+      var link=$(this).find('enclosure').url;
+      item.link=link;
+      item.description="No URL Found";
+      var linkParts=link.split("/");      
+      item.description=linkParts.pop();//m
+      for (var p=0; p<linkParts.length; p++){
+        if(linkParts[p].indexOf('mp3')>-1){
+          item.description=linkParts[p];
           }
         }
-      item.description=item.link;
       }
     if(source=="Weekly Release Spotlight"){
       //item.date="skip";

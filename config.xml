@@ -18,9 +18,9 @@
 <preference name="fullscreen" value="true" />
 <preference name="orientation" value="portrait" />
 <preference name="permissions" value="none"/>
-<gap:plugin name="org.apache.cordova.device" version="0.2.12" />
 <gap:splash src="splash.png" />
 <gap:plugin name="org.apache.cordova.media" />
+<gap:plugin name="org.apache.cordova.device" version="0.2.12" />
 <gap:plugin name="org.apache.cordova.network-information" />
 <gap:plugin name="nl.kingsquare.background-audio" version="1.0.0" />
 <access origin="*" />
