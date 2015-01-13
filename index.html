@@ -252,6 +252,7 @@ function init(){
   getRecentSongs();
 
   if (device.platform == "Android") {
+    returnFalse=" return false;";
     var my_media = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
   }
   else {
@@ -273,6 +274,7 @@ function onOffline() {
     stopStream();
     }
   }
+var returnFalse="";
 function onOnline() {
   //dbuga('onOnline() uiPlaying='+uiPlaying);
   if(uiPlaying){
@@ -571,11 +573,11 @@ function updateWrsDownloads(){
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\'); return false;"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
     if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
     if(downloadItem.date != "skip"){htmlBlock+=  '<br />'+downloadItem.date+'<br />';}
-    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\'); return false;">'+downloadItem.title+'</a>';
+    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+'</a>';
     htmlBlock+='</div></div>';
     }
   document.getElementById('wrsScroller').innerHTML=htmlBlock;
@@ -604,11 +606,11 @@ function updateTotdDownloads(){
     var downloadItem=sortedDownloads[d];
     //dbuga(downloadItem.link);
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\'); return false;"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
     if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
     if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
-    htmlBlock+=  downloadItem.title+' - <a href="javascript:remoteLink(\''+downloadItem.link+'\'); return false;">'+downloadItem.description+'</a>';
+    htmlBlock+=  downloadItem.title+' - <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     }
   document.getElementById('totdScroller').innerHTML=htmlBlock;
@@ -639,12 +641,12 @@ function updateCqDownloads(){
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+='<a href="javascript:remoteCqLink(\''+d+'\'); return false;">';
+    htmlBlock+='<a href="javascript:remoteCqLink(\''+d+'\');'+returnFalse+'">';
     htmlBlock+=  '<img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" />';
     htmlBlock+='</a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
     htmlBlock+=  downloadItem.title+'<br />';
-    htmlBlock+=  '<a href="javascript:remoteCqLink(\''+d+'\'); return false;">'+downloadItem.description+'</a>';
+    htmlBlock+=  '<a href="javascript:remoteCqLink(\''+d+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     if(d>9){d=sortedDownloads.length;}
     }
@@ -732,7 +734,7 @@ function populateCalendar(){
       var part=quoteParts[q];
       if(prevPart.indexOf('href=')>-1){
         ///dbuga(part);
-        part="javascript:remoteLink('"+part+"'); return false;";
+        part="javascript:remoteLink('"+part+"');'+returnFalse+'";
         }
       performersFixed+=part; 
       }
@@ -1582,9 +1584,9 @@ function parseItunesResults(theData){
       var result=results[r];
       //dbuga(result.artistName+" "+result.collectionName);
       htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-      htmlBlock+=  '<a href="javascript:remoteLink(\''+result.collectionViewUrl+'\'); return false;"><img src="'+result.artworkUrl100+'" style="'+imgStyle+'" /></a>';
+      htmlBlock+=  '<a href="javascript:remoteLink(\''+result.collectionViewUrl+'\');'+returnFalse+'"><img src="'+result.artworkUrl100+'" style="'+imgStyle+'" /></a>';
       htmlBlock+=  '<br /><span style="font-family:akziregular;">'+result.artistName+'</span>';
-      htmlBlock+=  '<br /><a href="javascript:remoteLink(\''+result.collectionViewUrl+'\'); return false;"><span style="">'+result.collectionName+'</span></a>';
+      htmlBlock+=  '<br /><a href="javascript:remoteLink(\''+result.collectionViewUrl+'\');'+returnFalse+'"><span style="">'+result.collectionName+'</span></a>';
       htmlBlock+='</div>';
       }
     }
