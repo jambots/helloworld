@@ -384,8 +384,41 @@ var monToMonth={"Jan":"January", "Feb":"February", "Mar":"March", "Apr":"April",
 function parseDownloads(theXml, source){
   //dbuga("parseDownloads() "+source);
   if(source=="Track of the Day"){
-    dbugItem=xmlToJson(theXml);
+    var totdObj=xmlToJson(theXml);
+    dbugItem=totdObj;
+    var itemsArray=totdObj.rss.channel.item;
+    for (var i=0; i<itemsArray; i++){
+      var thisObj=itemsArray[i];
+      var dateStr=thisObj.pubDate["#text"];
+      var parts=dateStr.split(" ");
+      var yyyy=parts[3];
+      var mm=monToMM[parts[2]];
+      var dd=parts[1];
+      var timeCode=parts[4];
+      var timeParts=timeCode.split(":");
+      var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
+      var sortNum=yyyy+mm+dd+hhmmss;
+      var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
+      var bandSong=thisObj.title["#text"];
+      var parts=bandSong.split(" - ");
+      var band=bandSong[0];
+      var song=bandSong[1];
+      var item={
+        "sort":sortNum, 
+        "source":source, 
+        "date":dispDate, 
+        "image":thisObj["itunes:image"]["@attributes"]["href"], 
+        "title":band,
+        "description":song, 
+        "link":thisObj["enclosure"]["@attributes"]["url"]
+        };
+      totdDownloads.push(item);
+      }
     }
+  else{
+    parseDownloadsXML(theXml, source)
+    }
+function parseDownloadsXML(theXml, source){  
   $(theXml).find('item').each(function(){
     //dbugArray.push($(this));
     //convert Tue, 11 Mar 2014 00:01:00 CDT to yyyymmddhhmmss
@@ -427,24 +460,6 @@ function parseDownloads(theXml, source){
       //dbuga("Culture Queue 9");
       item.link+="&summary="+encodeURI(sum);
       //dbuga('okay');
-      }
-    if(source=="Track of the Day"){
-      //http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Ftotd
-/*
-      item.image=$(this).find("image").attr("href");
-      //item.image=$(this).find("[nodeName=itunes:image]").attr("href");
-                 
-      var link=$(this).find('enclosure').attr("url");
-      item.link=link;
-      item.description="No URL Found";
-      var linkParts=link.split("/");      
-      
-      for (var p=0; p<linkParts.length; p++){
-        if(linkParts[p].indexOf('mp3')>-1){
-          item.description=linkParts[p];
-          }
-        }
-*/
       }
     if(source=="Weekly Release Spotlight"){
       //item.date="skip";
