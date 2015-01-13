@@ -385,7 +385,6 @@ function parseDownloads(theXml, source){
   //dbuga("parseDownloads() "+source);
   if(source=="Track of the Day"){
     var totdObj=xmlToJson(theXml);
-    dbugItem=totdObj;
 
     var itemsArray=totdObj.rss.channel.item;
     dbug('itemsArray.length='+itemsArray.length);
@@ -425,6 +424,7 @@ function parseDownloads(theXml, source){
       totdDownloads.push(item);
       }
       }
+    updateTotdDownloads();
     }
   else{
     parseDownloadsXML(theXml, source)
@@ -514,7 +514,6 @@ function parseDownloadsXML(theXml, source){
     });
 
   if(source=="Weekly Release Spotlight"){updateWrsDownloads();}
-  if(source=="Track of the Day"){updateTotdDownloads();}
   if(source=="Culture Queue"){updateCqDownloads();}
   }
 function xmlToJson(xml) {
@@ -573,7 +572,7 @@ function updateWrsDownloads(){
     var downloadItem=sortedDownloads[d];
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\'); return false;"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
-    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
+    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
     if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
     if(downloadItem.date != "skip"){htmlBlock+=  '<br />'+downloadItem.date+'<br />';}
     htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\'); return false;">'+downloadItem.title+'</a>';
@@ -1623,8 +1622,9 @@ function remoteLink(theUrl){
     if(mediaRunning){stopMedia();}
     }
   //window.plugins.childBrowser.openExternal(theUrl);
-  navigator.app.loadUrl(theUrl, {openExternal: true});
-  //dbuga("remoteLink ran");
+  window.plugins.ChildBrowser.showWebPage(theUrl, { showLocationBar: true });
+  //navigator.app.loadUrl(theUrl, {openExternal: true});
+  dbuga("remoteLink ran");
   }
 function remoteCqLink(cqNum){
     uiPlaying=false;
