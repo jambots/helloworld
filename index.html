@@ -376,6 +376,7 @@ function getDownloads(){
 
 
   }
+var dbugItem="";
 // remove errors on publish
 var monToMM={"Jan":"01", "Feb":"02", "Mar":"03", "Apr":"04", "May":"05", "Jun":"06", "Jul":"07", "Aug":"08", "Sep":"09", "Oct":"10", "Nov":"11", "Dec":"12"};
 var monToMonth={"Jan":"January", "Feb":"February", "Mar":"March", "Apr":"April", "May":"May", "Jun":"June", "Jul":"July", "Aug":"August", "Sep":"September", "Oct":"October", "Nov":"November", "Dec":"December"};
@@ -427,6 +428,7 @@ function parseDownloads(theXml, source){
       }
     if(source=="Track of the Day"){
       //http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Ftotd
+      dbugItem=$(this);
       item.image=$(this).find("image").attr("href");
       //item.image=$(this).find("[nodeName=itunes:image]").attr("href");
                  
