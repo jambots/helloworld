@@ -384,11 +384,19 @@ var monToMonth={"Jan":"January", "Feb":"February", "Mar":"March", "Apr":"April",
 function parseDownloads(theXml, source){
   //dbuga("parseDownloads() "+source);
   if(source=="Track of the Day"){
+    dbug('');
     var totdObj=xmlToJson(theXml);
     dbugItem=totdObj;
     var itemsArray=totdObj.rss.channel.item;
     for (var i=0; i<itemsArray; i++){
       var thisObj=itemsArray[i];
+      if(i==0){
+        dbuga(' thisObj.pubDate["#text"] = '+thisObj.pubDate["#text"]);
+        dbuga(' thisObj["enclosure"]["@attributes"]["url"] = '+thisObj["enclosure"]["@attributes"]["url"]);
+        dbuga(' thisObj.title["#text"] = '+thisObj.title["#text"]);
+        dbuga(' thisObj["itunes:image"]["@attributes"]["href"] = '+thisObj["itunes:image"]["@attributes"]["href"]);
+        
+        }
       var dateStr=thisObj.pubDate["#text"];
       var parts=dateStr.split(" ");
       var yyyy=parts[3];
