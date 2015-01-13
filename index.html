@@ -382,7 +382,6 @@ var dbugItem="";
 // remove errors on publish
 var monToMM={"Jan":"01", "Feb":"02", "Mar":"03", "Apr":"04", "May":"05", "Jun":"06", "Jul":"07", "Aug":"08", "Sep":"09", "Oct":"10", "Nov":"11", "Dec":"12"};
 var monToMonth={"Jan":"January", "Feb":"February", "Mar":"March", "Apr":"April", "May":"May", "Jun":"June", "Jul":"July", "Aug":"August", "Sep":"September", "Oct":"October", "Nov":"November", "Dec":"December"};
-//var dbugArray=[];
 function parseDownloads(theXml, source){
   //dbuga("parseDownloads() "+source);
   if(source=="Track of the Day"){
@@ -422,6 +421,7 @@ function parseDownloads(theXml, source){
     }
   if(source=="Culture Queue"){
     var cqObj=xmlToJson(theXml);
+    dbugItem=cqObj;
     var itemsArray=cqObj.rss.channel.item;
     dbug('itemsArray.length='+itemsArray.length);
     for (var i=0; i<itemsArray.length; i++){
