@@ -390,6 +390,7 @@ function parseDownloads(theXml, source){
     var itemsArray=totdObj.rss.channel.item;
     dbug('itemsArray.length='+itemsArray.length);
     for (var i=0; i<itemsArray.length; i++){
+      if(i<14){
       var thisObj=itemsArray[i];
       if(i==0){
         dbuga(' thisObj.pubDate["#text"] = '+thisObj.pubDate["#text"]);
@@ -410,8 +411,8 @@ function parseDownloads(theXml, source){
       var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
       var bandSong=thisObj.title["#text"];
       var parts=bandSong.split(" - ");
-      var band=bandSong[0];
-      var song=bandSong[1];
+      var band=parts[0];
+      var song=parts[1];
       var item={
         "sort":sortNum, 
         "source":source, 
@@ -422,6 +423,7 @@ function parseDownloads(theXml, source){
         "link":thisObj["enclosure"]["@attributes"]["url"]
         };
       totdDownloads.push(item);
+      }
       }
     }
   else{
