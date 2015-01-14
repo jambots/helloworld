@@ -205,14 +205,15 @@ function init(){
   //dbug('init okay');
   }
 function onOffline() {
-  //dbuga('onOffline() uiPlaying='+uiPlaying);
+  dbuga('onOffline() uiPlaying='+uiPlaying);
   if(uiPlaying){
-    stopStream();
+    retrying=true;
+    retryAttempts=0;
     }
   }
 var returnFalse="";
 function onOnline() {
-  //dbuga('onOnline() uiPlaying='+uiPlaying);
+  dbuga('onOnline() uiPlaying='+uiPlaying);
   if(uiPlaying){
     playStream();
     }
