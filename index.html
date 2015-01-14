@@ -61,6 +61,7 @@ function stateTick(){
     theString+="uiPlaying="+uiPlaying+"<br />";
     theString+="isPlaying="+isPlaying+"<br />";
     theString+="mediaStatusNum="+mediaStatusNum+"<br />";
+    theString+="singing="+singing+"<br />";
     theString+="retrying="+retrying+"<br />";
     theString+="retryAttempts="+retryAttempts;
     document.getElementById("stateDiv").innerHTML=theString;
@@ -212,7 +213,7 @@ function onOnline() {
   }
 var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
 function singStatusCallback(theStatus){
-  mediaStatusNum= theStatus;
+  mediaStatusNum=theStatus;
   dbuga('singMedia status '+statusArray[theStatus]);
   if((theStatus==4)&&(singing==true)){
     singMedia.play();
@@ -223,7 +224,7 @@ function singError(er){
   }
 function singSuccess(){
   dbuga('singSuccess');
-  singMedia.play();
+  //singMedia.play();
   }
  document.addEventListener("backbutton", onBackKeyDown, false);
   
@@ -1673,6 +1674,7 @@ function handleButton(pageName, buttonName){
       dials[3].destVal=dials[3].initVal;
       dials[3].history=initHistory;
       }
+
     if(buttonName=="set"){
       if(isPlaying){stopStream();}
       sleepSeconds=0;
@@ -1686,9 +1688,6 @@ function handleButton(pageName, buttonName){
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
-
-      
-      
       //dbuga("in set singMedia.play()");
       singing=false;
       singMedia.play();
