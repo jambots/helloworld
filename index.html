@@ -1785,9 +1785,10 @@ function handleButton(pageName, buttonName){
       interrupted=false;
       buttonOff("listen", "playpause");
 
-      stopMedia();
-      singMedia.stop();
-      singing=false;
+      stopStream();
+      //stopMedia();
+      //singMedia.stop();
+      //singing=false;
       buttonOn("wakeup", "alarmoff");
       window.setTimeout('buttonOff("wakeup", "alarmoff"); selectPage("listen");', navDelay);
       }
@@ -1806,9 +1807,10 @@ function handleButton(pageName, buttonName){
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
-      stopMedia();
-      singMedia.stop();
-      singing=false;
+      //stopMedia();
+      //singMedia.stop();
+      //singing=false;
+      stopStream();
       buttonOn("wakeup", "snooze");
       window.setTimeout('buttonOff("wakeup", "snooze"); selectPage("armed");', navDelay);
       }
