@@ -43,6 +43,8 @@ var html5audio = {
     myaudio.addEventListener("error", function() {
        dbuga('myaudio ERROR');
     }, false);
+
+
     myaudio.addEventListener("playing", function() {
        dbuga('playing fired');
        isPlaying = true;
@@ -53,20 +55,8 @@ var html5audio = {
        //activityIndicator.style.display = 'none';
        //stopButton.style.display = 'block';
     }, false);
-    myaudio.addEventListener("ended", function() {
-       dbuga('myaudio ENDED');
-       html5audio.stop();
-       // navigator.notification.alert('Streaming failed. Possibly due to a network error.', null, 'Stream error', 'OK');
-       // navigator.notification.confirm(
-       //  'Streaming failed. Possibly due to a network error.', // message
-       //  onConfirmRetry,  // callback to invoke with index of button pressed
-       //  'Stream error',  // title
-       //  'Retry,OK'    // buttonLabels
-       // );
-       if (window.confirm('Streaming failed. Possibly due to a network error. Retry?')) {
-         onConfirmRetry();
-       }
-    }, false);
+
+
   },
   pause: function() {
     isPlaying = false;
@@ -93,6 +83,20 @@ var html5audio = {
   }
 
 /*
+    myaudio.addEventListener("ended", function() {
+       dbuga('myaudio ENDED');
+       //html5audio.stop();
+       // navigator.notification.alert('Streaming failed. Possibly due to a network error.', null, 'Stream error', 'OK');
+       // navigator.notification.confirm(
+       //  'Streaming failed. Possibly due to a network error.', // message
+       //  onConfirmRetry,  // callback to invoke with index of button pressed
+       //  'Stream error',  // title
+       //  'Retry,OK'    // buttonLabels
+       // );
+       if (window.confirm('Streaming failed. Possibly due to a network error. Retry?')) {
+         onConfirmRetry();
+       }
+    }, false);
     myaudio.addEventListener("timeupdate", function() {
        var s = parseInt(myaudio.currentTime % 60);
        var m = parseInt((myaudio.currentTime / 60) % 60);
