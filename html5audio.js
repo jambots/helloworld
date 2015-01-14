@@ -40,26 +40,8 @@ var html5audio = {
          //textPosition.innerHTML = 'loading...';
        }
     },1000);
-    myaudio.addEventListener("timeupdate", function() {
-       var s = parseInt(myaudio.currentTime % 60);
-       var m = parseInt((myaudio.currentTime / 60) % 60);
-       var h = parseInt(((myaudio.currentTime / 60) / 60) % 60);
-       if (isPlaying && myaudio.currentTime > 0) {
-         //textPosition.innerHTML = pad2(h) + ':' + pad2(m) + ':' + pad2(s);
-       }
-    }, false);
     myaudio.addEventListener("error", function() {
-       console.log('myaudio ERROR');
-    }, false);
-    myaudio.addEventListener("canplay", function() {
-       console.log('myaudio CAN PLAY');
-    }, false);
-    myaudio.addEventListener("waiting", function() {
-       dbuga('myaudio WAITING');
-       isPlaying = true;
-       //playButton.style.display = 'none';
-       //stopButton.style.display = 'none';
-       //activityIndicator.style.display = 'block';
+       dbuga('myaudio ERROR');
     }, false);
     myaudio.addEventListener("playing", function() {
        dbuga('playing fired');
@@ -90,8 +72,8 @@ var html5audio = {
     isPlaying = false;
     clearInterval(readyStateInterval);
     myaudio.pause();
-         buttonOff("listen", "playpause");
-         updateNowPlaying();
+    buttonOff("listen", "playpause");
+    updateNowPlaying();
     //stopButton.style.display = 'none';
     //activityIndicator.style.display = 'none';
     //playButton.style.display = 'block';
@@ -109,4 +91,27 @@ var html5audio = {
     myaudio = new Audio(myaudioURL);
     //textPosition.innerHTML = '';
   }
+
+/*
+    myaudio.addEventListener("timeupdate", function() {
+       var s = parseInt(myaudio.currentTime % 60);
+       var m = parseInt((myaudio.currentTime / 60) % 60);
+       var h = parseInt(((myaudio.currentTime / 60) / 60) % 60);
+       if (isPlaying && myaudio.currentTime > 0) {
+         //textPosition.innerHTML = pad2(h) + ':' + pad2(m) + ':' + pad2(s);
+       }
+    }, false);
+
+    myaudio.addEventListener("canplay", function() {
+       dbuga('myaudio CAN PLAY');
+    }, false);
+
+    myaudio.addEventListener("waiting", function() {// doesn't fire on android for a minute :(
+       dbuga('myaudio WAITING');
+       //isPlaying = true;
+       //playButton.style.display = 'none';
+       //stopButton.style.display = 'none';
+       //activityIndicator.style.display = 'block';
+    }, false);
+*/
 };

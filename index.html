@@ -52,6 +52,17 @@ function retryTick(){
 
 
 function stateTick(){
+  // lost a connection?
+  if((navigator.connection.type ==Connection.NONE)||(navigator.connection.type =="none")){
+    document.getElementById('page_listen_content_djDiv').innerHTML="No connection";
+    if((isPlaying==false)&&(uiPlaying==true)&&(retrying==false)){
+      retryAttempts=0;
+      retrying=true;
+      } 
+    }
+  debugState();
+  }
+function debugState(){
   if(debugging==false){
     document.getElementById("stateDiv").style.display="none";
     }
