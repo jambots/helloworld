@@ -37,8 +37,6 @@ var html5audio = {
          document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
          retrying=true;
          buttonOn("listen", "playpause");
-         //playButton.style.display = 'none';
-         //activityIndicator.style.display = 'block';
          //textPosition.innerHTML = 'loading...';
        }
     },1000);
