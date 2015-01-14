@@ -17,7 +17,7 @@
 <script type="text/javascript">
 
 var platform="android";
-var debugging=true;
+var debugging=false;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -124,7 +124,7 @@ function connectStream(){
   myaudio = null;
   myaudio = new Audio(myaudioURL);
   if(uiPlaying){html5audio.play();}
-  dbuga("connectStream() completed");
+  //dbuga("connectStream() completed");
   }
 
 
@@ -161,7 +161,7 @@ function genericGet(itemName){
 var minuteInterval;
 var dimensionInterval;
 function init(){
-  dbuga('init 0.0');
+  //dbuga('init 0.0');
   currentPage="listen";
 
   populateContainer();
@@ -171,18 +171,18 @@ function init(){
 
   buttonOn("settings", genericGet("quality"));
   buttonOn("footnav", "listen");
-  dbuga(' init 3');
+  //dbuga(' init 3');
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
   dialInterval=setInterval('dialTick()', 25);
-  dbuga(' init 4');
+  //dbuga(' init 4');
   //minuteTick();
   getFaqs();
-  dbuga(' init 5');
+  //dbuga(' init 5');
   retryInterval=window.setInterval("retryTick()", 2000);
   selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
-  dbuga(' init 7');
+  //dbuga(' init 7');
   getRecentSongs();
 
   if (device.platform == "Android") {
@@ -196,11 +196,11 @@ function init(){
 
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
-  dbuga(' init 7');
+  //dbuga(' init 7');
   myaudioURL = urlByQuality[genericGet("quality")]+"/;";
-  dbuga(' init 7');
+  //dbuga(' init 7');
   connectStream();      
-  dbug('init okay');
+  //dbug('init okay');
   }
 function onOffline() {
   //dbuga('onOffline() uiPlaying='+uiPlaying);
@@ -218,16 +218,16 @@ function onOnline() {
 var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
 function singStatusCallback(theStatus){
   mediaStatusNum=theStatus;
-  dbuga('singMedia status '+statusArray[theStatus]);
+  //dbuga('singMedia status '+statusArray[theStatus]);
   if((theStatus==4)&&(singing==true)){
     singMedia.play();
     }
   }
 function singError(er){
-  dbuga("singError "+JSON.stringify(er))
+  //dbuga("singError "+JSON.stringify(er))
   }
 function singSuccess(){
-  dbuga('singSuccess');
+  //dbuga('singSuccess');
   //singMedia.play();
   }
  document.addEventListener("backbutton", onBackKeyDown, false);
@@ -319,7 +319,7 @@ function parseDownloads(theXml, source){
   if(source=="Track of the Day"){
     var totdObj=xmlToJson(theXml);
     var itemsArray=totdObj.rss.channel.item;
-    dbug('itemsArray.length='+itemsArray.length);
+    //dbug('itemsArray.length='+itemsArray.length);
     for (var i=0; i<itemsArray.length; i++){
       if(i<14){
       var thisObj=itemsArray[i];
@@ -353,17 +353,17 @@ function parseDownloads(theXml, source){
     }
   if(source=="Culture Queue"){
     var cqObj=xmlToJson(theXml);
-    dbugItem=cqObj;
+    //dbugItem=cqObj;
     var itemsArray=cqObj.rss.channel.item;
-    dbug('itemsArray.length='+itemsArray.length);
+    //dbug('itemsArray.length='+itemsArray.length);
     for (var i=0; i<itemsArray.length; i++){
       if(i<14){
       var thisObj=itemsArray[i];
       if(i==0){
-        dbuga(' thisObj.pubDate["#text"] = '+thisObj.pubDate["#text"]);
-        dbuga(' thisObj["enclosure"]["@attributes"]["url"] = '+thisObj["enclosure"]["@attributes"]["url"]);
-        dbuga(' thisObj.title["#text"] = '+thisObj.title["#text"]);
-        dbuga(' thisObj["itunes:image"]["@attributes"]["href"] = '+thisObj["itunes:image"]["@attributes"]["href"]);
+        //dbuga(' thisObj.pubDate["#text"] = '+thisObj.pubDate["#text"]);
+        //dbuga(' thisObj["enclosure"]["@attributes"]["url"] = '+thisObj["enclosure"]["@attributes"]["url"]);
+        //dbuga(' thisObj.title["#text"] = '+thisObj.title["#text"]);
+        //dbuga(' thisObj["itunes:image"]["@attributes"]["href"] = '+thisObj["itunes:image"]["@attributes"]["href"]);
         
         }
       var dateStr=thisObj.pubDate["#text"];
@@ -839,7 +839,7 @@ function secondTick(){
       }
 
     if((nowMod+1440>=genericGet("alarmMinuteOfDay")+1440+snoozeMinutes)&&(nowMod+1440<genericGet("alarmMinuteOfDay")+1500+snoozeMinutes)){
-      dbuga('alarm');
+      //dbuga('alarm');
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Real College Radio";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       buttonOn("listen", "playpause");
@@ -1584,7 +1584,7 @@ var resultsHolderScroll;
 var calendarHolderScroll;
 var playlistHolderScroll;
 function alarmStatusChanged(alarmIsSet){
-  dbuga("app says alarmStatusChanged("+alarmIsSet+")");
+  //dbuga("app says alarmStatusChanged("+alarmIsSet+")");
   }
 var mouseX=0;
 var mouseY=0;
@@ -1624,7 +1624,7 @@ function remoteCqLink(cqNum){
   }
 
 function handleButton(pageName, buttonName){
-  dbug("handleButton("+pageName+", "+buttonName+")");
+  //dbug("handleButton("+pageName+", "+buttonName+")");
   if(pageName=="alarm"){
     if(buttonName=="timeset"){
       mouseStartX=mouseX;
@@ -1987,13 +1987,12 @@ function stopStream(){
   //dbuga('stopStream()');
   html5audio.stop();
   document.getElementById('page_listen_content_djDiv').innerHTML="";
-  dbuga('stopStream() ran');
+  //dbuga('stopStream() ran');
   }
 function playStream(){
-  dbuga('playStream() so connectStream()');
+  //dbuga('playStream() so connectStream()');
   connectStream();
   }
-var noStatusTimeout;
 
 var lastTouchId="";
 function handleTouchEvent(e){
