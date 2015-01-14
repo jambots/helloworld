@@ -840,10 +840,12 @@ function secondTick(){
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       buttonOn("listen", "playpause");
       document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
-      connecting=true;
-      interrupted=false;
-      uiPlaying=true;
-      connectStream();
+      //connecting=true;
+      //interrupted=false;
+      //uiPlaying=true;
+      //connectStream();
+      singing=true;
+      singMedia.play();
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
       selectPage("wakeup");
