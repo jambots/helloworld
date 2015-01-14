@@ -645,7 +645,7 @@ function updateTotdDownloads(){
     //dbuga(downloadItem.link);
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
-    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
+    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
     if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
     if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
     htmlBlock+=  downloadItem.title+' - <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
@@ -686,7 +686,7 @@ function updateCqDownloads(){
     htmlBlock+='<a href="javascript:remoteCqLink(\''+d+'\');'+returnFalse+'">';
     htmlBlock+=  '<img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" />';
     htmlBlock+='</a>';
-    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*30+'px; Zbackground-color:blue;">'
+    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
     //htmlBlock+=  downloadItem.title+'<br />';
     if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
     if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
@@ -909,7 +909,7 @@ function secondTick(){
       }
 
     if((nowMod+1440>=genericGet("alarmMinuteOfDay")+1440+snoozeMinutes)&&(nowMod+1440<genericGet("alarmMinuteOfDay")+1500+snoozeMinutes)){
-      //dbuga('alarm');
+      dbuga('alarm');
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="XYZ Real College Radio";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       buttonOn("listen", "playpause");
@@ -917,12 +917,9 @@ function secondTick(){
       connecting=true;
       interrupted=false;
       uiPlaying=true;
+      connectStream();
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
-      connectMedia();
-      singMedia.play();
-      //dbuga(' - set singing==true');
-      singing=true;
       selectPage("wakeup");
       }
     }
