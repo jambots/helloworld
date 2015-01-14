@@ -25,19 +25,15 @@ var uiPlaying=false;
 var mediaStatusNum=0;
 var singMedia;
 var singing=false;
-
+var connection=true;
 function retryTick(){
   if(retrying==true){
     var message="Connecting...";
     retryAttempts++;
-    if((navigator.connection.type ==Connection.NONE)||(navigator.connection.type =="none")){
-      message="no connection.";
+    if(isPlaying==false){
+      connectStream();
       }
-    else{
-      if(isPlaying==false){
-        connectStream();
-        }
-      }
+    }
     if(retryAttempts>10){
       message="We're not connecting.<br />Try again in a bit K?";
       uiPlaying=false;
@@ -46,7 +42,6 @@ function retryTick(){
       buttonOff("listen", "playpause");      
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=message;
       }
-    document.getElementById('page_listen_content_djDiv').innerHTML=message;
     }
   }
 
@@ -54,10 +49,18 @@ function retryTick(){
 function stateTick(){
   // lost a connection?
   if((navigator.connection.type ==Connection.NONE)||(navigator.connection.type =="none")){
-    document.getElementById('page_listen_content_djDiv').innerHTML="No connection";
-    if((isPlaying==false)&&(uiPlaying==true)&&(retrying==false)){
-      retryAttempts=0;
-      retrying=true;
+    if(connection==false){
+      document.getElementById('page_listen_content_djDiv').innerHTML="No connection";
+      }
+    if(connection==true){
+      connection=false;
+      dbuga('Lost connection');
+      document.getElementById('page_listen_content_djDiv').innerHTML="Lost connection";
+      if((uiPlaying==true)&&(retrying==false)){
+        dbuga('so start retrying');
+        retryAttempts=0;
+        retrying=true;
+        }
       } 
     }
   debugState();
@@ -72,6 +75,7 @@ function debugState(){
     var theString=""+rnd(210)+"<br />";
     
     theString+="navigator.connection.type="+navigator.connection.type+"<br />";
+    theString+="connection="+connection+"<br />";
     theString+="quality="+genericGet("quality")+"<br />";
     //theString+="navigator.connection.type="+navigator.connection.type+"<br />";
     theString+="uiPlaying="+uiPlaying+"<br />";
