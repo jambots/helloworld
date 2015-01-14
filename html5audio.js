@@ -52,6 +52,11 @@ var html5audio = {
        //stopButton.style.display = 'block';
     }, false);
 
+    myaudio.addEventListener("ended", function() {
+       dbuga('myaudio ENDED');
+       isPlaying=false;
+    }, false);
+
 
   },
   pause: function() {
@@ -78,10 +83,6 @@ var html5audio = {
     //textPosition.innerHTML = '';
   }
 
-    myaudio.addEventListener("ended", function() {
-       dbuga('myaudio ENDED');
-       isPlaying=false;
-    }, false);
 /*
     myaudio.addEventListener("timeupdate", function() {
        var s = parseInt(myaudio.currentTime % 60);
