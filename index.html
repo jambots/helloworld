@@ -68,7 +68,7 @@ function stateTick(){
       document.getElementById('page_listen_content_djDiv').innerHTML="Connected";
       connectStream();
       }
-    if(isPlaying==false){
+    if((isPlaying==false)&&(uiPlaying==true)){
       document.getElementById('page_listen_content_djDiv').innerHTML="No stream";
       }
     }
@@ -84,6 +84,7 @@ function debugState(){
     var theString=""+rnd(210)+"<br />";
     
     theString+="navigator.connection.type="+navigator.connection.type+"<br />";
+    theString+="audioReadyState="+audioReadyState+"<br />";
     theString+="connection="+connection+"<br />";
     theString+="quality="+genericGet("quality")+"<br />";
     //theString+="navigator.connection.type="+navigator.connection.type+"<br />";

@@ -19,7 +19,7 @@ function pad2(number) {
 
 var isPlaying = false;
 var readyStateInterval = null;
-
+var audioReadyState=0;
 
 var myaudioURL;
 var myaudio;
@@ -29,6 +29,7 @@ var html5audio = {
     isPlaying = true;
     myaudio.play();
     readyStateInterval = setInterval(function(){
+      audioReadyState=myaudio.readyState;
       if (myaudio.readyState <= 2) {
          //document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
          //retrying=true;
