@@ -17,7 +17,7 @@
 <script type="text/javascript">
 
 var platform="android";
-var debugging=false;
+var debugging=true;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -214,23 +214,26 @@ function init(){
   document.addEventListener("backbutton", onBackKeyDown, false);
   //dbuga(' init 7');
   getRecentSongs();
+  document.addEventListener("deviceready", onDeviceReady, false);
 
-  if (device.platform == "Android") {
-    returnFalse=" return false;";
-    singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
-  }
-  else {
-    singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
-  }
-
-
-  document.addEventListener("offline", onOffline, false);
-  document.addEventListener("online", onOnline, false);
+  //document.addEventListener("offline", onOffline, false);
+  //document.addEventListener("online", onOnline, false);
   //dbuga(' init 7');
   myaudioURL = urlByQuality[genericGet("quality")]+"/;";
   //dbuga(' init 7');
   connectStream();      
   //dbug('init okay');
+  }
+
+function onDeviceReady(){
+  if (device.platform == "Android") {
+    returnFalse=" return false;";
+    singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
+    }
+  else {
+    singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
+    }
+  dbuga("onDeviceReady() completed");
   }
 function onOffline() {
   //dbuga('onOffline() uiPlaying='+uiPlaying);
@@ -249,16 +252,16 @@ function onOnline() {
 var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
 function singStatusCallback(theStatus){
   mediaStatusNum=theStatus;
-  //dbuga('singMedia status '+statusArray[theStatus]);
+  dbuga('singMedia status '+statusArray[theStatus]);
   if((theStatus==4)&&(singing==true)){
     singMedia.play();
     }
   }
 function singError(er){
-  //dbuga("singError "+JSON.stringify(er))
+  dbuga("singError "+JSON.stringify(er))
   }
 function singSuccess(){
-  //dbuga('singSuccess');
+  dbuga('singSuccess');
   //singMedia.play();
   }
  document.addEventListener("backbutton", onBackKeyDown, false);
