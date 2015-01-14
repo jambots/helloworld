@@ -17,7 +17,7 @@
 <script type="text/javascript">
 
 var platform="android";
-var debugging=false;
+var debugging=true;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -30,7 +30,7 @@ function retryTick(){
   if(retrying==true){
     var message="Connecting...";
     retryAttempts++;
-    if(navigator.connection.type ==Connection.NONE){
+    if((navigator.connection.type ==Connection.NONE)||(navigator.connection.type =="none")){
       message="no connection.";
       }
     else{
