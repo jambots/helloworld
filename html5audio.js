@@ -54,15 +54,15 @@ var html5audio = {
     }, false);
 
     myaudio.addEventListener("ended", function() {
-       dbuga('myaudio ENDED');
-       isPlaying=false;
+       //dbuga('myaudio ENDED');
+       //isPlaying=false;
     }, false);
     myaudio.addEventListener("stalled", function() {
-       dbuga('myaudio stalled');
-       isPlaying=false;
+       //dbuga('myaudio stalled');
+       //isPlaying=false;
     }, false);
     myaudio.addEventListener("waiting", function() {// doesn't fire on android for a minute :(
-       dbuga('myaudio WAITING');
+       //dbuga('myaudio WAITING');
        //isPlaying = true;
        //playButton.style.display = 'none';
        //stopButton.style.display = 'none';
