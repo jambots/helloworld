@@ -57,6 +57,10 @@ var html5audio = {
        dbuga('myaudio ENDED');
        isPlaying=false;
     }, false);
+    myaudio.addEventListener("stalled", function() {
+       dbuga('myaudio stalled');
+       isPlaying=false;
+    }, false);
 
 
   },
