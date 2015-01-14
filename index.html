@@ -55,6 +55,7 @@ function stateTick(){
     if(connection==true){
       connection=false;
       dbuga('Lost connection');
+      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Lost connection";
       document.getElementById('page_listen_content_djDiv').innerHTML="Lost connection";
       if((uiPlaying==true)&&(retrying==false)){
         dbuga('so start retrying');

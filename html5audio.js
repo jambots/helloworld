@@ -39,6 +39,7 @@ var html5audio = {
     },1000);
     myaudio.addEventListener("error", function() {
        dbuga('myaudio ERROR');
+       if(uiPlaying){connectStream();}
     }, false);
 
 
