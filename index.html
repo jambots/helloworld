@@ -7,7 +7,9 @@
 <script src="phonegap.js"></script>
 <script src="jquerymin.js"></script>
 <script src="childbrowser.js"></script>
+<!--
 <script type="text/javascript" src="iscroll-lite.js"></script>
+-->
 <script type="text/javascript" src="html5audio.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css">
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
@@ -1215,12 +1217,14 @@ function populateContainer(){
   populateDials();
   selectCurrentPage();
   //dbuga('add iScrolls');
+  /*
   resultsHolderScroll=new iScroll('resultsHolder');
   playlistHolderScroll=new iScroll('playlistHolder');
   calendarHolderScroll=new iScroll('calendarHolder');
   cqHolderScroll=new iScroll('cqHolder');
   totdHolderScroll=new iScroll('totdHolder');
   wrsHolderScroll=new iScroll('wrsHolder');
+  */
   //dbuga('populate ran ok');
   }
 function populateFaqs(){
@@ -1539,7 +1543,8 @@ function moused(e){
   }
 
 var touchingDial=-1;
-
+var touching=false;
+var touchTimeout
 function mouseup(e){
   //dbuga('mouseup(e) touchingDial='+touchingDial);
   endDialTouch();
