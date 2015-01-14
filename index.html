@@ -44,6 +44,7 @@ function retryTick(){
       retrying=false;
       interrupted=false;
       buttonOff("listen", "playpause");      
+      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=message;
       }
     document.getElementById('page_listen_content_djDiv').innerHTML=message;
     }
@@ -57,15 +58,16 @@ function stateTick(){
   else{
     document.getElementById("stateDiv").style.display="block";
  
-    var theString=""+rnd(210);
+    var theString=""+rnd(210)+"<br />";
     
-   //theString+="myaudio.readyState="+myaudio.readyState+"<br />";
-   theString+="quality="+genericGet("quality")+"<br />";
+    theString+="navigator.connection.type="+navigator.connection.type+"<br />";
+    theString+="quality="+genericGet("quality")+"<br />";
     //theString+="navigator.connection.type="+navigator.connection.type+"<br />";
     theString+="uiPlaying="+uiPlaying+"<br />";
     theString+="isPlaying="+isPlaying+"<br />";
     theString+="mediaStatusNum="+mediaStatusNum+"<br />";
     theString+="singing="+singing+"<br />";
+
     theString+="retrying="+retrying+"<br />";
     theString+="retryAttempts="+retryAttempts;
     document.getElementById("stateDiv").innerHTML=theString;
