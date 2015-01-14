@@ -40,6 +40,10 @@ function retryTick(){
       }
     if(retryAttempts>10){
       message="We're not connecting.<br />Try again in a bit K?";
+      uiPlaying=false;
+      retrying=false;
+      interrupted=false;
+      buttonOff("listen", "playpause");      
       }
     document.getElementById('page_listen_content_djDiv').innerHTML=message;
     }
@@ -836,10 +840,10 @@ function secondTick(){
 
     if((nowMod+1440>=genericGet("alarmMinuteOfDay")+1440+snoozeMinutes)&&(nowMod+1440<genericGet("alarmMinuteOfDay")+1500+snoozeMinutes)){
       dbuga('alarm');
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="XYZ Real College Radio";
+      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Real College Radio";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       buttonOn("listen", "playpause");
-      document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
+      document.getElementById('page_listen_content_djDiv').innerHTML="";
       //connecting=true;
       //interrupted=false;
       //uiPlaying=true;
@@ -1953,7 +1957,7 @@ var connectFails=0;
 
 var bufferTimeout;
 function minuteTick(){
-  if((uiPlaying==true)&&(mediaRunning==true)){
+  if((uiPlaying==true)&&(isPlaying==true)){
     updateNowPlaying();
     }
   getRecentSongs();
