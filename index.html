@@ -636,6 +636,10 @@ function updateTotdDownloads(){
   var htmlBlock="";
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
+    if(d==0){
+      document.getElementById("page_extras_button_totd").style.backgroundImage='url('+downloadItem.image+')';
+      document.getElementById("page_extras_button_totd_on").style.backgroundImage='url('+downloadItem.image+')';
+      }
     //dbuga(downloadItem.link);
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
@@ -672,6 +676,10 @@ function updateCqDownloads(){
   var htmlBlock="";
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
+    if(d==0){
+      document.getElementById("page_extras_button_cq").style.backgroundImage='url('+downloadItem.image+')';
+      document.getElementById("page_extras_button_cq_on").style.backgroundImage='url('+downloadItem.image+')';
+      }
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+='<a href="javascript:remoteCqLink(\''+d+'\');'+returnFalse+'">';
     htmlBlock+=  '<img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" />';
@@ -680,7 +688,7 @@ function updateCqDownloads(){
     //htmlBlock+=  downloadItem.title+'<br />';
     if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
     if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
-    htmlBlock+=  '<a href="javascript:remoteCqLink(\''+d+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
+    htmlBlock+=  <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     if(d>9){d=sortedDownloads.length;}
     }
