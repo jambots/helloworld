@@ -11,11 +11,6 @@ function onError(error)
   console.log(error.message);
 }
 
-function onConfirmRetry(button) {
-  if (button == 1) {
-    html5audio.play();
-  }
-}
 
 function pad2(number) {
   return (number < 10 ? '0' : '') + number
@@ -82,21 +77,11 @@ var html5audio = {
     //textPosition.innerHTML = '';
   }
 
-/*
     myaudio.addEventListener("ended", function() {
        dbuga('myaudio ENDED');
-       //html5audio.stop();
-       // navigator.notification.alert('Streaming failed. Possibly due to a network error.', null, 'Stream error', 'OK');
-       // navigator.notification.confirm(
-       //  'Streaming failed. Possibly due to a network error.', // message
-       //  onConfirmRetry,  // callback to invoke with index of button pressed
-       //  'Stream error',  // title
-       //  'Retry,OK'    // buttonLabels
-       // );
-       if (window.confirm('Streaming failed. Possibly due to a network error. Retry?')) {
-         onConfirmRetry();
-       }
+       isPlaying=false;
     }, false);
+/*
     myaudio.addEventListener("timeupdate", function() {
        var s = parseInt(myaudio.currentTime % 60);
        var m = parseInt((myaudio.currentTime / 60) % 60);
