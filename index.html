@@ -64,6 +64,7 @@ function stateTick(){
     }
   else{// is connected
     if(connection==false){
+      connection=true;
       document.getElementById('page_listen_content_djDiv').innerHTML="Connected";
       connectStream();
       }
