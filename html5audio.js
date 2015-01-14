@@ -61,7 +61,13 @@ var html5audio = {
        dbuga('myaudio stalled');
        isPlaying=false;
     }, false);
-
+    myaudio.addEventListener("waiting", function() {// doesn't fire on android for a minute :(
+       dbuga('myaudio WAITING');
+       //isPlaying = true;
+       //playButton.style.display = 'none';
+       //stopButton.style.display = 'none';
+       //activityIndicator.style.display = 'block';
+    }, false);
 
   },
   pause: function() {
@@ -102,12 +108,6 @@ var html5audio = {
        dbuga('myaudio CAN PLAY');
     }, false);
 
-    myaudio.addEventListener("waiting", function() {// doesn't fire on android for a minute :(
-       dbuga('myaudio WAITING');
-       //isPlaying = true;
-       //playButton.style.display = 'none';
-       //stopButton.style.display = 'none';
-       //activityIndicator.style.display = 'block';
-    }, false);
+
 */
 };
