@@ -17,7 +17,7 @@
 <script type="text/javascript">
 
 var platform="android";
-var debugging=true;
+var debugging=false;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -55,7 +55,7 @@ function stateTick(){
     if(connection==true){
       connection=false;
       dbuga('Lost connection');
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Lost connection";
+      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       document.getElementById('page_listen_content_djDiv').innerHTML="Lost connection";
       if((uiPlaying==true)&&(retrying==false)){
         dbuga('so start retrying');
@@ -1424,13 +1424,17 @@ var pages=[
 //    {"name":"broken", "top":28, "left":9, "height":6, "width":30}
 
 function dbuga(theString){
-  document.getElementById('debugDiv').style.display="block";
-  document.getElementById('debugDiv').innerHTML+="<br />"+theString;
+  if(debugging){
+    document.getElementById('debugDiv').style.display="block";
+    document.getElementById('debugDiv').innerHTML+="<br />"+theString;
+    }
   }
 
 function dbug(theString){
-  document.getElementById('debugDiv').style.display="block";
-  document.getElementById('debugDiv').innerHTML=theString;
+  if(debugging){
+    document.getElementById('debugDiv').style.display="block";
+    document.getElementById('debugDiv').innerHTML=theString;
+    }
   }
 function rnd(theSeed){
   //return 0;
