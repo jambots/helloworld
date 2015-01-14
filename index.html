@@ -33,7 +33,6 @@ function retryTick(){
     if(isPlaying==false){
       connectStream();
       }
-    }
     if(retryAttempts>10){
       message="We're not connecting.<br />Try again in a bit K?";
       uiPlaying=false;
@@ -62,6 +61,12 @@ function stateTick(){
         retrying=true;
         }
       } 
+    }
+  else{// is connected
+    if(connection==false){
+      document.getElementById('page_listen_content_djDiv').innerHTML="Connected";
+      connectStream();
+      }
     }
   debugState();
   }
