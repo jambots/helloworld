@@ -34,9 +34,9 @@ var html5audio = {
     myaudio.play();
     readyStateInterval = setInterval(function(){
       if (myaudio.readyState <= 2) {
-         document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
-         retrying=true;
-         buttonOn("listen", "playpause");
+         //document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
+         //retrying=true;
+         //buttonOn("listen", "playpause");
          //textPosition.innerHTML = 'loading...';
        }
     },1000);
