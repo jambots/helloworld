@@ -150,7 +150,7 @@ function togglePlaying(){
 
 function connectStream(){
   if(isPlaying){html5audio.stop();}
-  myaudioURL=urlByQuality[genericGet("quality")]+"/;";
+  myaudioURL=urlByQuality[genericGet("quality")]+""; // not sure why radiok needs /; appended
   myaudio = null;
   myaudio = new Audio(myaudioURL);
   if(uiPlaying){html5audio.play();}
@@ -1557,14 +1557,14 @@ function buttonOff(thePage, theButton){
   }
 
 /*
-var urlByQuality={"low":"http://radiokstreams.cce.umn.edu:8056", "medium":"http://radiokstreams.cce.umn.edu:8128", "high":"http://radiokstreams.cce.umn.edu:8256", "higher":"http://radiokstreams.cce.umn.edu:8256", "broken":"http://radiokstreams.cce.umn.edu:8168"};
+var urlByQuality={"low":"http://radiokstreams.cce.umn.edu:8056/;", "medium":"http://radiokstreams.cce.umn.edu:8128/;", "high":"http://radiokstreams.cce.umn.edu:8256/;", "higher":"http://radiokstreams.cce.umn.edu:8256/;", "broken":"http://radiokstreams.cce.umn.edu:8168/;"};
 */
 var urlByQuality={
-  "low":"http://wtbu.bu.edu:1800", 
-  "medium":"http://wtbu.bu.edu:1800", 
-  "high":"http://wtbu.bu.edu:1800", 
-  "higher":"http://wtbu.bu.edu:1800", 
-  "broken":"http://wtbu.bu.edu:1800"
+  "low":"http://wtbu.bu.edu:1800/listen.m3u", 
+  "medium":"http://wtbu.bu.edu:1800/listen.m3u", 
+  "high":"http://wtbu.bu.edu:1800/listen.m3u", 
+  "higher":"http://wtbu.bu.edu:1800/listen.m3u", 
+  "broken":"http://wtbu.bu.edu:1800/listen.m3u"
 };
 
 //http://wtbu.bu.edu:1800/listen.m3u
