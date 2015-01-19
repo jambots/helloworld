@@ -28,13 +28,13 @@
 </gap:config-file>
 
 <preference name="permissions" value="none"/>
-<gap:splash src="splash.png" />
 <gap:plugin name="org.apache.cordova.media" />
 <gap:plugin name="org.apache.cordova.device" version="0.2.12" />
 <gap:plugin name="org.apache.cordova.network-information" />
 <gap:plugin name="nl.kingsquare.background-audio" version="1.0.0" />
 <access origin="*" />
 
+<gap:splash src="splash.png" />
 <icon src="icon.png" />
 
 
