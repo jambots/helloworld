@@ -85,5 +85,8 @@
 
 
 
+<!--
 <gap:plugin name="com.phonegap.plugins.childbrowser" />
+-->
+<gap:plugin name="org.apache.cordova.inappbrowser" version="0.5.2" />
 </widget>

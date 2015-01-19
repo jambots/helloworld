@@ -6,7 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script src="phonegap.js"></script>
 <script src="jquerymin.js"></script>
+<!--
 <script src="childbrowser.js"></script>
+-->
 <script type="text/javascript" src="html5audio.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css">
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
@@ -64,7 +66,7 @@ function stateTick(){
   else{// is connected
     if(connection==false){ //update because connection restored
       connection=true;
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Real College Radio";
+      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       connectStream();
       }
@@ -873,7 +875,7 @@ function secondTick(){
 
     if((nowMod+1440>=genericGet("alarmMinuteOfDay")+1440+snoozeMinutes)&&(nowMod+1440<genericGet("alarmMinuteOfDay")+1500+snoozeMinutes)){
       //dbuga('alarm');
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Real College Radio";
+      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       buttonOn("listen", "playpause");
       document.getElementById('page_listen_content_djDiv').innerHTML="";
@@ -1281,7 +1283,7 @@ var pages=[
     {"name":"playpause", "top":38, "left":12, "height":12, "width":24}
   ],
   "contents":[
-    {"name":"nowPlayingDiv", "top":29.5, "left":1, "width":46, "height":8, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"Real College Radio"},
+    {"name":"nowPlayingDiv", "top":29.5, "left":1, "width":46, "height":8, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":""},
     {"name":"djDiv", "top":51, "left":1, "width":46, "height":8, "lineHeight":2.5, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":""}
   ]
 },
@@ -1651,7 +1653,17 @@ function remoteLink(theUrl){
     buttonOff("listen", "playpause");
     if(isPlaying){stopStream();}
     }
+  if(device.platform=="Android"){
+    var ref = window.open(theUrl, "_system");
+    }
+  else{
+    var ref = window.open(theUrl, "_system");
+    }
+
+
+/*
   //window.plugins.childBrowser.openExternal(theUrl);
+
   if(device.platform=="Android"){
     window.plugins.ChildBrowser.openExternal(theUrl, false);
     }
@@ -1659,6 +1671,8 @@ function remoteLink(theUrl){
     window.plugins.ChildBrowser.showWebPage(theUrl, { showLocationBar: true });
     }
   //navigator.app.loadUrl(theUrl, {openExternal: true});
+*/
+
   //dbuga("remoteLink ran");
   }
 function remoteCqLink(cqNum){
@@ -1808,7 +1822,8 @@ function handleButton(pageName, buttonName){
     if(buttonName=="donate"){
       buttonOn("footnav", "donate");
       window.setTimeout('buttonOff("footnav", "donate")', navDelay*2);
-      window.location.href="http://www.radiok.org/donate/";
+      //window.location.href="http://www.radiok.org/donate/";
+      window.setTimeout("remoteLink('http://www.radiok.org/donate/')", navDelay);
       }
     }
   if(pageName=="listen"){
