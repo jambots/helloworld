@@ -321,9 +321,12 @@ function getDownloads(){
   document.getElementById('wrsHolder').style.height=grid*51+'px'; 
   document.getElementById('cqHolder').style.width=grid*48+'px'; 
   document.getElementById('cqHolder').style.height=grid*51+'px'; 
+  totdDownloads=[];
+  wrsDownloads=[];
+  cqDownloads=[];
 
   $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/rss_by_path?path=%2Ffeatures%2Fweekly-release-spotlight%2F",
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F",
     dataType: "xml",        
     success: function(xml) {parseDownloads(xml, "Weekly Release Spotlight");}
     });
@@ -392,13 +395,6 @@ function parseDownloads(theXml, source){
     for (var i=0; i<itemsArray.length; i++){
       if(i<14){
       var thisObj=itemsArray[i];
-      if(i==0){
-        //dbuga(' thisObj.pubDate["#text"] = '+thisObj.pubDate["#text"]);
-        //dbuga(' thisObj["enclosure"]["@attributes"]["url"] = '+thisObj["enclosure"]["@attributes"]["url"]);
-        //dbuga(' thisObj.title["#text"] = '+thisObj.title["#text"]);
-        //dbuga(' thisObj["itunes:image"]["@attributes"]["href"] = '+thisObj["itunes:image"]["@attributes"]["href"]);
-        
-        }
       var dateStr=thisObj.pubDate["#text"];
       var parts=dateStr.split(" ");
       var yyyy=parts[3];
@@ -425,95 +421,37 @@ function parseDownloads(theXml, source){
     updateCqDownloads();
     }
   if(source=="Weekly Release Spotlight"){
-    parseDownloadsXML(theXml, source)
+    var wrsObj=xmlToJson(theXml);
+    var itemsArray=wrsObj.rss.channel.item;
+    //dbug('itemsArray.length='+itemsArray.length);
+    for (var i=0; i<itemsArray.length; i++){
+      var thisObj=itemsArray[i];
+      var dateStr=thisObj.pubDate["#text"];
+      var parts=dateStr.split(" ");
+      var yyyy=parts[3];
+      var mm=monToMM[parts[2]];
+      var dd=parts[1];
+      var timeCode=parts[4];
+      var timeParts=timeCode.split(":");
+      var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
+      var sortNum=yyyy+mm+dd+hhmmss;
+      var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
+      var band=thisObj.title["#text"];
+      var album=thisObj.description["#text"];;
+      var item={
+        "sort":sortNum, 
+        "source":source, 
+        "date":dispDate, 
+        "image":thisObj["itunes:image"]["@attributes"]["href"], 
+        "title":band,
+        "description":album, 
+        "link":thisObj["enclosure"]["@attributes"]["url"]
+        };
+      wrsDownloads.push(item);
+
+      }
+    updateWrsDownloads();
     }
-  }
-function parseDownloadsXML(theXml, source){  
-  $(theXml).find('item').each(function(){
-    //dbugArray.push($(this));
-    //convert Tue, 11 Mar 2014 00:01:00 CDT to yyyymmddhhmmss
-    var dateStr=$(this).find('pubDate').text();
-    var parts=dateStr.split(" ");
-    var yyyy=parts[3];
-    var mm=monToMM[parts[2]];
-    var dd=parts[1];
-    var timeCode=parts[4];
-    var timeParts=timeCode.split(":");
-    var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
-    var sortNum=yyyy+mm+dd+hhmmss;
-    var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
-    var item={"sort":sortNum, "source":source, "date":dispDate, "image":"", "title":$(this).find('title').text(), "description":"", "link":""};
-    var descData=$(this).find('description').text();
-    var quoteParts=descData.split('"');
-/*
-    if(source=="Culture Queue"){ //old code
-      //dbuga("Culture Queue 0");
-      item.image="social/culturequeue.jpg";
-      //dbuga("Culture Queue 1");
-      var mp3Link=$(this).find('guid').text();
-      mp3Link=mp3Link.replace(/\?/g, "%3f");
-
-      //dbuga("Culture Queue 2");
-      var sum=$(this).find('itunes\\:summary, summary').text();
-      //dbuga("Culture Queue 3");
-      var fullTitle=item.title;
-      var titleParts=fullTitle.split(":");
-      item.description=titleParts[1];
-      item.title=titleParts[0];
-      item.date="skip";
-      //dbuga("Culture Queue 6");
-
-      item.link="http://www.radiok.org/cq-archiver/";
-      //dbuga("Culture Queue 7");
-      item.link+="?title="+encodeURI(fullTitle);
-      //dbuga("Culture Queue 8");
-      item.link+="&ep="+mp3Link;
-      //dbuga("Culture Queue 9");
-      item.link+="&summary="+encodeURI(sum);
-      //dbuga('okay');
-      }
-*/
-    if(source=="Weekly Release Spotlight"){
-      //item.date="skip";
-      //item.title+="<br />";
-      for (var q=0; q<quoteParts.length; q++){
-        if((quoteParts[q].indexOf('jpg')>-1)&&(quoteParts[q].indexOf('/files/cache/')>-1)){
-          item.image=quoteParts[q];
-          if(item.image.indexOf("http")==-1){item.image="http://www.radiok.org"+item.image;}
-          }
-        //if(quoteParts[q].indexOf('mp3')>-1){
-        //  item.link=quoteParts[q];
-        //  }
-        }
-      }
-    if(item.link==""){
-      item.link=$(this).find('link').text();
-      }
-    if(item.link.indexOf("http")==-1){item.link="http://www.radiok.org"+item.link;}
-
-    
-
-    if(item.description==""){
-      var link=item.link;
-      var linkParts=link.split("/");
-      if(linkParts.length>0){
-        item.description=linkParts.pop();
-        }
-      if((item.description=="")&&(linkParts.length>0)){
-        item.description=linkParts.pop();
-        }
-      item.description=item.description.replace(/\-/g, " ");
-      //item.description=item.description.replace(/\_/g, " ");
-      }
-    if(item.description==""){item.description="Read more...";}
-
-    if(source=="Weekly Release Spotlight"){wrsDownloads.push(item);}
-    if(source=="Track of the Day"){totdDownloads.push(item);}
-    if(source=="Culture Queue"){cqDownloads.push(item);}
-
-    });
-
-  if(source=="Weekly Release Spotlight"){updateWrsDownloads();}
   }
 function xmlToJson(xml) {
   
@@ -562,19 +500,20 @@ function updateWrsDownloads(){
 
   var gradStyle="background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0%, #F2F2F2), color-stop(2%, #F2F2F2), color-stop(3%, #EDEDED), color-stop(50%, #fff), color-stop(100%, #fff));";
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
-  var htmlBlock="";
   spotlightImage=sortedDownloads[0].image;
   //dbuga("spotlightImage="+spotlightImage);
   document.getElementById("page_extras_button_wrs").style.backgroundImage='url('+spotlightImage+')';
   document.getElementById("page_extras_button_wrs_on").style.backgroundImage='url('+spotlightImage+')';
+
+  var htmlBlock="";
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
     if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
-    if(downloadItem.date != "skip"){htmlBlock+=  '<br />'+downloadItem.date+'<br />';}
-    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+'</a>';
+    if(downloadItem.date != "skip"){htmlBlock+=  '<br />'+downloadItem.date+' ';}
+    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+' - '+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     }
   document.getElementById('wrsScroller').innerHTML=htmlBlock;
