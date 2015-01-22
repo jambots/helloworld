@@ -437,7 +437,8 @@ function parseDownloads(theXml, source){
       var sortNum=yyyy+mm+dd+hhmmss;
       var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
       var band=thisObj.title["#text"];
-      var album=thisObj.description["#text"];;
+      var album=thisObj.description["#text"];
+      var link=thisObj.link["#text"];
       var item={
         "sort":sortNum, 
         "source":source, 
@@ -445,7 +446,7 @@ function parseDownloads(theXml, source){
         "image":thisObj["itunes:image"]["@attributes"]["href"], 
         "title":band,
         "description":album, 
-        "link":thisObj["enclosure"]["@attributes"]["url"]
+        "link":link
         };
       wrsDownloads.push(item);
 
