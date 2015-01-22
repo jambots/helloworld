@@ -515,14 +515,16 @@ function updateWrsDownloads(){
   document.getElementById('wrsScroller').innerHTML=htmlBlock;
   document.getElementById('wrsHolder').style.width=grid*48+'px'; 
   document.getElementById('wrsHolder').style.height=grid*51+'px'; 
-  wrsScrollerTimeout=window.setTimeout("refreshWrsHolderScroll()", 100);
+  //wrsScrollerTimeout=window.setTimeout("refreshWrsHolderScroll()", 100);
   }
 
-var wrsScrollerTimeout;
+//var wrsScrollerTimeout;
+/*
 function refreshWrsHolderScroll(){
   wrsHolderScroll.refresh();
   }
 var wrsHolderScroll;
+*/
 
 function updateTotdDownloads(){
   //dbuga('updateTotdDownloads()');
@@ -552,15 +554,15 @@ function updateTotdDownloads(){
   document.getElementById('totdScroller').innerHTML=htmlBlock;
   document.getElementById('totdHolder').style.width=grid*48+'px'; 
   document.getElementById('totdHolder').style.height=grid*51+'px'; 
-  totdScrollerTimeout=window.setTimeout("refreshTotdHolderScroll()", 100);
+  //totdScrollerTimeout=window.setTimeout("refreshTotdHolderScroll()", 100);
   }
-
+/*
 var totdScrollerTimeout;
 function refreshTotdHolderScroll(){
   totdHolderScroll.refresh();
   }
 var totdHolderScroll;
-
+*/
 
 
 function updateCqDownloads(){
@@ -595,14 +597,15 @@ function updateCqDownloads(){
   document.getElementById('cqScroller').innerHTML=htmlBlock;
   document.getElementById('cqHolder').style.width=grid*48+'px'; 
   document.getElementById('cqHolder').style.height=grid*51+'px'; 
-  cqScrollerTimeout=window.setTimeout("refreshCqHolderScroll()", 100);
+  //cqScrollerTimeout=window.setTimeout("refreshCqHolderScroll()", 100);
   }
-
+/*
 var cqScrollerTimeout;
 function refreshCqHolderScroll(){
   cqHolderScroll.refresh();
   }
 var cqHolderScroll;
+*/
 
 function updateNowPlaying(){
   //dbuga('updateNowPlaying()')
@@ -654,12 +657,14 @@ function updatePlaylist(){
   document.getElementById('playlistScroller').innerHTML=htmlBlock; 
   document.getElementById('playlistHolder').style.width=grid*48+'px'; 
   document.getElementById('playlistHolder').style.height=grid*51+'px'; 
-  playlistScrollerTimeout=window.setTimeout("refreshPlaylistHolderScroll()", 100);
+  //playlistScrollerTimeout=window.setTimeout("refreshPlaylistHolderScroll()", 100);
   }
+/*
 var playlistScrollerTimeout;
 function refreshPlaylistHolderScroll(){
   playlistHolderScroll.refresh();
   }
+*/
 function populateCalendar(){
   //dbuga('populateCalendar() '+calendar.length);
 
@@ -693,12 +698,14 @@ function populateCalendar(){
   document.getElementById('calendarScroller').innerHTML=htmlBlock; 
   document.getElementById('calendarHolder').style.width=grid*48+'px'; 
   document.getElementById('calendarHolder').style.height=grid*51+'px'; 
-  calendarScrollerTimeout=window.setTimeout("refreshCalendarHolderScroll()", 100);
+  //calendarScrollerTimeout=window.setTimeout("refreshCalendarHolderScroll()", 100);
   }
+/*
 var calendarScrollerTimeout;
 function refreshCalendarHolderScroll(){
   calendarHolderScroll.refresh();
   }
+*/
 function getFaqs(){
   faqs=[];
   var feedUrl="http://www.radiok.org/app-faq/";
@@ -1318,7 +1325,7 @@ var pages=[
     {"name":"vc", "top":45, "left":2, "height":11, "width":11},
   ],
   "contents":[
-    {"name":"cqDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"CULTURE QUEUE<br />Radio K's award-winning Arts and Culture program, dedicated to telling stories about the many wonders of the Twin Cities that you won't hear anywhere else."},
+    {"name":"cqDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','cq'); return false;\">CULTURE QUEUE</a><br />Radio K's award-winning Arts and Culture program, dedicated to telling stories about the many wonders of the Twin Cities that you won't hear anywhere else."},
     {"name":"totdDesc", "top":21, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"TRACK OF THE DAY<br />Every day Radio K offers up a fresh new track for you to download. It's just one more way that Real College Radio makes Real Life (a little more) Rockin'."},
     {"name":"wrsDesc", "top":33, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"WEEKLY RELEASE SPOTLIGHT<br />Each week we comb through mountains of new music to find that one perfect album that we (and you) almost missed."},
     {"name":"vcDesc", "top":45, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"VINYL CLOSET<br />A digitized archive of Studio K performances from 1994 to 2006 that feature seminal Minnesota artists that have left an indelible mark on the Minnesota music scene."},
@@ -1561,14 +1568,14 @@ function parseItunesResults(theData){
   document.getElementById('resultsScroller').innerHTML=htmlBlock;
   document.getElementById('resultsHolder').style.width=grid*48+'px'; 
   document.getElementById('resultsHolder').style.height=grid*51+'px'; 
-  resultsScrollerTimeout=window.setTimeout("refreshResultsHolderScroll()", 100);
+  //resultsScrollerTimeout=window.setTimeout("refreshResultsHolderScroll()", 100);
   }
-
+/*
 var resultsScrollerTimeout;
 function refreshResultsHolderScroll(){
   resultsHolderScroll.refresh();
   }
-
+*/
 var resultsHolderScroll;
 var calendarHolderScroll;
 var playlistHolderScroll;
