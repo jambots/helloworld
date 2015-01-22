@@ -356,8 +356,7 @@ function parseDownloads(theXml, source){
     var totdObj=xmlToJson(theXml);
     var itemsArray=totdObj.rss.channel.item;
     //dbug('itemsArray.length='+itemsArray.length);
-    for (var i=0; i<itemsArray.length; i++){
-      if(i<14){
+    for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
       var parts=dateStr.split(" ");
@@ -384,7 +383,6 @@ function parseDownloads(theXml, source){
         };
       totdDownloads.push(item);
       }
-      }
     updateTotdDownloads();
     }
   if(source=="Culture Queue"){
@@ -392,7 +390,7 @@ function parseDownloads(theXml, source){
     //dbugItem=cqObj;
     var itemsArray=cqObj.rss.channel.item;
     //dbug('itemsArray.length='+itemsArray.length);
-    for (var i=0; i<itemsArray.length; i++){
+    for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       if(i<14){
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
@@ -417,14 +415,13 @@ function parseDownloads(theXml, source){
         };
       cqDownloads.push(item);
       }
-      }
     updateCqDownloads();
     }
   if(source=="Weekly Release Spotlight"){
     var wrsObj=xmlToJson(theXml);
     var itemsArray=wrsObj.rss.channel.item;
     //dbug('itemsArray.length='+itemsArray.length);
-    for (var i=0; i<itemsArray.length; i++){
+    for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
       var parts=dateStr.split(" ");
@@ -449,7 +446,6 @@ function parseDownloads(theXml, source){
         "link":link
         };
       wrsDownloads.push(item);
-
       }
     updateWrsDownloads();
     }
