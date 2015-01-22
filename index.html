@@ -568,7 +568,7 @@ var totdHolderScroll;
 
 function returnGradStyle(){
   var gradStyle="background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0%, #F2F2F2), color-stop(2%, #F2F2F2), color-stop(3%, #EDEDED), color-stop(50%, #fff), color-stop(100%, #fff));";
-  gradStyle="";// hack to test speed
+  //gradStyle="";// hack to test speed
   return gradStyle;
   }
 function updateCqDownloads(){
@@ -1957,7 +1957,7 @@ function handleButton(pageName, buttonName){
       buttonOn("request", "email");
       window.setTimeout('buttonOff("request", "email")', navDelay*2);
       //window.location='mailto:request@radiok.org?subject=Request from Radio K app';
-      window.setTimeout("remoteLink('mailto:request@radiok.org?subject=Request from Radio K app')", navDelay);
+      window.setTimeout("remoteLink('mailto:radiokdj@umn.edu?subject=Request from Radio K app')", navDelay);
       }
     if(buttonName=="tweet"){
       buttonOn("request", "tweet");
