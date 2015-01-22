@@ -102,30 +102,25 @@ background-position:center center;
   -webkit-transition:opacity 100ms linear;
   overflow:hidden; position:static; 
   float:left; 
-  //background-color:#110; 
-  //-webkit-transition:height 1000ms linear, max-height 1000ms linear; 
 }
 .twistie{
   overflow:hidden;  position:relative; font-family:akzibold;
   background-repeat:no-repeat;
   background-position:center right;
-  //-webkit-transition:height 1000ms linear, max-height 1000ms linear; 
 }
 .answer{
   position:absolute; font-family:akziregular;
   //float:left; 
   //background-color:#336;
   display:none; 
-  //-webkit-transition:height 100ms linear, max-height 100ms linear; 
 }
-//a:link{color:#2BBED8; font-family:akzibold; text-decoration:none;}
 a:link{color:#00f; font-family:akzibold; text-decoration:none;}
 
 //a:visited{color:#2BBED8; font-family:akzibold; text-decoration:none;}
 a:visited{color:#00f; font-family:akzibold; text-decoration:none;}
 .pages{
 opacity:0;
--webkit-transition:opacity 350ms linear;
+-webkit-transition:opacity 100ms linear;
 -webkit-background-size:100% 100%; 
 background-repeat:no-repeat;
 background-color:#000;
