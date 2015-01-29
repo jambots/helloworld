@@ -682,24 +682,11 @@ function populateCalendar(){
 
   for(var e=0; e<calendar.length; e++){
     var eventData=calendar[e];
-    var performersText=eventData.performers;
-    var quoteParts=performersText.split('"');
-    var performersFixed=quoteParts[0];
-    for (var q=1; q<quoteParts.length; q++){
-      performersFixed+='"';
-      var prevPart=quoteParts[q-1];
-      var part=quoteParts[q];
-      if(prevPart.indexOf('href=')>-1){
-        ///dbuga(part);
-        part="javascript:remoteLink('"+part+"');'+returnFalse+'";
-        }
-      performersFixed+=part; 
-      }
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  ''+performersFixed;
+    htmlBlock+=  '<a href="javascript:remoteLink(\'"+ eventData.url +"\');">'+eventData.performers+'</a>';
     htmlBlock+=  '<br />'+eventData.venue+'';
     htmlBlock+=  ' &mdash; '+eventData.date;
-    htmlBlock+=  '<br /><span style="font-family:akziregular;">'+eventData.time+' '+ eventData.age +'</span>';
+    htmlBlock+=  '<br /><span style="font-family:akziregular;">'+eventData.time+'</span>';
     htmlBlock+='</div>';
     }
 
@@ -772,41 +759,38 @@ function getCalendar(){
     });
   //dbuga('getCalendar() completed');
   }
+
+
 function parseCalendar(theScrape){
-  var tableSplit=theScrape.split("<table");
-  var temp=tableSplit[1];
-  tableSplit=temp.split("</table>");
-  var tableContents=tableSplit[0];
-  
-  var trBlocks=tableContents.split('<tr valign="top">');
-  //dbuga('parseCalendar trBlocks.length=' +trBlocks.length);
-  if(trBlocks.length>2){
-    for (var tr=2; tr<trBlocks.length; tr++){
-      var trBlock=trBlocks[tr];
-      var tempParts=trBlock.split('</tr>');
-      var trText=tempParts[0];
-      var tdParts=trText.split('<td>');
-      var rowObj={"date":"date", "time":"time", "performers":"performers", "venue":"venue", "age":"age"}; 
-      for (var td=1; td<tdParts.length; td++){
-        tdBlock=tdParts[td];
-        var temp=tdBlock.split('</td>')
-        var tdText=temp[0];
-        if(td==1){
-          var dateTimeParts=tdText.split("<br />");
-          rowObj.date=dateTimeParts[0];
-          rowObj.time=dateTimeParts[1];
-          }
-        if(td==2){rowObj.performers=tdText;}
-        if(td==3){rowObj.venue=tdText;}
-        if(td==4){rowObj.age=tdText;}
-        }
-      //dbuga("dateTime="+rowObj.dateTime+" performers="+rowObj.performers+" venue="+rowObj.venue+" age="+rowObj.age);
-      calendar.push(rowObj);
-      }
+  var blocks=theScrape.split('<div class="titlehead">');
+  for (var b=1; b<blocks.length; b++){
+    var block=blocks[b];
+    var timeParts=block.split('<div class="time">');
+    var timePlus=timeParts[1];
+    var endDivParts=timePlus.split('</div>');
+    var time=endDivParts[0];
+    var dateLink=endDivParts[1];
+    var dateLinkParts=dateLink.split(" - ");
+    var date=dateLinkParts[0];
+    var link=dateLinkParts[1];
+    var linkParts=link.split('"');
+    var url=linkParts[1];
+    var titleParts=link.split('>');
+    var title=titleParts[1];
+    titleParts=title.split('<');
+    title=titleParts[0];
+    var localParts=block.split('<div class="local">');
+    var local=localParts[1];
+    localParts=local.split('</div>');
+    local=localParts[0];
+    var rowObj={"date":date, "time":time, "performers":title, "venue":local, "url":url}; 
+    calendar.push(rowObj);
     }
-  //dbuga('parseCalendar completed');
+  dbuga('parseCalendar completed');
   populateCalendar();
   }
+ 
+
 var snoozeMinutes=0;
 function secondTick(){
   var nowDate=new Date();
@@ -1628,6 +1612,7 @@ function remoteLink(theUrl){
 
   //dbuga("remoteLink ran");
   }
+
 function remoteCqLink(cqNum){
     uiPlaying=false;
     retrying=false;
