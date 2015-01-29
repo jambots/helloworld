@@ -774,7 +774,7 @@ function parseCalendar(theScrape){
     var date=dateLinkParts[0];
     var link=dateLinkParts[1];
     var linkParts=link.split('"');
-    var url=linkParts[1];
+    var url='http://radiok.org'+linkParts[1];
     var titleParts=link.split('>');
     var title=titleParts[1];
     titleParts=title.split('<');
