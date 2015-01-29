@@ -679,11 +679,11 @@ function populateCalendar(){
   //var gradStyle="background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0%, #F2F2F2), color-stop(2%, #F2F2F2), color-stop(3%, #EDEDED), color-stop(50%, #fff), color-stop(100%, #fff));";
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
   var htmlBlock="";
-
+//<a href="javascript:remoteLink('" +="" eventdata.url="" +"');"="">Drone Not Drones</a>
   for(var e=0; e<calendar.length; e++){
     var eventData=calendar[e];
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="javascript:remoteLink(\'"+ eventData.url +"\');">'+eventData.performers+'</a>';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+ eventData.url +'\');">'+eventData.performers+'</a>';
     htmlBlock+=  '<br />'+eventData.venue+'';
     htmlBlock+=  ' &mdash; '+eventData.date;
     htmlBlock+=  '<br /><span style="font-family:akziregular;">'+eventData.time+'</span>';
