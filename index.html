@@ -53,11 +53,11 @@ function stateTick(){
       }
     if(connection==true){
       connection=false;
-      dbuga('Lost connection');
+      //dbuga('Lost connection');
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       document.getElementById('page_listen_content_djDiv').innerHTML="Lost connection";
       if((uiPlaying==true)&&(retrying==false)){
-        dbuga('so start retrying');
+        //dbuga('so start retrying');
         retryAttempts=0;
         retrying=true;
         }
@@ -232,7 +232,7 @@ function onDeviceReady(){
   else {
     singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
     }
-  dbuga("onDeviceReady() completed");
+  //dbuga("onDeviceReady() completed");
   }
 function onOffline() {
   //dbuga('onOffline() uiPlaying='+uiPlaying);
@@ -251,16 +251,16 @@ function onOnline() {
 var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
 function singStatusCallback(theStatus){
   mediaStatusNum=theStatus;
-  dbuga('singMedia status '+statusArray[theStatus]);
+  //dbuga('singMedia status '+statusArray[theStatus]);
   if((theStatus==4)&&(singing==true)){
     singMedia.play();
     }
   }
 function singError(er){
-  dbuga("singError "+JSON.stringify(er))
+  //dbuga("singError "+JSON.stringify(er))
   }
 function singSuccess(){
-  dbuga('singSuccess');
+  //dbuga('singSuccess');
   //singMedia.play();
   }
  document.addEventListener("backbutton", onBackKeyDown, false);
@@ -786,7 +786,7 @@ function parseCalendar(theScrape){
     var rowObj={"date":date, "time":time, "performers":title, "venue":local, "url":url}; 
     calendar.push(rowObj);
     }
-  dbuga('parseCalendar completed');
+  //dbuga('parseCalendar completed');
   populateCalendar();
   }
  
