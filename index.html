@@ -663,9 +663,9 @@ function updatePlaylist(){
     if(album.indexOf("'")>-1){album = replaceAll("'", "&apos;", album);}
 
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  ''+songData.song_artist+' &#8220;'+song+'&#8221;';
+    htmlBlock+=  ''+artist+' &#8220;'+song+'&#8221;';
     htmlBlock+=  '<br /><a href="javascript:shop(\''+artist+'\', \''+album+'\', \''+song+'\');">';
-    htmlBlock+=  ''+songData.song_album+'</a>';
+    htmlBlock+=  ''+album+'</a>';
     htmlBlock+=  '<br /><span style="font-family:akziregular;">'+dateTimeToTime(songData.song_timestamp)+'</span>';
     htmlBlock+='</div>';
     }
