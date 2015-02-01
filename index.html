@@ -309,7 +309,7 @@ function parseRecentSongs(theData){
     var time=recentSongs[songKeys[0]].song_timestamp;
     var dj=recentSongs[songKeys[0]].dj;
 
-    song = replaceAll("'", "&apos;", song);
+    song = replaceAll("'", "!", song);
 
     nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
     if((uiPlaying==true)&&(isPlaying==true)){
