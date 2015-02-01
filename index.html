@@ -658,7 +658,7 @@ function updatePlaylist(){
     var song=songData.song_title;
     var artist=songData.song_artist;
     var album=songData.song_album;
-    if(song.indexOf("'")>-1){song = replaceAll("'", "&apos;", song);}
+    if(song.indexOf("'")>-1){song = replaceAll("'", "!", song); alert(song);}
     if(artist.indexOf("'")>-1){artist = replaceAll("'", "&apos;", artist);}
     if(album.indexOf("'")>-1){album = replaceAll("'", "&apos;", album);}
 
