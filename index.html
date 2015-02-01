@@ -1115,6 +1115,17 @@ function populateFaqs(){
   for (var f=0; f<faqs.length; f++){
     var q=faqs[f].q;
     var a=faqs[f].a;
+
+    var quoteParts=a.split('"');
+    for(var p=0; p<quoteParts.length; p++){
+      var thisPart= quoteParts[p];
+      if(thisPart.indexOf('http:')>-1){
+        quoteParts[p]='javascript:remoteLink(\''+thisPart+'\');'+returnFalse;
+        }
+      }
+    a=quoteParts.join('"');
+    //'<a href="javascript:remoteLink(\''+result.collectionViewUrl+'\');'+returnFalse+'">';
+
     var grad="background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0%, #232323), color-stop(2%, #232323), color-stop(3%, #181818), color-stop(100%, #000));";
 
     a=a.replace(/socialSize/g, (7*grid)+"px");
@@ -1301,10 +1312,10 @@ var pages=[
     {"name":"vc", "top":45, "left":2, "height":11, "width":11},
   ],
   "contents":[
-    {"name":"cqDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','cq');\" style=\"color:#2cbdd8;\">CULTURE QUEUE</a><br />Radio K's award-winning Arts and Culture program, dedicated to telling stories about the many wonders of the Twin Cities that you won't hear anywhere else."},
-    {"name":"totdDesc", "top":21, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','totd');\" style=\"color:#2cbdd8;\">TRACK OF THE DAY</a><br />Every day Radio K offers up a fresh new track for you to download. It's just one more way that Real College Radio makes Real Life (a little more) Rockin'."},
-    {"name":"wrsDesc", "top":33, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\" style=\"color:#2cbdd8;\">WEEKLY RELEASE SPOTLIGHT</a><br />Each week we comb through mountains of new music to find that one perfect album that we (and you) almost missed."},
-    {"name":"vcDesc", "top":45, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','vc');\" style=\"color:#2cbdd8;\">VINYL CLOSET</a><br />A digitized archive of Studio K performances from 1994 to 2006 that feature seminal Minnesota artists that have left an indelible mark on the Minnesota music scene."},
+    {"name":"cqDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','cq');\">CULTURE QUEUE</a><br />Radio K's award-winning Arts and Culture program, dedicated to telling stories about the many wonders of the Twin Cities that you won't hear anywhere else."},
+    {"name":"totdDesc", "top":21, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','totd');\">TRACK OF THE DAY</a><br />Every day Radio K offers up a fresh new track for you to download. It's just one more way that Real College Radio makes Real Life (a little more) Rockin'."},
+    {"name":"wrsDesc", "top":33, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">WEEKLY RELEASE SPOTLIGHT</a><br />Each week we comb through mountains of new music to find that one perfect album that we (and you) almost missed."},
+    {"name":"vcDesc", "top":45, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','vc');\">VINYL CLOSET</a><br />A digitized archive of Studio K performances from 1994 to 2006 that feature seminal Minnesota artists that have left an indelible mark on the Minnesota music scene."},
   ]
 },
 {"name":"totd", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
