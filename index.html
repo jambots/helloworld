@@ -295,7 +295,8 @@ function getRecentSongs(){
 var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
 var recentSongs={};
 function replaceAll(find, replace, str) {
-  return str.replace(new RegExp(find, 'g'), replace);
+  var parts=str.split(find);
+  return parts.join(replace);
 }
 function parseRecentSongs(theData){
   recentSongs=JSON.parse(theData);
@@ -308,9 +309,11 @@ function parseRecentSongs(theData){
     var artist=recentSongs[songKeys[0]].song_artist;
     var time=recentSongs[songKeys[0]].song_timestamp;
     var dj=recentSongs[songKeys[0]].dj;
-    if(song.indexOf("'")>-1){alert(song);}
-    song = replaceAll("'", "!", song);
-
+    if(song.indexOf("'")>-1){
+      alert(song);
+      song = replaceAll("'", "&apos;", song);
+      alert(song);
+      }
     nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
     if((uiPlaying==true)&&(isPlaying==true)){
       updateNowPlaying();
