@@ -114,10 +114,10 @@ background-position:center center;
   //background-color:#336;
   display:none; 
 }
-a:link{color:#00f; font-family:akzibold; text-decoration:none;}
+a:link{color:#2cbdd8; font-family:akzibold; text-decoration:none;}
 
 //a:visited{color:#2BBED8; font-family:akzibold; text-decoration:none;}
-a:visited{color:#00f; font-family:akzibold; text-decoration:none;}
+a:visited{color:#2cbdd8; font-family:akzibold; text-decoration:none;}
 .pages{
 opacity:0;
 -webkit-transition:opacity 100ms linear;
