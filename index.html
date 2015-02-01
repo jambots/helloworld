@@ -310,9 +310,7 @@ function parseRecentSongs(theData){
     var time=recentSongs[songKeys[0]].song_timestamp;
     var dj=recentSongs[songKeys[0]].dj;
     if(song.indexOf("'")>-1){
-      alert(song);
       song = replaceAll("'", "&apos;", song);
-      alert(song);
       }
     nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
     if((uiPlaying==true)&&(isPlaying==true)){
@@ -657,9 +655,16 @@ function updatePlaylist(){
 
   for(var s=0; s<songKeys.length; s++){
     var songData=recentSongs[songKeys[s]];
+    var song=songData.song_title;
+    var artist=songData.song_artist;
+    var album=songData.song_album;
+    if(song.indexOf("'")>-1){song = replaceAll("'", "&apos;", song);}
+    if(artist.indexOf("'")>-1){artist = replaceAll("'", "&apos;", artist);}
+    if(album.indexOf("'")>-1){album = replaceAll("'", "&apos;", album);}
+
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  ''+songData.song_artist+' &#8220;'+songData.song_title+'&#8221;';
-    htmlBlock+=  '<br /><a href="javascript:shop(\''+songData.song_artist+'\', \''+songData.song_album+'\', \''+songData.song_title+'\');">';
+    htmlBlock+=  ''+songData.song_artist+' &#8220;'+song+'&#8221;';
+    htmlBlock+=  '<br /><a href="javascript:shop(\''+artist+'\', \''+album+'\', \''+song+'\');">';
     htmlBlock+=  ''+songData.song_album+'</a>';
     htmlBlock+=  '<br /><span style="font-family:akziregular;">'+dateTimeToTime(songData.song_timestamp)+'</span>';
     htmlBlock+='</div>';
