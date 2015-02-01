@@ -308,7 +308,7 @@ function parseRecentSongs(theData){
     var artist=recentSongs[songKeys[0]].song_artist;
     var time=recentSongs[songKeys[0]].song_timestamp;
     var dj=recentSongs[songKeys[0]].dj;
-
+    if(song.indexOf("'")>-1){alert(song);}
     song = replaceAll("'", "!", song);
 
     nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
