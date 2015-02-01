@@ -294,13 +294,24 @@ function getRecentSongs(){
 // remove errors on publish
 var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
 var recentSongs={};
+function replaceAll(find, replace, str) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}
 function parseRecentSongs(theData){
   recentSongs=JSON.parse(theData);
   var songKeys=Object.keys(recentSongs);
   songKeys.sort();
   songKeys.reverse();
   if(songKeys.length>0){
-    nowData={"dj":recentSongs[songKeys[0]].dj, "time":recentSongs[songKeys[0]].song_timestamp, "artist":recentSongs[songKeys[0]].song_artist, "song":recentSongs[songKeys[0]].song_title, "album":recentSongs[songKeys[0]].song_album};
+    var album=recentSongs[songKeys[0]].song_album;
+    var song=recentSongs[songKeys[0]].song_title;
+    var artist=recentSongs[songKeys[0]].song_artist;
+    var time=recentSongs[songKeys[0]].song_timestamp;
+    var dj=recentSongs[songKeys[0]].dj;
+
+    song = replaceAll("'", "&apos;", song);
+
+    nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
     if((uiPlaying==true)&&(isPlaying==true)){
       updateNowPlaying();
       }
