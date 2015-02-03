@@ -16,7 +16,7 @@
 <script type="text/javascript">
 
 var platform="android";
-var debugging=false;
+var debugging=true;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -50,6 +50,13 @@ function stateTick(){
   if((navigator.connection.type ==Connection.NONE)||(navigator.connection.type =="none")){
     if(connection==false){
       document.getElementById('page_listen_content_djDiv').innerHTML="No connection";
+      if(pageName=="wakeup"){
+        singing=true;
+        singMedia.play();
+        connecting=false;
+        interrupted=false;
+        uiPlaying=false;
+        }
       }
     if(connection==true){
       connection=false;
@@ -1744,7 +1751,7 @@ function handleButton(pageName, buttonName){
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
-////
+
       stopStream();
       singMedia.stop();
       singing=false;
