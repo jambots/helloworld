@@ -816,12 +816,26 @@ function secondTick(){
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       buttonOn("listen", "playpause");
       document.getElementById('page_listen_content_djDiv').innerHTML="";
-      //connecting=true;
-      //interrupted=false;
-      //uiPlaying=true;
-      //connectStream();
-      singing=true;
-      singMedia.play();
+
+      if((navigator.connection.type ==Connection.NONE)||(navigator.connection.type =="none")){
+        singing=true;
+        singMedia.play();
+        }
+      else{////
+        //connecting=true;
+        //interrupted=false;
+        //uiPlaying=true;
+        //connectStream();
+        buttonOn("listen", "playpause");
+        document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
+        retrying=true;
+        retryAttempts=0;
+        interrupted=false;
+        uiPlaying=true;
+        clearInterval(minuteInterval);
+        minuteInterval=setInterval('minuteTick()', 15000);
+        playStream();
+        }
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
       selectPage("wakeup");
@@ -1730,8 +1744,8 @@ function handleButton(pageName, buttonName){
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
-
-      //stopStream();
+////
+      stopStream();
       singMedia.stop();
       singing=false;
       buttonOn("wakeup", "alarmoff");
@@ -1749,7 +1763,7 @@ function handleButton(pageName, buttonName){
       buttonOff("listen", "playpause");
       singMedia.stop();
       singing=false;
-      //stopStream();
+      stopStream();////
       buttonOn("wakeup", "snooze");
       window.setTimeout('buttonOff("wakeup", "snooze"); selectPage("armed");', navDelay);
       }
