@@ -29,7 +29,10 @@ var html5audio = {
     isPlaying = true;
     myaudio.play();
     readyStateInterval = setInterval(function(){
-      audioReadyState=myaudio.readyState;
+      if(myaudio.readyState != audioReadyState){
+        audioReadyState =myaudio.readyState;
+        dbuga("audioReadyState ="+myaudio.readyState);
+      }    
       if (myaudio.readyState <= 2) {
          //document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
          //retrying=true;
@@ -55,15 +58,15 @@ var html5audio = {
     }, false);
 
     myaudio.addEventListener("ended", function() {
-       //dbuga('myaudio ENDED');
+       dbuga('myaudio ENDED');
        //isPlaying=false;
     }, false);
     myaudio.addEventListener("stalled", function() {
-       //dbuga('myaudio stalled');
+       dbuga('myaudio stalled');
        //isPlaying=false;
     }, false);
     myaudio.addEventListener("waiting", function() {// doesn't fire on android for a minute :(
-       //dbuga('myaudio WAITING');
+       dbuga('myaudio WAITING');
        //isPlaying = true;
        //playButton.style.display = 'none';
        //stopButton.style.display = 'none';

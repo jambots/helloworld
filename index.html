@@ -721,7 +721,7 @@ function getFaqs(){
     dataType: "text",        // < new bit
     success: function(data) {parseFaqs(data);}
     });
-  //dbuga('getFaqs() completed');
+  dbuga('getFaqs() completed');
   }
 var faqs=[
   {"q":"What is Radio K?", "a":"Radio K, the award-winning radio station of the University of Minnesota, is nationally recognized as one of the best student-run college radio stations in the country, playing an eclectic variety of independent music both old and new.<br /><br />Radio K educates students, breaks ground in musical programming, and provides cutting-edge cultural coverage through our specialty shows, web content and Culture Queue."},
@@ -1159,7 +1159,7 @@ function populateFaqs(){
     var quoteParts=a.split('"');
     for(var p=0; p<quoteParts.length; p++){
       var thisPart= quoteParts[p];
-      if(thisPart.indexOf('http:')>-1){
+      if(thisPart.indexOf('http')>-1){
         quoteParts[p]='javascript:remoteLink(\''+thisPart+'\');'+returnFalse;
         }
       }
@@ -1729,6 +1729,7 @@ function handleButton(pageName, buttonName){
       document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
       window.setTimeout('buttonOff("alarm", "set"); selectPage("armed");', navDelay);
       snoozeMinutes=0;
+      alarming=false;
       uiPlaying=false;
       connecting=false;
       interrupted=false;
@@ -1751,7 +1752,7 @@ function handleButton(pageName, buttonName){
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
-
+      alarming=false;
       stopStream();
       singMedia.stop();
       singing=false;
@@ -1770,6 +1771,7 @@ function handleButton(pageName, buttonName){
       buttonOff("listen", "playpause");
       singMedia.stop();
       singing=false;
+      alarming=false;
       stopStream();////
       buttonOn("wakeup", "snooze");
       window.setTimeout('buttonOff("wakeup", "snooze"); selectPage("armed");', navDelay);
@@ -1997,7 +1999,7 @@ function handleButton(pageName, buttonName){
 
 var connecting=false;
 var connectFails=0;
-
+var alarming=false;
 var bufferTimeout;
 function minuteTick(){
   if((uiPlaying==true)&&(isPlaying==true)){
