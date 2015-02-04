@@ -16,7 +16,7 @@
 <script type="text/javascript">
 
 var platform="android";
-var debugging=true;
+var debugging=false;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -1354,6 +1354,7 @@ var pages=[
 {"name":"totd", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
+    {"name":"stotd", "top":0, "left":0, "height":7, "width":9},
   ],
   "contents":[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="totdHolder"><div id="totdScroller"></div></div>'}
@@ -1370,6 +1371,7 @@ var pages=[
 {"name":"cq", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
+    {"name":"scq", "top":0, "left":0, "height":7, "width":9},
   ],
   "contents":[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="cqHolder"><div id="cqScroller"></div></div>'}
@@ -1886,6 +1888,10 @@ function handleButton(pageName, buttonName){
       buttonOn("totd", "done");
       window.setTimeout('buttonOff("totd", "done"); selectPage("extras");', navDelay);
       }
+    if(buttonName=="stotd"){
+      buttonOn("totd", "stotd");
+      window.setTimeout('buttonOff("stotd", "done"); remoteLink("https://itunes.apple.com/us/podcast/radio-ks-track-of-the-day/id389816740?mt=2");', navDelay);
+      }
     }
   if(pageName=="wrs"){
     if(buttonName=="done"){
@@ -1897,6 +1903,10 @@ function handleButton(pageName, buttonName){
     if(buttonName=="done"){
       buttonOn("cq", "done");
       window.setTimeout('buttonOff("cq", "done"); selectPage("extras");', navDelay);
+      }
+    if(buttonName=="scq"){
+      buttonOn("cq", "scq");
+      window.setTimeout('buttonOff("cq", "scq"); remoteLink("https://itunes.apple.com/us/podcast/culture-queue/id862798048?mt=2");', navDelay);
       }
     }
   if(pageName=="settings"){
