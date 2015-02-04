@@ -49,9 +49,14 @@ var html5audio = {
     myaudio.addEventListener("playing", function() {
        dbuga('playing fired');
        isPlaying = true;
-         buttonOn("listen", "playpause");
-         retrying=false;
-         updateNowPlaying();
+       buttonOn("listen", "playpause");
+       retrying=false;
+       updateNowPlaying();
+       if(singing){
+         singMedia.stop();
+         singing=false;
+       }
+
        //playButton.style.display = 'none';
        //activityIndicator.style.display = 'none';
        //stopButton.style.display = 'block';

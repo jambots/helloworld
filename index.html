@@ -824,15 +824,9 @@ function secondTick(){
       buttonOn("listen", "playpause");
       document.getElementById('page_listen_content_djDiv').innerHTML="";
 
-      if((navigator.connection.type ==Connection.NONE)||(navigator.connection.type =="none")){
-        singing=true;
-        singMedia.play();
-        }
-      else{////
-        //connecting=true;
-        //interrupted=false;
-        //uiPlaying=true;
-        //connectStream();
+      singing=true;
+      singMedia.play();
+      alarming=true;////
         buttonOn("listen", "playpause");
         document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
         retrying=true;
@@ -842,7 +836,6 @@ function secondTick(){
         clearInterval(minuteInterval);
         minuteInterval=setInterval('minuteTick()', 15000);
         playStream();
-        }
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
       selectPage("wakeup");
