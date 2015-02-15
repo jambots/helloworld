@@ -243,7 +243,7 @@ function onDeviceReady(){
   else {
     singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
     }
-  dbuga("onDeviceReady() completed");
+  //dbuga("onDeviceReady() completed");
   }
 function onOffline() {
   //dbuga('onOffline() uiPlaying='+uiPlaying);
@@ -725,7 +725,7 @@ function getFaqs(){
     dataType: "text",        // < new bit
     success: function(data) {parseFaqs(data);}
     });
-  dbuga('getFaqs() completed');
+  //dbuga('getFaqs() completed');
   }
 var faqs=[
   {"q":"What is Radio K?", "a":"Radio K, the award-winning radio station of the University of Minnesota, is nationally recognized as one of the best student-run college radio stations in the country, playing an eclectic variety of independent music both old and new.<br /><br />Radio K educates students, breaks ground in musical programming, and provides cutting-edge cultural coverage through our specialty shows, web content and Culture Queue."},
@@ -2106,7 +2106,7 @@ var alarmIncDec=1;
   <div id="container">
   </div>
   <div id="debugDiv"></div>
-  <div id="stateDiv" style="top:160px;"></div>
+  <div id="stateDiv" style="top:460px;"></div>
 </div>
 </body>
 </html>

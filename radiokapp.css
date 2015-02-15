@@ -81,7 +81,7 @@ src: url('akzidenzgroteskbold.ttf');
 
 .loading{color:black; font-family:akzibold;}
 .playlistItem{color:black; font-family:akzibold; position:static; text-align:center;}
-#debugDiv{display:none; position:absolute; width:100%; top:0px;
+#debugDiv{position:absolute; width:100%; top:0px;
 background-color:rgba(0,0,0,.6); color:white; font-family: akziregular; font-size:18px;}
 div{
 position:absolute;
