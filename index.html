@@ -16,7 +16,7 @@
 <script type="text/javascript">
 
 var platform="android";
-var debugging=false;
+var debugging=true;
 var retrying=false;
 var interrupted=false;
 var retryAttempts=0;
@@ -159,7 +159,11 @@ function connectStream(){
   myaudioURL=urlByQuality[genericGet("quality")]+""; // not sure why radiok needs /; appended
   myaudio = null;
   myaudio = new Audio(myaudioURL);
+
+  dbuga("connectStream() UIPLAYING:"+uiPlaying);
+
   if(uiPlaying){html5audio.play();}
+  //dbuga("connectStream() completed");
   //dbuga("connectStream() completed");
   }
 
@@ -818,6 +822,7 @@ function secondTick(){
       }
 
     if((nowMod+1440>=genericGet("alarmMinuteOfDay")+1440+snoozeMinutes)&&(nowMod+1440<genericGet("alarmMinuteOfDay")+1500+snoozeMinutes)){
+      //    -----    alarming, wake up! --------------
       //dbuga('alarm');
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
