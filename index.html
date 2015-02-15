@@ -836,18 +836,21 @@ function secondTick(){
 
       //singing=true;
       //singMedia.play();
-
-/*
       alarming=true;
-      buttonOn("listen", "playpause");
-      document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
-      retrying=true;
-      retryAttempts=0;
-      interrupted=false;
-      uiPlaying=true;
-      dbuga("in secondTick playStream()");
-      playStream();
-*/
+        buttonOn("listen", "playpause");
+        document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
+        retrying=true;
+        retryAttempts=0;
+        interrupted=false;
+        uiPlaying=true;
+        dbuga("in secondTick playStream()");
+
+      $('#some_link').click(function() {
+        playStream();
+        return false;
+      });
+      //playStream();
+
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
       selectPage("wakeup");
@@ -1754,7 +1757,7 @@ function handleButton(pageName, buttonName){
     }
   if(pageName=="wakeup"){
     if(buttonName=="alarmoff"){
-/*
+
       uiPlaying=false;
       connecting=false;
       interrupted=false;
@@ -1763,18 +1766,6 @@ function handleButton(pageName, buttonName){
       stopStream();
       ////singMedia.stop();
       singing=false;
-*/
-//code borrowed to try playing with event
-      alarming=true;
-      buttonOn("listen", "playpause");
-      document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
-      retrying=true;
-      retryAttempts=0;
-      interrupted=false;
-      uiPlaying=true;
-      dbuga("in secondTick playStream()");
-      playStream();
-// end of borrowed code
       buttonOn("wakeup", "alarmoff");
       window.setTimeout('buttonOff("wakeup", "alarmoff"); selectPage("listen");', navDelay);
       }
