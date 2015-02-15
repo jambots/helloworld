@@ -160,9 +160,12 @@ function connectStream(){
   myaudio = null;
   myaudio = new Audio(myaudioURL);
 
-  dbuga("connectStream() UIPLAYING:"+uiPlaying +" so html5audio.play()");
+  dbuga("connectStream() UIPLAYING:"+uiPlaying +"");
 
-  if(uiPlaying){html5audio.play();}
+  if(uiPlaying){
+    dbuga("connectStream() UIPLAYING:"+uiPlaying +" so html5audio.play()");
+    html5audio.play();
+    }
   //dbuga("connectStream() completed");
   dbuga("connectStream() completed");
   }

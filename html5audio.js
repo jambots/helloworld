@@ -56,10 +56,6 @@ var html5audio = {
          singMedia.stop();
          singing=false;
        }
-
-       //playButton.style.display = 'none';
-       //activityIndicator.style.display = 'none';
-       //stopButton.style.display = 'block';
     }, false);
 
     myaudio.addEventListener("ended", function() {
@@ -67,15 +63,11 @@ var html5audio = {
        //isPlaying=false;
     }, false);
     myaudio.addEventListener("stalled", function() {
-       dbuga('myaudio stalled');
-       //isPlaying=false;
+       dbuga('myaudio stalled so isPlaying=false');
+       isPlaying=false;
     }, false);
     myaudio.addEventListener("waiting", function() {// doesn't fire on android for a minute :(
        dbuga('myaudio WAITING');
-       //isPlaying = true;
-       //playButton.style.display = 'none';
-       //stopButton.style.display = 'none';
-       //activityIndicator.style.display = 'block';
     }, false);
 
   },
@@ -85,9 +77,6 @@ var html5audio = {
     myaudio.pause();
     buttonOff("listen", "playpause");
     updateNowPlaying();
-    //stopButton.style.display = 'none';
-    //activityIndicator.style.display = 'none';
-    //playButton.style.display = 'block';
   },
   stop: function() {
     isPlaying = false;
@@ -95,9 +84,6 @@ var html5audio = {
     myaudio.pause();
          buttonOff("listen", "playpause");
          updateNowPlaying();
-    //stopButton.style.display = 'none';
-    //activityIndicator.style.display = 'none';
-    //playButton.style.display = 'block';
     myaudio = null;
     myaudio = new Audio(myaudioURL);
     //textPosition.innerHTML = '';
