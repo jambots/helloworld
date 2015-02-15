@@ -845,10 +845,7 @@ function secondTick(){
         uiPlaying=true;
         dbuga("in secondTick playStream()");
 
-      $('#some_link').ontouchstart(function() {
-        playStream();
-        return false;
-      });
+      $('#some_link').click();
       //playStream();
 
       clearInterval(minuteInterval);
@@ -2114,7 +2111,7 @@ var alarmIncDec=1;
   </div>
   <div id="debugDiv"></div>
   <div id="stateDiv" style="top:460px;"></div>
-<div style="position:absolute; top:400px; color:yellow;" id="some_link" ontouchstart="playStream()">some_link</div>
+  <div style="position:absolute; top:400px; color:yellow;" id="some_link" onclick="dbuga('onclick so playStream()'); playStream(); return false;">some_link</div>
 </div>
 </body>
 </html>
