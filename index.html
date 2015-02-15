@@ -160,11 +160,11 @@ function connectStream(){
   myaudio = null;
   myaudio = new Audio(myaudioURL);
 
-  dbuga("connectStream() UIPLAYING:"+uiPlaying);
+  dbuga("connectStream() UIPLAYING:"+uiPlaying +" so html5audio.play()");
 
   if(uiPlaying){html5audio.play();}
   //dbuga("connectStream() completed");
-  //dbuga("connectStream() completed");
+  dbuga("connectStream() completed");
   }
 
 
@@ -822,8 +822,10 @@ function secondTick(){
       }
 
     if((nowMod+1440>=genericGet("alarmMinuteOfDay")+1440+snoozeMinutes)&&(nowMod+1440<genericGet("alarmMinuteOfDay")+1500+snoozeMinutes)){
+
       //    -----    alarming, wake up! --------------
-      //dbuga('alarm');
+
+      dbuga('alarm');
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       buttonOn("listen", "playpause");
@@ -831,7 +833,7 @@ function secondTick(){
 
       singing=true;
       singMedia.play();
-      alarming=true;////
+      alarming=true;
         buttonOn("listen", "playpause");
         document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
         retrying=true;
@@ -840,6 +842,7 @@ function secondTick(){
         uiPlaying=true;
         clearInterval(minuteInterval);
         minuteInterval=setInterval('minuteTick()', 15000);
+        dbuga("in secondTick playStream()");
         playStream();
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
@@ -2043,7 +2046,7 @@ function stopStream(){
   //dbuga('stopStream() ran');
   }
 function playStream(){
-  //dbuga('playStream() so connectStream()');
+  dbuga('playStream() so connectStream()');
   connectStream();
   }
 
