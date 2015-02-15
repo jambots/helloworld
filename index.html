@@ -22,7 +22,7 @@ var interrupted=false;
 var retryAttempts=0;
 var uiPlaying=false;
 var mediaStatusNum=0;
-var singMedia;
+var ////singMedia;
 var singing=false;
 var connection=true;
 function retryTick(){
@@ -52,7 +52,7 @@ function stateTick(){
       document.getElementById('page_listen_content_djDiv').innerHTML="No connection";
       if(pageName=="wakeup"){
         singing=true;
-        singMedia.play();
+        ////singMedia.play();
         connecting=false;
         interrupted=false;
         uiPlaying=false;
@@ -241,10 +241,10 @@ function init(){
 function onDeviceReady(){
   if (device.platform == "Android") {
     returnFalse=" return false;";
-    singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
+    ////singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
     }
   else {
-    singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
+    ////singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
     }
   //dbuga("onDeviceReady() completed");
   }
@@ -267,7 +267,7 @@ function singStatusCallback(theStatus){
   mediaStatusNum=theStatus;
   //dbuga('singMedia status '+statusArray[theStatus]);
   if((theStatus==4)&&(singing==true)){
-    singMedia.play();
+    ////singMedia.play();
     }
   }
 function singError(er){
@@ -1758,7 +1758,7 @@ function handleButton(pageName, buttonName){
       buttonOff("listen", "playpause");
       alarming=false;
       stopStream();
-      singMedia.stop();
+      ////singMedia.stop();
       singing=false;
       buttonOn("wakeup", "alarmoff");
       window.setTimeout('buttonOff("wakeup", "alarmoff"); selectPage("listen");', navDelay);
@@ -1773,7 +1773,7 @@ function handleButton(pageName, buttonName){
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
-      singMedia.stop();
+      ////singMedia.stop();
       singing=false;
       alarming=false;
       stopStream();////
