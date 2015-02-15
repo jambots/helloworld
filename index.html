@@ -843,8 +843,6 @@ function secondTick(){
         retryAttempts=0;
         interrupted=false;
         uiPlaying=true;
-        clearInterval(minuteInterval);
-        minuteInterval=setInterval('minuteTick()', 15000);
         dbuga("in secondTick playStream()");
         playStream();
       clearInterval(minuteInterval);
