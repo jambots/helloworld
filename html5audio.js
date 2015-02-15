@@ -64,7 +64,7 @@ var html5audio = {
     }, false);
     myaudio.addEventListener("stalled", function() {
        dbuga('myaudio stalled so isPlaying=false');
-       isPlaying=false;
+       //isPlaying=false;
     }, false);
     myaudio.addEventListener("waiting", function() {// doesn't fire on android for a minute :(
        dbuga('myaudio WAITING');
