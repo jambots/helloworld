@@ -843,7 +843,7 @@ function secondTick(){
         retryAttempts=0;
         interrupted=false;
         uiPlaying=true;
-        dbuga("in secondTick playStream()");
+        dbuga("in secondTick //playStream() $('#some_link').click()");
 
       $('#some_link').click();
       //playStream();
@@ -1357,10 +1357,10 @@ var pages=[
     {"name":"vc", "top":45, "left":2, "height":11, "width":11},
   ],
   "contents":[
-    {"name":"cqDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','cq');\">CULTURE QUEUE</a><br />Radio K's award-winning Arts and Culture program, dedicated to telling stories about the many wonders of the Twin Cities that you won't hear anywhere else."},
-    {"name":"totdDesc", "top":21, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','totd');\">TRACK OF THE DAY</a><br />Every day Radio K offers up a fresh new track for you to download. It's just one more way that Real College Radio makes Real Life (a little more) Rockin'."},
-    {"name":"wrsDesc", "top":33, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">WEEKLY RELEASE SPOTLIGHT</a><br />Each week we comb through mountains of new music to find that one perfect album that we (and you) almost missed."},
-    {"name":"vcDesc", "top":45, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','vc');\">VINYL CLOSET</a><br />A digitized archive of Studio K performances from 1994 to 2006 that feature seminal Minnesota artists that have left an indelible mark on the Minnesota music scene."},
+    {"name":"cqDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','cq', {});\">CULTURE QUEUE</a><br />Radio K's award-winning Arts and Culture program, dedicated to telling stories about the many wonders of the Twin Cities that you won't hear anywhere else."},
+    {"name":"totdDesc", "top":21, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','totd', {});\">TRACK OF THE DAY</a><br />Every day Radio K offers up a fresh new track for you to download. It's just one more way that Real College Radio makes Real Life (a little more) Rockin'."},
+    {"name":"wrsDesc", "top":33, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs', {});\">WEEKLY RELEASE SPOTLIGHT</a><br />Each week we comb through mountains of new music to find that one perfect album that we (and you) almost missed."},
+    {"name":"vcDesc", "top":45, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','vc', {});\">VINYL CLOSET</a><br />A digitized archive of Studio K performances from 1994 to 2006 that feature seminal Minnesota artists that have left an indelible mark on the Minnesota music scene."},
   ]
 },
 {"name":"totd", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
@@ -1668,8 +1668,12 @@ function remoteCqLink(cqNum){
   navigator.app.loadUrl(theUrl, {openExternal: true});
   //dbuga("remoteLink ran");
   }
-
-function handleButton(pageName, buttonName){
+var eventCache;
+function tryToGo(){
+  dbuga('tryToGo()');
+  eventCache.okGo();
+  }
+function handleButton(pageName, buttonName, evt){
   //dbug("handleButton("+pageName+", "+buttonName+")");
   if(pageName=="alarm"){
     if(buttonName=="timeset"){
@@ -1728,6 +1732,8 @@ function handleButton(pageName, buttonName){
       }
 
     if(buttonName=="set"){
+      eventCache=evt;
+      eventCache.okGo=function(){playStream();};
       if(isPlaying){stopStream();}
       sleepSeconds=0;
       var mil=""+minuteOfDayToHH(genericGet("alarmMinuteOfDay"))+minuteOfDayToMM(genericGet("alarmMinuteOfDay"));
@@ -2092,7 +2098,7 @@ function handleTouchEvent(e){
               if(tenth>5){alarmIncDec=12*pol*60;}
               }
             //dbuga(area.page+" "+area.name);
-            handleButton(area.page, area.name);
+            handleButton(area.page, area.name, e);
             }
           }
         }
@@ -2111,7 +2117,7 @@ var alarmIncDec=1;
   </div>
   <div id="debugDiv"></div>
   <div id="stateDiv" style="top:460px;"></div>
-  <div style="position:absolute; top:400px; color:yellow;" id="some_link" onclick="dbuga('onclick so playStream()'); playStream(); return false;">some_link</div>
+  <div style="position:absolute; top:400px; color:yellow;" id="some_link" onclick="dbuga('onclick so tryToGo()'); tryToGo(); return false;">some_link</div>
 </div>
 </body>
 </html>
