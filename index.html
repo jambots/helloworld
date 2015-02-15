@@ -167,7 +167,7 @@ function connectStream(){
     html5audio.play();
     }
   //dbuga("connectStream() completed");
-  dbuga("connectStream() completed");
+  //dbuga("connectStream() completed");
   }
 
 
@@ -234,7 +234,7 @@ function init(){
   //dbuga(' init 7');
   myaudioURL = urlByQuality[genericGet("quality")]+"/;";
   //dbuga(' init 7');
-  connectStream();      
+  connectStream();  //commented feb 15, could be fucking up android 
   //dbug('init okay');
   }
 
@@ -834,8 +834,8 @@ function secondTick(){
       buttonOn("listen", "playpause");
       document.getElementById('page_listen_content_djDiv').innerHTML="";
 
-      singing=true;
-      singMedia.play();
+      //singing=true;
+      //singMedia.play();
       alarming=true;
         buttonOn("listen", "playpause");
         document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
