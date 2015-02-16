@@ -28,6 +28,7 @@ androidStreamMedia.stop=new Function("{dbuga('stop() nothing');}");
 androidStreamMedia.release=new Function("{dbuga('release() nothing');}");
 var android=false;
 var ios=false;
+var streamPlaying=false;
 var androidStreamPlaying=false;
 var androidStreamStatus=-1;
 
@@ -247,6 +248,7 @@ function init(){
   }
 
 function onDeviceReady(){
+  dbuga("onDeviceReady() device.platform="+device.platform);
   if (device.platform == "Android") {
     android=true;
     }
@@ -261,7 +263,7 @@ function onDeviceReady(){
   if(ios){
     singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
     }
-  //dbuga("onDeviceReady() completed");
+  /buga("onDeviceReady() completed");
   }
 function onOffline() {
   //dbuga('onOffline() uiPlaying='+uiPlaying);
@@ -2045,14 +2047,14 @@ function remoteControlPlay(){
   buttonOn("listen", "playpause");
   }
 function stopStream(){
-  dbuga('stopStream()');
+  dbuga('stopStream() android='+android);
   if(android){
     androidStreamMedia.stop();
     androidStreamMedia.release();
     }
   //html5audio.stop();
   //document.getElementById('page_listen_content_djDiv').innerHTML="";
-  //dbuga('stopStream() ran');
+  dbuga('stopStream() ran');
   }
 function playStream(){
   dbuga('playStream() '+device.platform);
