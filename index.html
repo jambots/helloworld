@@ -2042,7 +2042,7 @@ function stopStream(){
 function playStream(){
   dbuga('playStream() '+device.platform);
   if(device.platform=="Android"){
-    dbuga("androidStream "+myAudioUrl);
+    dbuga("androidStream "+myAudioURL);
     androidStream = new Media(myAudioURL, androidSuccess, androidError, androidStatusCallback);
     androidStream.play();
     //connectStream();
