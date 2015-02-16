@@ -23,7 +23,9 @@ var singMedia;
 var singing=false;
 var singStatusNum=0;
 var myAudioURL="";
-var androidStream;
+var androidStream={};
+androidStream.stop=new Function("{dbuga('stop() nothing');}");
+
 var androidStreaming=false;
 var androidStatusNum=-1;
 
@@ -2034,15 +2036,19 @@ function remoteControlPlay(){
   buttonOn("listen", "playpause");
   }
 function stopStream(){
-  //dbuga('stopStream()');
-  html5audio.stop();
-  document.getElementById('page_listen_content_djDiv').innerHTML="";
+  dbuga('stopStream()');
+  if(device.platform=="Android"){
+    androidStream.stop();
+    }
+  //html5audio.stop();
+  //document.getElementById('page_listen_content_djDiv').innerHTML="";
   //dbuga('stopStream() ran');
   }
 function playStream(){
   dbuga('playStream() '+device.platform);
   if(device.platform=="Android"){
     dbuga("androidStream "+myAudioURL);
+    androidStream.stop();
     androidStream = new Media(myAudioURL, androidSuccess, androidError, androidStatusCallback);
     androidStream.play();
     //connectStream();
