@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script src="phonegap.js"></script>
 <script src="jquerymin.js"></script>
-<link rel="stylesheet" type="text/css" href="reset-min.css">
+<link rel="stylesheet" type="text/css" href="reset-min.css?1">
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
 
 <script type="text/javascript">
@@ -16,7 +16,6 @@ var retryInterval;
 var retryAttempts=0;
 var retrying=false;
 
-var interrupted=false;
 var uiPlaying=false;
 
 var singMedia;
@@ -81,13 +80,12 @@ function retryTick(){
     var message="Connecting...";
     retryAttempts++;
     if(streamPlaying==false){
-      connectStream();
+      //connectStream();
       }
     if(retryAttempts>20){
       message="We're not connecting.<br />Try again in a bit K?";
       uiPlaying=false;
       retrying=false;
-      interrupted=false;
       buttonOff("listen", "playpause");      
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=message;
       document.getElementById('page_listen_content_djDiv').innerHTML="";
@@ -104,7 +102,6 @@ function stateTick(){
       if(pageName=="wakeup"){
         singing=true;
         singMedia.play();
-        interrupted=false;
         uiPlaying=false;
         }
       }
@@ -138,26 +135,25 @@ function debugState(){
     document.getElementById("stateDiv").style.display="none";
     }
   else{
-    document.getElementById("stateDiv").style.display="block";
+    var stateDiv=document.getElementById("stateDiv");
+    stateDiv.style.display="block";
  
-    var theString=""+rnd(210)+"<br />";
+    stateDiv.innerHTML=""+rnd(210)+"<br />";
     
-    theString+="navigator.connection.type="+navigator.connection.type+"<br />";
-    theString+="connection="+connection+"<br />";
-    theString+="android="+android+"<br />";
-    theString+="ios="+ios+"<br />";
-    theString+="uiPlaying="+uiPlaying+"<br />";
-    theString+="myaudioURL ="+ myaudioURL +"<br />";
+    stateDiv.innerHTML+="navigator.connection.type="+navigator.connection.type+"<br />";
+    stateDiv.innerHTML+="connection="+connection+"<br />";
+    stateDiv.innerHTML+="android="+android+"<br />";
+    stateDiv.innerHTML+="ios="+ios+"<br />";
+    stateDiv.innerHTML+="uiPlaying="+uiPlaying+"<br />";
+    stateDiv.innerHTML+="myaudioURL ="+ myaudioURL +"<br />";
 
   
-    theString+="androidStreamPlaying="+ androidStreamPlaying + "<br />";
-    theString+="androidStreamStatus="+ androidStreamStatus + "<br />";
-    theString+="singing="+singing+"<br />";
-    theString+="singStatusNum="+singStatusNum+"<br />";
-    theString+="retrying="+retrying+"<br />";
-    theString+="retryAttempts="+retryAttempts;
-    document.getElementById("stateDiv").innerHTML=theString;
- 
+    stateDiv.innerHTML+="androidStreamPlaying="+ androidStreamPlaying + "<br />";
+    stateDiv.innerHTML+="androidStreamStatus="+ androidStreamStatus + "<br />";
+    stateDiv.innerHTML+="singing="+singing+"<br />";
+    stateDiv.innerHTML+="singStatusNum="+singStatusNum+"<br />";
+    stateDiv.innerHTML+="retrying="+retrying+"<br />";
+    stateDiv.innerHTML+="retryAttempts="+retryAttempts;
     }
   }
 // -------------- events --------------------
@@ -188,7 +184,6 @@ function togglePlaying(){
   if(uiPlaying==true){
     uiPlaying=false;
     retrying=false;
-    interrupted=false;
     buttonOff("listen", "playpause");
     stopStream();
     }
@@ -197,7 +192,6 @@ function togglePlaying(){
     document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
     retrying=true;
     retryAttempts=0;
-    interrupted=false;
     uiPlaying=true;
     clearInterval(minuteInterval);
     minuteInterval=setInterval('minuteTick()', 15000);
@@ -207,7 +201,7 @@ function togglePlaying(){
   }
 
 function connectStream(){
-  dbuga("connectStream() disbled UIPLAYING:"+uiPlaying +"");
+  dbuga("connectStream() disabled UIPLAYING:"+uiPlaying +"");
 /*
   if(streamPlaying){html5audio.stop();}
   myaudioURL=urlByQuality[genericGet("quality")]+""; // not sure why radiok needs /; appended
@@ -253,18 +247,24 @@ function genericGet(itemName){
   
   return value;
   }
+var readyTimeout;
 var minuteInterval;
 var dimensionInterval;
 function init(){
   document.addEventListener("deviceready", onDeviceReady, false);
+  readyTimeout=window.setTimeout("onDeviceReady()", 5000);
   }
 function onDeviceReady(){
+  clearTimeout(readyTimeout);
   dbuga("onDeviceReady() device.platform="+device.platform);
   if (device.platform == "Android") {
     android=true;
     }
-  else{
-    ios=false;
+  if (device.platform == "iOS") {
+    ios=true;
+    }
+  if (device.platform == "browser") {
+    
     }
   if(android){returnFalse=" return false;";}
 
@@ -904,7 +904,6 @@ function secondTick(){
         document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
         retrying=true;
         retryAttempts=0;
-        interrupted=false;
         uiPlaying=true;
         playStream();
 
@@ -1688,7 +1687,6 @@ function remoteLink(theUrl){
   if(theUrl.indexOf('mp3')>-1){
     uiPlaying=false;
     retrying=false;
-    interrupted=false;
     buttonOff("listen", "playpause");
     if(streamPlaying){stopStream();}
     }
@@ -1718,7 +1716,6 @@ function remoteLink(theUrl){
 function remoteCqLink(cqNum){
     uiPlaying=false;
     retrying=false;
-    interrupted=false;
     buttonOff("listen", "playpause");
     
  var downloadItem=cqDownloads[Number(cqNum)];
@@ -1798,7 +1795,6 @@ function handleButton(pageName, buttonName){
       snoozeMinutes=0;
       alarming=false;
       uiPlaying=false;
-      interrupted=false;
       buttonOff("listen", "playpause");
       //dbuga("in set singMedia.play()");
       singing=false;
@@ -1815,7 +1811,6 @@ function handleButton(pageName, buttonName){
     if(buttonName=="alarmoff"){
 
       uiPlaying=false;
-      interrupted=false;
       buttonOff("listen", "playpause");
       alarming=false;
       stopStream();
@@ -1831,7 +1826,6 @@ function handleButton(pageName, buttonName){
       var textTime=minuteOfDayToHour(genericGet("alarmMinuteOfDay")+snoozeMinutes)+":"+minuteOfDayToMM(genericGet("alarmMinuteOfDay")+snoozeMinutes)+" "+minuteOfDayToAmPm(genericGet("alarmMinuteOfDay")+snoozeMinutes);
       document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
       uiPlaying=false;
-      interrupted=false;
       buttonOff("listen", "playpause");
       singMedia.stop();
       singing=false;
@@ -2078,7 +2072,6 @@ function remoteControlPause(){
   remoteControlPaused=true;
   uiPlaying=false;
   retrying=false;
-  interrupted=false;
   buttonOff("listen", "playpause");
   }
 function remoteControlPlay(){
@@ -2086,7 +2079,6 @@ function remoteControlPlay(){
   remoteControlPaused=false;
   uiPlaying=true;
   retrying=false;
-  interrupted=false;
   buttonOn("listen", "playpause");
   }
 
