@@ -177,20 +177,20 @@ function connectStream(){
 
 // ----------------------------------------------------------------------------
 function genericDefault(itemName, defaultValue){
-  if(device.platform=="android"){
+  if(device.platform=="Android"){
     if (localStorage.getItem(itemName) === null) {
       localStorage.setItem(itemName, defaultValue);
       }
     }
   }
 function genericSet(itemName, newValue){
-  if(device.platform=="android"){
+  if(device.platform=="Android"){
     localStorage.setItem(itemName, newValue);
     }
   }
 function genericGet(itemName){
   var value="notSet";
-  if(device.platform=="android"){
+  if(device.platform=="Android"){
     value=localStorage.getItem(itemName);
     }
   var valueNumber=Number(value);
@@ -2041,10 +2041,23 @@ function stopStream(){
   }
 function playStream(){
   dbuga('playStream()');
-  if(device.platform=="android"){
+  if(device.platform=="Android"){
+    dbuga("androidStream "+myAudioUrl);
     androidStream = new Media(myAudioURL, androidSuccess, androidError, androidStatusCallback);
+    androidStream.play();
     //connectStream();
     }
+  }
+function androidStatusCallback(theStatus){
+  androidStatusNum=theStatus;
+  dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus]);
+  }
+
+function androidError(er){
+  dbuga("androidError "+JSON.stringify(er))
+  }
+function androidSuccess(){
+  dbuga('androidSuccess');
   }
 
 var lastTouchId="";
