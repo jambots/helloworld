@@ -22,7 +22,7 @@ var uiPlaying=false;
 var singMedia;
 var singing=false;
 var singStatusNum=0;
-var myAudioURL="";
+var myaudioURL="";
 var androidStreamMedia={};
 androidStreamMedia.stop=new Function("{dbuga('stop() nothing');}");
 androidStreamMedia.release=new Function("{dbuga('release() nothing');}");
@@ -37,7 +37,7 @@ function retryTick(){
   if(retrying==true){
     var message="Connecting...";
     retryAttempts++;
-    if(isPlaying==false){
+    if(streamPlaying==false){
       connectStream();
       }
     if(retryAttempts>20){
@@ -85,7 +85,7 @@ function stateTick(){
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       connectStream();
       }
-    if((isPlaying==false)&&(uiPlaying==true)){
+    if((streamPlaying==false)&&(uiPlaying==true)){
       document.getElementById('page_listen_content_djDiv').innerHTML="No stream";
       }
     }
@@ -165,7 +165,7 @@ function togglePlaying(){
 function connectStream(){
   dbuga("connectStream() disbled UIPLAYING:"+uiPlaying +"");
 /*
-  if(isPlaying){html5audio.stop();}
+  if(streamPlaying){html5audio.stop();}
   myaudioURL=urlByQuality[genericGet("quality")]+""; // not sure why radiok needs /; appended
   myaudio = null;
   myaudio = new Audio(myaudioURL);
@@ -341,7 +341,7 @@ function parseRecentSongs(theData){
       song = replaceAll("'", "&apos;", song);
       }
     nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
-    if((uiPlaying==true)&&(isPlaying==true)){
+    if((uiPlaying==true)&&(streamPlaying==true)){
       updateNowPlaying();
       }
     }
@@ -1641,7 +1641,7 @@ function remoteLink(theUrl){
     retrying=false;
     interrupted=false;
     buttonOff("listen", "playpause");
-    if(isPlaying){stopStream();}
+    if(streamPlaying){stopStream();}
     }
   if(android){
     var ref = window.open(theUrl, "_system");
@@ -1739,7 +1739,7 @@ function handleButton(pageName, buttonName){
       }
 
     if(buttonName=="set"){
-      if(isPlaying){stopStream();}
+      if(streamPlaying){stopStream();}
       sleepSeconds=0;
       var mil=""+minuteOfDayToHH(genericGet("alarmMinuteOfDay"))+minuteOfDayToMM(genericGet("alarmMinuteOfDay"));
       buttonOn("alarm", "set");
@@ -2018,7 +2018,7 @@ var connectFails=0;
 var alarming=false;
 var bufferTimeout;
 function minuteTick(){
-  if((uiPlaying==true)&&(isPlaying==true)){
+  if((uiPlaying==true)&&(streamPlaying==true)){
     updateNowPlaying();
     }
   getRecentSongs();
@@ -2057,11 +2057,10 @@ function stopStream(){
 function playStream(){
   dbuga('playStream() '+device.platform);
   stopStream();
-  myAudioURL=urlByQuality[genericGet("quality")]+"";
+  myaudioURL=urlByQuality[genericGet("quality")]+"";
   if(android){
-    dbuga("androidStreamMedia "+myAudioURL);
-    androidStreamMedia = new Media(myAudioURL, androidSuccess, androidError, androidStatusCallback);
-    androidStreamMedia.play();
+    dbuga("androidStreamMedia "+myaudioURL);
+    androidStreamMedia = new Media(myaudioURL, androidSuccess, androidError, androidStatusCallback);
     }
   if(ios){
     //connectStream();
@@ -2077,6 +2076,7 @@ function androidError(er){
   }
 function androidSuccess(){
   dbuga('androidSuccess');
+  androidStreamMedia.play();
   }
 
 var lastTouchId="";
