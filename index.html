@@ -6,12 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script src="phonegap.js"></script>
 <script src="jquerymin.js"></script>
-<!--
-<script src="childbrowser.js"></script>
--->
-<!--
--->
-<script type="text/javascript" src="html5audio.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css">
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
 
@@ -166,7 +160,7 @@ function togglePlaying(){
 
 function connectStream(){
   dbuga("connectStream() disbled UIPLAYING:"+uiPlaying +"");
-  /*
+/*
   if(isPlaying){html5audio.stop();}
   myaudioURL=urlByQuality[genericGet("quality")]+""; // not sure why radiok needs /; appended
   myaudio = null;
@@ -279,17 +273,6 @@ function singStatusCallback(theStatus){
   if((theStatus==4)&&(singing==true)){
     singMedia.play();
     }
-  }
-function androidStatusCallback(theStatus){
-  androidStatusNum=theStatus;
-  dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus]);
-  }
-
-function androidError(er){
-  dbuga("androidError "+JSON.stringify(er))
-  }
-function androidSuccess(){
-  dbuga('androidSuccess');
   }
 function singError(er){
   dbuga("singError "+JSON.stringify(er))
@@ -1967,17 +1950,7 @@ function handleButton(pageName, buttonName){
         ////connectStream();
         }
       }
-/*
-    if(buttonName=="broken"){
-      buttonOff("settings", "medium");
-      buttonOff("settings", "higher");
-      buttonOn("settings", "broken");
-      genericSet("quality", "broken");
-      if(playing){
-        comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
-        }
-      }
-*/
+
     }
   if(pageName=="faqs"){
     if(buttonName=="done"){
@@ -2070,8 +2043,8 @@ function playStream(){
   dbuga('playStream()');
   if(device.platform=="android"){
     androidStream = new Media(myAudioURL, androidSuccess, androidError, androidStatusCallback);
-  //connectStream();
-
+    //connectStream();
+    }
   }
 
 var lastTouchId="";
