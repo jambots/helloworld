@@ -33,6 +33,48 @@ var androidStreamPlaying=false;
 var androidStreamStatus=-1;
 
 var connection=true;
+var connectFails=0;
+var alarming=false;
+var bufferTimeout;
+function stopStream(){
+  //dbuga('stopStream()');
+  if(android){
+    androidStreamMedia.stop();
+    androidStreamMedia.release();
+    }
+  //html5audio.stop();
+  //document.getElementById('page_listen_content_djDiv').innerHTML="";
+  dbuga('stopStream() ran');
+  }
+function playStream(){
+  dbuga('playStream() android='+android);
+  stopStream();
+  myaudioURL=urlByQuality[genericGet("quality")]+"";
+  if(android){
+    dbuga("androidStreamMedia "+myaudioURL);
+    androidStreamMedia = new Media(myaudioURL, androidSuccess, androidError, androidStatusCallback);
+    androidStreamMedia.play();
+    }
+  if(ios){
+    //connectStream();
+    }
+  }
+function androidStatusCallback(theStatus){
+  androidStreamStatus=theStatus;
+  dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus]);
+  if(androidStreamStatus==2){
+    androidStreamPlaying=true;
+    streamPlaying=true;
+    }
+  }
+
+function androidError(er){
+  dbuga("androidError "+JSON.stringify(er))
+  }
+function androidSuccess(){
+  dbuga('androidSuccess');
+  }
+
 
 function retryTick(){
   if(retrying==true){
@@ -62,7 +104,6 @@ function stateTick(){
       if(pageName=="wakeup"){
         singing=true;
         singMedia.play();
-        connecting=false;
         interrupted=false;
         uiPlaying=false;
         }
@@ -1757,7 +1798,6 @@ function handleButton(pageName, buttonName){
       snoozeMinutes=0;
       alarming=false;
       uiPlaying=false;
-      connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
       //dbuga("in set singMedia.play()");
@@ -1775,7 +1815,6 @@ function handleButton(pageName, buttonName){
     if(buttonName=="alarmoff"){
 
       uiPlaying=false;
-      connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
       alarming=false;
@@ -1792,7 +1831,6 @@ function handleButton(pageName, buttonName){
       var textTime=minuteOfDayToHour(genericGet("alarmMinuteOfDay")+snoozeMinutes)+":"+minuteOfDayToMM(genericGet("alarmMinuteOfDay")+snoozeMinutes)+" "+minuteOfDayToAmPm(genericGet("alarmMinuteOfDay")+snoozeMinutes);
       document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
       uiPlaying=false;
-      connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
       singMedia.stop();
@@ -2021,10 +2059,6 @@ function handleButton(pageName, buttonName){
     }
   }
 
-var connecting=false;
-var connectFails=0;
-var alarming=false;
-var bufferTimeout;
 function minuteTick(){
   if((uiPlaying==true)&&(streamPlaying==true)){
     updateNowPlaying();
@@ -2037,8 +2071,10 @@ function resumeGame(){
   //dbuga('resumeGame()');
   return true;
   }
+
 var remoteControlPaused=false;
 function remoteControlPause(){
+  dbuga('remoteControlPause()');
   remoteControlPaused=true;
   uiPlaying=false;
   retrying=false;
@@ -2046,46 +2082,14 @@ function remoteControlPause(){
   buttonOff("listen", "playpause");
   }
 function remoteControlPlay(){
+  dbuga('remoteControlPlay()');
   remoteControlPaused=false;
   uiPlaying=true;
   retrying=false;
   interrupted=false;
   buttonOn("listen", "playpause");
   }
-function stopStream(){
-  dbuga('stopStream() android='+android);
-  if(android){
-    androidStreamMedia.stop();
-    androidStreamMedia.release();
-    }
-  //html5audio.stop();
-  //document.getElementById('page_listen_content_djDiv').innerHTML="";
-  dbuga('stopStream() ran');
-  }
-function playStream(){
-  dbuga('playStream() android='+android);
-  stopStream();
-  myaudioURL=urlByQuality[genericGet("quality")]+"";
-  if(android){
-    dbuga("androidStreamMedia "+myaudioURL);
-    androidStreamMedia = new Media(myaudioURL, androidSuccess, androidError, androidStatusCallback);
-    }
-  if(ios){
-    //connectStream();
-    }
-  }
-function androidStatusCallback(theStatus){
-  androidStreamStatus=theStatus;
-  dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus]);
-  }
 
-function androidError(er){
-  dbuga("androidError "+JSON.stringify(er))
-  }
-function androidSuccess(){
-  dbuga('androidSuccess');
-  androidStreamMedia.play();
-  }
 
 var lastTouchId="";
 function handleTouchEvent(e){
