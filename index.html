@@ -23,11 +23,13 @@ var singMedia;
 var singing=false;
 var singStatusNum=0;
 var myAudioURL="";
-var androidStream={};
-androidStream.stop=new Function("{dbuga('stop() nothing');}");
-
-var androidStreaming=false;
-var androidStatusNum=-1;
+var androidStreamMedia={};
+androidStreamMedia.stop=new Function("{dbuga('stop() nothing');}");
+androidStreamMedia.release=new Function("{dbuga('release() nothing');}");
+var android=false;
+var ios=false;
+var androidStreamPlaying=false;
+var androidStreamStatus=-1;
 
 var connection=true;
 
@@ -104,8 +106,8 @@ function debugState(){
     theString+="myaudioURL ="+ myaudioURL +"<br />";
 
   
-    theString+="androidStreaming="+ androidStreaming + "<br />";
-    theString+="androidStatusNum="+ androidStatusNum + "<br />";
+    theString+="androidStreamPlaying="+ androidStreamPlaying + "<br />";
+    theString+="androidStreamStatus="+ androidStreamStatus + "<br />";
     theString+="singing="+singing+"<br />";
     theString+="singStatusNum="+singStatusNum+"<br />";
     theString+="retrying="+retrying+"<br />";
@@ -179,20 +181,20 @@ function connectStream(){
 
 // ----------------------------------------------------------------------------
 function genericDefault(itemName, defaultValue){
-  if(device.platform=="Android"){
+  if(android){
     if (localStorage.getItem(itemName) === null) {
       localStorage.setItem(itemName, defaultValue);
       }
     }
   }
 function genericSet(itemName, newValue){
-  if(device.platform=="Android"){
+  if(android){
     localStorage.setItem(itemName, newValue);
     }
   }
 function genericGet(itemName){
   var value="notSet";
-  if(device.platform=="Android"){
+  if(android){
     value=localStorage.getItem(itemName);
     }
   var valueNumber=Number(value);
@@ -246,10 +248,17 @@ function init(){
 
 function onDeviceReady(){
   if (device.platform == "Android") {
-    returnFalse=" return false;";
+    android=true;
+    }
+  else{
+    ios=false;
+    }
+  if(android){returnFalse=" return false;";}
+
+  if(android){ 
     singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
     }
-  else {
+  if(ios){
     singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
     }
   //dbuga("onDeviceReady() completed");
@@ -1634,10 +1643,10 @@ function remoteLink(theUrl){
     buttonOff("listen", "playpause");
     if(isPlaying){stopStream();}
     }
-  if(device.platform=="Android"){
+  if(android){
     var ref = window.open(theUrl, "_system");
     }
-  else{
+  if(ios){
     var ref = window.open(theUrl, "_system");
     }
 
@@ -1645,10 +1654,10 @@ function remoteLink(theUrl){
 /*
   //window.plugins.childBrowser.openExternal(theUrl);
 
-  if(device.platform=="Android"){
+  if(android){
     window.plugins.ChildBrowser.openExternal(theUrl, false);
     }
-  else{
+  if(ios){
     window.plugins.ChildBrowser.showWebPage(theUrl, { showLocationBar: true });
     }
   //navigator.app.loadUrl(theUrl, {openExternal: true});
@@ -2037,8 +2046,9 @@ function remoteControlPlay(){
   }
 function stopStream(){
   dbuga('stopStream()');
-  if(device.platform=="Android"){
-    androidStream.stop();
+  if(android){
+    androidStreamMedia.stop();
+    androidStreamMedia.release();
     }
   //html5audio.stop();
   //document.getElementById('page_listen_content_djDiv').innerHTML="";
@@ -2046,16 +2056,19 @@ function stopStream(){
   }
 function playStream(){
   dbuga('playStream() '+device.platform);
-  if(device.platform=="Android"){
-    dbuga("androidStream "+myAudioURL);
-    androidStream.stop();
-    androidStream = new Media(myAudioURL, androidSuccess, androidError, androidStatusCallback);
-    androidStream.play();
+  stopStream();
+  myAudioURL=urlByQuality[genericGet("quality")]+"";
+  if(android){
+    dbuga("androidStreamMedia "+myAudioURL);
+    androidStreamMedia = new Media(myAudioURL, androidSuccess, androidError, androidStatusCallback);
+    androidStreamMedia.play();
+    }
+  if(ios){
     //connectStream();
     }
   }
 function androidStatusCallback(theStatus){
-  androidStatusNum=theStatus;
+  androidStreamStatus=theStatus;
   dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus]);
   }
 
