@@ -9,22 +9,32 @@
 <!--
 <script src="childbrowser.js"></script>
 -->
+<!--
+-->
 <script type="text/javascript" src="html5audio.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css">
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
 
 <script type="text/javascript">
-
-var platform="android";
 var debugging=true;
-var retrying=false;
-var interrupted=false;
+
+var retryInterval;
 var retryAttempts=0;
+var retrying=false;
+
+var interrupted=false;
 var uiPlaying=false;
-var mediaStatusNum=0;
+
 var singMedia;
 var singing=false;
+var singStatusNum=0;
+var myAudioURL="";
+var androidStream;
+var androidStreaming=false;
+var androidStatusNum=-1;
+
 var connection=true;
+
 function retryTick(){
   if(retrying==true){
     var message="Connecting...";
@@ -52,7 +62,7 @@ function stateTick(){
       document.getElementById('page_listen_content_djDiv').innerHTML="No connection";
       if(pageName=="wakeup"){
         singing=true;
-        ////singMedia.play();
+        singMedia.play();
         connecting=false;
         interrupted=false;
         uiPlaying=false;
@@ -93,15 +103,15 @@ function debugState(){
     var theString=""+rnd(210)+"<br />";
     
     theString+="navigator.connection.type="+navigator.connection.type+"<br />";
-    theString+="audioReadyState="+audioReadyState+"<br />";
     theString+="connection="+connection+"<br />";
-    theString+="quality="+genericGet("quality")+"<br />";
-    //theString+="navigator.connection.type="+navigator.connection.type+"<br />";
     theString+="uiPlaying="+uiPlaying+"<br />";
-    theString+="isPlaying="+isPlaying+"<br />";
-    theString+="mediaStatusNum="+mediaStatusNum+"<br />";
-    theString+="singing="+singing+"<br />";
+    theString+="myaudioURL ="+ myaudioURL +"<br />";
 
+  
+    theString+="androidStreaming="+ androidStreaming + "<br />";
+    theString+="androidStatusNum="+ androidStatusNum + "<br />";
+    theString+="singing="+singing+"<br />";
+    theString+="singStatusNum="+singStatusNum+"<br />";
     theString+="retrying="+retrying+"<br />";
     theString+="retryAttempts="+retryAttempts;
     document.getElementById("stateDiv").innerHTML=theString;
@@ -155,38 +165,38 @@ function togglePlaying(){
   }
 
 function connectStream(){
+  dbuga("connectStream() disbled UIPLAYING:"+uiPlaying +"");
+  /*
   if(isPlaying){html5audio.stop();}
   myaudioURL=urlByQuality[genericGet("quality")]+""; // not sure why radiok needs /; appended
   myaudio = null;
   myaudio = new Audio(myaudioURL);
 
-  dbuga("connectStream() UIPLAYING:"+uiPlaying +"");
 
   if(uiPlaying){
     dbuga("connectStream() UIPLAYING:"+uiPlaying +" so html5audio.play()");
     html5audio.play();
     }
-  //dbuga("connectStream() completed");
-  //dbuga("connectStream() completed");
+*/
   }
 
 
 // ----------------------------------------------------------------------------
 function genericDefault(itemName, defaultValue){
-  if(platform=="android"){
+  if(device.platform=="android"){
     if (localStorage.getItem(itemName) === null) {
       localStorage.setItem(itemName, defaultValue);
       }
     }
   }
 function genericSet(itemName, newValue){
-  if(platform=="android"){
+  if(device.platform=="android"){
     localStorage.setItem(itemName, newValue);
     }
   }
 function genericGet(itemName){
   var value="notSet";
-  if(platform=="android"){
+  if(device.platform=="android"){
     value=localStorage.getItem(itemName);
     }
   var valueNumber=Number(value);
@@ -222,7 +232,7 @@ function init(){
   //minuteTick();
   getFaqs();
   //dbuga(' init 5');
-  ////retryInterval=window.setInterval("retryTick()", 15000);
+  //retryInterval=window.setInterval("retryTick()", 15000);
   selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
   //dbuga(' init 7');
@@ -234,17 +244,17 @@ function init(){
   //dbuga(' init 7');
   myaudioURL = urlByQuality[genericGet("quality")]+"/;";
   //dbuga(' init 7');
-  connectStream();  //commented feb 15, could be fucking up android 
+  //connectStream();  //commented feb 15, could be fucking up android 
   //dbug('init okay');
   }
 
 function onDeviceReady(){
   if (device.platform == "Android") {
     returnFalse=" return false;";
-    ////singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
+    singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
     }
   else {
-    ////singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
+    singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
     }
   //dbuga("onDeviceReady() completed");
   }
@@ -264,17 +274,28 @@ function onOnline() {
   }
 var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
 function singStatusCallback(theStatus){
-  mediaStatusNum=theStatus;
-  //dbuga('singMedia status '+statusArray[theStatus]);
+  singStatusNum=theStatus;
+  dbuga('singMedia status '+theStatus+" "+statusArray[theStatus]);
   if((theStatus==4)&&(singing==true)){
-    ////singMedia.play();
+    singMedia.play();
     }
   }
+function androidStatusCallback(theStatus){
+  androidStatusNum=theStatus;
+  dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus]);
+  }
+
+function androidError(er){
+  dbuga("androidError "+JSON.stringify(er))
+  }
+function androidSuccess(){
+  dbuga('androidSuccess');
+  }
 function singError(er){
-  //dbuga("singError "+JSON.stringify(er))
+  dbuga("singError "+JSON.stringify(er))
   }
 function singSuccess(){
-  //dbuga('singSuccess');
+  dbuga('singSuccess');
   //singMedia.play();
   }
  document.addEventListener("backbutton", onBackKeyDown, false);
@@ -285,11 +306,10 @@ function onBackKeyDown() {
       buttonOn("footnav", "listen");
       buttonOff("footnav", "request");
   }
-var retryInterval;
+
 var songs=[];
 
 var secondInterval;
-var streamStatus=false;
 var sleepSeconds=0;
 var dialInterval;
 
@@ -843,10 +863,7 @@ function secondTick(){
         retryAttempts=0;
         interrupted=false;
         uiPlaying=true;
-        dbuga("in secondTick //playStream() $('#some_link').click()");
-
-      $('#some_link').click();
-      //playStream();
+        playStream();
 
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
@@ -1357,10 +1374,10 @@ var pages=[
     {"name":"vc", "top":45, "left":2, "height":11, "width":11},
   ],
   "contents":[
-    {"name":"cqDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','cq', {});\">CULTURE QUEUE</a><br />Radio K's award-winning Arts and Culture program, dedicated to telling stories about the many wonders of the Twin Cities that you won't hear anywhere else."},
-    {"name":"totdDesc", "top":21, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','totd', {});\">TRACK OF THE DAY</a><br />Every day Radio K offers up a fresh new track for you to download. It's just one more way that Real College Radio makes Real Life (a little more) Rockin'."},
-    {"name":"wrsDesc", "top":33, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs', {});\">WEEKLY RELEASE SPOTLIGHT</a><br />Each week we comb through mountains of new music to find that one perfect album that we (and you) almost missed."},
-    {"name":"vcDesc", "top":45, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','vc', {});\">VINYL CLOSET</a><br />A digitized archive of Studio K performances from 1994 to 2006 that feature seminal Minnesota artists that have left an indelible mark on the Minnesota music scene."},
+    {"name":"cqDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','cq');\">CULTURE QUEUE</a><br />Radio K's award-winning Arts and Culture program, dedicated to telling stories about the many wonders of the Twin Cities that you won't hear anywhere else."},
+    {"name":"totdDesc", "top":21, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','totd');\">TRACK OF THE DAY</a><br />Every day Radio K offers up a fresh new track for you to download. It's just one more way that Real College Radio makes Real Life (a little more) Rockin'."},
+    {"name":"wrsDesc", "top":33, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">WEEKLY RELEASE SPOTLIGHT</a><br />Each week we comb through mountains of new music to find that one perfect album that we (and you) almost missed."},
+    {"name":"vcDesc", "top":45, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','vc');\">VINYL CLOSET</a><br />A digitized archive of Studio K performances from 1994 to 2006 that feature seminal Minnesota artists that have left an indelible mark on the Minnesota music scene."},
   ]
 },
 {"name":"totd", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
@@ -1668,12 +1685,8 @@ function remoteCqLink(cqNum){
   navigator.app.loadUrl(theUrl, {openExternal: true});
   //dbuga("remoteLink ran");
   }
-var eventCache;
-function tryToGo(){
-  dbuga('tryToGo()');
-  eventCache.okGo();
-  }
-function handleButton(pageName, buttonName, evt){
+
+function handleButton(pageName, buttonName){
   //dbug("handleButton("+pageName+", "+buttonName+")");
   if(pageName=="alarm"){
     if(buttonName=="timeset"){
@@ -1732,8 +1745,6 @@ function handleButton(pageName, buttonName, evt){
       }
 
     if(buttonName=="set"){
-      eventCache=evt;
-      eventCache.okGo=function(){playStream();};
       if(isPlaying){stopStream();}
       sleepSeconds=0;
       var mil=""+minuteOfDayToHH(genericGet("alarmMinuteOfDay"))+minuteOfDayToMM(genericGet("alarmMinuteOfDay"));
@@ -1749,7 +1760,7 @@ function handleButton(pageName, buttonName, evt){
       buttonOff("listen", "playpause");
       //dbuga("in set singMedia.play()");
       singing=false;
-      ////singMedia.play();
+      singMedia.play();
       //dbuga("--passed");
       }
     if(buttonName=="cancel"){
@@ -1767,7 +1778,7 @@ function handleButton(pageName, buttonName, evt){
       buttonOff("listen", "playpause");
       alarming=false;
       stopStream();
-      ////singMedia.stop();
+      singMedia.stop();
       singing=false;
       buttonOn("wakeup", "alarmoff");
       window.setTimeout('buttonOff("wakeup", "alarmoff"); selectPage("listen");', navDelay);
@@ -1782,10 +1793,10 @@ function handleButton(pageName, buttonName, evt){
       connecting=false;
       interrupted=false;
       buttonOff("listen", "playpause");
-      ////singMedia.stop();
+      singMedia.stop();
       singing=false;
       alarming=false;
-      stopStream();////
+      stopStream();
       buttonOn("wakeup", "snooze");
       window.setTimeout('buttonOff("wakeup", "snooze"); selectPage("armed");', navDelay);
       }
@@ -1942,8 +1953,8 @@ function handleButton(pageName, buttonName, evt){
       //buttonOff("settings", "broken");
       genericSet("quality", "medium");
       if(uiPlaying){
-        html5audio.stop();
-        connectStream();
+        ////html5audio.stop();
+        ////connectStream();
         }
       }
     if(buttonName=="higher"){
@@ -1952,8 +1963,8 @@ function handleButton(pageName, buttonName, evt){
       //buttonOff("settings", "broken");
       genericSet("quality", "higher");
       if(uiPlaying){
-        html5audio.stop();
-        connectStream();
+        ////html5audio.stop();
+        ////connectStream();
         }
       }
 /*
@@ -1963,7 +1974,7 @@ function handleButton(pageName, buttonName, evt){
       buttonOn("settings", "broken");
       genericSet("quality", "broken");
       if(playing){
-        ////comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
+        comQueue.push("action=manageStream|mode=play|url="+urlByQuality[genericGet("quality")]+"");
         }
       }
 */
@@ -2056,8 +2067,11 @@ function stopStream(){
   //dbuga('stopStream() ran');
   }
 function playStream(){
-  dbuga('playStream() so connectStream()');
-  connectStream();
+  dbuga('playStream()');
+  if(device.platform=="android"){
+    androidStream = new Media(myAudioURL, androidSuccess, androidError, androidStatusCallback);
+  //connectStream();
+
   }
 
 var lastTouchId="";
@@ -2098,7 +2112,7 @@ function handleTouchEvent(e){
               if(tenth>5){alarmIncDec=12*pol*60;}
               }
             //dbuga(area.page+" "+area.name);
-            handleButton(area.page, area.name, e);
+            handleButton(area.page, area.name);
             }
           }
         }
@@ -2117,7 +2131,6 @@ var alarmIncDec=1;
   </div>
   <div id="debugDiv"></div>
   <div id="stateDiv" style="top:460px;"></div>
-  <div style="position:absolute; top:400px; color:yellow;" id="some_link" onclick="dbuga('onclick so tryToGo()'); tryToGo(); return false;">some_link</div>
 </div>
 </body>
 </html>
