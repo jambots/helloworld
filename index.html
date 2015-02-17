@@ -31,7 +31,7 @@ var streamPlaying=false;
 var androidStreamPlaying=false;
 var androidStreamStatus=-1;
 
-var connection=true;
+var connection=false;
 var connectFails=0;
 var alarming=false;
 var bufferTimeout;
@@ -59,11 +59,25 @@ function playStream(){
     }
   }
 function androidStatusCallback(theStatus){
+  var prevStatus=androidStreamStatus;
   androidStreamStatus=theStatus;
-  dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus]);
+  dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus] +" prevStatus:"+prevStatus);
   if(androidStreamStatus==2){
     androidStreamPlaying=true;
     streamPlaying=true;
+    retrying=false;
+    uiPlaying=true;
+    stateMessage="Playing...";    
+    }
+  else{
+    androidStreamPlaying=true;
+    streamPlaying=true;
+    }
+  if((uiPlaying)&&(androidStreamStatus==4)&&(prevStatus==2)){
+    // interrupted
+    stateMessage="Interrupted, retrying...";
+    retryAttempts=0;
+    retrying=true;
     }
   }
 
@@ -93,40 +107,38 @@ function retryTick(){
     }
   }
 
-
+var connectionMessage="";
+var stateMessage="";
 function stateTick(){
   // lost a connection?
+  var wasConnected=connection;
   if((navigator.connection.type ==Connection.NONE)||(navigator.connection.type =="none")){
-    if(connection==false){
-      document.getElementById('page_listen_content_djDiv').innerHTML="No connection";
-      if(pageName=="wakeup"){
-        singing=true;
-        singMedia.play();
-        uiPlaying=false;
-        }
+    connection=false;
+    connectionMessage="No connection...";
+    }
+  else{
+    connection=true;
+    connectionMessage=navigator.connection.type +" connection";
+    }
+  if(connection==false){ // not connected
+    if(wasConnected==true){
+      dbuga('Lost connection');
+      connectionMessage="Lost connection...";
       }
-    if(connection==true){
-      connection=false;
-      //dbuga('Lost connection');
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
-      document.getElementById('page_listen_content_djDiv').innerHTML="Lost connection";
-      if((uiPlaying==true)&&(retrying==false)){
-        //dbuga('so start retrying');
-        retryAttempts=0;
-        retrying=true;
-        }
-      } 
+    // always update state if no connection
+    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=stateMessage;
+    document.getElementById('page_listen_content_djDiv').innerHTML=connectionMessage;
     }
   else{// is connected
-    if(connection==false){ //update because connection restored
-      connection=true;
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
-      document.getElementById('page_listen_content_djDiv').innerHTML="";
-      connectStream();
+    if(wasConnected==false){
+      //update because connection restored on this tick
+      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=stateMessage;
+      document.getElementById('page_listen_content_djDiv').innerHTML=connectionMessage;
       }
-    if((streamPlaying==false)&&(uiPlaying==true)){
-      document.getElementById('page_listen_content_djDiv').innerHTML="No stream";
-      }
+    }
+  if((uiPlaying)&&(streamPlaying==false)){
+    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=stateMessage;
+    document.getElementById('page_listen_content_djDiv').innerHTML=connectionMessage;
     }
   debugState();
   }
@@ -142,9 +154,13 @@ function debugState(){
     
     stateDiv.innerHTML+="navigator.connection.type="+navigator.connection.type+"<br />";
     stateDiv.innerHTML+="connection="+connection+"<br />";
+    stateDiv.innerHTML+="stateMessage="+stateMessage+"<br />";
+    stateDiv.innerHTML+="connectionMessage="+connectionMessage+"<br />";
+
     stateDiv.innerHTML+="android="+android+"<br />";
     stateDiv.innerHTML+="ios="+ios+"<br />";
     stateDiv.innerHTML+="uiPlaying="+uiPlaying+"<br />";
+    stateDiv.innerHTML+="streamPlaying="+streamPlaying+"<br />";
     stateDiv.innerHTML+="myaudioURL ="+ myaudioURL +"<br />";
 
   
