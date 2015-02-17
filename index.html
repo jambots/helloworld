@@ -80,11 +80,13 @@ function createStream(){
 
     iosStreamAudio.addEventListener("error", function() {
        dbuga('iosStreamAudio error');
-       //if(uiPlaying){connectStream();}
+       iosStreamPlaying =false;
+       streamPlaying=false;
     }, false);
     iosStreamAudio.addEventListener("pause", function() {
        dbuga('iosStreamAudio pause');
-       //if(uiPlaying){connectStream();}
+       iosStreamPlaying =false;
+       streamPlaying=false;
     }, false);
     iosStreamAudio.addEventListener("seeking", function() {
        dbuga('iosStreamAudio seeking');
