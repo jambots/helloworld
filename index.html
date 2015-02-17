@@ -72,6 +72,7 @@ function createStream(){
     androidStreamMedia = new Media(myStreamUrl, androidSuccess, androidError, androidStatusCallback);
     }
   if(ios){
+    if(streamCreated){iosStreamAudio.pause();}
     dbuga("createStream() ios "+myStreamUrl);
     
     iosStreamAudio = null;
