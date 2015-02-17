@@ -188,6 +188,7 @@ function retryTick(){
     stateMessage="Retrying...";
     dbuga(" retryTick() streamPlaying="+ streamPlaying);
     retryAttempts++;
+
     if(streamPlaying==false){
       if(ios){
         window.setTimeout("playStream()", 5000);
@@ -198,6 +199,8 @@ function retryTick(){
       }
     if(retryAttempts>8){
       stateMessage="We're not connecting.<br />Try again in a bit K?";
+      if(singing){singMedia.play();}
+      
       uiPlaying=false;
       retrying=false;
       buttonOff("listen", "playpause");      
@@ -1004,8 +1007,7 @@ function secondTick(){
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       //dbuga('alarming so singing=true');
 
-      ////singing=true;
-      ////singMedia.play();
+      singing=true;
       alarming=true;
       buttonOn("listen", "playpause");
       document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
