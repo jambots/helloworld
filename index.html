@@ -45,13 +45,15 @@ var stateMessage="";
 var alarming=false;
 var bufferTimeout;
 function stopStream(){
-  //dbuga('stopStream()');
+  dbuga('stopStream()');
   if(android){
     androidStreamMedia.stop();
     }
 
   if(ios){
     iosStreamMedia.stop();
+    iosStreamPlaying=false;
+    streamPlaying=false;
     }
   }
 function createStream(){
@@ -78,9 +80,9 @@ function createStream(){
        dbuga('playing fired');
        iosStreamPlaying = true;
        streamPlaying = true;
-       //buttonOn("listen", "playpause");
+       buttonOn("listen", "playpause");
        retrying=false;
-       //updateNowPlaying();
+       updateNowPlaying();
        //if(singing){
          //singMedia.stop();
          //singing=false;
@@ -97,6 +99,7 @@ function createStream(){
     }, false);
     iosStreamAudio.addEventListener("waiting", function() {// doesn't fire on android for a minute :(
        dbuga('iosStreamAudio WAITING');
+       iosStreamPlaying=false;
     }, false);
     }
   streamCreated=true;
@@ -149,9 +152,9 @@ function androidSuccess(){
 
 
 function retryTick(){
-  dbuga(" retryTick() streamPlaying="+ streamPlaying);
-  stateMessage="Retrying...";
   if(retrying==true){
+    stateMessage="Retrying...";
+    dbuga(" retryTick() streamPlaying="+ streamPlaying);
     retryAttempts++;
     if(streamPlaying==false){
       playStream();
