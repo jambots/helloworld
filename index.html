@@ -192,7 +192,11 @@ function retryTick(){
     dbuga(" retryTick() streamPlaying="+ streamPlaying);
     retryAttempts++;
     if(streamPlaying==false){
-      playStream();
+      if(ios){
+        window.setTimeout("playStream()", 5000);
+        createStream();
+        }
+      else{playStream();}
       ////singing=false;
       }
     if(retryAttempts>8){
