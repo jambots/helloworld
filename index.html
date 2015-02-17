@@ -255,7 +255,7 @@ function mediumSelected(){
   buttonOff("settings", "higher");
   genericSet("quality", "medium");
   stopStream();
-  connectStream();
+  createStream();
   if(uiPlaying){
     startRetrying();
     }
@@ -2063,21 +2063,19 @@ function handleButton(pageName, buttonName){
     if(buttonName=="medium"){
       buttonOn("settings", "medium");
       buttonOff("settings", "higher");
-      //buttonOff("settings", "broken");
       genericSet("quality", "medium");
+      createStream();
       if(uiPlaying){
-        ////html5audio.stop();
-        ////connectStream();
+        startRetrying();
         }
       }
     if(buttonName=="higher"){
       buttonOff("settings", "medium");
       buttonOn("settings", "higher");
-      //buttonOff("settings", "broken");
       genericSet("quality", "higher");
+      createStream();
       if(uiPlaying){
-        ////html5audio.stop();
-        ////connectStream();
+        startRetrying();
         }
       }
 
