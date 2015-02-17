@@ -78,6 +78,16 @@ function createStream(){
     iosStreamAudio = null;
     iosStreamAudio = new Audio(myStreamUrl);
 
+    iosStreamAudio.addEventListener("abort", function() {
+       dbuga('iosStreamAudio abort');
+       iosStreamPlaying =false;
+       streamPlaying=false;
+    }, false);
+    iosStreamAudio.addEventListener("emptied", function() {
+       dbuga('iosStreamAudio emptied');
+       iosStreamPlaying =false;
+       streamPlaying=false;
+    }, false);
     iosStreamAudio.addEventListener("error", function() {
        dbuga('iosStreamAudio error');
        iosStreamPlaying =false;
@@ -102,9 +112,15 @@ function createStream(){
        iosStreamPlaying =false;
        streamPlaying=false;
     }, false);
-    iosStreamAudio.addEventListener("waiting", function() {dbuga('iosStreamAudio WAITING');
+    iosStreamAudio.addEventListener("waiting", function() {
+       dbuga('iosStreamAudio WAITING');
        iosStreamPlaying=false;
        streamPlaying=false;
+    }, false);
+    iosStreamAudio.addEventListener("play", function() {
+       dbuga('iosStreamAudio playi');
+       //iosStreamPlaying=false;
+       //streamPlaying=false;
     }, false);
 
     iosStreamAudio.addEventListener("playing", function() {
