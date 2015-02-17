@@ -63,6 +63,8 @@ function createStream(){
     androidStreamMedia = new Media(myStreamUrl, androidSuccess, androidError, androidStatusCallback);
     }
   if(ios){
+    dbuga("createStream() android "+myStreamUrl);
+    
     iosStreamAudio = null;
     iosStreamAudio = new Audio(myStreamUrl);
 
@@ -100,7 +102,7 @@ function createStream(){
   }
 
 function playStream(){
-  //dbuga('playStream() android='+android);
+  dbuga('playStream() ios='+ios);
   if(streamCreated==false){createStream();}
   stopStream();
   if(android){
@@ -145,6 +147,7 @@ function androidSuccess(){
 
 
 function retryTick(){
+  dbuga(" retryTick() streamPlaying="+ streamPlaying);
   stateMessage="Retrying...";
   if(retrying==true){
     retryAttempts++;
@@ -248,6 +251,7 @@ function highSelected(){
     }
   }
 function startRetrying(){
+  dbuga('startRetrying()');
   clearInterval(retryInterval);
   retryInterval=window.setInterval("retryTick()", 15000);    
   clearInterval(minuteInterval);
