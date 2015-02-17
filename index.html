@@ -84,8 +84,7 @@ function androidStatusCallback(theStatus){
   if((uiPlaying)&&(androidStreamStatus==4)&&(prevStatus==2)){
     // interrupted
     stateMessage="Interrupted, retrying...";
-    retryAttempts=0;
-    retrying=true;
+    startRetrying();
     }
   }
 
@@ -184,7 +183,7 @@ function mediumSelected(){
   stopStream();
   connectStream();
   if(uiPlaying){
-    retrying=true;
+    startRetrying();
     }
   }
 function highSelected(){
@@ -194,10 +193,18 @@ function highSelected(){
   stopStream();
   connectStream();
   if(uiPlaying){
-    retrying=true;
+    startRetrying();
     }
   }
-
+function startRetrying(){
+  clearInterval(retryInterval);
+  retryInterval=window.setInterval("retryTick()", 15000);    
+  clearInterval(minuteInterval);
+  minuteInterval=setInterval('minuteTick()', 15000);
+  retrying=true;
+  retryAttempts=0;
+  retryTick();
+  }
 function togglePlaying(){
   //dbuga('togglePlaying()');
   document.getElementById('page_listen_content_djDiv').innerHTML="";
@@ -210,12 +217,8 @@ function togglePlaying(){
   else{
     buttonOn("listen", "playpause");
     document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
-    retrying=true;
-    retryAttempts=0;
     uiPlaying=true;
-    clearInterval(minuteInterval);
-    minuteInterval=setInterval('minuteTick()', 15000);
-    playStream();
+    startRetrying();
     }
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
@@ -318,7 +321,7 @@ function resumeInit(){
   //minuteTick();
   getFaqs();
   //dbuga(' init 5');
-  retryInterval=window.setInterval("retryTick()", 5000);    
+  retryInterval=window.setInterval("retryTick()", 15000);    
 
   selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
@@ -336,10 +339,6 @@ function resumeInit(){
 
 function onOffline() {
   //dbuga('onOffline() uiPlaying='+uiPlaying);
-  if(uiPlaying){
-    //retrying=true;
-    //retryAttempts=0;
-    }
   }
 var returnFalse="";
 function onOnline() {
@@ -923,12 +922,8 @@ function secondTick(){
       alarming=true;
       buttonOn("listen", "playpause");
       document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
-      retrying=true;
-      retryAttempts=0;
+      startRetrying();
       uiPlaying=true;
-      playStream();
-      clearInterval(minuteInterval);
-      minuteInterval=setInterval('minuteTick()', 15000);
       selectPage("wakeup");
       }
     }
