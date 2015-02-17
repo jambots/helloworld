@@ -30,28 +30,32 @@ var ios=false;
 var streamPlaying=false;
 var androidStreamPlaying=false;
 var androidStreamStatus=-1;
-
+var streamCreated=false;
 var connection=false;
 var connectFails=0;
 var alarming=false;
 var bufferTimeout;
 function stopStream(){
-  //dbuga('stopStream()');
+  dbuga('stopStream()');
+  if(android){
+    androidStreamMedia.stop();
+    }
+  }
+function createStream(){
   if(android){
     androidStreamMedia.stop();
     androidStreamMedia.release();
+    myaudioURL=urlByQuality[genericGet("quality")]+"";
+    dbuga("createStream() android "+myaudioURL);
+    androidStreamMedia = new Media(myaudioURL, androidSuccess, androidError, androidStatusCallback);
     }
-  //html5audio.stop();
-  //document.getElementById('page_listen_content_djDiv').innerHTML="";
-  dbuga('stopStream() ran');
   }
+
 function playStream(){
   dbuga('playStream() android='+android);
   stopStream();
-  myaudioURL=urlByQuality[genericGet("quality")]+"";
   if(android){
-    dbuga("androidStreamMedia "+myaudioURL);
-    androidStreamMedia = new Media(myaudioURL, androidSuccess, androidError, androidStatusCallback);
+    dbuga("androidStreamMedia.play()");
     androidStreamMedia.play();
     }
   if(ios){
@@ -91,18 +95,15 @@ function androidSuccess(){
 
 function retryTick(){
   if(retrying==true){
-    var message="Connecting...";
     retryAttempts++;
     if(streamPlaying==false){
-      //connectStream();
+      playStream();
       }
     if(retryAttempts>20){
-      message="We're not connecting.<br />Try again in a bit K?";
+      stateMessage="We're not connecting.<br />Try again in a bit K?";
       uiPlaying=false;
       retrying=false;
       buttonOff("listen", "playpause");      
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=message;
-      document.getElementById('page_listen_content_djDiv').innerHTML="";
       }
     }
   }
@@ -305,6 +306,7 @@ function resumeInit(){
 
   buttonOn("settings", genericGet("quality"));
   buttonOn("footnav", "listen");
+  createStream();
   //dbuga(' init 3');
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
@@ -313,7 +315,8 @@ function resumeInit(){
   //minuteTick();
   getFaqs();
   //dbuga(' init 5');
-  //retryInterval=window.setInterval("retryTick()", 15000);
+  retryInterval=window.setInterval("retryTick()", 5000);    
+
   selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
   //dbuga(' init 7');
@@ -339,7 +342,6 @@ var returnFalse="";
 function onOnline() {
   //dbuga('onOnline() uiPlaying='+uiPlaying);
   if(uiPlaying){
-    //playStream();
     }
   }
 var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
@@ -916,13 +918,12 @@ function secondTick(){
       //singing=true;
       //singMedia.play();
       alarming=true;
-        buttonOn("listen", "playpause");
-        document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
-        retrying=true;
-        retryAttempts=0;
-        uiPlaying=true;
-        playStream();
-
+      buttonOn("listen", "playpause");
+      document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
+      retrying=true;
+      retryAttempts=0;
+      uiPlaying=true;
+      playStream();
       clearInterval(minuteInterval);
       minuteInterval=setInterval('minuteTick()', 15000);
       selectPage("wakeup");
