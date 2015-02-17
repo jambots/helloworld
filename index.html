@@ -76,7 +76,8 @@ function createStream(){
 
     iosStreamAudio.addEventListener("playing", function() {
        dbuga('playing fired');
-       //iosStreamPlaying = true;
+       iosStreamPlaying = true;
+       streamPlaying = true;
        //buttonOn("listen", "playpause");
        retrying=false;
        //updateNowPlaying();
@@ -372,7 +373,7 @@ function resumeInit(){
   //dbuga(' init 7');
   myStreamUrl = urlByQuality[genericGet("quality")]+"/;";
   //dbuga(' init 7');
-  //connectStream();  //commented feb 15, could be fucking up android 
+  if(ios){createStream();}
   //dbug('init okay');
   }
 
