@@ -278,22 +278,22 @@ function togglePlaying(){
 
 // ----------------------------------------------------------------------------
 function genericDefault(itemName, defaultValue){
-  if(android){
+  //if(android){
     if (localStorage.getItem(itemName) === null) {
       localStorage.setItem(itemName, defaultValue);
       }
-    }
+  //  }
   }
 function genericSet(itemName, newValue){
-  if(android){
+  //if(android){
     localStorage.setItem(itemName, newValue);
-    }
+  //  }
   }
 function genericGet(itemName){
   var value="notSet";
-  if(android){
+  //if(android){
     value=localStorage.getItem(itemName);
-    }
+  //  }
   var valueNumber=Number(value);
   var valueNumberString=""+valueNumber+"";
   if(value==valueNumberString){
