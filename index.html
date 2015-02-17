@@ -919,6 +919,7 @@ function secondTick(){
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       buttonOn("listen", "playpause");
       document.getElementById('page_listen_content_djDiv').innerHTML="";
+      dbuga('alarming so singing=true')' 
 
       singing=true;
       singMedia.play();
@@ -1815,7 +1816,7 @@ function handleButton(pageName, buttonName){
       alarming=false;
       uiPlaying=false;
       buttonOff("listen", "playpause");
-      //dbuga("in set singMedia.play()");
+      dbuga("in set singMedia.play() singing=false");
       singing=false;
       singMedia.play();
       //dbuga("--passed");
@@ -1834,6 +1835,7 @@ function handleButton(pageName, buttonName){
       alarming=false;
       stopStream();
       singMedia.stop();
+      dbuga('alarmoff so singing=false')' 
       singing=false;
       buttonOn("wakeup", "alarmoff");
       window.setTimeout('buttonOff("wakeup", "alarmoff"); selectPage("listen");', navDelay);
@@ -1848,6 +1850,8 @@ function handleButton(pageName, buttonName){
       buttonOff("listen", "playpause");
       singMedia.stop();
       singing=false;
+      dbuga('snooze so singing=false')' 
+
       alarming=false;
       stopStream();
       buttonOn("wakeup", "snooze");
