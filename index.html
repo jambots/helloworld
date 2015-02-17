@@ -78,8 +78,8 @@ function androidStatusCallback(theStatus){
     if(prevStatus==1){updateNowPlaying();}    
     }
   else{
-    androidStreamPlaying=true;
-    streamPlaying=true;
+    androidStreamPlaying=false;
+    streamPlaying=false;
     }
   if((uiPlaying)&&(androidStreamStatus==4)&&(prevStatus==2)){
     // interrupted
@@ -101,6 +101,7 @@ function retryTick(){
   if(retrying==true){
     retryAttempts++;
     if(streamPlaying==false){
+      createStream();
       playStream();
       }
     if(retryAttempts>20){
