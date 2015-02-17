@@ -106,7 +106,7 @@ function createStream(){
     }, false);
 
     iosStreamAudio.addEventListener("playing", function() {
-       dbuga('playing fired');
+       dbuga('playing fired so streamPlaying=true');
        iosStreamPlaying = true;
        streamPlaying = true;
        buttonOn("listen", "playpause");
@@ -139,7 +139,7 @@ function playStream(){
 function androidStatusCallback(theStatus){
   var prevStatus=androidStreamStatus;
   androidStreamStatus=theStatus;
-  //dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus] +" prevStatus:"+prevStatus);
+  dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus] +" prevStatus:"+prevStatus);
   if(androidStreamStatus==2){
     androidStreamPlaying=true;
     streamPlaying=true;
@@ -237,6 +237,7 @@ function debugState(){
     stateDiv.innerHTML+="android="+android+"<br />";
     stateDiv.innerHTML+="ios="+ios+"<br />";
     stateDiv.innerHTML+="iosStreamAudio.readyState="+iosStreamAudio.readyState+"<br />";
+    stateDiv.innerHTML+="iosStreamPlaying="+iosStreamPlaying+"<br />";
     stateDiv.innerHTML+="uiPlaying="+uiPlaying+"<br />";
     stateDiv.innerHTML+="streamPlaying="+streamPlaying+"<br />";
     stateDiv.innerHTML+="myStreamUrl ="+ myStreamUrl +"<br />";
