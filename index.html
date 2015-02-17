@@ -103,8 +103,9 @@ function retryTick(){
     if(streamPlaying==false){
       createStream();
       playStream();
+      singing=false;
       }
-    if(retryAttempts>20){
+    if(retryAttempts>8){
       stateMessage="We're not connecting.<br />Try again in a bit K?";
       uiPlaying=false;
       retrying=false;
@@ -357,10 +358,10 @@ function singStatusCallback(theStatus){
     }
   }
 function singError(er){
-  dbuga("singError "+JSON.stringify(er))
+  //dbuga("singError "+JSON.stringify(er))
   }
 function singSuccess(){
-  dbuga('singSuccess');
+  //dbuga('singSuccess');
   //singMedia.play();
   }
  document.addEventListener("backbutton", onBackKeyDown, false);
@@ -919,8 +920,8 @@ function secondTick(){
       buttonOn("listen", "playpause");
       document.getElementById('page_listen_content_djDiv').innerHTML="";
 
-      //singing=true;
-      //singMedia.play();
+      singing=true;
+      singMedia.play();
       alarming=true;
       buttonOn("listen", "playpause");
       document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
