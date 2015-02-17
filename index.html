@@ -51,7 +51,14 @@ function stopStream(){
     }
 
   if(ios){
-    iosStreamAudio.stop();
+    //iosStreamAudio.stop();
+    iosStreamAudio.pause();
+    //buttonOff("listen", "playpause");
+    //updateNowPlaying();
+    myaudio = null;
+    myaudio = new Audio(myaudioURL);
+    //textPosition.innerHTML = '';
+
     iosStreamPlaying=false;
     streamPlaying=false;
     }
