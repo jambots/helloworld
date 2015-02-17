@@ -51,7 +51,7 @@ function stopStream(){
     }
 
   if(ios){
-    iosStreamMedia.stop();
+    iosStreamAudio.stop();
     iosStreamPlaying=false;
     streamPlaying=false;
     }
@@ -71,11 +71,25 @@ function createStream(){
     iosStreamAudio = new Audio(myStreamUrl);
 
     iosStreamAudio.addEventListener("error", function() {
-       dbuga('iosStreamAudio ERROR');
+       dbuga('iosStreamAudio error');
        //if(uiPlaying){connectStream();}
     }, false);
-
-
+    iosStreamAudio.addEventListener("stalled", function() {
+       dbuga('iosStreamAudio stalled');
+       //if(uiPlaying){connectStream();}
+    }, false);
+    iosStreamAudio.addEventListener("pause", function() {
+       dbuga('iosStreamAudio pause');
+       //if(uiPlaying){connectStream();}
+    }, false);
+    iosStreamAudio.addEventListener("seeking", function() {
+       dbuga('iosStreamAudio seeking');
+       //if(uiPlaying){connectStream();}
+    }, false);
+    iosStreamAudio.addEventListener("ended", function() {
+       dbuga('iosStreamAudio ended');
+       //if(uiPlaying){connectStream();}
+    }, false);
     iosStreamAudio.addEventListener("playing", function() {
        dbuga('playing fired');
        iosStreamPlaying = true;
@@ -97,8 +111,7 @@ function createStream(){
        dbuga('iosStreamAudio stalled so ');
        //iosStreamPlaying =false;
     }, false);
-    iosStreamAudio.addEventListener("waiting", function() {// doesn't fire on android for a minute :(
-       dbuga('iosStreamAudio WAITING');
+    iosStreamAudio.addEventListener("waiting", function() {dbuga('iosStreamAudio WAITING');
        iosStreamPlaying=false;
     }, false);
     }
