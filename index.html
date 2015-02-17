@@ -21,16 +21,24 @@ var uiPlaying=false;
 var singMedia;
 var singing=false;
 var singStatusNum=0;
-var myaudioURL="";
-var androidStreamMedia={};
-androidStreamMedia.stop=new Function("{dbuga('stop() nothing');}");
-androidStreamMedia.release=new Function("{dbuga('release() nothing');}");
-var android=false;
-var ios=false;
+
+var myStreamUrl="";
 var streamPlaying=false;
+var streamCreated=false;
+
+var ios=false;
+var iosStreamPlaying=false;
+var iosStreamStatus=-1;
+var iosStreamAudio={};
+iosStreamAudio.readyState=-1;
+var android=false;
 var androidStreamPlaying=false;
 var androidStreamStatus=-1;
-var streamCreated=false;
+var androidStreamMedia={};
+// add functions in case object is referenced before created
+androidStreamMedia.stop=new Function("{dbuga('stop() nothing android');}");
+androidStreamMedia.release=new Function("{dbuga('release() nothing android');}");
+
 var connection=true;
 var connectionMessage="";
 var stateMessage="";
@@ -41,20 +49,58 @@ function stopStream(){
   if(android){
     androidStreamMedia.stop();
     }
+
+  if(ios){
+    iosStreamMedia.stop();
+    }
   }
 function createStream(){
+  myStreamUrl=urlByQuality[genericGet("quality")]+"";
   if(android){
     androidStreamMedia.stop();
     androidStreamMedia.release();
-    myaudioURL=urlByQuality[genericGet("quality")]+"";
-    dbuga("createStream() android "+myaudioURL);
-    androidStreamMedia = new Media(myaudioURL, androidSuccess, androidError, androidStatusCallback);
+    //dbuga("createStream() android "+myStreamUrl);
+    androidStreamMedia = new Media(myStreamUrl, androidSuccess, androidError, androidStatusCallback);
+    }
+  if(ios){
+    iosStreamAudio = null;
+    iosStreamAudio = new Audio(myStreamUrl);
+
+    iosStreamAudio.addEventListener("error", function() {
+       dbuga('iosStreamAudio ERROR');
+       //if(uiPlaying){connectStream();}
+    }, false);
+
+
+    iosStreamAudio.addEventListener("playing", function() {
+       dbuga('playing fired');
+       //iosStreamPlaying = true;
+       //buttonOn("listen", "playpause");
+       //retrying=false;
+       //updateNowPlaying();
+       //if(singing){
+         //singMedia.stop();
+         //singing=false;
+       //}
+    }, false);
+
+    iosStreamAudio.addEventListener("ended", function() {
+       dbuga('iosStreamAudio ENDED');
+       //iosStreamPlaying =false;
+    }, false);
+    iosStreamAudio.addEventListener("stalled", function() {
+       dbuga('iosStreamAudio stalled so ');
+       //iosStreamPlaying =false;
+    }, false);
+    iosStreamAudio.addEventListener("waiting", function() {// doesn't fire on android for a minute :(
+       dbuga('iosStreamAudio WAITING');
+    }, false);
     }
   streamCreated=true;
   }
 
 function playStream(){
-  dbuga('playStream() android='+android);
+  //dbuga('playStream() android='+android);
   if(streamCreated==false){createStream();}
   stopStream();
   if(android){
@@ -62,16 +108,18 @@ function playStream(){
     androidStreamMedia.play();
     }
   if(ios){
+    iosStreamAudio.play();
     //connectStream();
     }
   }
 function androidStatusCallback(theStatus){
   var prevStatus=androidStreamStatus;
   androidStreamStatus=theStatus;
-  dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus] +" prevStatus:"+prevStatus);
+  //dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus] +" prevStatus:"+prevStatus);
   if(androidStreamStatus==2){
     androidStreamPlaying=true;
     streamPlaying=true;
+    singing=false;
     retrying=false;
     uiPlaying=true;
     stateMessage="Streaming...";
@@ -127,7 +175,7 @@ function stateTick(){
     }
   if(connection==false){ // not connected
     if(wasConnected==true){
-      dbuga('Lost connection');
+      //dbuga('Lost connection');
       connectionMessage="Lost connection...";
       }
     // always update state if no connection
@@ -164,9 +212,10 @@ function debugState(){
 
     stateDiv.innerHTML+="android="+android+"<br />";
     stateDiv.innerHTML+="ios="+ios+"<br />";
+    stateDiv.innerHTML+="iosStreamAudio.readyState="+iosStreamAudio.readyState+"<br />";
     stateDiv.innerHTML+="uiPlaying="+uiPlaying+"<br />";
     stateDiv.innerHTML+="streamPlaying="+streamPlaying+"<br />";
-    stateDiv.innerHTML+="myaudioURL ="+ myaudioURL +"<br />";
+    stateDiv.innerHTML+="myStreamUrl ="+ myStreamUrl +"<br />";
 
   
     stateDiv.innerHTML+="androidStreamPlaying="+ androidStreamPlaying + "<br />";
@@ -226,22 +275,6 @@ function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   }
 
-function connectStream(){
-  dbuga("connectStream() disabled UIPLAYING:"+uiPlaying +"");
-/*
-  if(streamPlaying){html5audio.stop();}
-  myaudioURL=urlByQuality[genericGet("quality")]+""; // not sure why radiok needs /; appended
-  myaudio = null;
-  myaudio = new Audio(myaudioURL);
-
-
-  if(uiPlaying){
-    dbuga("connectStream() UIPLAYING:"+uiPlaying +" so html5audio.play()");
-    html5audio.play();
-    }
-*/
-  }
-
 
 // ----------------------------------------------------------------------------
 function genericDefault(itemName, defaultValue){
@@ -282,7 +315,7 @@ function init(){
   }
 function onDeviceReady(){
   clearTimeout(readyTimeout);
-  dbuga("onDeviceReady() device.platform="+device.platform);
+  //dbuga("onDeviceReady() device.platform="+device.platform);
   if (device.platform == "Android") {
     android=true;
     }
@@ -300,7 +333,7 @@ function onDeviceReady(){
   if(ios){
     singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
     }
-  dbuga("onDeviceReady() completed");
+  //dbuga("onDeviceReady() completed");
   resumeInit();
   }
 
@@ -315,7 +348,6 @@ function resumeInit(){
 
   buttonOn("settings", genericGet("quality"));
   buttonOn("footnav", "listen");
-  //createStream();
   //dbuga(' init 3');
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
@@ -334,7 +366,7 @@ function resumeInit(){
   //document.addEventListener("offline", onOffline, false);
   //document.addEventListener("online", onOnline, false);
   //dbuga(' init 7');
-  myaudioURL = urlByQuality[genericGet("quality")]+"/;";
+  myStreamUrl = urlByQuality[genericGet("quality")]+"/;";
   //dbuga(' init 7');
   //connectStream();  //commented feb 15, could be fucking up android 
   //dbug('init okay');
@@ -352,7 +384,7 @@ function onOnline() {
 var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
 function singStatusCallback(theStatus){
   singStatusNum=theStatus;
-  dbuga('singMedia status '+theStatus+" "+statusArray[theStatus]+" singing="+singing);
+  //dbuga('singMedia status '+theStatus+" "+statusArray[theStatus]+" singing="+singing);
   if((theStatus==4)&&(singing==true)){
     singMedia.play();
     }
@@ -914,12 +946,12 @@ function secondTick(){
 
       //    -----    alarming, wake up! --------------
 
-      dbuga('alarm');
+      //dbuga('alarm');
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       buttonOn("listen", "playpause");
       document.getElementById('page_listen_content_djDiv').innerHTML="";
-      dbuga('alarming so singing=true');
+      //dbuga('alarming so singing=true');
 
       singing=true;
       singMedia.play();
@@ -1816,7 +1848,7 @@ function handleButton(pageName, buttonName){
       alarming=false;
       uiPlaying=false;
       buttonOff("listen", "playpause");
-      dbuga("in set singMedia.play() singing=false");
+      //dbuga("in set singMedia.play() singing=false");
       singing=false;
       singMedia.play();
       //dbuga("--passed");
@@ -1835,7 +1867,7 @@ function handleButton(pageName, buttonName){
       alarming=false;
       stopStream();
       singMedia.stop();
-      dbuga('alarmoff so singing=false');
+      //dbuga('alarmoff so singing=false');
       singing=false;
       buttonOn("wakeup", "alarmoff");
       window.setTimeout('buttonOff("wakeup", "alarmoff"); selectPage("listen");', navDelay);
@@ -1850,7 +1882,7 @@ function handleButton(pageName, buttonName){
       buttonOff("listen", "playpause");
       singMedia.stop();
       singing=false;
-      dbuga('snooze so singing=false'); 
+      //dbuga('snooze so singing=false'); 
 
       alarming=false;
       stopStream();

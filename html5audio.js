@@ -1,28 +1,7 @@
 
-var progressTimer;
-
-var playButton;
-var stopButton;
-var activityIndicator;
-var textPosition;
-
-function onError(error) 
-{
-  console.log(error.message);
-}
-
-
-function pad2(number) {
-  return (number < 10 ? '0' : '') + number
-}
-
-
 var isPlaying = false;
 var readyStateInterval = null;
 var audioReadyState=0;
-
-var myaudioURL;
-var myaudio;
 
 var html5audio = {
   play: function(){
@@ -89,20 +68,4 @@ var html5audio = {
     //textPosition.innerHTML = '';
   }
 
-/*
-    myaudio.addEventListener("timeupdate", function() {
-       var s = parseInt(myaudio.currentTime % 60);
-       var m = parseInt((myaudio.currentTime / 60) % 60);
-       var h = parseInt(((myaudio.currentTime / 60) / 60) % 60);
-       if (isPlaying && myaudio.currentTime > 0) {
-         //textPosition.innerHTML = pad2(h) + ':' + pad2(m) + ':' + pad2(s);
-       }
-    }, false);
-
-    myaudio.addEventListener("canplay", function() {
-       dbuga('myaudio CAN PLAY');
-    }, false);
-
-
-*/
 };
