@@ -118,7 +118,7 @@ function createStream(){
        streamPlaying=false;
     }, false);
     iosStreamAudio.addEventListener("play", function() {
-       dbuga('iosStreamAudio playi');
+       dbuga('iosStreamAudio play');
        //iosStreamPlaying=false;
        //streamPlaying=false;
     }, false);
@@ -219,6 +219,7 @@ function stateTick(){
     if(wasConnected==true){
       //dbuga('Lost connection');
       connectionMessage="Lost connection...";
+      if(ios){startRetrying();}
       }
     // always update state if no connection
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=stateMessage;
