@@ -104,9 +104,10 @@ function createStream(){
 function playStream(){
   dbuga('playStream() ios='+ios+" streamCreated:"+streamCreated);
   if(streamCreated==false){createStream();}
-  stopStream();
+  //stopStream();
   if(android){
     //dbuga("androidStreamMedia.play()");
+    stopStream();
     androidStreamMedia.play();
     }
   if(ios){
