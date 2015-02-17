@@ -31,8 +31,9 @@ var streamPlaying=false;
 var androidStreamPlaying=false;
 var androidStreamStatus=-1;
 var streamCreated=false;
-var connection=false;
-var connectFails=0;
+var connection=true;
+var connectionMessage="";
+var stateMessage="";
 var alarming=false;
 var bufferTimeout;
 function stopStream(){
@@ -49,10 +50,12 @@ function createStream(){
     dbuga("createStream() android "+myaudioURL);
     androidStreamMedia = new Media(myaudioURL, androidSuccess, androidError, androidStatusCallback);
     }
+  streamCreated=true;
   }
 
 function playStream(){
   dbuga('playStream() android='+android);
+  if(streamCreated==false){createStream();}
   stopStream();
   if(android){
     dbuga("androidStreamMedia.play()");
@@ -108,8 +111,6 @@ function retryTick(){
     }
   }
 
-var connectionMessage="";
-var stateMessage="";
 function stateTick(){
   // lost a connection?
   var wasConnected=connection;
