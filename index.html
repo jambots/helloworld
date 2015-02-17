@@ -37,7 +37,7 @@ var stateMessage="";
 var alarming=false;
 var bufferTimeout;
 function stopStream(){
-  dbuga('stopStream()');
+  //dbuga('stopStream()');
   if(android){
     androidStreamMedia.stop();
     }
@@ -74,7 +74,7 @@ function androidStatusCallback(theStatus){
     streamPlaying=true;
     retrying=false;
     uiPlaying=true;
-    stateMessage="Playing...";
+    stateMessage="Streaming...";
     if(prevStatus==1){updateNowPlaying();}    
     }
   else{
@@ -97,6 +97,7 @@ function androidSuccess(){
 
 
 function retryTick(){
+  stateMessage="Retrying...";
   if(retrying==true){
     retryAttempts++;
     if(streamPlaying==false){
@@ -204,6 +205,7 @@ function startRetrying(){
   retrying=true;
   retryAttempts=0;
   retryTick();
+  stateMessage="Playing...";
   }
 function togglePlaying(){
   //dbuga('togglePlaying()');
@@ -312,7 +314,7 @@ function resumeInit(){
 
   buttonOn("settings", genericGet("quality"));
   buttonOn("footnav", "listen");
-  createStream();
+  //createStream();
   //dbuga(' init 3');
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
