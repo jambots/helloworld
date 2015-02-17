@@ -102,7 +102,7 @@ function createStream(){
   }
 
 function playStream(){
-  dbuga('playStream() ios='+ios);
+  dbuga('playStream() ios='+ios+" streamCreated:"+streamCreated);
   if(streamCreated==false){createStream();}
   stopStream();
   if(android){
@@ -152,7 +152,6 @@ function retryTick(){
   if(retrying==true){
     retryAttempts++;
     if(streamPlaying==false){
-      //createStream();
       playStream();
       ////singing=false;
       }
