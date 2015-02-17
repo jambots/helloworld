@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
 
 <script type="text/javascript">
-var debugging=true;
+var debugging=false;
 
 var retryInterval;
 var retryAttempts=0;
@@ -224,10 +224,11 @@ function stateTick(){
       //dbuga('Lost connection');
       connectionMessage="Lost connection...";
       if(ios){
-
-        streamPlaying=false;
-        iosStreamPlaying=false;
-        startRetrying();
+        if(uiPlaying){
+          streamPlaying=false;
+          iosStreamPlaying=false;
+          startRetrying();
+          }
         }
       }
     // always update state if no connection
