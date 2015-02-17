@@ -63,7 +63,7 @@ function createStream(){
     androidStreamMedia = new Media(myStreamUrl, androidSuccess, androidError, androidStatusCallback);
     }
   if(ios){
-    dbuga("createStream() android "+myStreamUrl);
+    dbuga("createStream() ios "+myStreamUrl);
     
     iosStreamAudio = null;
     iosStreamAudio = new Audio(myStreamUrl);
@@ -78,7 +78,7 @@ function createStream(){
        dbuga('playing fired');
        //iosStreamPlaying = true;
        //buttonOn("listen", "playpause");
-       //retrying=false;
+       retrying=false;
        //updateNowPlaying();
        //if(singing){
          //singMedia.stop();
@@ -152,7 +152,7 @@ function retryTick(){
   if(retrying==true){
     retryAttempts++;
     if(streamPlaying==false){
-      createStream();
+      //createStream();
       playStream();
       ////singing=false;
       }
