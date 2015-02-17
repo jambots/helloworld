@@ -223,7 +223,12 @@ function stateTick(){
     if(wasConnected==true){
       //dbuga('Lost connection');
       connectionMessage="Lost connection...";
-      if(ios){startRetrying();}
+      if(ios){
+
+        streamPlaying=false;
+        iosStreamPlaying=false;
+        startRetrying();
+        }
       }
     // always update state if no connection
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=stateMessage;
