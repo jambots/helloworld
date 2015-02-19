@@ -303,6 +303,7 @@ function highSelected(){
   }
 function startRetrying(){
   dbuga('startRetrying()');
+  if(android){createStream();}
   clearInterval(retryInterval);
   retryInterval=window.setInterval("retryTick()", 15000);    
   clearInterval(minuteInterval);
