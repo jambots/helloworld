@@ -194,7 +194,10 @@ function retryTick(){
         window.setTimeout("playStream()", 5000);
         createStream();
         }
-      else{playStream();}
+      if(android){
+        window.setTimeout("playStream()", 5000);
+        createStream();
+        }
       ////singing=false;
       }
     if(retryAttempts>8){
@@ -1603,7 +1606,7 @@ function touchCancel(event){
   }
 
 function touchStart(event){
-  if(event.touches.length>1){dbug('');}
+  if(event.touches.length>1){document.getElementById('debugDiv').innerHTML="";}
   //dbug('touchStart(event) touchingDial='+touchingDial);
   mouseX=event.touches[0].pageX;
   mouseY=event.touches[0].pageY;
