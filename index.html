@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
 
 <script type="text/javascript">
-var debugging=true;
+var debugging=false;
 
 var retryInterval;
 var retryAttempts=0;
@@ -216,7 +216,7 @@ function stateTick(){
   var wasConnected=connection;
   if((navigator.connection.type ==Connection.NONE)||(navigator.connection.type =="none")){
     connection=false;
-    connectionMessage="No connection...";
+    connectionMessage="Try again later...we are not connecting.";
     }
   else{
     connection=true;
@@ -314,7 +314,8 @@ function startRetrying(){
   retrying=true;
   retryAttempts=0;
   retryTick();
-  stateMessage="Playing...";
+  stateMessage="Starting...";
+  connectionMessage="";
   }
 function togglePlaying(){
   //dbuga('togglePlaying()');
@@ -1604,10 +1605,14 @@ function gestureEnd(event) {
 function touchCancel(event){
   event.preventDefault(); 
   }
-
+var debugCount=0;
 function touchStart(event){
-  if(event.touches.length>1){document.getElementById('debugDiv').innerHTML="";}
-  //dbug('touchStart(event) touchingDial='+touchingDial);
+  if(event.touches.length>3){
+    debugCount++;
+    if(debugCount>3){
+      debugging=true;
+      }
+    }
   mouseX=event.touches[0].pageX;
   mouseY=event.touches[0].pageY;
   //event.preventDefault(); 
