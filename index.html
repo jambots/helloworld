@@ -252,7 +252,7 @@ function stateTick(){
     if(wasConnected==false){
       dbuga('reconnected so create stream then retry in one sec retrying='+retrying);
       createStream();////
-      if(retrying){
+      if(uiPlaying){
         window.setTimeout("startRetrying", 5000);
         }
       //update because connection restored on this tick
