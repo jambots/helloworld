@@ -250,7 +250,7 @@ function stateTick(){
     }
   else{// is connected
     if(wasConnected==false){
-      dbuga('reconnected so create stream then retry in one sec');
+      dbuga('reconnected so create stream then retry in one sec retrying='+retrying);
       createStream();////
       if(retrying){
         window.setTimeout("startRetrying", 5000);
@@ -1623,7 +1623,6 @@ function touchCancel(event){
 var debugCount=0;
 function touchStart(event){
   if(event.touches.length>3){
-    dbug('clear');
     debugCount++;
     if(debugCount>3){
       debugging=true;
