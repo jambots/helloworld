@@ -192,7 +192,7 @@ function retryTick(){
     if(streamPlaying==false){
       if(ios){
         window.setTimeout("playStream()", 500);
-        //createStream();
+        ////createStream();
         }
       if(android){
         window.setTimeout("playStream()", 5000);
@@ -240,6 +240,11 @@ function stateTick(){
     }
   else{// is connected
     if(wasConnected==false){
+      dbuga('reconnected so create stream then retry in one sec');
+      createStream();////
+      if(retrying){
+        window.setTimeout("retryTick()", 500);
+        }
       //update because connection restored on this tick
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=stateMessage;
       document.getElementById('page_listen_content_djDiv').innerHTML=connectionMessage;
