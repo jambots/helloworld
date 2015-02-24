@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
 
 <script type="text/javascript">
-var debugging=true;
+var debugging=false;
 
 var retryInterval;
 var retryAttempts=0;
@@ -74,7 +74,17 @@ function createStream(){
   if(ios){
     if(streamCreated){iosStreamAudio.pause();}
     dbuga("createStream() ios "+myStreamUrl);
-    
+    iosStreamAudio.onabort = null;
+    iosStreamAudio.onemptied = null;
+    iosStreamAudio.onerror = null;
+    iosStreamAudio.onpause = null;
+    iosStreamAudio.onseking = null;
+    iosStreamAudio.onended = null;
+    iosStreamAudio.onstalled = null;
+    iosStreamAudio.onwaiting = null;
+    iosStreamAudio.onplay = null;
+    iosStreamAudio.onplaying = null;
+
     iosStreamAudio = null;
     iosStreamAudio = new Audio(myStreamUrl);
 
@@ -118,7 +128,7 @@ function createStream(){
        streamPlaying=false;
     }, false);
     iosStreamAudio.addEventListener("play", function() {
-       dbuga('iosStreamAudio play');
+       dbuga('iosStreamAudio PLAY');
        //iosStreamPlaying=false;
        //streamPlaying=false;
     }, false);
@@ -230,7 +240,7 @@ function stateTick(){
         if(uiPlaying){
           streamPlaying=false;
           iosStreamPlaying=false;
-          startRetrying();
+          //startRetrying();
           }
         }
       }
