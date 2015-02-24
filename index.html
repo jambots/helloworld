@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
 
 <script type="text/javascript">
-var debugging=false;
+var debugging=true;
 
 var retryInterval;
 var retryAttempts=0;
@@ -191,8 +191,8 @@ function retryTick(){
 
     if(streamPlaying==false){
       if(ios){
-        window.setTimeout("playStream()", 5000);
-        createStream();
+        window.setTimeout("playStream()", 500);
+        //createStream();
         }
       if(android){
         window.setTimeout("playStream()", 5000);
@@ -318,7 +318,7 @@ function startRetrying(){
   connectionMessage="";
   }
 function togglePlaying(){
-  //dbuga('togglePlaying()');
+  dbuga('togglePlaying() uiPlaying='+uiPlaying);
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   if(uiPlaying==true){
     uiPlaying=false;
