@@ -243,7 +243,7 @@ function stateTick(){
       dbuga('reconnected so create stream then retry in one sec');
       createStream();////
       if(retrying){
-        window.setTimeout("retryTick()", 500);
+        window.setTimeout("startRetrying", 5000);
         }
       //update because connection restored on this tick
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=stateMessage;
@@ -1613,6 +1613,7 @@ function touchCancel(event){
 var debugCount=0;
 function touchStart(event){
   if(event.touches.length>3){
+    dbug('clear');
     debugCount++;
     if(debugCount>3){
       debugging=true;
