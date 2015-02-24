@@ -201,7 +201,9 @@ function retryTick(){
 
     if(streamPlaying==false){
       if(ios){
-        window.setTimeout("playStream()", 500);
+        if(iosStreamAudio.readyState==4){
+          window.setTimeout("playStream()", 500);
+          }
         ////createStream();
         }
       if(android){
