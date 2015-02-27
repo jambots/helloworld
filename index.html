@@ -334,10 +334,10 @@ function startRetrying(){
   clearInterval(retryInterval);
   if(ios){
     retryInterval=window.setInterval("retryTick()", 1000);
-    }    
+    }
   if(android){
     retryInterval=window.setInterval("retryTick()", 15000);
-    }    
+    }
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
   retrying=true;
