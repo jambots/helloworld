@@ -136,11 +136,13 @@ function createStream(){
     iosStreamAudio.addEventListener("playing", function() {
        dbuga('playing fired so streamPlaying=true');
        iosStreamPlaying = true;
+       
        streamPlaying = true;
        buttonOn("listen", "playpause");
        retrying=false;
        updateNowPlaying();
        singing=false;
+       minuteTick();
     }, false);
 
     }
@@ -279,25 +281,29 @@ function debugState(){
     stateDiv.innerHTML=""+rnd(210)+"<br />";
     
     stateDiv.innerHTML+="navigator.connection.type="+navigator.connection.type+"<br />";
-    stateDiv.innerHTML+="connection="+connection+"<br />";
-    stateDiv.innerHTML+="stateMessage="+stateMessage+"<br />";
-    stateDiv.innerHTML+="connectionMessage="+connectionMessage+"<br />";
+    //stateDiv.innerHTML+="connection="+connection+"<br />";
+    //stateDiv.innerHTML+="stateMessage="+stateMessage+"<br />";
+    //stateDiv.innerHTML+="connectionMessage="+connectionMessage+"<br />";
+    stateDiv.innerHTML+="retrying="+retrying+"<br />";
+    stateDiv.innerHTML+="retryAttempts="+retryAttempts;
 
-    stateDiv.innerHTML+="android="+android+"<br />";
-    stateDiv.innerHTML+="ios="+ios+"<br />";
-    stateDiv.innerHTML+="iosStreamAudio.readyState="+iosStreamAudio.readyState+"<br />";
-    stateDiv.innerHTML+="iosStreamPlaying="+iosStreamPlaying+"<br />";
+    if(android){
+      //stateDiv.innerHTML+="android="+android+"<br />";
+      stateDiv.innerHTML+="androidStreamPlaying="+ androidStreamPlaying + "<br />";
+      stateDiv.innerHTML+="androidStreamStatus="+ androidStreamStatus + "<br />";
+      }
+    if(ios){
+      //stateDiv.innerHTML+="ios="+ios+"<br />";
+      stateDiv.innerHTML+="iosStreamAudio.readyState="+iosStreamAudio.readyState+"<br />";
+      stateDiv.innerHTML+="iosStreamPlaying="+iosStreamPlaying+"<br />";
+      }
     stateDiv.innerHTML+="uiPlaying="+uiPlaying+"<br />";
     stateDiv.innerHTML+="streamPlaying="+streamPlaying+"<br />";
     stateDiv.innerHTML+="myStreamUrl ="+ myStreamUrl +"<br />";
 
   
-    stateDiv.innerHTML+="androidStreamPlaying="+ androidStreamPlaying + "<br />";
-    stateDiv.innerHTML+="androidStreamStatus="+ androidStreamStatus + "<br />";
     stateDiv.innerHTML+="singing="+singing+"<br />";
     stateDiv.innerHTML+="singStatusNum="+singStatusNum+"<br />";
-    stateDiv.innerHTML+="retrying="+retrying+"<br />";
-    stateDiv.innerHTML+="retryAttempts="+retryAttempts;
     }
   }
 // -------------- events --------------------
@@ -325,7 +331,7 @@ function startRetrying(){
   dbuga('startRetrying()');
   if(android){createStream();}
   clearInterval(retryInterval);
-  retryInterval=window.setInterval("retryTick()", 15000);    
+  retryInterval=window.setInterval("retryTick()", 1000);    
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
   retrying=true;
