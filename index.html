@@ -234,7 +234,8 @@ function stateTick(){
     }
   else{
     connection=true;
-    connectionMessage=navigator.connection.type +" connection";
+    //connectionMessage=navigator.connection.type +" connection";
+    connectionMessage="";
     }
   if(connection==false){ // not connected
     if(wasConnected==true){
@@ -331,7 +332,12 @@ function startRetrying(){
   dbuga('startRetrying()');
   if(android){createStream();}
   clearInterval(retryInterval);
-  retryInterval=window.setInterval("retryTick()", 1000);    
+  if(ios){
+    retryInterval=window.setInterval("retryTick()", 1000);
+    }    
+  if(android){
+    retryInterval=window.setInterval("retryTick()", 15000);
+    }    
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', 15000);
   retrying=true;
@@ -439,7 +445,7 @@ function resumeInit(){
   //minuteTick();
   getFaqs();
   //dbuga(' init 5');
-  retryInterval=window.setInterval("retryTick()", 15000);    
+  //retryInterval=window.setInterval("retryTick()", 15000);    
 
   selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
