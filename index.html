@@ -201,7 +201,7 @@ function retryTick(){
       stateMessage="Retrying...";
       }
     else{
-      stateMessage="Connecting...X";
+      stateMessage="";
       }
     dbuga(" retryTick() streamPlaying="+ streamPlaying);
     retryAttempts++;
@@ -2301,8 +2301,8 @@ var alarmIncDec=1;
 <div id="wrapper">
   <div id="container">
   </div>
-  <div id="readyStateDiv" style="position:absolute; color:#666; line-height:10px;"></div>
-  <div id="debugDiv"></div>
+  <div id="readyStateDiv" style="position:absolute; color:#666; line-height:5px;"></div>
+  <div id="debugDiv" style="top:10px;"></div>
   <div id="stateDiv" style="top:460px;"></div>
 </div>
 </body>
