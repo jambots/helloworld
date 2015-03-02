@@ -220,7 +220,8 @@ function retryTick(){
       ////singing=false;
       }
     if(retryAttempts>30){
-      stateMessage="We're not connecting.<br />Try again in a bit K?";
+      connectionMessage="We're not connecting.<br />Try again in a bit K?";
+      stateMessage="";
       if(singing){singMedia.play();}
       
       uiPlaying=false;
@@ -232,7 +233,7 @@ function retryTick(){
 function readyStateDisplay(readyState){
   readyState=Number(readyState);
   var readyString="";
-  for(var r=0; r<readyState; r++){readyString+=".";}
+  for(var r=0; r<readyState; r++){readyString+="&nbsp;.";}
   document.getElementById("readyStateDiv").innerHTML=readyString;
   }
 function stateTick(){
@@ -2300,7 +2301,7 @@ var alarmIncDec=1;
 <div id="wrapper">
   <div id="container">
   </div>
-  <div id="readyStateDiv" style="position:absolute; color:#333;"></div>
+  <div id="readyStateDiv" style="position:absolute; color:#666; line-height=10px;"></div>
   <div id="debugDiv"></div>
   <div id="stateDiv" style="top:460px;"></div>
 </div>
