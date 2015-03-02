@@ -237,10 +237,10 @@ function readyStateDisplay(readyState){
   }
 function stateTick(){
   if(ios){
-    stateDisplay(iosStreamAudio.readyState);
+    readyStateDisplay(iosStreamAudio.readyState);
     }
   if(android){
-    //stateDisplay(androidStreamMedia.readyState);// need to set listener?
+    //readyStateDisplay(androidStreamMedia.readyState);// need to set listener?
     }
   
   // lost a connection?
