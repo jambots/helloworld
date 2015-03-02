@@ -124,8 +124,8 @@ function createStream(){
     }, false);
     iosStreamAudio.addEventListener("waiting", function() {
        dbuga('iosStreamAudio WAITING');
-       iosStreamPlaying=false;
-       streamPlaying=false;
+       //iosStreamPlaying=false;
+       //streamPlaying=false;
     }, false);
     iosStreamAudio.addEventListener("play", function() {
        dbuga('iosStreamAudio PLAY');
@@ -134,7 +134,7 @@ function createStream(){
     }, false);
 
     iosStreamAudio.addEventListener("playing", function() {
-       dbuga('playing fired so streamPlaying=true');
+       dbuga('iosStreamAudio PLAYING so streamPlaying=true');
        iosStreamPlaying = true;
        
        streamPlaying = true;
@@ -304,7 +304,7 @@ function debugState(){
     //stateDiv.innerHTML+="stateMessage="+stateMessage+"<br />";
     //stateDiv.innerHTML+="connectionMessage="+connectionMessage+"<br />";
     stateDiv.innerHTML+="retrying="+retrying+"<br />";
-    stateDiv.innerHTML+="retryAttempts="+retryAttempts;
+    stateDiv.innerHTML+="retryAttempts="+retryAttempts+"<br />";
 
     if(android){
       //stateDiv.innerHTML+="android="+android+"<br />";
