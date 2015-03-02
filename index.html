@@ -201,7 +201,7 @@ function retryTick(){
       stateMessage="Retrying...";
       }
     else{
-      stateMessage="Connectiong...";
+      stateMessage="Connecting...X";
       }
     dbuga(" retryTick() streamPlaying="+ streamPlaying);
     retryAttempts++;
@@ -366,7 +366,7 @@ function startRetrying(){
   }
 function togglePlaying(){
   dbuga('togglePlaying() uiPlaying='+uiPlaying);
-  document.getElementById('page_listen_content_djDiv').innerHTML="";
+  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   if(uiPlaying==true){
     uiPlaying=false;
     retrying=false;
@@ -375,11 +375,11 @@ function togglePlaying(){
     }
   else{
     buttonOn("listen", "playpause");
-    document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
+    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Connecting...";
     uiPlaying=true;
     startRetrying();
     }
-  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
+  document.getElementById('page_listen_content_djDiv').innerHTML="";
   }
 
 
