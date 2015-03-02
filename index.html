@@ -197,7 +197,12 @@ function androidSuccess(){
 
 function retryTick(){
   if(retrying==true){
-    stateMessage="Retrying...";
+    if((retryAttempts>10)&&(retryAttempts%5==0)){
+      stateMessage="Retrying...";
+      }
+    else{
+      stateMessage="Connectiong...";
+      }
     dbuga(" retryTick() streamPlaying="+ streamPlaying);
     retryAttempts++;
 
@@ -224,8 +229,20 @@ function retryTick(){
       }
     }
   }
-
+function readyStateDisplay(readyState){
+  readyState=Number(readyState);
+  var readyString="";
+  for(var r=0; r<readyState; r++){readyString+=".";}
+  document.getElementById(readyStateDiv).innerHTML=readyString;
+  }
 function stateTick(){
+  if(ios){
+    stateDisplay(iosStreamAudio.readyState);
+    }
+  if(android){
+    //stateDisplay(androidStreamMedia.readyState);// need to set listener?
+    }
+  
   // lost a connection?
   var wasConnected=connection;
   if((navigator.connection.type ==Connection.NONE)||(navigator.connection.type =="none")){
@@ -2283,6 +2300,7 @@ var alarmIncDec=1;
 <div id="wrapper">
   <div id="container">
   </div>
+  <div id="readyStateDiv" style="position:absolute; color:#333;"></div>
   <div id="debugDiv"></div>
   <div id="stateDiv" style="top:460px;"></div>
 </div>
