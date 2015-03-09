@@ -67,8 +67,10 @@ function stopStream(){
     streamPlaying=false;
     }
   }
+var waitEvents=0;
 function createStream(){
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
+  waitEvents=0;
   if(android){
     androidStreamMedia.stop();
     androidStreamMedia.release();
@@ -127,7 +129,12 @@ function createStream(){
        streamPlaying=false;
     }, false);
     iosStreamAudio.addEventListener("waiting", function() {
-       dbuga('iosStreamAudio WAITING');
+       waitEvents++;
+       dbuga('iosStreamAudio WAITING '+waitEvents);
+       if(waitEvents>3){
+         togglePlaying();
+         window.setTimeout("togglePlaying()", 1000);
+       }
        //iosStreamPlaying=false;
        //streamPlaying=false;
     }, false);
@@ -304,6 +311,7 @@ function debugState(){
     stateDiv.innerHTML=""+rnd(210)+"<br />";
     
     stateDiv.innerHTML+="navigator.connection.type="+navigator.connection.type+"<br />";
+    stateDiv.innerHTML+="waitEvents="+waitEvents+"<br />";
     //stateDiv.innerHTML+="connection="+connection+"<br />";
     //stateDiv.innerHTML+="stateMessage="+stateMessage+"<br />";
     //stateDiv.innerHTML+="connectionMessage="+connectionMessage+"<br />";
@@ -2226,7 +2234,7 @@ function handleButton(pageName, buttonName){
       }
     }
   }
-var minuteMs=120000;
+var minuteMs=60000;
 function minuteTick(){
   dbuga('minuteTick()');
   if((uiPlaying==true)&&(streamPlaying==true)){
