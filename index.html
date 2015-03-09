@@ -237,7 +237,7 @@ function retryTick(){
 function readyStateDisplay(readyState){
   readyState=Number(readyState);
   var readyString="";
-  for(var r=0; r<readyState; r++){readyString+="&nbsp;.";}
+  for(var r=0; r<readyState; r++){readyString+="&nbsp;*";}
   document.getElementById("readyStateDiv").innerHTML=readyString;
   }
 function stateTick(){
@@ -361,7 +361,7 @@ function startRetrying(){
     retryInterval=window.setInterval("retryTick()", 15000);
     }
   clearInterval(minuteInterval);
-  minuteInterval=setInterval('minuteTick()', 60000);
+  minuteInterval=setInterval('minuteTick()', minuteMs);
   retrying=true;
   retryAttempts=0;
   retryTick();
@@ -447,7 +447,7 @@ function onDeviceReady(){
   //dbuga("onDeviceReady() completed");
   resumeInit();
   }
-
+var allowAjax=true;
 function resumeInit(){
   //dbuga('init 0.0');
   currentPage="listen";
@@ -461,7 +461,7 @@ function resumeInit(){
   buttonOn("footnav", "listen");
   //dbuga(' init 3');
   clearInterval(minuteInterval);
-  minuteInterval=setInterval('minuteTick()', 60000);
+  minuteInterval=setInterval('minuteTick()', minuteMs);
   dialInterval=setInterval('dialTick()', 25);
   //dbuga(' init 4');
   //minuteTick();
@@ -528,11 +528,13 @@ function getRecentSongs(){
   //var feedUrl="http://www.radiok.org/";
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_songs";
   //var feedUrl="recent_songs.txt";
-  $.ajax({
-    url: feedUrl,
-    dataType: "text",        //  new bit
-    success: function(data) {parseRecentSongs(data);}
-    });
+  if(allowAjax){
+      $.ajax({
+      url: feedUrl,
+      dataType: "text",        //  new bit
+      success: function(data) {parseRecentSongs(data);}
+      });
+    }
   }
 // remove errors on publish
 var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
@@ -2223,7 +2225,7 @@ function handleButton(pageName, buttonName){
       }
     }
   }
-
+var minuteMs=15000;
 function minuteTick(){
   if((uiPlaying==true)&&(streamPlaying==true)){
     updateNowPlaying();
@@ -2309,8 +2311,8 @@ var alarmIncDec=1;
 <div id="wrapper">
   <div id="container">
   </div>
-  <div id="readyStateDiv" style="position:absolute; color:#fff; line-height:5px;"></div>
-  <div id="debugDiv" style="top:10px;"></div>
+  <div id="readyStateDiv" style="position:absolute; color:#fff; line-height:5px; "></div>
+  <div id="debugDiv" style="top:20px; position:absolute;"></div>
   <div id="stateDiv" style="top:460px;"></div>
 </div>
 </body>
