@@ -361,7 +361,7 @@ function startRetrying(){
     retryInterval=window.setInterval("retryTick()", 15000);
     }
   clearInterval(minuteInterval);
-  minuteInterval=setInterval('minuteTick()', 15000);
+  minuteInterval=setInterval('minuteTick()', 60000);
   retrying=true;
   retryAttempts=0;
   retryTick();
@@ -461,7 +461,7 @@ function resumeInit(){
   buttonOn("footnav", "listen");
   //dbuga(' init 3');
   clearInterval(minuteInterval);
-  minuteInterval=setInterval('minuteTick()', 15000);
+  minuteInterval=setInterval('minuteTick()', 60000);
   dialInterval=setInterval('dialTick()', 25);
   //dbuga(' init 4');
   //minuteTick();
@@ -2229,7 +2229,7 @@ function minuteTick(){
     updateNowPlaying();
     }
   getRecentSongs();
-  //dbuga('end of minuteTick()');
+  dbuga('end of minuteTick()');
   }
 
 function resumeGame(){
@@ -2309,7 +2309,7 @@ var alarmIncDec=1;
 <div id="wrapper">
   <div id="container">
   </div>
-  <div id="readyStateDiv" style="position:absolute; color:#666; line-height:5px;"></div>
+  <div id="readyStateDiv" style="position:absolute; color:#fff; line-height:5px;"></div>
   <div id="debugDiv" style="top:10px;"></div>
   <div id="stateDiv" style="top:460px;"></div>
 </div>
