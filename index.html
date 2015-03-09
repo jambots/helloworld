@@ -546,6 +546,7 @@ function replaceAll(find, replace, str) {
 function parseRecentSongs(theData){
   recentSongs=JSON.parse(theData);
   var songKeys=Object.keys(recentSongs);
+  dbuga("parseRecentSongs("+songKeys.length+")");
   songKeys.sort();
   songKeys.reverse();
   if(songKeys.length>0){
@@ -2225,13 +2226,14 @@ function handleButton(pageName, buttonName){
       }
     }
   }
-var minuteMs=15000;
+var minuteMs=120000;
 function minuteTick(){
+  dbuga('minuteTick()');
   if((uiPlaying==true)&&(streamPlaying==true)){
     updateNowPlaying();
     }
   getRecentSongs();
-  dbuga('end of minuteTick()');
+  //dbuga('end of minuteTick()');
   }
 
 function resumeGame(){
@@ -2311,7 +2313,7 @@ var alarmIncDec=1;
 <div id="wrapper">
   <div id="container">
   </div>
-  <div id="readyStateDiv" style="position:absolute; color:#fff; line-height:5px; "></div>
+  <div id="readyStateDiv" style="position:absolute; color:#fff; line-height:10px; "></div>
   <div id="debugDiv" style="top:20px; position:absolute;"></div>
   <div id="stateDiv" style="top:460px;"></div>
 </div>
