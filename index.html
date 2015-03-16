@@ -14,7 +14,7 @@
 
 
 
-var debugging=false;
+var debugging=true;
 
 var retryInterval;
 var retryAttempts=0;
@@ -480,7 +480,7 @@ function resumeInit(){
   selectPage("listen");
   document.addEventListener("backbutton", onBackKeyDown, false);
   //dbuga(' init 7');
-  //getRecentSongs();
+  getRecentSong();
 
   //document.addEventListener("offline", onOffline, false);
   //document.addEventListener("online", onOnline, false);
@@ -531,7 +531,7 @@ var sleepSeconds=0;
 var dialInterval;
 
 function getRecentSong(){
-  dbuga('getRecentSongs()');
+  dbuga('getRecentSong()');
   //return false;
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_song";
   if(allowAjax){
@@ -543,7 +543,7 @@ function getRecentSong(){
     }
   }
 function getRecentSongs(){
-  dbuga('getRecentSong()');
+  dbuga('getRecentSongs()');
   //return false;
   //var feedUrl="http://www.radiok.org/";
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_songs";
@@ -2130,7 +2130,7 @@ function handleButton(pageName, buttonName){
       buttonOff("footnav", "listen");
       buttonOn("more", "playlist");
       window.setTimeout('buttonOff("more", "playlist"); selectPage("playlist");', navDelay);
-      getRecentSongs ();
+      getRecentSongs();
       }
     }
 
