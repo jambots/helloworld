@@ -584,23 +584,47 @@ var recentSong={};
 var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
 var recentSongs={};
 var testData="";
+/*
+{
+"553732":{
+  "song_id":"553732",
+  "song_timestamp":"2015-03-16 09:28:31",
+  "song_artist":"Homeless & Big Cats",
+  "song_title":"Forklifts",
+  "song_album":"Single",
+  "song_length":"3:00",
+  "dj":"Michael L",
+  "show_name":"Monday 9-12pm",
+  "disk_id":"39766",
+  "playlist_id":"8690",
+  "show_category":"Variety Shift"
+  }
+}
+*/
 function parseRecentSong(theData){
   testData=theData;
   recentSong=JSON.parse(theData);
   var songKeys=Object.keys(recentSong);
-  dbuga("parseRecentSong("+songKeys.length+")");
+  dbug("parseRecentSong("+songKeys.length+")");
+
   songKeys.sort();
   songKeys.reverse();
   if(songKeys.length>0){
+    dbuga("songKeys[0]="+songKeys[0]);
     var album=recentSongs[songKeys[0]].song_album;
     var song=recentSongs[songKeys[0]].song_title;
+    dbuga("song="+song);
     var artist=recentSongs[songKeys[0]].song_artist;
+    dbuga("artist="+artist);
     var time=recentSongs[songKeys[0]].song_timestamp;
     var dj=recentSongs[songKeys[0]].dj;
+    dbuga("dj="+dj);
     if(song.indexOf("'")>-1){
       song = replaceAll("'", "&apos;", song);
       }
     nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
+    dbuga("uiPlaying ="+ uiPlaying);
+    dbuga("streamPlaying ="+ streamPlaying);
     if((uiPlaying==true)&&(streamPlaying==true)){
       updateNowPlaying();
       }
