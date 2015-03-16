@@ -245,7 +245,7 @@ function readyStateDisplay(readyState){
   readyState=Number(readyState);
   var readyString="";
   for(var r=0; r<readyState; r++){readyString+="&nbsp;*";}
-  document.getElementById("readyStateDiv").innerHTML=readyString;
+  if(debugging){document.getElementById("readyStateDiv").innerHTML=readyString;}
   }
 function stateTick(){
   if(ios){
