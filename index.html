@@ -605,26 +605,26 @@ function parseRecentSong(theData){
   testData=theData;
   recentSong=JSON.parse(theData);
   var songKeys=Object.keys(recentSong);
-  dbug("parseRecentSong("+songKeys.length+")");
+  dbuga("parseRecentSong("+songKeys.length+")");
 
   songKeys.sort();
   songKeys.reverse();
   if(songKeys.length>0){
-    dbuga("songKeys[0]="+songKeys[0]);
-    var album=recentSongs[songKeys[0]].song_album;
-    var song=recentSongs[songKeys[0]].song_title;
-    dbuga("song="+song);
-    var artist=recentSongs[songKeys[0]].song_artist;
-    dbuga("artist="+artist);
-    var time=recentSongs[songKeys[0]].song_timestamp;
-    var dj=recentSongs[songKeys[0]].dj;
-    dbuga("dj="+dj);
+    //dbuga("songKeys[0]="+songKeys[0]);
+    var album=recentSong[songKeys[0]].song_album;
+    var song=recentSong[songKeys[0]].song_title;
+    //dbuga("song="+song);
+    var artist=recentSong[songKeys[0]].song_artist;
+    //dbuga("artist="+artist);
+    var time=recentSong[songKeys[0]].song_timestamp;
+    var dj=recentSong[songKeys[0]].dj;
+    //dbuga("dj="+dj);
     if(song.indexOf("'")>-1){
       song = replaceAll("'", "&apos;", song);
       }
     nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
-    dbuga("uiPlaying ="+ uiPlaying);
-    dbuga("streamPlaying ="+ streamPlaying);
+    //dbuga("uiPlaying ="+ uiPlaying);
+    //dbuga("streamPlaying ="+ streamPlaying);
     if((uiPlaying==true)&&(streamPlaying==true)){
       updateNowPlaying();
       }
