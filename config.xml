@@ -14,9 +14,9 @@
 <gap:config-file platform="android" parent="/manifest/application">
     <activity android:launchMode="singleInstance" />
 </gap:config-file>
-
+<!--
 <gap:plugin name="com.rd11.remote-controls" />
-
+-->
 <preference name="fullscreen" value="true" />
 <preference name="orientation" value="portrait" />
 

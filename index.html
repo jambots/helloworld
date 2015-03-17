@@ -378,12 +378,13 @@ function startRetrying(){
   }
 function togglePlaying(){
   dbuga('togglePlaying() uiPlaying='+uiPlaying);
-  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
+  //document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   if(uiPlaying==true){
     uiPlaying=false;
     retrying=false;
     buttonOff("listen", "playpause");
     stopStream();
+    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
     }
   else{
     buttonOn("listen", "playpause");
