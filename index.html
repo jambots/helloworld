@@ -939,6 +939,7 @@ function updateNowPlaying(){
   if((connection)&&(uiPlaying)){
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
     document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
+    if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
     }
   }
 function dateTimeToTime(theDateTime){

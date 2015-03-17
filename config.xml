@@ -3,8 +3,8 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "com.radiok.kuom"
-        versionCode="28" 
-        version   = "3.0.28">
+        versionCode="29" 
+        version   = "3.0.29">
 
 <preference name="phonegap-version" value="3.6.3" />
     <name>Radio K - KUOM</name>/Users/admin/android/radiok/helloworld/index.html
@@ -14,6 +14,8 @@
 <gap:config-file platform="android" parent="/manifest/application">
     <activity android:launchMode="singleInstance" />
 </gap:config-file>
+<gap:plugin name="com.silverorange.now-playing" version="1.0.0" />
+
 <preference name="fullscreen" value="true" />
 <preference name="orientation" value="portrait" />
 
