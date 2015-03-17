@@ -295,8 +295,10 @@ function stateTick(){
       }
     }
   if((uiPlaying)&&(streamPlaying==false)){
-    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=stateMessage;
-    document.getElementById('page_listen_content_djDiv').innerHTML=connectionMessage;
+    if(stateMessage != ""){
+      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=stateMessage;
+      document.getElementById('page_listen_content_djDiv').innerHTML=connectionMessage;
+      }
     }
   debugState();
   }
@@ -388,7 +390,7 @@ function togglePlaying(){
     }
   else{
     buttonOn("listen", "playpause");
-    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Connecting...";
+    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Toggle Connecting...";
     uiPlaying=true;
     startRetrying();
     }
