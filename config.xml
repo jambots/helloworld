@@ -15,9 +15,10 @@
     <activity android:launchMode="singleInstance" />
 </gap:config-file>
 
+
 <!--
-<gap:plugin name="com.rd11.remote-controls" version="1.0.0" />-->
-<gap:plugin name="com.silverorange.now-playing" version="1.0.0" />
+<gap:plugin name="com.rd11.remote-controls" version="1.0.0" /><gap:plugin name="com.silverorange.now-playing" version="1.0.0" />
+-->
 
 <gap:plugin name="com.phonegap.plugin.statusbar" version="1.1.0" />
 <gap:plugin name="org.apache.cordova.media" />
