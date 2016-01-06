@@ -54,15 +54,8 @@ function stopStream(){
     androidStreamMedia.stop();
     }
 
-  if(ios){
-    //iosStreamAudio.stop();
-    //iosStreamAudio.pause();
-    //buttonOff("listen", "playpause");
-    //updateNowPlaying();
-    //iosStreamAudio = null;
-    //iosStreamAudio = new Audio(myaudioURL);
-    //textPosition.innerHTML = '';
-    /////createStream();
+  if(ios){ 
+    iosStreamAudio.pause();
     iosStreamPlaying=false;
     streamPlaying=false;
     }
@@ -333,6 +326,7 @@ function debugState(){
       }
     stateDiv.innerHTML+="uiPlaying="+uiPlaying+"<br />";
     stateDiv.innerHTML+="streamPlaying="+streamPlaying+"<br />";
+    stateDiv.innerHTML+="streamCreated="+ streamCreated +"<br />";
     stateDiv.innerHTML+="myStreamUrl ="+ myStreamUrl +"<br />";
 
   
