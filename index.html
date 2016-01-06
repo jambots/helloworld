@@ -492,7 +492,7 @@ function resumeInit(){
   //dbuga(' init 7');
   myStreamUrl = urlByQuality[genericGet("quality")]+"/;";
   //dbuga(' init 7');
-  if(ios){createStream();}
+  //////if(ios){createStream();}
   //dbug('init okay');
   }
 
@@ -2399,6 +2399,11 @@ var alarmIncDec=1;
   <div id="readyStateDiv" style="position:absolute; color:#fff; line-height:10px; "></div>
   <div id="debugDiv" style="top:20px; position:absolute;"></div>
   <div id="stateDiv" style="top:460px;"></div>
+<audio controls autoplay style="position:absolute; top:400px;">
+   <source src="http://radiokstreams.cce.umn.edu:8256/;"></source>
+   Unfortunately your browser doesn't support html5 audio streaming, please update your browser.
+   //Here is where you would add a flash player fallback also!
+</audio>
 </div>
 </body>
 </html>
