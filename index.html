@@ -1833,9 +1833,22 @@ function buttonOff(thePage, theButton){
   document.getElementById('page_'+thePage+'_button_'+theButton+'_on').style.opacity="0";
   }
 
-
-var urlByQuality={"low":"http://radiokstreams.cce.umn.edu:8056/;", "medium":"http://radiokstreams.cce.umn.edu:8128/;", "high":"http://radiokstreams.cce.umn.edu:8256/;", "higher":"http://radiokstreams.cce.umn.edu:8256/;", "broken":"http://radiokstreams.cce.umn.edu:8168/;"};
+// original 2016 streams
+var urlByQuality={
+  "low":"http://radiokstreams.cce.umn.edu:8056", 
+  "medium":"http://icecast.ksl.com:8000/", 
+  "high":"http://radiokstreams.cce.umn.edu:8256", 
+  "higher":"http://radiokstreams.cce.umn.edu:8256/", 
+  "broken":"http://radiokstreams.cce.umn.edu:8168"
+};
 /*
+var urlByQuality={
+  "low":"http://radiokstreams.cce.umn.edu:8056/;", 
+  "medium":"http://radiokstreams.cce.umn.edu:8128/;", 
+  "high":"http://radiokstreams.cce.umn.edu:8256/;", 
+  "higher":"http://radiokstreams.cce.umn.edu:8256/;", 
+  "broken":"http://radiokstreams.cce.umn.edu:8168/;"
+};
 var urlByQuality={
   "low":"http://wtbu.bu.edu:1800/listen.m3u", 
   "medium":"http://wtbu.bu.edu:1800/listen.m3u", 
