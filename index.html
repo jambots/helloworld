@@ -62,7 +62,7 @@ function stopStream(){
     //iosStreamAudio = null;
     //iosStreamAudio = new Audio(myaudioURL);
     //textPosition.innerHTML = '';
-    createStream();
+    /////createStream();
     iosStreamPlaying=false;
     streamPlaying=false;
     }
@@ -78,7 +78,7 @@ function createStream(){
     androidStreamMedia = new Media(myStreamUrl, androidSuccess, androidError, androidStatusCallback);
     }
   if(ios){
-    if(streamCreated){iosStreamAudio.pause();}
+    //////if(streamCreated){iosStreamAudio.pause();}
     dbuga("createStream() ios "+myStreamUrl);
     iosStreamAudio.onabort = null;
     iosStreamAudio.onemptied = null;
@@ -367,7 +367,7 @@ function startRetrying(){
   clearInterval(retryInterval);
   if(ios){
     retryTick();
-    retryInterval=window.setInterval("retryTick()", 1000);
+    //////retryInterval=window.setInterval("retryTick()", 1000);
     }
   if(android){
     retryInterval=window.setInterval("retryTick()", 15000);
@@ -394,7 +394,8 @@ function togglePlaying(){
     buttonOn("listen", "playpause");
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Connecting...";
     uiPlaying=true;
-    startRetrying();
+    createStream();
+    //startRetrying();
     }
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   }
@@ -2244,7 +2245,7 @@ function handleButton(pageName, buttonName){
       buttonOn("settings", "medium");
       buttonOff("settings", "higher");
       genericSet("quality", "medium");
-      createStream();
+      /////createStream();
       if(uiPlaying){
         startRetrying();
         }
@@ -2253,7 +2254,7 @@ function handleButton(pageName, buttonName){
       buttonOff("settings", "medium");
       buttonOn("settings", "higher");
       genericSet("quality", "higher");
-      createStream();
+      //////createStream();
       if(uiPlaying){
         startRetrying();
         }
@@ -2399,11 +2400,6 @@ var alarmIncDec=1;
   <div id="readyStateDiv" style="position:absolute; color:#fff; line-height:10px; "></div>
   <div id="debugDiv" style="top:20px; position:absolute;"></div>
   <div id="stateDiv" style="top:460px;"></div>
-<audio controls autoplay style="position:absolute; top:400px;">
-   <source src="http://radiokstreams.cce.umn.edu:8256/;"></source>
-   Unfortunately your browser doesn't support html5 audio streaming, please update your browser.
-   //Here is where you would add a flash player fallback also!
-</audio>
 </div>
 </body>
 </html>
