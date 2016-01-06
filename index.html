@@ -220,7 +220,8 @@ function retryTick(){
     if(streamPlaying==false){
       if(ios){
         if(iosStreamAudio.readyState==4){
-          window.setTimeout("playStream()", 1000);
+          //window.setTimeout("playStream()", 1000);
+          playStream();
           }
         ////createStream();
         }
@@ -365,6 +366,7 @@ function startRetrying(){
   if(android){createStream();}
   clearInterval(retryInterval);
   if(ios){
+    retryTick();
     retryInterval=window.setInterval("retryTick()", 1000);
     }
   if(android){
