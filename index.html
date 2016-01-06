@@ -388,7 +388,8 @@ function togglePlaying(){
     buttonOn("listen", "playpause");
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Connecting...";
     uiPlaying=true;
-    createStream();
+    playStream();
+  
     //startRetrying();
     }
   document.getElementById('page_listen_content_djDiv').innerHTML="";
@@ -1833,7 +1834,7 @@ function buttonOff(thePage, theButton){
 // original 2016 streams
 var urlByQuality={
   "low":"http://radiokstreams.cce.umn.edu:8056/;", 
-  "medium":"http://icecast.ksl.com:8000/;", 
+  "medium":"http://radiokstreams.cce.umn.edu:8128/;", 
   "high":"http://radiokstreams.cce.umn.edu:8256/;", 
   "higher":"http://radiokstreams.cce.umn.edu:8256/;", 
   "broken":"http://radiokstreams.cce.umn.edu:8168/;"
