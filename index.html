@@ -14,7 +14,7 @@
 
 
 
-var debugging=false;
+var debugging=true;
 
 var retryInterval;
 var retryAttempts=0;
@@ -220,7 +220,7 @@ function retryTick(){
     if(streamPlaying==false){
       if(ios){
         if(iosStreamAudio.readyState==4){
-          //window.setTimeout("playStream()", 1000);
+          //window.setTimeout("playStream()", 3000);
           playStream();
           }
         ////createStream();
@@ -231,7 +231,7 @@ function retryTick(){
         }
       ////singing=false;
       }
-    if(retryAttempts>30){
+    if(retryAttempts>20){
       connectionMessage="We're not connecting.<br />Try again in a bit K?";
       stateMessage="";
       if(singing){singMedia.play();}
@@ -1837,11 +1837,11 @@ function buttonOff(thePage, theButton){
 
 // original 2016 streams
 var urlByQuality={
-  "low":"http://radiokstreams.cce.umn.edu:8056", 
-  "medium":"http://icecast.ksl.com:8000/", 
-  "high":"http://radiokstreams.cce.umn.edu:8256", 
-  "higher":"http://radiokstreams.cce.umn.edu:8256/", 
-  "broken":"http://radiokstreams.cce.umn.edu:8168"
+  "low":"http://radiokstreams.cce.umn.edu:8056/;", 
+  "medium":"http://icecast.ksl.com:8000/;", 
+  "high":"http://radiokstreams.cce.umn.edu:8256/;", 
+  "higher":"http://radiokstreams.cce.umn.edu:8256/;", 
+  "broken":"http://radiokstreams.cce.umn.edu:8168/;"
 };
 /*
 var urlByQuality={
