@@ -633,32 +633,22 @@ function parseRecentSong(theData){
   }
 var totdDownloads=[];
 var wrsDownloads=[];
-var cqDownloads=[];
 var spotlightImage="";
 function getDownloads(){
   //dbuga("getDownloads()");
   totdDownloads=[];
   wrsDownloads=[];
-  cqDownloads=[];
   document.getElementById('totdHolder').style.width=grid*48+'px'; 
   document.getElementById('totdHolder').style.height=grid*51+'px'; 
   document.getElementById('wrsHolder').style.width=grid*48+'px'; 
   document.getElementById('wrsHolder').style.height=grid*51+'px'; 
-  document.getElementById('cqHolder').style.width=grid*48+'px'; 
-  document.getElementById('cqHolder').style.height=grid*51+'px'; 
   totdDownloads=[];
   wrsDownloads=[];
-  cqDownloads=[];
-
+  
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F",
     dataType: "xml",        
     success: function(xml) {parseDownloads(xml, "Weekly Release Spotlight");}
-    });
-  $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fculture-queue%2F",
-    dataType: "xml",        
-    success: function(xml) {parseDownloads(xml, "Culture Queue");}
     });
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Ftotd",
@@ -709,37 +699,6 @@ function parseDownloads(theXml, source){
       totdDownloads.push(item);
       }
     updateTotdDownloads();
-    }
-  if(source=="Culture Queue"){
-    var cqObj=xmlToJson(theXml);
-    //dbugItem=cqObj;
-    var itemsArray=cqObj.rss.channel.item;
-    //dbug('itemsArray.length='+itemsArray.length);
-    for (var i=0; (i<itemsArray.length)&&(i<14); i++){
-      var thisObj=itemsArray[i];
-      var dateStr=thisObj.pubDate["#text"];
-      var parts=dateStr.split(" ");
-      var yyyy=parts[3];
-      var mm=monToMM[parts[2]];
-      var dd=parts[1];
-      var timeCode=parts[4];
-      var timeParts=timeCode.split(":");
-      var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
-      var sortNum=yyyy+mm+dd+hhmmss;
-      var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
-      var title=thisObj.title["#text"];
-      var item={
-        "sort":sortNum, 
-        "source":source, 
-        "date":dispDate, 
-        "image":thisObj["itunes:image"]["@attributes"]["href"], 
-        "title":"",
-        "description":title, 
-        "link":thisObj["enclosure"]["@attributes"]["url"]
-        };
-      cqDownloads.push(item);
-      }
-    updateCqDownloads();
     }
   if(source=="Weekly Release Spotlight"){
     var wrsObj=xmlToJson(theXml);
@@ -894,47 +853,6 @@ function returnGradStyle(){
   //gradStyle="";// hack to test speed
   return gradStyle;
   }
-function updateCqDownloads(){
-  //dbuga('updateCqDownloads()');
-  var sortedDownloads=cqDownloads.sort(function(a, b){
-      // furthest to nearest
-      return b.sort-a.sort
-    });
-  var gradStyle=returnGradStyle();
-  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
-  cqDownloads=sortedDownloads;
-  var htmlBlock="";
-  for(var d=0; d<sortedDownloads.length; d++){
-    var downloadItem=sortedDownloads[d];
-    if(d==0){
-      document.getElementById("page_extras_button_cq").style.backgroundImage='url('+downloadItem.image+')';
-      document.getElementById("page_extras_button_cq_on").style.backgroundImage='url('+downloadItem.image+')';
-      }
-    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+='<a href="javascript:remoteCqLink(\''+d+'\');'+returnFalse+'">';
-    htmlBlock+=  '<img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" />';
-    htmlBlock+='</a>';
-    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
-    //htmlBlock+=  downloadItem.title+'<br />';
-    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
-    if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
-    htmlBlock+='<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
-    htmlBlock+='</div></div>';
-    if(d>9){d=sortedDownloads.length;}
-    }
-  document.getElementById('cqScroller').innerHTML=htmlBlock;
-  document.getElementById('cqHolder').style.width=grid*48+'px'; 
-  document.getElementById('cqHolder').style.height=grid*51+'px'; 
-  //cqScrollerTimeout=window.setTimeout("refreshCqHolderScroll()", 100);
-  }
-/*
-var cqScrollerTimeout;
-function refreshCqHolderScroll(){
-  cqHolderScroll.refresh();
-  }
-var cqHolderScroll;
-*/
-
 function updateNowPlaying(){
   //dbuga('updateNowPlaying()')
   if((connection)&&(uiPlaying)){
@@ -1026,9 +944,13 @@ function getFaqs(){
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
-    success: function(data) {parseFaqs(data);}
+    
+    success: function(data) {
+      console.log(data);
+      parseFaqs(data);
+      }
     });
-  //dbuga('getFaqs() completed');
+  dbuga('getFaqs() completed');
   }
 var faqs=[
   {"q":"What is Radio K?", "a":"Radio K, the award-winning radio station of the University of Minnesota, is nationally recognized as one of the best student-run college radio stations in the country, playing an eclectic variety of independent music both old and new.<br /><br />Radio K educates students, breaks ground in musical programming, and provides cutting-edge cultural coverage through our specialty shows, web content and Culture Queue."},
@@ -1065,20 +987,68 @@ function parseFaqs(theScrape){
   populateFaqs();
   }
 var calendar=[];
+
 function getCalendar(){
   calendar=[];
-  var feedUrl="http://www.radiok.org/events/";
-  //dbuga('getCalendar()');
+  var feedUrl="http://www.radiok.org/tools/blocks/pro_event_list/rss.php?ctID=&bID=14940&ordering=ASC";
+  dbuga('getCalendar()');
   $.ajax({
     url: feedUrl,
-    dataType: "text",        // < new bit
-    success: function(data) {parseCalendar(data);}
+    dataType: "xml",        // new bit
+    success: function(data) {parseCalendarRss(data);}
     });
-  //dbuga('getCalendar() completed');
+  dbuga('getCalendar() completed');
   }
+ 
+function parseCalendarRss(theRss){
+  console.log('parseCalendarRss()');
+  $(theRss).find('item').each(function() {
+     var $this = $(this);
+     var item = {
+       title: $this.find("title").text(),
+       link: $this.find("link").text(),
+       description: $this.find("description").text(),
+       pubDate: $this.find("pubDate").text(),
+       }
+    console.log('item');
+    console.log(item.title+" "+item.pubDate+" "+item.link);
+    }
+  );
+}
+//getCalendar()
 
+/*
+  var blocks=theScrape.split('<div class="titlehead">');
+  for (var b=1; b<blocks.length; b++){
+    var block=blocks[b];
+    var timeParts=block.split('<div class="time">');
+    var timePlus=timeParts[1];
+    var endDivParts=timePlus.split('</div>');
+    var time=endDivParts[0];
+    var dateLink=endDivParts[1];
+    var dateLinkParts=dateLink.split(" - ");
+    var date=dateLinkParts[0];
+    var link=dateLinkParts[1];
+    var linkParts=link.split('"');
+    var url='http://radiok.org'+linkParts[1];
+    var titleParts=link.split('>');
+    var title=titleParts[1];
+    titleParts=title.split('<');
+    title=titleParts[0];
+    var localParts=block.split('<div class="local">');
+    var local=localParts[1];
+    localParts=local.split('</div>');
+    local=localParts[0];
+    var rowObj={"date":date, "time":time, "performers":title, "venue":local, "url":url}; 
+    calendar.push(rowObj);
+    }
+  dbuga('parseCalendarRss completed');
+   
+  populateCalendar();
+  */
 
-function parseCalendar(theScrape){
+function parseCalendarScrape(theScrape){// obsolete
+  console.log('parseCalendar()');
   var blocks=theScrape.split('<div class="titlehead">');
   for (var b=1; b<blocks.length; b++){
     var block=blocks[b];
@@ -1106,7 +1076,7 @@ function parseCalendar(theScrape){
   //dbuga('parseCalendar completed');
   populateCalendar();
   }
- 
+
 
 var snoozeMinutes=0;
 function secondTick(){
@@ -1439,11 +1409,10 @@ function populateContainer(){
   resultsHolderScroll=new iScroll('resultsHolder');
   playlistHolderScroll=new iScroll('playlistHolder');
   calendarHolderScroll=new iScroll('calendarHolder');
-  cqHolderScroll=new iScroll('cqHolder');
   totdHolderScroll=new iScroll('totdHolder');
   wrsHolderScroll=new iScroll('wrsHolder');
   */
-  var scrollIdArray=["resultsHolder", "playlistHolder", "calendarHolder", "cqHolder", "totdHolder", "wrsHolder"];
+  var scrollIdArray=["resultsHolder", "playlistHolder", "calendarHolder", "totdHolder", "wrsHolder"];
   for (var s=0; s<scrollIdArray.length; s++){
     new ScrollFix(document.getElementById(scrollIdArray[s]));
     }
@@ -1646,13 +1615,13 @@ var pages=[
 {"name":"extras", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
-    {"name":"cq", "top":9, "left":2, "height":11, "width":11},
+    {"name":"events", "top":9, "left":2, "height":11, "width":11},
     {"name":"totd", "top":21, "left":2, "height":11, "width":11},
     {"name":"wrs", "top":33, "left":2, "height":11, "width":11},
     {"name":"vc", "top":45, "left":2, "height":11, "width":11},
   ],
   "contents":[
-    {"name":"cqDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','cq');\">CULTURE QUEUE</a><br />Radio K's award-winning Arts and Culture program, dedicated to telling stories about the many wonders of the Twin Cities that you won't hear anywhere else."},
+    {"name":"eventsDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','events');\">EVENTS</a><br />Calendar of Upcoming Events."},
     {"name":"totdDesc", "top":21, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','totd');\">TRACK OF THE DAY</a><br />Every day Radio K offers up a fresh new track for you to download. It's just one more way that Real College Radio makes Real Life (a little more) Rockin'."},
     {"name":"wrsDesc", "top":33, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">WEEKLY RELEASE SPOTLIGHT</a><br />Each week we comb through mountains of new music to find that one perfect album that we (and you) almost missed."},
     {"name":"vcDesc", "top":45, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','vc');\">VINYL CLOSET</a><br />A digitized archive of Studio K performances from 1994 to 2006 that feature seminal Minnesota artists that have left an indelible mark on the Minnesota music scene."},
@@ -1673,15 +1642,6 @@ var pages=[
   ],
   "contents":[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="wrsHolder"><div id="wrsScroller"></div></div>'}
-  ]
-},
-{"name":"cq", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "buttons":[
-    {"name":"done", "top":0, "left":39, "height":7, "width":9},
-    {"name":"scq", "top":0, "left":0, "height":7, "width":12},
-  ],
-  "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="cqHolder"><div id="cqScroller"></div></div>'}
   ]
 },
 {"name":"faqs", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
@@ -1757,7 +1717,7 @@ function mousemove(e){
   mouseY=e.pageY;
   }
 function touchMove(event){
-  if((currentPage !="totd")&&(currentPage !="wrs")&&(currentPage !="cq")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
+  if((currentPage !="totd")&&(currentPage !="wrs")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
     event.preventDefault();
     }
   if(currentPage =="alarm"){
@@ -1962,19 +1922,6 @@ function remoteLink(theUrl){
   //navigator.app.loadUrl(theUrl, {openExternal: true});
 */
 
-  //dbuga("remoteLink ran");
-  }
-
-function remoteCqLink(cqNum){
-    uiPlaying=false;
-    retrying=false;
-    buttonOff("listen", "playpause");
-    
- var downloadItem=cqDownloads[Number(cqNum)];
-  var theUrl=downloadItem.link;
-  //dbuga("remoteLink("+theUrl+")");
-  //window.plugins.childBrowser.openExternal(theUrl);
-  navigator.app.loadUrl(theUrl, {openExternal: true});
   //dbuga("remoteLink ran");
   }
 
@@ -2185,6 +2132,10 @@ function handleButton(pageName, buttonName){
       buttonOn("extras", "done");
       window.setTimeout('buttonOff("extras", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
       }
+    if(buttonName=="events"){
+      buttonOn("extras", "events");
+      window.setTimeout('buttonOff("extras", "events"); selectPage("events");', navDelay);
+      }
     if(buttonName=="totd"){
       buttonOn("extras", "totd");
       window.setTimeout('buttonOff("extras", "totd"); selectPage("totd");', navDelay);
@@ -2193,10 +2144,7 @@ function handleButton(pageName, buttonName){
       buttonOn("extras", "wrs");
       window.setTimeout('buttonOff("extras", "wrs"); selectPage("wrs");', navDelay);
       }
-    if(buttonName=="cq"){
-      buttonOn("extras", "cq");
-      window.setTimeout('buttonOff("extras", "cq"); selectPage("cq");', navDelay);
-      }
+
     if(buttonName=="vc"){
       window.setTimeout("remoteLink('http://www.radiok.org/vinylcloset/')", navDelay);
       }
@@ -2215,16 +2163,6 @@ function handleButton(pageName, buttonName){
     if(buttonName=="done"){
       buttonOn("wrs", "done");
       window.setTimeout('buttonOff("wrs", "done"); selectPage("extras");', navDelay);
-      }
-    }
-  if(pageName=="cq"){
-    if(buttonName=="done"){
-      buttonOn("cq", "done");
-      window.setTimeout('buttonOff("cq", "done"); selectPage("extras");', navDelay);
-      }
-    if(buttonName=="scq"){
-      buttonOn("cq", "scq");
-      window.setTimeout('buttonOff("cq", "scq"); remoteLink("https://itunes.apple.com/us/podcast/culture-queue/id862798048?mt=2");', navDelay);
       }
     }
   if(pageName=="settings"){
