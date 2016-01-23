@@ -1529,10 +1529,9 @@ var pages=[
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
     {"name":"extras", "top":11, "left":9, "height":6, "width":30},
-    {"name":"events", "top":18, "left":9, "height":6, "width":30},
-    {"name":"alarm", "top":25, "left":9, "height":6, "width":30},
-    {"name":"settings", "top":32, "left":9, "height":6, "width":30},
-    {"name":"faqs", "top":39, "left":9, "height":6, "width":30}
+    {"name":"alarm", "top":18, "left":9, "height":6, "width":30},
+    {"name":"settings", "top":25, "left":9, "height":6, "width":30},
+    {"name":"faqs", "top":32, "left":9, "height":6, "width":30}
   ],
   "contents":[
   ]
@@ -1581,7 +1580,8 @@ var pages=[
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
     {"name":"medium", "top":14, "left":9, "height":6, "width":30},
-    {"name":"higher", "top":21, "left":9, "height":6, "width":30}
+    {"name":"higher", "top":21, "left":9, "height":6, "width":30},
+    {"name":"broken", "top":28, "left":9, "height":6, "width":30}
   ],
   "contents":[
   ]
@@ -2087,11 +2087,6 @@ function handleButton(pageName, buttonName){
       buttonOn("more", "done");
       window.setTimeout('buttonOff("more", "done"); selectPage("listen");', navDelay);
       }
-    if(buttonName=="settings"){
-      buttonOff("footnav", "listen");
-      buttonOn("more", "settings");
-      window.setTimeout('buttonOff("more", "settings"); selectPage("settings");', navDelay);
-      }
     if(buttonName=="extras"){
       buttonOff("footnav", "listen");
       buttonOn("more", "extras");
@@ -2102,22 +2097,15 @@ function handleButton(pageName, buttonName){
       buttonOn("more", "alarm");
       window.setTimeout('buttonOff("more", "alarm"); selectPage("alarm");', navDelay);
       }
+    if(buttonName=="settings"){
+      buttonOff("footnav", "listen");
+      buttonOn("more", "settings");
+      window.setTimeout('buttonOff("more", "settings"); selectPage("settings");', navDelay);
+      }
     if(buttonName=="faqs"){
       buttonOff("footnav", "listen");
       buttonOn("more", "faqs");
       window.setTimeout('buttonOff("more", "faqs"); selectPage("faqs");', navDelay);
-      }
-    if(buttonName=="events"){
-      buttonOff("footnav", "listen");
-      buttonOn("more", "events");
-      window.setTimeout('buttonOff("more", "events"); selectPage("events");', navDelay);
-      getCalendar();
-      }
-    if(buttonName=="playlist"){
-      buttonOff("footnav", "listen");
-      buttonOn("more", "playlist");
-      window.setTimeout('buttonOff("more", "playlist"); selectPage("playlist");', navDelay);
-      getRecentSongs();
       }
     }
 
@@ -2177,6 +2165,7 @@ function handleButton(pageName, buttonName){
     if(buttonName=="medium"){
       buttonOn("settings", "medium");
       buttonOff("settings", "higher");
+      buttonOff("settings", "broken");
       genericSet("quality", "medium");
       /////createStream();
       if(uiPlaying){
@@ -2186,7 +2175,19 @@ function handleButton(pageName, buttonName){
     if(buttonName=="higher"){
       buttonOff("settings", "medium");
       buttonOn("settings", "higher");
+      buttonOff("settings", "broken");
       genericSet("quality", "higher");
+      //////createStream();
+      if(uiPlaying){
+        startRetrying();
+        }
+      }
+    if(buttonName=="broken"){
+      buttonOff("settings", "medium");
+      buttonOff("settings", "higher");
+      buttonOn("settings", "broken");
+
+      genericSet("quality", "broken");
       //////createStream();
       if(uiPlaying){
         startRetrying();
