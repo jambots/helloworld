@@ -1031,10 +1031,8 @@ function parseFaqs(theScrape){
     }
   populateFaqs();
   }
-var calendar=[];
 
 function getCalendar(){
-  calendar=[];
   var feedUrl="http://www.radiok.org/tools/blocks/pro_event_list/rss.php?ctID=&bID=14940&ordering=ASC";
   dbuga('getCalendar()');
   $.ajax({
@@ -1045,20 +1043,33 @@ function getCalendar(){
   dbuga('getCalendar() completed');
   }
  
+var calendar=[];
 function parseCalendarRss(theRss){
   console.log('parseCalendarRss()');
-  $(theRss).find('item').each(function() {
+  calendar=[];
+    $(theRss).find('item').each(function() {
      var $this = $(this);
-     var item = {
-       title: $this.find("title").text(),
-       link: $this.find("link").text(),
-       description: $this.find("description").text(),
-       pubDate: $this.find("pubDate").text(),
-       }
-    console.log('item');
-    console.log(item.title+" "+item.pubDate+" "+item.link);
+     var title=$this.find("title").text();
+     //link: $this.find("link").text(),
+     //description: $this.find("description").text(),
+     var pubDate=$this.find("pubDate").text();
+     var parts=pubDate.split(" ");
+     var junk=parts.pop();
+     var hms=parts.pop();
+     var year=parts.pop();
+     var date=parts.join(" ");
+     
+     var rowObj={
+       "date":date,
+       "time":hms,
+       "performers":title,
+       "venue":$this.find("description").text(),
+       "url":$this.find("link").text()
+       }; 
+    calendar.push(rowObj);
     }
   );
+  populateCalendar();
 }
 //getCalendar()
 
