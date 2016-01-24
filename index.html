@@ -4,16 +4,56 @@
 <title>KUOM Radio K</title>
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<!--
 <script src="phonegap.js"></script>
+-->
 <script src="jquerymin.js"></script>
 <script src="scrollfix.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css?1">
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
 
 <script type="text/javascript">
+var stateValues={
+"connection":true,
+"streamFound":true,
+"buffered":false,
+"uiPlaying":false,
+"streamPlaying":false
+}
 
-
-
+var stateTree=[
+  {"name":"connection", "message":"No connection"},
+  {"name":"streamFound", "message":"Network error"},
+  {"name":"buffered", "message":"Buffering..."},
+  {"name":"uiPlaying", "message":"Starting"},
+  {"name":"streamPlaying", "message":"Playing"},
+];
+function graphState(){
+  var canv=document.getElementById('stateCanvas');
+  var ctx=canv.getContext('2d');
+  var w=canv.width;
+  var h=canv.height;
+  var stepPx=h/stateTree.length;
+  var pad=w/20;
+  ctx.lineWidth=w/30;
+  ctx.font = Math.floor(stepPx/3)+'px Calibri';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  for(var n=0; n<stateTree.length; n++){
+    var textColor="#888";
+    var bgColor="#444";
+    if(stateValues[stateTree[n].name]){
+      textColor="#fff";
+      bgColor="#888";
+      }
+    ctx.fillStyle = bgColor;
+    ctx.fillRect(pad,pad+stepPx*n, w-pad*2, stepPx-pad*2);
+    ctx.strokeStyle = textColor;
+    ctx.strokeRect(pad,pad+stepPx*n, w-pad*2, stepPx-pad*2);
+    ctx.fillStyle = textColor;
+    ctx.fillText(stateTree[n].name,w/2,stepPx*n+stepPx/2);
+    }
+  }
 var debugging=false;
 
 var retryInterval;
@@ -248,9 +288,9 @@ function stateTick(){
   if(android){
     //readyStateDisplay(androidStreamMedia.readyState);// need to set listener?
     }
-  
   // lost a connection?
   var wasConnected=connection;
+/* ////  
   if((navigator.connection.type ==Connection.NONE)||(navigator.connection.type =="none")){
     connection=false;
     connectionMessage="Try again later...we are not connecting.";
@@ -260,6 +300,8 @@ function stateTick(){
     //connectionMessage=navigator.connection.type +" connection";
     connectionMessage="";
     }
+*/
+
   if(connection==false){ // not connected
     if(wasConnected==true){
       //dbuga('Lost connection');
@@ -306,7 +348,7 @@ function debugState(){
  
     stateDiv.innerHTML=""+rnd(210)+"<br />";
     
-    stateDiv.innerHTML+="navigator.connection.type="+navigator.connection.type+"<br />";
+    ////stateDiv.innerHTML+="navigator.connection.type="+navigator.connection.type+"<br />";
     stateDiv.innerHTML+="waitEvents="+waitEvents+"<br />";
     //stateDiv.innerHTML+="connection="+connection+"<br />";
     //stateDiv.innerHTML+="stateMessage="+stateMessage+"<br />";
@@ -435,6 +477,8 @@ function init(){
   }
 function onDeviceReady(){
   clearTimeout(readyTimeout);
+
+/*
   //dbuga("onDeviceReady() device.platform="+device.platform);
   if (device.platform == "Android") {
     android=true;
@@ -454,6 +498,7 @@ function onDeviceReady(){
     singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
     }
   //dbuga("onDeviceReady() completed");
+*/
   resumeInit();
   }
 var allowAjax=true;
@@ -1355,6 +1400,15 @@ function populateContainer(){
   document.getElementById('container').style.height=ch+"px";
   document.getElementById('container').style.left=leftOffset+"px";
   document.getElementById('container').style.top=topOffset+"px";
+
+  document.getElementById('stateCanvas').width=cw/3;
+  document.getElementById('stateCanvas').height=ch/2;
+  document.getElementById('stateCanvas').style.left=cw/1.5+"px";
+  document.getElementById('stateCanvas').style.top=ch/4+"px";
+  document.getElementById('stateCanvas').style.position="absolute";
+  document.getElementById('stateCanvas').style.backgroundColor="rgba(25,255,255,.2)";
+
+
 
   var htmlString="";
 
@@ -2334,6 +2388,7 @@ var alarmIncDec=1;
   <div id="readyStateDiv" style="position:absolute; color:#fff; line-height:10px; "></div>
   <div id="debugDiv" style="top:20px; position:absolute;"></div>
   <div id="stateDiv" style="top:460px;"></div>
+  <canvas id="stateCanvas"></canvas>
 </div>
 </body>
 </html>
