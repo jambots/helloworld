@@ -13,9 +13,9 @@
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
 
 <script type="text/javascript">
-var stateValues={
-"connection":true,
-"streamFound":true,
+var state={
+"connection":false,
+"streamFound":false,
 "buffered":false,
 "uiPlaying":false,
 "streamPlaying":false
@@ -42,7 +42,7 @@ function graphState(){
   for(var n=0; n<stateTree.length; n++){
     var textColor="#888";
     var bgColor="#444";
-    if(stateValues[stateTree[n].name]){
+    if(state[stateTree[n].name]){
       textColor="#fff";
       bgColor="#888";
       }
@@ -54,7 +54,16 @@ function graphState(){
     ctx.fillText(stateTree[n].name,w/2,stepPx*n+stepPx/2);
     }
   }
-var debugging=false;
+
+function testMyStream(){
+$.get(myStreamUrl)
+    .done(function() { 
+        state.streamFound=true;
+    }).fail(function() { 
+        state.streamFound=false;
+    })
+  }
+var debugging=true;
 
 var retryInterval;
 var retryAttempts=0;
@@ -528,23 +537,24 @@ function resumeInit(){
   //dbuga(' init 7');
   getRecentSong();
 
-  //document.addEventListener("offline", onOffline, false);
-  //document.addEventListener("online", onOnline, false);
+  document.addEventListener("offline", onOffline, false);
+  document.addEventListener("online", onOnline, false);
   //dbuga(' init 7');
   myStreamUrl = urlByQuality[genericGet("quality")]+"";
+  testMyStream();
   //dbuga(' init 7');
   //////if(ios){createStream();}
   //dbug('init okay');
   }
-
+var eventStack=[];
 function onOffline() {
-  //dbuga('onOffline() uiPlaying='+uiPlaying);
+  state.connection=false;
+  eventStack.push("connection false");
   }
 var returnFalse="";
 function onOnline() {
-  //dbuga('onOnline() uiPlaying='+uiPlaying);
-  if(uiPlaying){
-    }
+  state.connection=true;
+  eventStack.push("connection true");
   }
 var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
 function singStatusCallback(theStatus){
