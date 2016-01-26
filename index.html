@@ -55,14 +55,7 @@ function graphState(){
     }
   }
 
-function testMyStream(){
-$.get(myStreamUrl)
-    .done(function() { 
-        state.streamFound=true;
-    }).fail(function() { 
-        state.streamFound=false;
-    })
-  }
+
 var debugging=true;
 
 var retryInterval;
@@ -98,7 +91,7 @@ var stateMessage="";
 var alarming=false;
 var bufferTimeout;
 function stopStream(){
-  dbuga('stopStream()');
+  //dbuga('stopStream()');
   if(android){
     androidStreamMedia.stop();
     }
@@ -256,7 +249,7 @@ function retryTick(){
     else{
       stateMessage="";
       }
-    dbuga(" retryTick() streamPlaying="+ streamPlaying);
+    //dbuga(" retryTick() streamPlaying="+ streamPlaying);
     retryAttempts++;
 
     if(streamPlaying==false){
@@ -510,6 +503,23 @@ function onDeviceReady(){
 */
   resumeInit();
   }
+function hostReachable(url) {
+
+  // Handle IE and more capable browsers
+  var xhr = new  XMLHttpRequest;
+  var status;
+
+  // Open new request as a HEAD to the root hostname with a random param to bust the cache
+  xhr.open( "HEAD", url, false );
+
+  // Issue request and handle response
+  try {
+    xhr.send();
+    console.log(url+' reachable');
+  } catch (error) {
+    console.log(url+' NOT reachable');
+  }
+}
 var allowAjax=true;
 function resumeInit(){
   //dbuga('init 0.0');
@@ -541,7 +551,7 @@ function resumeInit(){
   document.addEventListener("online", onOnline, false);
   //dbuga(' init 7');
   myStreamUrl = urlByQuality[genericGet("quality")]+"";
-  testMyStream();
+  
   //dbuga(' init 7');
   //////if(ios){createStream();}
   //dbug('init okay');
@@ -587,7 +597,7 @@ var sleepSeconds=0;
 var dialInterval;
 
 function getRecentSong(){
-  dbuga('getRecentSong()');
+  //dbuga('getRecentSong()');
   //return false;
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_song";
   if(allowAjax){
@@ -599,7 +609,7 @@ function getRecentSong(){
     }
   }
 function getRecentSongs(){
-  dbuga('getRecentSongs()');
+  //dbuga('getRecentSongs()');
   //return false;
   //var feedUrl="http://www.radiok.org/";
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_songs";
@@ -620,7 +630,7 @@ function replaceAll(find, replace, str) {
 function parseRecentSongs(theData){
   recentSongs=JSON.parse(theData);
   var songKeys=Object.keys(recentSongs);
-  dbuga("parseRecentSongs("+songKeys.length+")");
+  //dbuga("parseRecentSongs("+songKeys.length+")");
   songKeys.sort();
   songKeys.reverse();
   if(songKeys.length>0){
@@ -661,7 +671,7 @@ function parseRecentSong(theData){
   testData=theData;
   recentSong=JSON.parse(theData);
   var songKeys=Object.keys(recentSong);
-  dbuga("parseRecentSong("+songKeys.length+")");
+  //dbuga("parseRecentSong("+songKeys.length+")");
 
   songKeys.sort();
   songKeys.reverse();
@@ -690,7 +700,7 @@ var totdDownloads=[];
 var wrsDownloads=[];
 var spotlightImage="";
 function getDownloads(){
-  dbuga("getDownloads()");
+  //dbuga("getDownloads()");
   getCalendar();
   totdDownloads=[];
   wrsDownloads=[];
@@ -1002,11 +1012,11 @@ function getFaqs(){
     dataType: "text",        // < new bit
     
     success: function(data) {
-      console.log(data);
+      //console.log(data);
       parseFaqs(data);
       }
     });
-  dbuga('getFaqs() completed');
+  //dbuga('getFaqs() completed');
   }
 var faqs=[
   {"q":"What is Radio K?", "a":"Radio K, the award-winning radio station of the University of Minnesota, is nationally recognized as one of the best student-run college radio stations in the country, playing an eclectic variety of independent music both old and new.<br /><br />Radio K educates students, breaks ground in musical programming, and provides cutting-edge cultural coverage through our specialty shows, web content and Culture Queue."},
@@ -1045,13 +1055,13 @@ function parseFaqs(theScrape){
 
 function getCalendar(){
   var feedUrl="http://www.radiok.org/tools/blocks/pro_event_list/rss.php?ctID=&bID=14940&ordering=ASC";
-  dbuga('getCalendar()');
+  //dbuga('getCalendar()');
   $.ajax({
     url: feedUrl,
     dataType: "xml",        // new bit
     success: function(data) {parseCalendarRss(data);}
     });
-  dbuga('getCalendar() completed');
+  //dbuga('getCalendar() completed');
   }
  
 var calendar=[];
@@ -1109,7 +1119,7 @@ function parseCalendarRss(theRss){
     var rowObj={"date":date, "time":time, "performers":title, "venue":local, "url":url}; 
     calendar.push(rowObj);
     }
-  dbuga('parseCalendarRss completed');
+  //dbuga('parseCalendarRss completed');
    
   populateCalendar();
   */
@@ -1492,7 +1502,7 @@ function populateContainer(){
   for (var s=0; s<scrollIdArray.length; s++){
     new ScrollFix(document.getElementById(scrollIdArray[s]));
     }
-  dbuga('populate ran ok');
+  //dbuga('populate ran ok');
   }
 function populateFaqs(){
   var htmlString="";
@@ -2322,7 +2332,7 @@ function handleButton(pageName, buttonName){
   }
 var minuteMs=60000;
 function minuteTick(){
-  dbuga('minuteTick()');
+  //dbuga('minuteTick()');
   if((uiPlaying==true)&&(streamPlaying==true)){
     updateNowPlaying();
     }
@@ -2337,14 +2347,14 @@ function resumeGame(){
 
 var remoteControlPaused=false;
 function remoteControlPause(){
-  dbuga('remoteControlPause()');
+  //dbuga('remoteControlPause()');
   remoteControlPaused=true;
   uiPlaying=false;
   retrying=false;
   buttonOff("listen", "playpause");
   }
 function remoteControlPlay(){
-  dbuga('remoteControlPlay()');
+  //dbuga('remoteControlPlay()');
   remoteControlPaused=false;
   uiPlaying=true;
   retrying=false;
