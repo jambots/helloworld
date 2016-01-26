@@ -5,27 +5,25 @@
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script src="phonegap.js"></script>
-
 <script src="jquerymin.js"></script>
 <script src="scrollfix.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css?1">
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
-
 <script type="text/javascript">
+
+
 var state={
-"connection":false,
-"streamFound":false,
-"buffered":false,
-"uiPlaying":false,
-"streamPlaying":false
+"deviceReady":false,
+"appActive":false,
+"online":false,
+"google":false
 }
 
 var stateTree=[
-  {"name":"connection", "message":"No connection"},
-  {"name":"streamFound", "message":"Network error"},
-  {"name":"buffered", "message":"Buffering..."},
-  {"name":"uiPlaying", "message":"Starting"},
-  {"name":"streamPlaying", "message":"Playing"},
+  {"name":"deviceReady", "message":"DEVICE NOT READY"},
+  {"name":"appActive", "message":"BACKGROUND"},
+  {"name":"online", "message":"NO CONNECTION"},
+  {"name":"internet", "message":"NO INTERNET"}
 ];
 function graphState(){
   var canv=document.getElementById('stateCanvas');
@@ -53,6 +51,75 @@ function graphState(){
     ctx.fillText(stateTree[n].name,w/2,stepPx*n+stepPx/2);
     }
   }
+//// state changing functions
+function checkInternet() {
+  var xhr = new  XMLHttpRequest;
+  var status;
+  xhr.open( "HEAD", 'http://www.google-analytics.com/__utm.gif', false );
+  try {
+    xhr.send();
+    state.internet=true;
+  } catch (error) {
+    state.internet=false;
+  }
+}
+
+function init(){
+  dbuga('init()')
+  //readyTimeout=window.setTimeout("onDeviceReady()", 5000);
+  }
+function onDeviceReady(){
+  dbuga('onDeviceReady()');
+  document.addEventListener("offline", onOffline, false);
+  document.addEventListener("online", onOnline, false);
+  document.addEventListener("resume", appResumed, false);
+  document.addEventListener("pause", appPaused, false);
+/*
+  //dbuga("onDeviceReady() device.platform="+device.platform);
+  if (device.platform == "Android") {
+    android=true;
+    }
+  if (device.platform == "iOS") {
+    ios=true;
+    }
+  if (device.platform == "browser") {
+    
+    }
+  if(android){returnFalse=" return false;";}
+
+  if(android){ 
+    singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
+    }
+  if(ios){
+    singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
+    }
+  //dbuga("onDeviceReady() completed");
+*/
+  resumeInit();
+  }
+function appResumed(){
+  dbuga('appResumed()');
+  }
+function appPaused(){
+  dbuga('appPaused()');
+  }
+
+var allowAjax=true;
+function stateTick(){
+  graphState();
+  processEvents();
+  }
+function processEvents(){
+  if(eventStack.length>0){
+    dbug('processEvents()');
+    for (var e=0; e<eventStack.length; e++){
+      var e=eventsStack[e];
+      dbuga(e);
+      }
+    }
+  }
+
+
 
 
 var debugging=true;
@@ -473,76 +540,6 @@ function genericGet(itemName){
 var minuteInterval;
 var dimensionInterval;
 document.addEventListener("deviceready", onDeviceReady, false);
-function init(){
-  dbuga('init()')
-  //readyTimeout=window.setTimeout("onDeviceReady()", 5000);
-  }
-function onDeviceReady(){
-  dbuga('onDeviceReady()');
-  document.addEventListener("offline", onOffline, false);
-  document.addEventListener("online", onOnline, false);
-  document.addEventListener("resume", appResumed, false);
-  document.addEventListener("pause", appPaused, false);
-/*
-  //dbuga("onDeviceReady() device.platform="+device.platform);
-  if (device.platform == "Android") {
-    android=true;
-    }
-  if (device.platform == "iOS") {
-    ios=true;
-    }
-  if (device.platform == "browser") {
-    
-    }
-  if(android){returnFalse=" return false;";}
-
-  if(android){ 
-    singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
-    }
-  if(ios){
-    singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
-    }
-  //dbuga("onDeviceReady() completed");
-*/
-  resumeInit();
-  }
-function appResumed(){
-  dbuga('appResumed()');
-  }
-function appPaused(){
-  dbuga('appPaused()');
-  }
-function hostReachable(url) {
-  
-  // Handle IE and more capable browsers
-  var xhr = new  XMLHttpRequest;
-  var status;
-
-  // Open new request as a HEAD to the root hostname with a random param to bust the cache
-  xhr.open( "HEAD", url, false );
-
-  // Issue request and handle response
-  try {
-    xhr.send();
-    dbuga(url+' reachable');
-  } catch (error) {
-    dbuga(url+' NOT reachable');
-  }
-}
-var allowAjax=true;
-function stateTick(){
-  graphState();
-  processEvents();
-  }
-function processEvents(){
-  if(eventStack.length>0){
-    dbug('processEvents()');
-    for (var e=0; e<eventStack.length; e++){
-      var e=eventsStack[e];
-      dbuga(e);
-      }
-    }
-  }
 function resumeInit(){
   //dbuga('init 0.0');
   currentPage="listen";
@@ -578,7 +575,7 @@ function resumeInit(){
   //dbuga(' init 7');
   //////if(ios){createStream();}
   //dbug('init okay');
-  //window.setInterval("hostReachable('http://www.google-analytics.com/__utm.gif')", 10000);
+  //window.setInterval("hostReachable('')", 10000);
   }
 var eventStack=[];
 function onOffline() {
@@ -2435,6 +2432,8 @@ function handleTouchEvent(e){
   }
 var alarmIncDec=1;
 //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+//  newest functions 
+
 
 </script>
 </head>
