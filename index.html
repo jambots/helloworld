@@ -597,14 +597,16 @@ function resumeInit(){
 var eventStack=[];
 function onOffline() {
   dbuga('onOffline()');
-  state.connection=false;
-  eventStack.push("connection false");
+  state.online=false;
+  state.internet=false;
+  eventStack.push("online false");
   }
 var returnFalse="";
 function onOnline() {
   dbuga('onOnline()');
-  state.connection=true;
-  eventStack.push("connection true");
+  state.online=true;
+  checkInternet();
+  eventStack.push("online true");
   }
 var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
 function singStatusCallback(theStatus){
