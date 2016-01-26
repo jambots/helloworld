@@ -472,11 +472,13 @@ function genericGet(itemName){
 //var readyTimeout;
 var minuteInterval;
 var dimensionInterval;
+document.addEventListener("deviceready", onDeviceReady, false);
 function init(){
-  document.addEventListener("deviceready", onDeviceReady, false);
+  dbuga('init()')
   //readyTimeout=window.setTimeout("onDeviceReady()", 5000);
   }
 function onDeviceReady(){
+  dbuga('onDeviceReady()');
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
   //clearTimeout(readyTimeout);
