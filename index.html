@@ -63,6 +63,16 @@ function checkInternet() {
     state.internet=false;
   }
 }
+function checkConnection() {
+  var con=navigator.connection.type;
+  dbuga("checkConnection() navigator.connection.type="+con);
+  if((con=="connection.NONE")||(con=="connection.UNKNOWN")){
+    state.online=false;
+    }
+  else{
+    state.online=true;
+    }
+  }
 
 function init(){
   dbuga('init()')
@@ -100,6 +110,7 @@ function onDeviceReady(){
     }
   //dbuga("onDeviceReady() completed");
 */
+  checkConnection();
   checkInternet();
   resumeInit();
   }
