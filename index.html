@@ -481,8 +481,8 @@ function onDeviceReady(){
   dbuga('onDeviceReady()');
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
-  //clearTimeout(readyTimeout);
-
+  document.addEventListener("resume", appResumed, false);
+  document.addEventListener("pause", appPaused, false);
 /*
   //dbuga("onDeviceReady() device.platform="+device.platform);
   if (device.platform == "Android") {
@@ -505,6 +505,12 @@ function onDeviceReady(){
   //dbuga("onDeviceReady() completed");
 */
   resumeInit();
+  }
+function appResumed(){
+  dbuga('appResumed()');
+  }
+function appPaused(){
+  dbuga('appPaused()');
   }
 function hostReachable(url) {
   
