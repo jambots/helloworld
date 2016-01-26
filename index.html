@@ -530,6 +530,19 @@ function hostReachable(url) {
   }
 }
 var allowAjax=true;
+function stateTick(){
+  graphState();
+  processEvents();
+  }
+function processEvents(){
+  if(eventStack.length>0){
+    dbug('processEvents()');
+    for (var e=0; e<eventStack.length; e++){
+      var e=eventsStack[e];
+      dbuga(e);
+      }
+    }
+  }
 function resumeInit(){
   //dbuga('init 0.0');
   currentPage="listen";
@@ -545,6 +558,7 @@ function resumeInit(){
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', minuteMs);
   dialInterval=setInterval('dialTick()', 25);
+  stateInterval=setInterval('stateTick()', 3000);
   //dbuga(' init 4');
   //minuteTick();
   getFaqs();
@@ -564,7 +578,7 @@ function resumeInit(){
   //dbuga(' init 7');
   //////if(ios){createStream();}
   //dbug('init okay');
-  window.setInterval("hostReachable('http://www.google-analytics.com/__utm.gif')", 10000);
+  //window.setInterval("hostReachable('http://www.google-analytics.com/__utm.gif')", 10000);
   }
 var eventStack=[];
 function onOffline() {
@@ -607,7 +621,7 @@ var songs=[];
 var secondInterval;
 var sleepSeconds=0;
 var dialInterval;
-
+var stateInterval;
 function getRecentSong(){
   //dbuga('getRecentSong()');
   //return false;
