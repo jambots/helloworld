@@ -16,7 +16,7 @@ var state={
 "deviceReady":false,
 "appActive":false,
 "online":false,
-"google":false
+"internet":false
 }
 
 var stateTree=[
@@ -74,6 +74,11 @@ function onDeviceReady(){
   document.addEventListener("online", onOnline, false);
   document.addEventListener("resume", appResumed, false);
   document.addEventListener("pause", appPaused, false);
+  state.deviceReady=true;
+  state.appActive=true;
+
+
+
 /*
   //dbuga("onDeviceReady() device.platform="+device.platform);
   if (device.platform == "Android") {
@@ -95,6 +100,7 @@ function onDeviceReady(){
     }
   //dbuga("onDeviceReady() completed");
 */
+  checkInternet();
   resumeInit();
   }
 function appResumed(){
@@ -105,7 +111,7 @@ function appPaused(){
   }
 
 var allowAjax=true;
-function stateTick(){
+function stateTicker(){
   graphState();
   processEvents();
   }
@@ -555,7 +561,7 @@ function resumeInit(){
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', minuteMs);
   dialInterval=setInterval('dialTick()', 25);
-  stateInterval=setInterval('stateTick()', 3000);
+  stateInterval=setInterval('stateTicker()', 3000);
   //dbuga(' init 4');
   //minuteTick();
   getFaqs();
