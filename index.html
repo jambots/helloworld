@@ -130,9 +130,10 @@ function processEvents(){
   if(eventStack.length>0){
     dbug('processEvents()');
     for (var e=0; e<eventStack.length; e++){
-      var e=eventsStack[e];
+      var e=eventStack[e];
       dbuga(e);
       }
+    eventStack=[];
     }
   }
 
