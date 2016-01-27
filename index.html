@@ -16,6 +16,8 @@
 document.addEventListener("deviceready", onDeviceReady, false);
 
 var state={
+"android":false,
+"ios":false,
 "deviceReady":false,
 "appActive":false,
 "online":false,
@@ -30,6 +32,7 @@ var state={
 "alarmTriggered":false,
 "retrying":false,
 "retryAttempts":0,
+"waitEvents":0,
 "playerType":""
 }
 var stateKeys=Object.keys(state);
@@ -138,6 +141,13 @@ function onDeviceReady(){
   document.addEventListener("online", onOnline, false);
   document.addEventListener("resume", appResumed, false);
   document.addEventListener("pause", appPaused, false);
+
+  if (device.platform == "Android") {
+    state.android=true;
+    }
+  if (device.platform == "iOS") {
+    state.ios=true;
+    }
   state.deviceReady=true;
   state.appActive=true;
   checkConnection();
@@ -189,15 +199,9 @@ function stopStream(){
 
 function createStream(){
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
-  waitEvents=0;
-  if(android){
-    androidStreamMedia.stop();
-    androidStreamMedia.release();
-    //dbuga("createStream() android "+myStreamUrl);
-    androidStreamMedia = new Media(myStreamUrl, androidSuccess, androidError, androidStatusCallback);
-    }
+  state.waitEvents=0;
+
   if(ios){
-    //////if(streamCreated){iosStreamAudio.pause();}
     dbuga("createStream() ios "+myStreamUrl);
     iosStreamAudio.onabort = null;
     iosStreamAudio.onemptied = null;
@@ -277,7 +281,7 @@ function createStream(){
     }, false);
 
     iosStreamAudio.addEventListener("playing", function() {
-       state.audioPlaying=TRUE;
+       state.audioPlaying=true;
        eventStack.push('audio playing');
        iosStreamPlaying = true;
        
@@ -346,26 +350,7 @@ function retryTick(){
     }
   }
 // -------------- events --------------------
-function mediumSelected(){
-  buttonOn("settings", "medium");
-  buttonOff("settings", "higher");
-  genericSet("quality", "medium");
-  stopStream();
-  createStream();
-  if(uiPlaying){
-    startRetrying();
-    }
-  }
-function highSelected(){
-  buttonOff("settings", "medium");
-  buttonOn("settings", "higher");
-  genericSet("quality", "higher");
-  stopStream();
-  connectStream();
-  if(uiPlaying){
-    startRetrying();
-    }
-  }
+
 function startRetrying(){
   dbuga('startRetrying()');
   if(android){createStream();}
