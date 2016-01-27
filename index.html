@@ -169,15 +169,19 @@ function stateTick(){
   graphState();
   processEvents();
   }
+var staleStack=[];
 function processEvents(){
   if(eventStack.length>0){
     dbug('processEvents()');
+    var staleString=stailStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
       var evt=eventStack[e];
       eventStash.push(evt);
+      staleStack.push(evt);
       }
     eventStack=[];
+    staleStack.push(" ");
 
     for (var e=0; e<eventStash.length; e++){
 
@@ -195,7 +199,8 @@ function processEvents(){
         iosStreamAudio.play();
         }
       }
-    }
+    dbuga('<span style="color:red;">'+staleString+'</span>');
+    }//end if event stack 
   }
 
 
@@ -1948,7 +1953,7 @@ function graphState(){
   var stepPx=h/stateKeys.length;
   var pad=w/20;
   ctx.lineWidth=w/40;
-  ctx.font = Math.floor(stepPx/2.5)+'px Helvetica';
+  ctx.font = Math.floor(stepPx/2)+'px Helvetica';
   ctx.textAlign = 'left';
   ctx.textBaseline = 'middle';
   for(var n=0; n<stateKeys.length; n++){
