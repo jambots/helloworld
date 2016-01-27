@@ -4,13 +4,16 @@
 <title>KUOM Radio K</title>
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <script src="phonegap.js"></script>
 <script src="jquerymin.js"></script>
 <script src="scrollfix.js"></script>
+<script src="pages.js"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css?1">
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
 <script type="text/javascript">
 
+document.addEventListener("deviceready", onDeviceReady, false);
 
 var state={
 "deviceReady":false,
@@ -25,63 +28,83 @@ var state={
 "remotePaused":false,
 "alarmSet":false,
 "alarmTriggered":false,
-"playerType":"",
-"retrys":0
+"retrying":false,
+"retryAttempts":0,
+"playerType":""
 }
 var stateKeys=Object.keys(state);
 
-function graphState(){
-  var pi=Math.PI;
-  var canv=document.getElementById('stateCanvas');
-  canv.height=Math.floor(wh*.75);
-  canv.style.top=wh*.125+"px";
-  canv.style.backgroundColor="rgba(50,50,50,.5)";
-  var ctx=canv.getContext('2d');
-  var w=canv.width;
-  var h=canv.height;
-  var stepPx=h/stateKeys.length;
-  var pad=w/20;
-  ctx.lineWidth=w/40;
-  ctx.font = Math.floor(stepPx/2.5)+'px Helvetica';
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'middle';
-  for(var n=0; n<stateKeys.length; n++){
-    var textColor="#aaa";
-    var bgColor="#444";
-    var thisKey=stateKeys[n];
-    var thisVal=state[thisKey];
-    if(typeof thisVal=="boolean"){
-      if(thisVal){
-        textColor="#fff";
-        bgColor="#ccc";
-        }
-      ctx.strokeStyle = textColor;
-      ctx.beginPath();
-      ctx.arc(stepPx/2,stepPx*n+stepPx/2, stepPx/4, 0, pi*2,true);
-      ctx.fillStyle = bgColor;
-      ctx.fill();
-      ctx.stroke();
-      }
-    if(typeof thisVal=="number"){
-      if(thisVal>0){
-        textColor="#fff";
-        bgColor="#888";
-        }
-      ctx.fillStyle = textColor;
-      ctx.fillText(thisVal,pad,stepPx*n+stepPx/2);
-      } 
-    if(typeof thisVal=="string"){
-      if(thisVal != ""){
-        textColor="#fff";
-        bgColor="#888";
-        }
-      ctx.fillStyle = textColor;
-      ctx.fillText(thisVal,0,stepPx*n+stepPx/2);
-      } 
-    ctx.fillStyle = textColor;
-    ctx.fillText(thisKey,stepPx*1.5,stepPx*n+stepPx/2);
-    }
-  }
+var myStreamUrl="";
+var debugging=true;
+var waitEvents=0;
+
+var retryInterval;
+var bufferTimeout;
+var minuteInterval;
+var dimensionInterval;
+var songs=[];
+
+var hideTimeout;
+var initHistory=[0,0,0,0,0,0,0,0];
+var prevDeltaY=0;
+var currentPage="";
+var snoozeMinutes=0;
+var dials=[];
+
+var ww=300;
+var wh=400;
+var leftOffset=0;
+var topOffset=0;
+var grid=32;
+var navDelay=400;
+var imagePath="images_small";
+
+var selectedTwistie=-1;
+
+var hideByPage={};
+var buttonMap=[];
+var pageArray=[];
+var heightsByPage={};
+
+var touchingDial=-1;
+var touching=false;
+var touchTimeout
+
+var resultsHolderScroll;
+var calendarHolderScroll;
+var playlistHolderScroll;
+var minuteMs=60000;
+var lastTouchId="";
+var alarmIncDec=1;
+var mouseX=0;
+var mouseY=0;
+var mouseStartX=0;
+var mouseStartY=0;
+var alarmFailsafeTimeout;
+var urlByQuality={
+  "low":"http://radiokstreams.cce.umn.edu:8056/;", 
+  "medium":"http://radiokstreams.cce.umn.edu:8128/;", 
+  "high":"http://radiokstreams.cce.umn.edu:8256/;", 
+  "higher":"http://radiokstreams.cce.umn.edu:8256/;", 
+  "broken":"http://radiokstreams.cce.umn.edu:8168/;"
+};
+
+//http://wtbu.bu.edu:1800/listen.m3u
+
+
+var secondInterval;
+var sleepSeconds=0;
+var dialInterval;
+var stateInterval;
+var eventStack=[];
+var recentSong={};
+var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
+var recentSongs={};
+
+
+var totdDownloads=[];
+var wrsDownloads=[];
+var spotlightImage="";
 //// state changing functions
 function checkInternet() {
   var xhr = new  XMLHttpRequest;
@@ -110,50 +133,26 @@ function init(){
   dbuga('init()');
   }
 function onDeviceReady(){
-  dbuga('onDeviceReady()');
+  eventStack.push('onDeviceReady()');
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
   document.addEventListener("resume", appResumed, false);
   document.addEventListener("pause", appPaused, false);
   state.deviceReady=true;
   state.appActive=true;
-
-
-
-/*
-  //dbuga("onDeviceReady() device.platform="+device.platform);
-  if (device.platform == "Android") {
-    android=true;
-    }
-  if (device.platform == "iOS") {
-    ios=true;
-    }
-  if (device.platform == "browser") {
-    
-    }
-  if(android){returnFalse=" return false;";}
-
-  if(android){ 
-    singMedia = new Media("/android_asset/www/sounds/singing.mp3", singSuccess, singError, singStatusCallback);
-    }
-  if(ios){
-    singMedia = new Media("sounds/singing.mp3", singSuccess, singError, singStatusCallback);
-    }
-  //dbuga("onDeviceReady() completed");
-*/
   checkConnection();
   checkInternet();
   resumeInit();
   }
 function appResumed(){
-  dbuga('appResumed()');
+  state.appActive=true;
   eventStack.push("App resumed");
   }
 function appPaused(){
-  dbuga('appPaused()');
+  state.appActive=false;
+  eventStack.push("App paused");
   }
 
-var allowAjax=true;
 function stateTicker(){
   graphState();
   processEvents();
@@ -172,40 +171,8 @@ function processEvents(){
 
 
 
-var debugging=true;
 
-var retryInterval;
-var retryAttempts=0;
-var retrying=false;
 
-var uiPlaying=false;
-
-var singMedia;
-var singing=false;
-var singStatusNum=0;
-
-var myStreamUrl="";
-var streamPlaying=false;
-var streamCreated=false;
-
-var ios=false;
-var iosStreamPlaying=false;
-var iosStreamStatus=-1;
-var iosStreamAudio={};
-iosStreamAudio.readyState=-1;
-var android=false;
-var androidStreamPlaying=false;
-var androidStreamStatus=-1;
-var androidStreamMedia={};
-// add functions in case object is referenced before created
-androidStreamMedia.stop=new Function("{dbuga('stop() nothing android');}");
-androidStreamMedia.release=new Function("{dbuga('release() nothing android');}");
-
-var connection=true;
-var connectionMessage="";
-var stateMessage="";
-var alarming=false;
-var bufferTimeout;
 function stopStream(){
   //dbuga('stopStream()');
   if(android){
@@ -218,7 +185,7 @@ function stopStream(){
     streamPlaying=false;
     }
   }
-var waitEvents=0;
+
 
 function createStream(){
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
@@ -342,38 +309,6 @@ function playStream(){
     //connectStream();
     }
   }
-function androidStatusCallback(theStatus){
-  var prevStatus=androidStreamStatus;
-  androidStreamStatus=theStatus;
-  dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus] +" prevStatus:"+prevStatus);
-  if(androidStreamStatus==2){
-    androidStreamPlaying=true;
-    streamPlaying=true;
-    singing=false;
-    retrying=false;
-    uiPlaying=true;
-    stateMessage="Streaming...";
-    if(prevStatus==1){updateNowPlaying();}    
-    }
-  else{
-    androidStreamPlaying=false;
-    streamPlaying=false;
-    }
-  if((uiPlaying)&&(androidStreamStatus==4)&&(prevStatus==2)){
-    // interrupted
-    stateMessage="Interrupted, retrying...";
-    startRetrying();
-    }
-  }
-
-function androidError(er){
-  //dbuga("androidError "+JSON.stringify(er))
-  }
-function androidSuccess(){
-  //dbuga('androidSuccess');
-  }
-
-
 function retryTick(){
   if(retrying==true){
     if((retryAttempts>10)&&(retryAttempts%5==0)){
@@ -408,107 +343,6 @@ function retryTick(){
       retrying=false;
       buttonOff("listen", "playpause");      
       }
-    }
-  }
-function readyStateDisplay(readyState){
-  readyState=Number(readyState);
-  var readyString="";
-  for(var r=0; r<readyState; r++){readyString+="&nbsp;*";}
-  if(debugging){document.getElementById("readyStateDiv").innerHTML=readyString;}
-  }
-function stateTick(){
-  if(ios){
-    readyStateDisplay(iosStreamAudio.readyState);
-    }
-  if(android){
-    //readyStateDisplay(androidStreamMedia.readyState);// need to set listener?
-    }
-  // lost a connection?
-  var wasConnected=connection;
-/* ////  
-  if((navigator.connection.type ==Connection.NONE)||(navigator.connection.type =="none")){
-    connection=false;
-    connectionMessage="Try again later...we are not connecting.";
-    }
-  else{
-    connection=true;
-    //connectionMessage=navigator.connection.type +" connection";
-    connectionMessage="";
-    }
-*/
-
-  if(connection==false){ // not connected
-    if(wasConnected==true){
-      //dbuga('Lost connection');
-      connectionMessage="Lost connection...";
-      if(ios){
-        if(uiPlaying){
-          streamPlaying=false;
-          iosStreamPlaying=false;
-          //startRetrying();
-          }
-        }
-      }
-    // always update state if no connection
-    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=stateMessage;
-    document.getElementById('page_listen_content_djDiv').innerHTML=connectionMessage;
-    }
-  else{// is connected
-    if(wasConnected==false){
-      dbuga('reconnected so create stream then retry in one sec retrying='+retrying);
-      createStream();////
-      if(uiPlaying){
-        window.setTimeout("startRetrying()", 5000);
-        }
-      //update because connection restored on this tick
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=stateMessage;
-      document.getElementById('page_listen_content_djDiv').innerHTML=connectionMessage;
-      }
-    }
-  if((uiPlaying)&&(streamPlaying==false)){
-    if(stateMessage != ""){
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=stateMessage;
-      document.getElementById('page_listen_content_djDiv').innerHTML=connectionMessage;
-      }
-    }
-  debugState();
-  }
-function debugState(){
-  if(debugging==false){
-    document.getElementById("stateDiv").style.display="none";
-    }
-  else{
-    var stateDiv=document.getElementById("stateDiv");
-    stateDiv.style.display="block";
- 
-    stateDiv.innerHTML=""+rnd(210)+"<br />";
-    
-    ////stateDiv.innerHTML+="navigator.connection.type="+navigator.connection.type+"<br />";
-    stateDiv.innerHTML+="waitEvents="+waitEvents+"<br />";
-    //stateDiv.innerHTML+="connection="+connection+"<br />";
-    //stateDiv.innerHTML+="stateMessage="+stateMessage+"<br />";
-    //stateDiv.innerHTML+="connectionMessage="+connectionMessage+"<br />";
-    stateDiv.innerHTML+="retrying="+retrying+"<br />";
-    stateDiv.innerHTML+="retryAttempts="+retryAttempts+"<br />";
-
-    if(android){
-      //stateDiv.innerHTML+="android="+android+"<br />";
-      stateDiv.innerHTML+="androidStreamPlaying="+ androidStreamPlaying + "<br />";
-      stateDiv.innerHTML+="androidStreamStatus="+ androidStreamStatus + "<br />";
-      }
-    if(ios){
-      //stateDiv.innerHTML+="ios="+ios+"<br />";
-      stateDiv.innerHTML+="iosStreamAudio.readyState="+iosStreamAudio.readyState+"<br />";
-      stateDiv.innerHTML+="iosStreamPlaying="+iosStreamPlaying+"<br />";
-      }
-    stateDiv.innerHTML+="uiPlaying="+uiPlaying+"<br />";
-    stateDiv.innerHTML+="streamPlaying="+streamPlaying+"<br />";
-    stateDiv.innerHTML+="streamCreated="+ streamCreated +"<br />";
-    stateDiv.innerHTML+="myStreamUrl ="+ myStreamUrl +"<br />";
-
-  
-    stateDiv.innerHTML+="singing="+singing+"<br />";
-    stateDiv.innerHTML+="singStatusNum="+singStatusNum+"<br />";
     }
   }
 // -------------- events --------------------
@@ -609,10 +443,7 @@ function genericGet(itemName){
   
   return value;
   }
-//var readyTimeout;
-var minuteInterval;
-var dimensionInterval;
-document.addEventListener("deviceready", onDeviceReady, false);
+
 function resumeInit(){
   //dbuga('init 0.0');
   currentPage="listen";
@@ -650,61 +481,31 @@ function resumeInit(){
   //dbug('init okay');
   //window.setInterval("hostReachable('')", 10000);
   }
-var eventStack=[];
 function onOffline() {
   dbuga('onOffline()');
   state.online=false;
   state.internet=false;
   eventStack.push("online false");
   }
-var returnFalse="";
 function onOnline() {
   dbuga('onOnline()');
   state.online=true;
   checkInternet();
   eventStack.push("online true");
   }
-var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
-function singStatusCallback(theStatus){
-  singStatusNum=theStatus;
-  //dbuga('singMedia status '+theStatus+" "+statusArray[theStatus]+" singing="+singing);
-  if((theStatus==4)&&(singing==true)){
-    singMedia.play();
-    }
-  }
-function singError(er){
-  //dbuga("singError "+JSON.stringify(er))
-  }
-function singSuccess(){
-  //dbuga('singSuccess');
-  //singMedia.play();
-  }
- document.addEventListener("backbutton", onBackKeyDown, false);
   
-function onBackKeyDown() {
-  // Handle the back button
-      selectPage("listen");
-      buttonOn("footnav", "listen");
-      buttonOff("footnav", "request");
-  }
 
-var songs=[];
 
-var secondInterval;
-var sleepSeconds=0;
-var dialInterval;
-var stateInterval;
+
 function getRecentSong(){
   //dbuga('getRecentSong()');
   //return false;
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_song";
-  if(allowAjax){
       $.ajax({
       url: feedUrl,
       dataType: "text",        //  new bit
       success: function(data) {parseRecentSong(data);}
       });
-    }
   }
 function getRecentSongs(){
   //dbuga('getRecentSongs()');
@@ -712,19 +513,14 @@ function getRecentSongs(){
   //var feedUrl="http://www.radiok.org/";
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_songs";
   //var feedUrl="recent_songs.txt";
-  if(allowAjax){
       $.ajax({
       url: feedUrl,
       dataType: "text",        //  new bit
       success: function(data) {parseRecentSongs(data);}
       });
-    }
   }
 // remove errors on publish
-function replaceAll(find, replace, str) {
-  var parts=str.split(find);
-  return parts.join(replace);
-}
+
 function parseRecentSongs(theData){
   recentSongs=JSON.parse(theData);
   var songKeys=Object.keys(recentSongs);
@@ -744,29 +540,8 @@ function parseRecentSongs(theData){
     }
   updatePlaylist();
   }
-var recentSong={};
-var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
-var recentSongs={};
-var testData="";
-/*
-{
-"553732":{
-  "song_id":"553732",
-  "song_timestamp":"2015-03-16 09:28:31",
-  "song_artist":"Homeless & Big Cats",
-  "song_title":"Forklifts",
-  "song_album":"Single",
-  "song_length":"3:00",
-  "dj":"Michael L",
-  "show_name":"Monday 9-12pm",
-  "disk_id":"39766",
-  "playlist_id":"8690",
-  "show_category":"Variety Shift"
-  }
-}
-*/
+
 function parseRecentSong(theData){
-  testData=theData;
   recentSong=JSON.parse(theData);
   var songKeys=Object.keys(recentSong);
   //dbuga("parseRecentSong("+songKeys.length+")");
@@ -794,9 +569,7 @@ function parseRecentSong(theData){
       }
     }
   }
-var totdDownloads=[];
-var wrsDownloads=[];
-var spotlightImage="";
+
 function getDownloads(){
   //dbuga("getDownloads()");
   getCalendar();
@@ -825,10 +598,8 @@ function getDownloads(){
 
 
   }
-var dbugItem="";
 // remove errors on publish
-var monToMM={"Jan":"01", "Feb":"02", "Mar":"03", "Apr":"04", "May":"05", "Jun":"06", "Jul":"07", "Aug":"08", "Sep":"09", "Oct":"10", "Nov":"11", "Dec":"12"};
-var monToMonth={"Jan":"January", "Feb":"February", "Mar":"March", "Apr":"April", "May":"May", "Jun":"June", "Jul":"July", "Aug":"August", "Sep":"September", "Oct":"October", "Nov":"November", "Dec":"December"};
+
 function parseDownloads(theXml, source){
   //dbuga("parseDownloads() "+source);
   if(source=="Track of the Day"){
@@ -966,13 +737,7 @@ function updateWrsDownloads(){
   //wrsScrollerTimeout=window.setTimeout("refreshWrsHolderScroll()", 100);
   }
 
-//var wrsScrollerTimeout;
-/*
-function refreshWrsHolderScroll(){
-  wrsHolderScroll.refresh();
-  }
-var wrsHolderScroll;
-*/
+
 
 function updateTotdDownloads(){
   //dbuga('updateTotdDownloads()');
@@ -1004,13 +769,7 @@ function updateTotdDownloads(){
   document.getElementById('totdHolder').style.height=grid*51+'px'; 
   //totdScrollerTimeout=window.setTimeout("refreshTotdHolderScroll()", 100);
   }
-/*
-var totdScrollerTimeout;
-function refreshTotdHolderScroll(){
-  totdHolderScroll.refresh();
-  }
-var totdHolderScroll;
-*/
+
 
 function returnGradStyle(){
   var gradStyle="background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0%, #F2F2F2), color-stop(2%, #F2F2F2), color-stop(3%, #EDEDED), color-stop(50%, #fff), color-stop(100%, #fff));";
@@ -1085,7 +844,6 @@ function populateCalendar(){
 
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
   var htmlBlock="";
-//<a href="javascript:remoteLink('" +="" eventdata.url="" +"');"="">Drone Not Drones</a>
   for(var e=0; e<calendar.length; e++){
     var eventData=calendar[e];
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
@@ -1190,70 +948,8 @@ function parseCalendarRss(theRss){
   );
   populateCalendar();
 }
-//getCalendar()
-
-/*
-  var blocks=theScrape.split('<div class="titlehead">');
-  for (var b=1; b<blocks.length; b++){
-    var block=blocks[b];
-    var timeParts=block.split('<div class="time">');
-    var timePlus=timeParts[1];
-    var endDivParts=timePlus.split('</div>');
-    var time=endDivParts[0];
-    var dateLink=endDivParts[1];
-    var dateLinkParts=dateLink.split(" - ");
-    var date=dateLinkParts[0];
-    var link=dateLinkParts[1];
-    var linkParts=link.split('"');
-    var url='http://radiok.org'+linkParts[1];
-    var titleParts=link.split('>');
-    var title=titleParts[1];
-    titleParts=title.split('<');
-    title=titleParts[0];
-    var localParts=block.split('<div class="local">');
-    var local=localParts[1];
-    localParts=local.split('</div>');
-    local=localParts[0];
-    var rowObj={"date":date, "time":time, "performers":title, "venue":local, "url":url}; 
-    calendar.push(rowObj);
-    }
-  //dbuga('parseCalendarRss completed');
-   
-  populateCalendar();
-  */
-
-function parseCalendarScrape(theScrape){// obsolete
-  console.log('parseCalendar()');
-  var blocks=theScrape.split('<div class="titlehead">');
-  for (var b=1; b<blocks.length; b++){
-    var block=blocks[b];
-    var timeParts=block.split('<div class="time">');
-    var timePlus=timeParts[1];
-    var endDivParts=timePlus.split('</div>');
-    var time=endDivParts[0];
-    var dateLink=endDivParts[1];
-    var dateLinkParts=dateLink.split(" - ");
-    var date=dateLinkParts[0];
-    var link=dateLinkParts[1];
-    var linkParts=link.split('"');
-    var url='http://radiok.org'+linkParts[1];
-    var titleParts=link.split('>');
-    var title=titleParts[1];
-    titleParts=title.split('<');
-    title=titleParts[0];
-    var localParts=block.split('<div class="local">');
-    var local=localParts[1];
-    localParts=local.split('</div>');
-    local=localParts[0];
-    var rowObj={"date":date, "time":time, "performers":title, "venue":local, "url":url}; 
-    calendar.push(rowObj);
-    }
-  //dbuga('parseCalendar completed');
-  populateCalendar();
-  }
 
 
-var snoozeMinutes=0;
 function secondTick(){
   var nowDate=new Date();
   var nowMod=nowDate.getHours()*60+nowDate.getMinutes();
@@ -1305,7 +1001,6 @@ function dimensionTick(){
     }
   stateTick();
   }
-var currentPage="";
 
 function selectCurrentPage(){
   selectPage(currentPage);
@@ -1339,7 +1034,6 @@ function minuteOfDayToHalf(mod){
   if(Math.floor(mod/60)%12==Math.floor(mod/60)%24){ampm=0;}
   return ampm;
   }
-var dials=[];
 function dialTick(){
   //dbug('');
   //dbuga("mouse: "+mouseX+" "+mouseY);
@@ -1349,7 +1043,6 @@ function dialTick(){
     updateAlarmDisplay();
     }
   }
-var prevDeltaY=0;
 function updateAlarmDisplay(){
   var pMod=genericGet("alarmMinuteOfDay");
   //dbug("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
@@ -1397,7 +1090,8 @@ function updateAlarmDisplay(){
     }
   //dbuga('okay');
   }
-var initHistory=[0,0,0,0,0,0,0,0];
+
+
 function populateDials(){
   //dbuga("populateDials() 0");
 
@@ -1470,7 +1164,6 @@ function showPage(thePage){
 function currentOpacity1(){
   document.getElementById('page_'+currentPage).style.opacity="1";
   }
-var hideTimeout;
 
 function hidePage(thePage){
   document.getElementById('page_'+thePage).style.opacity=hideByPage[thePage].opac;
@@ -1484,14 +1177,6 @@ function hideTick(){
       }
     }
   }
-
-var ww=300;
-var wh=400;
-var leftOffset=0;
-var topOffset=0;
-var grid=32;
-var navDelay=400;
-var imagePath="images_small";
 function populateContainer(){
   hideByPage={};
   buttonMap=[];
@@ -1682,261 +1367,7 @@ function selectTwistie(theTwistie){
       }
     }
   }
-var selectedTwistie=-1;
 
-var hideByPage={};
-var buttonMap=[];
-var pageArray=[];
-var heightsByPage={};
-var pages=[
-{"name":"footnav", "hideLeft":0, "hideTop":0,  "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":1, "height":64,
-   "buttons":[
-    {"name":"listen", "top":58, "left":0, "height":6, "width":16},
-    {"name":"request", "top":58, "left":16, "height":6, "width":16},
-    {"name":"donate", "top":58, "left":32, "height":6, "width":16}
-  ],
-  "contents":[
-  ]
-},
-{"name":"listen", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":1, "height":58,
-  "buttons":[
-    {"name":"more", "top":0, "left":0, "height":7, "width":16},
-    {"name":"playlist", "top":0, "left":32, "height":7, "width":16},
-    {"name":"playpause", "top":38, "left":12, "height":12, "width":24}
-  ],
-  "contents":[
-    {"name":"nowPlayingDiv", "top":29.5, "left":1, "width":46, "height":8, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":""},
-    {"name":"djDiv", "top":51, "left":1, "width":46, "height":8, "lineHeight":2.5, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":""}
-  ]
-},
-{"name":"more", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
-  "buttons":[
-    {"name":"done", "top":0, "left":39, "height":7, "width":9},
-    {"name":"extras", "top":11, "left":9, "height":6, "width":30},
-    {"name":"alarm", "top":18, "left":9, "height":6, "width":30},
-    {"name":"settings", "top":25, "left":9, "height":6, "width":30},
-    {"name":"faqs", "top":32, "left":9, "height":6, "width":30}
-  ],
-  "contents":[
-  ]
-},
-{"name":"alarm", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
-  "buttons":[
-    {"name":"cancel", "top":0, "left":36, "height":7, "width":12},
-    {"name":"timeset", "top":21, "left":9, "height":12, "width":30},
-    {"name":"set", "top":35, "left":9, "height":6, "width":30},
-  ],
-  "contents":[
-    {"name":"alarmTimeHour", "top":22, "left":15, "width":6, "height":10, "lineHeight":4, "fontSize":4, "fontFamily":"akzibold", "color":"black", "textAlign":"right", "defaultText":"hh"},
-    {"name":"alarmTimeMin", "top":22, "left":21, "width":6, "height":10, "lineHeight":4, "fontSize":4, "fontFamily":"akzibold", "color":"black", "textAlign":"left", "defaultText":"mm"},
-    {"name":"alarmTimeAmPm", "top":22, "left":27, "width":8, "height":10, "lineHeight":4, "fontSize":4, "fontFamily":"akzibold", "color":"black", "textAlign":"center", "defaultText":"ampm"},
-  ]
-},
-{"name":"armed", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":64,
-  "buttons":[
-    {"name":"cancelalarm", "top":17, "left":9, "height":6, "width":30},
-  ],
-  "contents":[
-    {"name":"nowtime", "top":30, "left":8, "width":32, "height":14, "lineHeight":8, "fontSize":8, "fontFamily":"akzilight", "color":"#fff", "textAlign":"center", "defaultText":"00:00:00"},
-    {"name":"nowAmPm", "top":34, "left":39, "width":8, "height":7, "lineHeight":4, "fontSize":2.9, "fontFamily":"akzilight", "color":"#fff", "textAlign":"center", "defaultText":"AM"},
-    {"name":"alarmtext", "top":47, "left":1, "width":46, "height":12, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzilight", "color":"white", "textAlign":"center", "defaultText":"alarmtext"}
-  ]
-},
-{"name":"wakeup", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":64,
-  "buttons":[
-    {"name":"alarmoff", "top":17, "left":9, "height":6, "width":30},
-    {"name":"snooze", "top":47, "left":9, "height":6, "width":30},
-  ],
-  "contents":[
-    {"name":"nowtime", "top":30, "left":8, "width":32, "height":14, "lineHeight":8, "fontSize":8, "fontFamily":"akzilight", "color":"#fff", "textAlign":"center", "defaultText":"00:00:00"},
-    {"name":"nowAmPm", "top":34, "left":39, "width":8, "height":7, "lineHeight":4, "fontSize":2.9, "fontFamily":"akzilight", "color":"#fff", "textAlign":"center", "defaultText":"AM"}
-  ]
-},
-{"name":"shop", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
-  "buttons":[
-    {"name":"done", "top":0, "left":39, "height":7, "width":9},
-  ],
-  "contents":[
-    {"name":"results", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="resultsHolder"><div id="resultsScroller"></div></div>'}
-  ]
-},
-{"name":"settings", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
-  "buttons":[
-    {"name":"done", "top":0, "left":39, "height":7, "width":9},
-    {"name":"medium", "top":14, "left":9, "height":6, "width":30},
-    {"name":"higher", "top":21, "left":9, "height":6, "width":30},
-    {"name":"broken", "top":28, "left":9, "height":6, "width":30}
-  ],
-  "contents":[
-  ]
-},
-{"name":"request", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
-  "buttons":[
-    {"name":"done", "top":0, "left":39, "height":7, "width":9},
-    {"name":"phone", "top":11, "left":9, "height":6, "width":30},
-    {"name":"email", "top":18, "left":9, "height":6, "width":30},
-    {"name":"tweet", "top":25, "left":9, "height":6, "width":30}
-  ],
-  "contents":[
-  ]
-},
-{"name":"playlist", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "buttons":[
-    {"name":"refresh", "top":0, "left":36, "height":7, "width":12},
-  ],
-  "contents":[
-    {"name":"playlist", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="playlistHolder"><div id="playlistScroller"></div></div>'}
-  ]
-},
-{"name":"events", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "buttons":[
-    {"name":"done", "top":0, "left":39, "height":7, "width":9},
-  ],
-  "contents":[
-    {"name":"events", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="calendarHolder"><div id="calendarScroller"></div></div>'}
-  ]
-},
-{"name":"extras", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "buttons":[
-    {"name":"done", "top":0, "left":39, "height":7, "width":9},
-    {"name":"events", "top":9, "left":2, "height":11, "width":11},
-    {"name":"totd", "top":21, "left":2, "height":11, "width":11},
-    {"name":"wrs", "top":33, "left":2, "height":11, "width":11},
-    {"name":"vc", "top":45, "left":2, "height":11, "width":11},
-  ],
-  "contents":[
-    {"name":"eventsDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','events');\">EVENTS</a><br />Calendar of Upcoming Events."},
-    {"name":"totdDesc", "top":21, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','totd');\">TRACK OF THE DAY</a><br />Every day Radio K offers up a fresh new track for you to download. It's just one more way that Real College Radio makes Real Life (a little more) Rockin'."},
-    {"name":"wrsDesc", "top":33, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">WEEKLY RELEASE SPOTLIGHT</a><br />Each week we comb through mountains of new music to find that one perfect album that we (and you) almost missed."},
-    {"name":"vcDesc", "top":45, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','vc');\">VINYL CLOSET</a><br />A digitized archive of Studio K performances from 1994 to 2006 that feature seminal Minnesota artists that have left an indelible mark on the Minnesota music scene."},
-  ]
-},
-{"name":"totd", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "buttons":[
-    {"name":"done", "top":0, "left":39, "height":7, "width":9},
-    {"name":"stotd", "top":0, "left":0, "height":7, "width":12},
-  ],
-  "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="totdHolder"><div id="totdScroller"></div></div>'}
-  ]
-},
-{"name":"wrs", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "buttons":[
-    {"name":"done", "top":0, "left":39, "height":7, "width":9},
-  ],
-  "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="wrsHolder"><div id="wrsScroller"></div></div>'}
-  ]
-},
-{"name":"faqs", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
-  "buttons":[
-    {"name":"done", "top":0, "left":39, "height":7, "width":9}
-  ],
-  "contents":[
-    {"name":"faqsDiv", "top":7.5, "left":0, "height":45.5, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":"How do I become a rich and<br>famous Radio K DJ?"},
-    {"name":"regentsDiv", "top":53, "left":0, "height":5, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":"How do I become a rich and<br>famous Radio K DJ?"}
-  ]
-}];
-// test broken button
-//    {"name":"broken", "top":28, "left":9, "height":6, "width":30}
-
-function dbuga(theString){
-  if(debugging){
-    document.getElementById('debugDiv').style.display="block";
-    document.getElementById('debugDiv').innerHTML+="<br />"+theString;
-    }
-  }
-
-function dbug(theString){
-  if(debugging){
-    document.getElementById('debugDiv').style.display="block";
-    document.getElementById('debugDiv').innerHTML=theString;
-    }
-  }
-function rnd(theSeed){
-  //return 0;
-  return Math.floor(Math.random()*theSeed);
-  }
-function range(theRange){
-  //return 0;
-  return rnd(theRange)-theRange/2;
-  }
-
-function gestureStart(event) {
-  //event.preventDefault(); 
-  }
-function gestureChange(event) {
-  //event.preventDefault(); 
-  }
-function gestureEnd(event) {
-  //event.preventDefault(); 
-  }
-
-function touchCancel(event){
-  event.preventDefault(); 
-  }
-var debugCount=0;
-function touchStart(event){
-  if(event.touches.length>3){
-    debugCount++;
-    if(debugCount>3){
-      debugging=true;
-      }
-    }
-  mouseX=event.touches[0].pageX;
-  mouseY=event.touches[0].pageY;
-  //event.preventDefault(); 
-  handleTouchEvent(event);
-  }
-function mousedown(e){
-  //dbug('mousedown(e) touchingDial='+touchingDial);
-  mouseX=e.pageX;
-  mouseY=e.pageY;
-  //dbug('moused '+ e.target.id);
-  handleTouchEvent({"type":"touchstart", "touches":[{"pageX":e.clientX, "pageY":e.clientY, "target":e.target}]});
-  }
-
-function mousemove(e){
-  mouseX=e.pageX;
-  mouseY=e.pageY;
-  }
-function touchMove(event){
-  if((currentPage !="totd")&&(currentPage !="wrs")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
-    event.preventDefault();
-    }
-  if(currentPage =="alarm"){
-    mouseX=event.touches[0].pageX;
-    mouseY=event.touches[0].pageY; 
-    }
-  if(lastTouchId.indexOf("page_")>-1){
-    event.preventDefault();
-    }
-  //dbuga('end of tm'); 
- }
-
-function touchEnd(event){
-  //dbuga('touchEnd(event) touchingDial='+touchingDial);
-  //event.preventDefault();
-  if(touchingDial==-1){
-    handleTouchEvent(event);
-    }
-  else{
-    endDialTouch();
-    }
-  }
-function moused(e){
-  //dbuga('moused '+ e.target.id);
-  //if(e.target.id=="stateDiv"){dbug('');}
-  //handleTouchEvent({"type":"touchstart", "touches":[{"pageX":e.clientX, "pageY":e.clientY, "target":e.target}]});
-  }
-
-var touchingDial=-1;
-var touching=false;
-var touchTimeout
-function mouseup(e){
-  //dbuga('mouseup(e) touchingDial='+touchingDial);
-  endDialTouch();
-  }
 function endDialTouch(){
   //dbuga(' -- endDialTouch() touchingDial='+touchingDial);
   if(touchingDial>-1){
@@ -1975,33 +1406,6 @@ function buttonOff(thePage, theButton){
   document.getElementById('page_'+thePage+'_button_'+theButton+'_on').style.opacity="0";
   }
 
-// original 2016 streams
-var urlByQuality={
-  "low":"http://radiokstreams.cce.umn.edu:8056/;", 
-  "medium":"http://radiokstreams.cce.umn.edu:8128/;", 
-  "high":"http://radiokstreams.cce.umn.edu:8256/;", 
-  "higher":"http://radiokstreams.cce.umn.edu:8256/;", 
-  "broken":"http://radiokstreams.cce.umn.edu:8168/;"
-};
-/*
-var urlByQuality={
-  "low":"http://radiokstreams.cce.umn.edu:8056/;", 
-  "medium":"http://radiokstreams.cce.umn.edu:8128/;", 
-  "high":"http://radiokstreams.cce.umn.edu:8256/;", 
-  "higher":"http://radiokstreams.cce.umn.edu:8256/;", 
-  "broken":"http://radiokstreams.cce.umn.edu:8168/;"
-};
-var urlByQuality={
-  "low":"http://wtbu.bu.edu:1800/listen.m3u", 
-  "medium":"http://wtbu.bu.edu:1800/listen.m3u", 
-  "high":"http://wtbu.bu.edu:1800/listen.m3u", 
-  "higher":"http://wtbu.bu.edu:1800/listen.m3u", 
-  "broken":"http://wtbu.bu.edu:1800/listen.m3u"
-};
-*/
-//http://wtbu.bu.edu:1800/listen.m3u
-
-
 
 function shop(artist, album, song){
   //dbuga("shop("+artist+", "+album+", "+song+")");
@@ -2016,7 +1420,7 @@ function shop(artist, album, song){
     success: function(data) {parseItunesResults(data);}
     });
   }
-// remove errors on publish
+
 function parseItunesResults(theData){
   //dbuga("parseItunesResults");
   var itunesJson=JSON.parse(theData);
@@ -2060,25 +1464,9 @@ function parseItunesResults(theData){
   document.getElementById('resultsScroller').innerHTML=htmlBlock;
   document.getElementById('resultsHolder').style.width=grid*48+'px'; 
   document.getElementById('resultsHolder').style.height=grid*51+'px'; 
-  //resultsScrollerTimeout=window.setTimeout("refreshResultsHolderScroll()", 100);
   }
-/*
-var resultsScrollerTimeout;
-function refreshResultsHolderScroll(){
-  resultsHolderScroll.refresh();
-  }
-*/
-var resultsHolderScroll;
-var calendarHolderScroll;
-var playlistHolderScroll;
-function alarmStatusChanged(alarmIsSet){
-  //dbuga("app says alarmStatusChanged("+alarmIsSet+")");
-  }
-var mouseX=0;
-var mouseY=0;
-var mouseStartX=0;
-var mouseStartY=0;
-var alarmFailsafeTimeout;
+
+
 function remoteLink(theUrl){
   if(theUrl.indexOf('mp3')>-1){
     uiPlaying=false;
@@ -2086,25 +1474,9 @@ function remoteLink(theUrl){
     buttonOff("listen", "playpause");
     if(streamPlaying){stopStream();}
     }
-  if(android){
-    var ref = window.open(theUrl, "_system");
-    }
-  if(ios){
-    var ref = window.open(theUrl, "_system");
-    }
+  var ref = window.open(theUrl, "_system");
 
 
-/*
-  //window.plugins.childBrowser.openExternal(theUrl);
-
-  if(android){
-    window.plugins.ChildBrowser.openExternal(theUrl, false);
-    }
-  if(ios){
-    window.plugins.ChildBrowser.showWebPage(theUrl, { showLocationBar: true });
-    }
-  //navigator.app.loadUrl(theUrl, {openExternal: true});
-*/
 
   //dbuga("remoteLink ran");
   }
@@ -2432,7 +1804,7 @@ function handleButton(pageName, buttonName){
       }
     }
   }
-var minuteMs=60000;
+
 function minuteTick(){
   //dbuga('minuteTick()');
   if((uiPlaying==true)&&(streamPlaying==true)){
@@ -2441,34 +1813,17 @@ function minuteTick(){
   getRecentSong();
   //dbuga('end of minuteTick()');
   }
-
-function resumeGame(){
-  //dbuga('resumeGame()');
-  return true;
-  }
-
-var remoteControlPaused=false;
 function remoteControlPause(){
-  dbuga('remoteControlPause()');
   eventStack.push("remote paused");
   state.remotePaused=true;
-
-  remoteControlPaused=true;
-  uiPlaying=false;
-  retrying=false;
-  buttonOff("listen", "playpause");
   }
 function remoteControlPlay(){
-  //dbuga('remoteControlPlay()');
-  remoteControlPaused=false;
+  eventStack.push('remote play');
   state.remotePaused=false;
-  uiPlaying=true;
-  retrying=false;
-  buttonOn("listen", "playpause");
   }
 
 
-var lastTouchId="";
+//// touch
 function handleTouchEvent(e){
   if(e.type=="touchstart"){
     if(e.touches.length==3){dbug('');}
@@ -2513,10 +1868,149 @@ function handleTouchEvent(e){
       }
     }
   }
-var alarmIncDec=1;
-//document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-//  newest functions 
 
+
+function gestureStart(event) {
+  //event.preventDefault(); 
+  }
+function gestureChange(event) {
+  //event.preventDefault(); 
+  }
+function gestureEnd(event) {
+  //event.preventDefault(); 
+  }
+
+function touchCancel(event){
+  event.preventDefault(); 
+  }
+function touchStart(event){
+  if(event.touches.length>3){
+    debugCount++;
+    if(debugCount>3){
+      debugging=true;
+      }
+    }
+  mouseX=event.touches[0].pageX;
+  mouseY=event.touches[0].pageY;
+  handleTouchEvent(event);
+  }
+function mouseup(e){
+  //dbuga('mouseup(e) touchingDial='+touchingDial);
+  endDialTouch();
+  }
+function mousedown(e){
+  mouseX=e.pageX;
+  mouseY=e.pageY;
+  handleTouchEvent({"type":"touchstart", "touches":[{"pageX":e.clientX, "pageY":e.clientY, "target":e.target}]});
+  }
+
+function mousemove(e){
+  mouseX=e.pageX;
+  mouseY=e.pageY;
+  }
+function touchMove(event){
+  if((currentPage !="totd")&&(currentPage !="wrs")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
+    event.preventDefault();
+    }
+  if(currentPage =="alarm"){
+    mouseX=event.touches[0].pageX;
+    mouseY=event.touches[0].pageY; 
+    }
+  if(lastTouchId.indexOf("page_")>-1){
+    event.preventDefault();
+    }
+  }
+
+function touchEnd(event){
+  if(touchingDial==-1){
+    handleTouchEvent(event);
+    }
+  else{
+    endDialTouch();
+    }
+  }
+function moused(e){}
+
+
+// utilities
+function dbuga(theString){
+  if(debugging){
+    document.getElementById('debugDiv').style.display="block";
+    document.getElementById('debugDiv').innerHTML+="<br />"+theString;
+    }
+  }
+
+function dbug(theString){
+  if(debugging){
+    document.getElementById('debugDiv').style.display="block";
+    document.getElementById('debugDiv').innerHTML=theString;
+    }
+  }
+function graphState(){
+  var pi=Math.PI;
+  var canv=document.getElementById('stateCanvas');
+  canv.height=Math.floor(wh*.75);
+  canv.style.top=wh*.125+"px";
+  canv.style.backgroundColor="rgba(50,50,50,.5)";
+  var ctx=canv.getContext('2d');
+  var w=canv.width;
+  var h=canv.height;
+  var stepPx=h/stateKeys.length;
+  var pad=w/20;
+  ctx.lineWidth=w/40;
+  ctx.font = Math.floor(stepPx/2.5)+'px Helvetica';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  for(var n=0; n<stateKeys.length; n++){
+    var textColor="#aaa";
+    var bgColor="#444";
+    var thisKey=stateKeys[n];
+    var thisVal=state[thisKey];
+    if(typeof thisVal=="boolean"){
+      if(thisVal){
+        textColor="#fff";
+        bgColor="#ccc";
+        }
+      ctx.strokeStyle = textColor;
+      ctx.beginPath();
+      ctx.arc(stepPx/2,stepPx*n+stepPx/2, stepPx/4, 0, pi*2,true);
+      ctx.fillStyle = bgColor;
+      ctx.fill();
+      ctx.stroke();
+      }
+    if(typeof thisVal=="number"){
+      if(thisVal>0){
+        textColor="#fff";
+        bgColor="#888";
+        }
+      ctx.fillStyle = textColor;
+      ctx.fillText(thisVal,pad,stepPx*n+stepPx/2);
+      } 
+    if(typeof thisVal=="string"){
+      if(thisVal != ""){
+        textColor="#fff";
+        bgColor="#888";
+        }
+      ctx.fillStyle = textColor;
+      ctx.fillText(thisVal,0,stepPx*n+stepPx/2);
+      } 
+    ctx.fillStyle = textColor;
+    ctx.fillText(thisKey,stepPx*1.5,stepPx*n+stepPx/2);
+    }
+  }
+function rnd(theSeed){
+  //return 0;
+  return Math.floor(Math.random()*theSeed);
+  }
+function range(theRange){
+  //return 0;
+  return rnd(theRange)-theRange/2;
+  }
+
+function replaceAll(find, replace, str) {
+  var parts=str.split(find);
+  return parts.join(replace);
+}
 
 </script>
 </head>
