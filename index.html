@@ -39,7 +39,17 @@ var stateKeys=Object.keys(state);
 var staleStack=[];
 
 var myStreamUrl="";
-var iosStreamAudio;
+var iosStreamAudio={};
+      iosStreamAudio.onabort = null;
+      iosStreamAudio.onemptied = null;
+      iosStreamAudio.onerror = null;
+      iosStreamAudio.onpause = null;
+      iosStreamAudio.onseking = null;
+      iosStreamAudio.onended = null;
+      iosStreamAudio.onstalled = null;
+      iosStreamAudio.onwaiting = null;
+      iosStreamAudio.onplay = null;
+      iosStreamAudio.onplaying = null;
 var debugging=true;
 var waitEvents=0;
 
@@ -181,12 +191,20 @@ function processEvents(){
       eventStash.push(evt);
       }
     eventStack=[];
-
     for (var e=0; e<eventStash.length; e++){
       var evt=eventStash[e];
 
+
       if(evt=="ui pause"){
         iosStreamAudio.pause();
+        evt+=" - iosStreamAudio.pause()"; 
+        }
+        
+      if(evt=="audio stalled"){
+        iosStreamAudio.pause();
+        state.audioPlaying=false;
+        state.audioCreated=false;
+        buttonOff("listen", "playpause");
         evt+=" - iosStreamAudio.pause()"; 
         }
       
@@ -201,10 +219,14 @@ function processEvents(){
           }
         e=eventStash.length; //cease in case of twitchy user 
         }
+
       if((evt=="audio created")&&(state.uiPlaying)){
         evt+=" - iosStreamAudio.play()";
         iosStreamAudio.play();
         }
+
+
+
       staleStack.unshift(evt);
       if(evt=="audio play"){
         state.audioPlaying=true;
@@ -243,7 +265,6 @@ function createStream(){
   state.waitEvents=0;
 
   if(state.ios){
-    if(state.audioCreated){
       iosStreamAudio.onabort = null;
       iosStreamAudio.onemptied = null;
       iosStreamAudio.onerror = null;
@@ -255,8 +276,6 @@ function createStream(){
       iosStreamAudio.onplay = null;
       iosStreamAudio.onplaying = null;
 
-
-      }
     iosStreamAudio = null;
     iosStreamAudio = new Audio(myStreamUrl);
     iosStreamAudio.addEventListener("abort", function() {
