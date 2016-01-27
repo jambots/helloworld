@@ -173,12 +173,12 @@ var staleStack=[];
 function processEvents(){
   if(eventStack.length>0){
     dbug('processEvents()');
-    var staleString=stailStack.join('<br />');
+    var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
       var evt=eventStack[e];
       eventStash.push(evt);
-      staleStack.push(evt);
+      staleStack.unshift(evt);
       }
     eventStack=[];
     staleStack.push(" ");
@@ -199,7 +199,8 @@ function processEvents(){
         iosStreamAudio.play();
         }
       }
-    dbuga('<span style="color:red;">'+staleString+'</span>');
+    dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
+    //dbuga(staleString);
     }//end if event stack 
   }
 
