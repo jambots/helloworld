@@ -153,7 +153,7 @@ function appPaused(){
   eventStack.push("App paused");
   }
 
-function stateTicker(){
+function stateTick(){
   graphState();
   processEvents();
   }
@@ -386,30 +386,18 @@ function startRetrying(){
   connectionMessage="";
   }
 function togglePlaying(){
-  dbuga('togglePlaying() uiPlaying='+uiPlaying);
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
-  if(uiPlaying==true){
+  document.getElementById('page_listen_content_djDiv').innerHTML="";
+  if(state.uiPlaying==true){
     state.uiPlaying=false;
     eventStack.push('ui pause');
-    uiPlaying=false;
-    retrying=false;
     buttonOff("listen", "playpause");
-    stopStream();
-    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
     }
   else{
     state.uiPlaying=true;
     eventStack.push('ui play');
-
     buttonOn("listen", "playpause");
-    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Connecting...";
-    uiPlaying=true;
-    
-    playStream();
-  
-    //startRetrying();
     }
-  document.getElementById('page_listen_content_djDiv').innerHTML="";
   }
 
 
@@ -459,7 +447,7 @@ function resumeInit(){
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', minuteMs);
   dialInterval=setInterval('dialTick()', 25);
-  stateInterval=setInterval('stateTicker()', 3000);
+  stateInterval=setInterval('stateTick()', 1000);
   //dbuga(' init 4');
   //minuteTick();
   getFaqs();
@@ -467,8 +455,7 @@ function resumeInit(){
   //retryInterval=window.setInterval("retryTick()", 15000);    
 
   selectPage("listen");
-  document.addEventListener("backbutton", onBackKeyDown, false);
-  //dbuga(' init 7');
+   //dbuga(' init 7');
   getRecentSong();
 
   document.addEventListener("offline", onOffline, false);
@@ -1806,12 +1793,10 @@ function handleButton(pageName, buttonName){
   }
 
 function minuteTick(){
-  //dbuga('minuteTick()');
-  if((uiPlaying==true)&&(streamPlaying==true)){
-    updateNowPlaying();
-    }
+  //if((uiPlaying==true)&&(streamPlaying==true)){
+  //  updateNowPlaying();
+  //  }
   getRecentSong();
-  //dbuga('end of minuteTick()');
   }
 function remoteControlPause(){
   eventStack.push("remote paused");
