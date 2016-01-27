@@ -16,25 +16,39 @@ var state={
 "deviceReady":false,
 "appActive":false,
 "online":false,
-"internet":false
+"internet":false,
+"uiPlaying":false,
+"audioPlaying":false,
+"remotePaused":false,
+"alarmSet":false,
+"alarmTriggered":false
 }
 
 var stateTree=[
   {"name":"deviceReady", "message":"DEVICE NOT READY"},
   {"name":"appActive", "message":"BACKGROUND"},
   {"name":"online", "message":"NO CONNECTION"},
-  {"name":"internet", "message":"NO INTERNET"}
+  {"name":"internet", "message":"NO INTERNET"},
+  {"name":"uiPlaying", "message":"READY"},
+  {"name":"audioPlaying", "message":"PLAYING"},
+  {"name":"remotePaused", "message":"REMOTE PAUSE"},
+  {"name":"alarmSet", "message":"SET"},
+  {"name":"alarmTriggered", "message":"WAKE"}
 ];
 function graphState(){
+  var pi=Math.PI;
   var canv=document.getElementById('stateCanvas');
+  canv.height=Math.floor(wh*.75);
+  canv.style.top=wh*.125+"px";
+  canv.style.backgroundColor="rgba(255,255,255,.2)";
   var ctx=canv.getContext('2d');
   var w=canv.width;
   var h=canv.height;
   var stepPx=h/stateTree.length;
   var pad=w/20;
-  ctx.lineWidth=w/30;
-  ctx.font = Math.floor(stepPx/3)+'px Calibri';
-  ctx.textAlign = 'center';
+  ctx.lineWidth=w/40;
+  ctx.font = Math.floor(stepPx/3)+'px Helvetica';
+  ctx.textAlign = 'left';
   ctx.textBaseline = 'middle';
   for(var n=0; n<stateTree.length; n++){
     var textColor="#888";
@@ -43,12 +57,18 @@ function graphState(){
       textColor="#fff";
       bgColor="#888";
       }
+/*
     ctx.fillStyle = bgColor;
     ctx.fillRect(pad,pad+stepPx*n, w-pad*2, stepPx-pad*2);
+*/
     ctx.strokeStyle = textColor;
-    ctx.strokeRect(pad,pad+stepPx*n, w-pad*2, stepPx-pad*2);
+    ctx.beginPath();
+    ctx.arc(stepPx/2,stepPx*n+stepPx/2, stepPx/4, 0, pi*2,true);
+    ctx.fillStyle = bgColor;
+    ctx.fill();
+    ctx.stroke();
     ctx.fillStyle = textColor;
-    ctx.fillText(stateTree[n].name,w/2,stepPx*n+stepPx/2);
+    ctx.fillText(stateTree[n].name,stepPx,stepPx*n+stepPx/2);
     }
   }
 //// state changing functions
@@ -116,6 +136,7 @@ function onDeviceReady(){
   }
 function appResumed(){
   dbuga('appResumed()');
+  eventStack.push("App resumed");
   }
 function appPaused(){
   dbuga('appPaused()');
