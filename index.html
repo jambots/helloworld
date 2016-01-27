@@ -24,7 +24,8 @@ var state={
 "audioPlaying":false,
 "remotePaused":false,
 "alarmSet":false,
-"alarmTriggered":false
+"alarmTriggered":false,
+"retrys":7
 }
 
 var stateTree=[
@@ -39,7 +40,8 @@ var stateTree=[
   {"name":"audioPlaying", "message":"PLAYING"},
   {"name":"remotePaused", "message":"REMOTE PAUSE"},
   {"name":"alarmSet", "message":"SET"},
-  {"name":"alarmTriggered", "message":"WAKE"}
+  {"name":"alarmTriggered", "message":"WAKE"},
+  {"name":"retrys", "message":"RETRYING"}
 ];
 function graphState(){
   var pi=Math.PI;
@@ -59,20 +61,26 @@ function graphState(){
   for(var n=0; n<stateTree.length; n++){
     var textColor="#aaa";
     var bgColor="#444";
-    if(state[stateTree[n].name]){
-      textColor="#fff";
-      bgColor="#888";
+    if(type of state[stateTree[n].name]=="boolean"){
+      if(state[stateTree[n].name]){
+        textColor="#fff";
+        bgColor="#888";
+        }
+      ctx.strokeStyle = textColor;
+      ctx.beginPath();
+      ctx.arc(stepPx/2,stepPx*n+stepPx/2, stepPx/4, 0, pi*2,true);
+      ctx.fillStyle = bgColor;
+      ctx.fill();
+      ctx.stroke();
       }
-/*
-    ctx.fillStyle = bgColor;
-    ctx.fillRect(pad,pad+stepPx*n, w-pad*2, stepPx-pad*2);
-*/
-    ctx.strokeStyle = textColor;
-    ctx.beginPath();
-    ctx.arc(stepPx/2,stepPx*n+stepPx/2, stepPx/4, 0, pi*2,true);
-    ctx.fillStyle = bgColor;
-    ctx.fill();
-    ctx.stroke();
+    if(type of state[stateTree[n].name]=="number"){
+      if(state[stateTree[n].name]>0){
+        textColor="#fff";
+        bgColor="#888";
+        }
+      ctx.fillStyle = textColor;
+      ctx.fillText(state[stateTree[n].name],pad,stepPx*n+stepPx/2);
+      } 
     ctx.fillStyle = textColor;
     ctx.fillText(stateTree[n].name,stepPx,stepPx*n+stepPx/2);
     }
@@ -531,8 +539,10 @@ function startRetrying(){
   }
 function togglePlaying(){
   dbuga('togglePlaying() uiPlaying='+uiPlaying);
-  //document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
+  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   if(uiPlaying==true){
+    state.uiPlaying=false;
+    eventStack.push('ui pause');
     uiPlaying=false;
     retrying=false;
     buttonOff("listen", "playpause");
@@ -540,9 +550,13 @@ function togglePlaying(){
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
     }
   else{
+    state.uiPlaying=true;
+    eventStack.push('ui play');
+
     buttonOn("listen", "playpause");
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Connecting...";
     uiPlaying=true;
+    
     playStream();
   
     //startRetrying();
@@ -2319,16 +2333,19 @@ function handleButton(pageName, buttonName){
       window.setTimeout('buttonOff("settings", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
       }
     if(buttonName=="medium"){
+      eventStack.push("setting medium");
       buttonOn("settings", "medium");
       buttonOff("settings", "higher");
       buttonOff("settings", "broken");
       genericSet("quality", "medium");
+      
       createStream();
       if(uiPlaying){
         startRetrying();
         }
       }
     if(buttonName=="higher"){
+      eventStack.push("setting higher");
       buttonOff("settings", "medium");
       buttonOn("settings", "higher");
       buttonOff("settings", "broken");
@@ -2339,6 +2356,7 @@ function handleButton(pageName, buttonName){
         }
       }
     if(buttonName=="broken"){
+      eventStack.push("setting broken");
       buttonOff("settings", "medium");
       buttonOff("settings", "higher");
       buttonOn("settings", "broken");
@@ -2417,7 +2435,10 @@ function resumeGame(){
 
 var remoteControlPaused=false;
 function remoteControlPause(){
-  //dbuga('remoteControlPause()');
+  dbuga('remoteControlPause()');
+  eventStack.push("remote paused");
+  state.remotePaused=true;
+
   remoteControlPaused=true;
   uiPlaying=false;
   retrying=false;
@@ -2426,6 +2447,7 @@ function remoteControlPause(){
 function remoteControlPlay(){
   //dbuga('remoteControlPlay()');
   remoteControlPaused=false;
+  state.remotePaused=false;
   uiPlaying=true;
   retrying=false;
   buttonOn("listen", "playpause");
