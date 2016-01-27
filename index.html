@@ -25,8 +25,8 @@ var state={
 "remotePaused":false,
 "alarmSet":false,
 "alarmTriggered":false,
-"playerType":"HTML5",
-"retrys":7
+"playerType":"",
+"retrys":0
 }
 var stateKeys=Object.keys(state);
 
@@ -35,7 +35,7 @@ function graphState(){
   var canv=document.getElementById('stateCanvas');
   canv.height=Math.floor(wh*.75);
   canv.style.top=wh*.125+"px";
-  canv.style.backgroundColor="rgba(255,255,255,.2)";
+  canv.style.backgroundColor="rgba(50,50,50,.5)";
   var ctx=canv.getContext('2d');
   var w=canv.width;
   var h=canv.height;
@@ -79,7 +79,7 @@ function graphState(){
       ctx.fillText(thisVal,0,stepPx*n+stepPx/2);
       } 
     ctx.fillStyle = textColor;
-    ctx.fillText(thisKey,stepPx,stepPx*n+stepPx/2);
+    ctx.fillText(thisKey,stepPx*1.5,stepPx*n+stepPx/2);
     }
   }
 //// state changing functions
