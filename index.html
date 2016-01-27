@@ -36,6 +36,7 @@ var state={
 "playerType":""
 }
 var stateKeys=Object.keys(state);
+var staleStack=[];
 
 var myStreamUrl="";
 var iosStreamAudio;
@@ -169,7 +170,7 @@ function stateTick(){
   graphState();
   processEvents();
   }
-var staleStack=[];
+
 function processEvents(){
   if(eventStack.length>0){
     dbug('processEvents()');
@@ -183,8 +184,12 @@ function processEvents(){
 
     for (var e=0; e<eventStash.length; e++){
       var evt=eventStash[e];
-      dbuga(evt);
 
+      if(evt=="ui pause"){
+        iosStreamAudio.pause();
+        evt+=" - iosStreamAudio.pause()"; 
+        }
+      
       if(evt=="ui play"){
         if(state.audioCreated){
           iosStreamAudio.play();
@@ -194,12 +199,17 @@ function processEvents(){
           createStream();
           evt+=" - createStream()"; 
           }
+        e=eventStash.length; //cease in case of twitchy user 
         }
       if((evt=="audio created")&&(state.uiPlaying)){
         evt+=" - iosStreamAudio.play()";
         iosStreamAudio.play();
         }
       staleStack.unshift(evt);
+      if(evt=="audio play"){
+        state.audioPlaying=true;
+        }
+      dbuga(evt);
 
       }
     staleStack.unshift(" ");
@@ -245,8 +255,9 @@ function createStream(){
       iosStreamAudio.onplay = null;
       iosStreamAudio.onplaying = null;
 
-      iosStreamAudio = null;
+
       }
+    iosStreamAudio = null;
     iosStreamAudio = new Audio(myStreamUrl);
     iosStreamAudio.addEventListener("abort", function() {
        state.audioPlaying=false;
@@ -283,27 +294,24 @@ function createStream(){
     iosStreamAudio.addEventListener("ended", function() {
        state.audioPlaying=false;
        eventStack.push('audio ended');
-
-       iosStreamPlaying =false;
-       streamPlaying=false;
     }, false);
     iosStreamAudio.addEventListener("stalled", function() {
        state.audioPlaying=false;
        eventStack.push('audio stalled');
-       iosStreamPlaying =false;
-       streamPlaying=false;
     }, false);
     iosStreamAudio.addEventListener("waiting", function() {
-       state.audioPlaying=false;
+       //state.audioPlaying=false;
        eventStack.push('audio wait');
+/*
        waitEvents++;
        dbuga('iosStreamAudio WAITING '+waitEvents);
        if(waitEvents>3){
          togglePlaying();
          window.setTimeout("togglePlaying()", 1000);
-       }
+         }
        //iosStreamPlaying=false;
        //streamPlaying=false;
+*/
     }, false);
     iosStreamAudio.addEventListener("play", function() {
        //state.audioPlaying=true;
@@ -315,6 +323,7 @@ function createStream(){
     iosStreamAudio.addEventListener("playing", function() {
        state.audioPlaying=true;
        eventStack.push('audio playing');
+/*
        iosStreamPlaying = true;
        
        streamPlaying = true;
@@ -323,6 +332,7 @@ function createStream(){
        updateNowPlaying();
        singing=false;
        //minuteTick();
+*/
     }, false);
 
     }
