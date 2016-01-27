@@ -172,10 +172,18 @@ function stateTick(){
 function processEvents(){
   if(eventStack.length>0){
     dbug('processEvents()');
+    var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
-      var e=eventStack[e];
-      dbuga(e);
-      if(e=="ui play"){
+      var evt=eventStack[e];
+      eventStash.push(evt);
+      }
+    eventStack=[];
+
+    for (var e=0; e<eventStash.length; e++){
+
+      var evt=eventStash[e];
+      dbuga(evt);
+      if(evt=="ui play"){
         if(state.audioCreated){
           iosStreamAudio.play();
           }
@@ -183,8 +191,10 @@ function processEvents(){
           createStream();
           }
         }
+      if((evt=="stream created")&&(state.uiPlaying)){
+        iosStreamAudio.play();
+        }
       }
-    eventStack=[];
     }
   }
 
@@ -307,7 +317,6 @@ function createStream(){
     }
   state.audioCreated=true;
   eventStack.push("audio created");
-  streamCreated=true;
   }
 
 function playStream(){
