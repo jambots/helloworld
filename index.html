@@ -137,7 +137,7 @@ function init(){
   dbuga('init()');
   }
 function onDeviceReady(){
-  eventStack.push('onDeviceReady()');
+  eventStack.push('device ready');
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
   document.addEventListener("resume", appResumed, false);
@@ -148,7 +148,7 @@ function onDeviceReady(){
     }
   if (device.platform == "iOS") {
     state.ios=true;
-    state.playerType="HTML5";
+    state.playerType="HTML";
     }
   state.deviceReady=true;
   state.appActive=true;
@@ -181,7 +181,7 @@ function processEvents(){
       staleStack.unshift(evt);
       }
     eventStack=[];
-    staleStack.push(" ");
+    staleStack.unshift(" ");
 
     for (var e=0; e<eventStash.length; e++){
 
