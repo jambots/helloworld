@@ -38,6 +38,7 @@ var state={
 var stateKeys=Object.keys(state);
 
 var myStreamUrl="";
+var iosStreamAudio;
 var debugging=true;
 var waitEvents=0;
 
@@ -147,6 +148,7 @@ function onDeviceReady(){
     }
   if (device.platform == "iOS") {
     state.ios=true;
+    state.playerType="HTML5";
     }
   state.deviceReady=true;
   state.appActive=true;
@@ -173,6 +175,14 @@ function processEvents(){
     for (var e=0; e<eventStack.length; e++){
       var e=eventStack[e];
       dbuga(e);
+      if(e=="ui play"){
+        if(state.audioCreated){
+          iosStreamAudio.play();
+          }
+        else{
+          createStream();
+          }
+        }
       }
     eventStack=[];
     }
@@ -201,20 +211,21 @@ function createStream(){
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
   state.waitEvents=0;
 
-  if(ios){
-    dbuga("createStream() ios "+myStreamUrl);
-    iosStreamAudio.onabort = null;
-    iosStreamAudio.onemptied = null;
-    iosStreamAudio.onerror = null;
-    iosStreamAudio.onpause = null;
-    iosStreamAudio.onseking = null;
-    iosStreamAudio.onended = null;
-    iosStreamAudio.onstalled = null;
-    iosStreamAudio.onwaiting = null;
-    iosStreamAudio.onplay = null;
-    iosStreamAudio.onplaying = null;
+  if(state.ios){
+    if(state.audioCreated){
+      iosStreamAudio.onabort = null;
+      iosStreamAudio.onemptied = null;
+      iosStreamAudio.onerror = null;
+      iosStreamAudio.onpause = null;
+      iosStreamAudio.onseking = null;
+      iosStreamAudio.onended = null;
+      iosStreamAudio.onstalled = null;
+      iosStreamAudio.onwaiting = null;
+      iosStreamAudio.onplay = null;
+      iosStreamAudio.onplaying = null;
 
-    iosStreamAudio = null;
+      iosStreamAudio = null;
+      }
     iosStreamAudio = new Audio(myStreamUrl);
     iosStreamAudio.addEventListener("abort", function() {
        state.audioPlaying=false;
@@ -300,8 +311,7 @@ function createStream(){
   }
 
 function playStream(){
-  dbuga('playStream() ios='+ios+" streamCreated:"+streamCreated);
-  if(streamCreated==false){createStream();}
+/*
   //stopStream();
   if(android){
     //dbuga("androidStreamMedia.play()");
@@ -312,6 +322,7 @@ function playStream(){
     iosStreamAudio.play();
     //connectStream();
     }
+*/
   }
 function retryTick(){
   if(retrying==true){
