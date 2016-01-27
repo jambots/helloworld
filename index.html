@@ -178,27 +178,32 @@ function processEvents(){
     for (var e=0; e<eventStack.length; e++){
       var evt=eventStack[e];
       eventStash.push(evt);
-      staleStack.unshift(evt);
       }
     eventStack=[];
-    staleStack.unshift(" ");
 
     for (var e=0; e<eventStash.length; e++){
-
       var evt=eventStash[e];
       dbuga(evt);
+
       if(evt=="ui play"){
         if(state.audioCreated){
           iosStreamAudio.play();
+          evt+=" - iosStreamAudio.play()"; 
           }
         else{
           createStream();
+          evt+=" - createStream()"; 
           }
         }
-      if((evt=="stream created")&&(state.uiPlaying)){
+      if((evt=="audio created")&&(state.uiPlaying)){
+        evt+=" - iosStreamAudio.play()";
         iosStreamAudio.play();
         }
+      staleStack.unshift(evt);
+
       }
+    staleStack.unshift(" ");
+
     dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
     //dbuga(staleString);
     }//end if event stack 
