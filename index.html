@@ -206,15 +206,15 @@ function processEvents(){
         }
         
       if(evt=="audio stalled"){
-        createStream();
-        evt+=" - createStream()"; 
+          var url=createStream();
+          evt+=" - createStream() "+url; 
         }
       
 
       if(evt=="audio error"){
         state.retryAttempts++;
-        createStream();
-        evt+=" - createStream()"; 
+          var url=createStream();
+          evt+=" - createStream() "+url; 
         }
       
       if(evt=="ui play"){
@@ -224,8 +224,8 @@ function processEvents(){
           evt+=" - iosStreamAudio.play()"; 
           }
         else{
-          createStream();
-          evt+=" - createStream()"; 
+          var url=createStream();
+          evt+=" - createStream() "+url; 
           }
         e=eventStash.length; //cease in case of twitchy user 
         }
@@ -244,9 +244,9 @@ function processEvents(){
         state.retryAttempts=0;
         state.uiPlaying=true;
         buttonOn("listen", "playpause");
-        evt+=" - test internet then createStream()";
         checkInternet();
-        createStream();
+        var url=createStream();
+        evt+=" - test internet then createStream() "+url; 
         }
 
       staleStack.unshift(evt);
@@ -296,7 +296,7 @@ function createStream(){
       }
     }
   state.waitEvents=0;
-
+  
   if(state.ios){
       iosStreamAudio.onabort = null;
       iosStreamAudio.onemptied = null;
@@ -376,6 +376,7 @@ function createStream(){
     }
   state.audioCreated=true;
   eventStack.push("audio created");
+  return myStreamUrl;
   }
 
 function playStream(){
@@ -391,63 +392,6 @@ function playStream(){
     //connectStream();
     }
 */
-  }
-function retryTick(){
-  if(retrying==true){
-    if((retryAttempts>10)&&(retryAttempts%5==0)){
-      stateMessage="Retrying...";
-      }
-    else{
-      stateMessage="";
-      }
-    //dbuga(" retryTick() streamPlaying="+ streamPlaying);
-    retryAttempts++;
-
-    if(streamPlaying==false){
-      if(ios){
-        if(iosStreamAudio.readyState==4){
-          //window.setTimeout("playStream()", 3000);
-          playStream();
-          }
-        ////createStream();
-        }
-      if(android){
-        window.setTimeout("playStream()", 5000);
-        createStream();
-        }
-      ////singing=false;
-      }
-    if(retryAttempts>20){
-      connectionMessage="We're not connecting.<br />Try again in a bit K?";
-      stateMessage="";
-      if(singing){singMedia.play();}
-      
-      uiPlaying=false;
-      retrying=false;
-      buttonOff("listen", "playpause");      
-      }
-    }
-  }
-// -------------- events --------------------
-
-function startRetrying(){
-  dbuga('startRetrying()');
-  if(android){createStream();}
-  clearInterval(retryInterval);
-  if(ios){
-    retryTick();
-    //////retryInterval=window.setInterval("retryTick()", 1000);
-    }
-  if(android){
-    retryInterval=window.setInterval("retryTick()", 15000);
-    }
-  clearInterval(minuteInterval);
-  minuteInterval=setInterval('minuteTick()', minuteMs);
-  retrying=true;
-  retryAttempts=0;
-  retryTick();
-  //stateMessage="Starting...";
-  connectionMessage="";
   }
 function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
