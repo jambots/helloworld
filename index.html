@@ -202,6 +202,7 @@ function processEvents(){
       if(evt=="ui pause"){
         iosStreamAudio.pause();
         evt+=" - iosStreamAudio.pause()"; 
+        e=eventStash.length; //cease in case of twitchy user 
         }
         
       if(evt=="audio stalled"){
@@ -213,7 +214,8 @@ function processEvents(){
         evt+=" - iosStreamAudio.pause()"; 
         }
       
-      if(evt=="error retry"){
+
+      if(evt=="audio error"){
         state.retryAttempts++;
         createStream();
         evt+=" - createStream()"; 
@@ -251,11 +253,13 @@ function processEvents(){
         createStream();
         }
 
-
-
       staleStack.unshift(evt);
-      if(evt=="audio play"){
+      if(evt=="audio playing"){
         state.audioPlaying=true;
+        state.buffering=false;
+        }
+      if(evt=="audio play"){
+        state.buffering=true;
         }
       dbuga(evt);
 
