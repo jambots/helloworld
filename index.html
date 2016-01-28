@@ -258,6 +258,7 @@ function processEvents(){
       if(evt=="audio playing"){
         state.audioPlaying=true;
         state.buffering=false;
+        window.clearTimeout(waitTimeout);
         }
       if(evt=="audio play"){
         state.buffering=true;
@@ -290,8 +291,8 @@ function processEvents(){
 function createStream(){
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
   if((state.waitEvents>2)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
-    state.retryAttempts=0;
-    state.waitEvents=0;
+    //state.retryAttempts=0;
+    //state.waitEvents=0;
     if(state.android){ 
       myStreamUrl="/android_asset/www/sounds/singing.mp3";
       }
