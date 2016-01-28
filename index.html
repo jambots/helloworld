@@ -327,8 +327,9 @@ function createStream(){
        eventStack.push('audio emptied');
     }, false);
     iosStreamAudio.addEventListener("error", function() {
-       state.audioPlaying=false;
-       eventStack.push('audio error');
+       if(state.audioPlaying==false){
+         eventStack.push('audio error');
+         }
     }, false);
     iosStreamAudio.addEventListener("pause", function() {
        state.audioPlaying=false;
