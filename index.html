@@ -52,6 +52,7 @@ var iosStreamAudio={};
       iosStreamAudio.onplaying = null;
 var debugging=true;
 var waitEvents=0;
+var waitTimeout;
 
 var retryInterval;
 var bufferTimeout;
@@ -216,9 +217,13 @@ function processEvents(){
           var url=createStream();
           evt+=" - createStream() "+url; 
         }
+      if(evt=="audio wait"){
+
+        }
       
       if(evt=="ui play"){
         state.retryAttempts=0;
+        state.waitEvents=0;
         if(state.audioCreated){
           iosStreamAudio.play();
           evt+=" - iosStreamAudio.play()"; 
@@ -242,6 +247,7 @@ function processEvents(){
 
       if(evt=="alarm fired"){
         state.retryAttempts=0;
+        state.waitEvents=0;
         state.uiPlaying=true;
         buttonOn("listen", "playpause");
         checkInternet();
@@ -249,14 +255,24 @@ function processEvents(){
         evt+=" - test internet then createStream() "+url; 
         }
 
-      staleStack.unshift(evt);
       if(evt=="audio playing"){
         state.audioPlaying=true;
         state.buffering=false;
         }
       if(evt=="audio play"){
         state.buffering=true;
+        window.clearTimeout(waitTimeout);
+        waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
         }
+      if(evt=="wait timeout"){
+        if(state.audioPlaying==false){
+          state.waitEvents++;
+          checkInternet();
+          var url=createStream();
+          evt+=" - test internet then createStream() "+url; 
+          }
+        }
+      staleStack.unshift(evt);
       dbuga(evt);
 
       }
@@ -271,23 +287,11 @@ function processEvents(){
 
 
 
-function stopStream(){
-  //dbuga('stopStream()');
-  if(android){
-    androidStreamMedia.stop();
-    }
-
-  if(ios){ 
-    iosStreamAudio.pause();
-    iosStreamPlaying=false;
-    streamPlaying=false;
-    }
-  }
-
-
 function createStream(){
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
-  if((state.retryAttempts>1)||(state.internet==false)||(state.online==false)){
+  if((state.waitEvents>2)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
+    state.retryAttempts=0;
+    state.waitEvents=0;
     if(state.android){ 
       myStreamUrl="/android_asset/www/sounds/singing.mp3";
       }
@@ -298,6 +302,9 @@ function createStream(){
   state.waitEvents=0;
   
   if(state.ios){
+      if(state.audioCreated){
+        iosStreamAudio.pause();
+        }    
       iosStreamAudio.onabort = null;
       iosStreamAudio.onemptied = null;
       iosStreamAudio.onerror = null;
@@ -343,16 +350,7 @@ function createStream(){
        state.audioPlaying=false;
        state.buffering=true;
        eventStack.push('audio wait');
-/*
-       waitEvents++;
-       dbuga('iosStreamAudio WAITING '+waitEvents);
-       if(waitEvents>3){
-         togglePlaying();
-         window.setTimeout("togglePlaying()", 1000);
-         }
-       //iosStreamPlaying=false;
-       //streamPlaying=false;
-*/
+
     }, false);
     iosStreamAudio.addEventListener("play", function() {
        eventStack.push('audio play');
@@ -361,16 +359,8 @@ function createStream(){
     iosStreamAudio.addEventListener("playing", function() {
        state.audioPlaying=true;
        eventStack.push('audio playing');
-/*
-       iosStreamPlaying = true;
-       
-       streamPlaying = true;
-       buttonOn("listen", "playpause");
-       retrying=false;
        updateNowPlaying();
-       singing=false;
-       //minuteTick();
-*/
+
     }, false);
 
     }
