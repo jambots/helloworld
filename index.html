@@ -206,12 +206,8 @@ function processEvents(){
         }
         
       if(evt=="audio stalled"){
-        iosStreamAudio.pause();
-        state.audioPlaying=false;
-        state.audioCreated=false;
-        state.uiPlaying=false;
-        buttonOff("listen", "playpause");
-        evt+=" - iosStreamAudio.pause()"; 
+        createStream();
+        evt+=" - createStream()"; 
         }
       
 
@@ -291,7 +287,7 @@ function stopStream(){
 
 function createStream(){
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
-  if((state.retryAttempts>3)||(state.internet==false)||(state.online==false)){
+  if((state.retryAttempts>1)||(state.internet==false)||(state.online==false)){
     if(state.android){ 
       myStreamUrl="/android_asset/www/sounds/singing.mp3";
       }
@@ -318,34 +314,22 @@ function createStream(){
     iosStreamAudio.addEventListener("abort", function() {
        state.audioPlaying=false;
        eventStack.push('audio abort');
-       iosStreamPlaying =false;
-       streamPlaying=false;
     }, false);
     iosStreamAudio.addEventListener("emptied", function() {
        state.audioPlaying=false;
        eventStack.push('audio emptied');
-       dbuga('iosStreamAudio emptied');
-       iosStreamPlaying =false;
-       streamPlaying=false;
     }, false);
     iosStreamAudio.addEventListener("error", function() {
        state.audioPlaying=false;
        eventStack.push('audio error');
-       
-       iosStreamPlaying =false;
-       streamPlaying=false;
     }, false);
     iosStreamAudio.addEventListener("pause", function() {
        state.audioPlaying=false;
        eventStack.push('audio pause');
-       
-       iosStreamPlaying =false;
-       streamPlaying=false;
-    }, false);
+       }, false);
     iosStreamAudio.addEventListener("seeking", function() {
        state.audioPlaying=false;
        eventStack.push('audio seeking');
-       
     }, false);
     iosStreamAudio.addEventListener("ended", function() {
        state.audioPlaying=false;
@@ -356,7 +340,8 @@ function createStream(){
        eventStack.push('audio stalled');
     }, false);
     iosStreamAudio.addEventListener("waiting", function() {
-       //state.audioPlaying=false;
+       state.audioPlaying=false;
+       state.buffering=true;
        eventStack.push('audio wait');
 /*
        waitEvents++;
@@ -370,10 +355,7 @@ function createStream(){
 */
     }, false);
     iosStreamAudio.addEventListener("play", function() {
-       //state.audioPlaying=true;
        eventStack.push('audio play');
-       //iosStreamPlaying=false;
-       //streamPlaying=false;
     }, false);
 
     iosStreamAudio.addEventListener("playing", function() {
