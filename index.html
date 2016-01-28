@@ -115,13 +115,17 @@ var eventStack=[];
 var recentSong={};
 var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
 var recentSongs={};
-
+var singMedia;
 
 var totdDownloads=[];
 var wrsDownloads=[];
 var spotlightImage="";
 //// state changing functions
-function checkInternet() {
+function checkInternet(){
+  if(state.online==false){
+    state.internet=false;
+    return false;
+    }
   var xhr = new  XMLHttpRequest;
   var status;
   xhr.open( "HEAD", 'http://www.google-analytics.com/__utm.gif', false );
@@ -225,6 +229,12 @@ function processEvents(){
         iosStreamAudio.play();
         }
 
+      if(evt=="alarm fired"){
+        evt+=" - test internet then createStream()";
+        checkInternet();
+        createStream();
+        }
+
 
 
       staleStack.unshift(evt);
@@ -240,7 +250,6 @@ function processEvents(){
     //dbuga(staleString);
     }//end if event stack 
   }
-
 
 
 
@@ -262,6 +271,15 @@ function stopStream(){
 
 function createStream(){
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
+  if((state.internet==false)||(state.online==false)){
+    myStreamUrl="";
+    if(state.android){ 
+      myStreamUrl="/android_asset/www/sounds/singing.mp3";
+      }
+    if(state.ios){
+      myStreamUrl="sounds/singing.mp3";
+      }
+    }
   state.waitEvents=0;
 
   if(state.ios){
