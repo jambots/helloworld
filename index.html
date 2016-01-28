@@ -229,6 +229,11 @@ function processEvents(){
         iosStreamAudio.play();
         }
 
+      if((evt=="audio ended")&&(state.uiPlaying)){
+        evt+=" - iosStreamAudio.play()";
+        iosStreamAudio.play();
+        }
+
       if(evt=="alarm fired"){
         state.uiPlaying=true;
         buttonOn("listen", "playpause");
@@ -1777,9 +1782,9 @@ function handleButton(pageName, buttonName){
       buttonOff("settings", "broken");
       genericSet("quality", "medium");
       
-      createStream();
-      if(uiPlaying){
-        startRetrying();
+      
+      if(state.uiPlaying){
+        createStream();
         }
       }
     if(buttonName=="higher"){
@@ -1788,9 +1793,8 @@ function handleButton(pageName, buttonName){
       buttonOn("settings", "higher");
       buttonOff("settings", "broken");
       genericSet("quality", "higher");
-      createStream();
-      if(uiPlaying){
-        startRetrying();
+      if(state.uiPlaying){
+        createStream();
         }
       }
     if(buttonName=="broken"){
@@ -1800,9 +1804,8 @@ function handleButton(pageName, buttonName){
       buttonOn("settings", "broken");
 
       genericSet("quality", "broken");
-      createStream();
-      if(uiPlaying){
-        startRetrying();
+      if(state.uiPlaying){
+        createStream();
         }
       }
 
