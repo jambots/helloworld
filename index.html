@@ -208,11 +208,19 @@ function processEvents(){
         iosStreamAudio.pause();
         state.audioPlaying=false;
         state.audioCreated=false;
+        state.uiPlaying=false;
         buttonOff("listen", "playpause");
         evt+=" - iosStreamAudio.pause()"; 
         }
       
+      if(evt=="error retry"){
+        state.retryAttempts++;
+        createStream();
+        evt+=" - createStream()"; 
+        }
+      
       if(evt=="ui play"){
+        state.retryAttempts=0;
         if(state.audioCreated){
           iosStreamAudio.play();
           evt+=" - iosStreamAudio.play()"; 
@@ -235,6 +243,7 @@ function processEvents(){
         }
 
       if(evt=="alarm fired"){
+        state.retryAttempts=0;
         state.uiPlaying=true;
         buttonOn("listen", "playpause");
         evt+=" - test internet then createStream()";
@@ -278,8 +287,7 @@ function stopStream(){
 
 function createStream(){
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
-  if((state.internet==false)||(state.online==false)){
-    myStreamUrl="";
+  if((state.retryAttempts>3)||(state.internet==false)||(state.online==false)){
     if(state.android){ 
       myStreamUrl="/android_asset/www/sounds/singing.mp3";
       }
