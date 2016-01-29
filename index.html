@@ -25,13 +25,12 @@ var state={
 "uiPlaying":false,
 "audioCreated":false,
 "buffering":false,
-"readyToPlay":false,
 "audioPlaying":false,
 "remotePaused":false,
 "alarmSet":false,
 "alarmTriggered":false,
-"retrying":false,
 "retryAttempts":0,
+"audioCount":0,
 "waitEvents":0,
 "playerType":""
 }
@@ -290,7 +289,7 @@ function processEvents(){
 
 
 
-var audioCount=0;
+
 
 function createStream(){
   var loop=false;
@@ -324,8 +323,8 @@ function createStream(){
 
     iosStreamAudio = null;
     iosStreamAudio = new Audio(myStreamUrl);
-    iosStreamAudio.audioNum=audioCount;
-    audioCount++;
+    iosStreamAudio.audioNum=state.audioCount;
+    state.audioCount++;
     iosStreamAudio.loop = loop;
     iosStreamAudio.addEventListener("abort", function() {
        state.audioPlaying=false;
