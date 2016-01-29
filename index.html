@@ -238,9 +238,9 @@ function processEvents(){
         }
 
       if((evt=="audio ended")&&(state.uiPlaying)){
-        evt+=" - iosStreamAudio.play()";
-        checkInternet();
-        iosStreamAudio.play();
+        //evt+=" - iosStreamAudio.play()";
+        //checkInternet();
+        //iosStreamAudio.play();
         }
 
       if(evt=="alarm fired"){
@@ -293,6 +293,7 @@ function processEvents(){
 
 
 function createStream(){
+  var loop=false;
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
   if((state.waitEvents>2)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
     state.retryAttempts=0;
@@ -303,6 +304,7 @@ function createStream(){
     if(state.ios){
       myStreamUrl="sounds/singing.mp3";
       }
+    loop=true;
     }
 
   if(state.ios){
@@ -322,6 +324,7 @@ function createStream(){
 
     iosStreamAudio = null;
     iosStreamAudio = new Audio(myStreamUrl);
+    iosStreamAudio.loop = loop;
     iosStreamAudio.addEventListener("abort", function() {
        state.audioPlaying=false;
        eventStack.push('audio abort');
@@ -349,7 +352,7 @@ function createStream(){
     }, false);
     iosStreamAudio.addEventListener("stalled", function() {
        state.audioPlaying=false;
-       eventStack.push('audio stalled');
+       window.setTimeout("eventStack.push('audio stalled')", 5000);
     }, false);
     iosStreamAudio.addEventListener("waiting", function() {
        state.audioPlaying=false;
