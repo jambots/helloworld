@@ -211,11 +211,17 @@ function processEvents(){
         }
       
 
-      if(evt=="audio error"){
-        //state.retryAttempts++;
-        //  var url=createStream();
-        //  evt+=" - createStream() "+url; 
-        }
+      if(evt.indexOf("audio error")>-1){
+        var parts=evt.split(" ");
+        var audioNum=Number(parts[2]);
+        if(audioNum==state.audioCount){
+          state.retryAttempts++;
+          var url=createStream();
+          evt+=" - MATCH createStream() "+url; 
+          }
+        else{
+          evt+=" - IGNORE old object";
+          }
 
       if(evt=="ui play"){
         state.retryAttempts=0;
@@ -251,7 +257,17 @@ function processEvents(){
         var url=createStream();
         evt+=" - test internet then createStream() "+url; 
         }
+      if(evt=="sing timeout"){
+        //state.retryAttempts++;
+        state.waitEvents=0;
+        if(state.uiPlaying){
+          checkInternet();
+          var url=createStream();
+          evt+=" - test internet then createStream() "+url; 
+          }
+        }
 
+      
       if(evt=="audio playing"){
         state.audioPlaying=true;
         state.buffering=false;
@@ -289,7 +305,7 @@ function processEvents(){
 
 
 
-
+var singTimeout;
 
 function createStream(){
   var loop=false;
@@ -304,6 +320,8 @@ function createStream(){
       myStreamUrl="sounds/singing.mp3";
       }
     loop=true;
+    window.clearTimeout(singTimeout);
+    singTimeout=window.setTimeout("eventStack.push('sing timeout')", 10000);
     }
 
   if(state.ios){
@@ -323,8 +341,8 @@ function createStream(){
 
     iosStreamAudio = null;
     iosStreamAudio = new Audio(myStreamUrl);
-    iosStreamAudio.audioNum=state.audioCount;
     state.audioCount++;
+    iosStreamAudio.audioNum=state.audioCount;
     iosStreamAudio.loop = loop;
     iosStreamAudio.addEventListener("abort", function() {
        state.audioPlaying=false;
@@ -336,8 +354,7 @@ function createStream(){
     }, false);
     iosStreamAudio.addEventListener("error", function() {
        if(state.audioPlaying==false){
-         eventStack.push('audio error');
-         eventStack.push('audioNum '+event.target.audioNum);
+         eventStack.push('audio error '+event.target.audioNum);
          }
     }, false);
     iosStreamAudio.addEventListener("pause", function() {
