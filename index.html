@@ -1899,8 +1899,10 @@ function touchStart(event){
   if(event.touches.length>3){
     debugCount++;
     if(debugCount>3){
-      debugging=true;
+      debugCount=0;
+      debugging=!(debugging);
       }
+
     }
   mouseX=event.touches[0].pageX;
   mouseY=event.touches[0].pageY;
