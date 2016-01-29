@@ -49,7 +49,7 @@ var iosStreamAudio={};
       iosStreamAudio.onwaiting = null;
       iosStreamAudio.onplay = null;
       iosStreamAudio.onplaying = null;
-var debugging=true;
+var debugging=false;
 var waitEvents=0;
 var waitTimeout;
 
@@ -206,6 +206,8 @@ function processEvents(){
         }
         
       if(evt=="audio stalled"){
+          //already delayed 5000
+          checkInternet();
           var url=createStream();
           evt+=" - createStream() "+url; 
         }
@@ -1956,9 +1958,15 @@ function dbug(theString){
     document.getElementById('debugDiv').innerHTML=theString;
     }
   }
+var pi=Math.PI;
 function graphState(){
-  var pi=Math.PI;
   var canv=document.getElementById('stateCanvas');
+  if(debugging==false){
+    canv.style.display="none";
+    return false;
+    }
+  canv.style.display="block";
+    
   canv.height=Math.floor(wh*.75);
   canv.style.top=wh*.125+"px";
   canv.style.backgroundColor="rgba(50,50,50,.5)";
