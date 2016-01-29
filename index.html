@@ -1895,10 +1895,11 @@ function gestureEnd(event) {
 function touchCancel(event){
   event.preventDefault(); 
   }
+var debugCount=0;
 function touchStart(event){
-  if(event.touches.length>3){
+  if(event.touches.length>2){
     debugCount++;
-    if(debugCount>3){
+    if(debugCount>2){
       debugCount=0;
       debugging=!(debugging);
       }
@@ -2042,7 +2043,7 @@ function replaceAll(find, replace, str) {
   <div id="readyStateDiv" style="position:absolute; color:#fff; line-height:10px; "></div>
   <div id="debugDiv" style="top:20px; position:absolute;"></div>
   <div id="stateDiv" style="top:460px;"></div>
-  <canvas id="stateCanvas"></canvas>
+  <canvas id="stateCanvas" style="display:none;"></canvas>
 </div>
 </body>
 </html>
