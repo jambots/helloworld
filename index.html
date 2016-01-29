@@ -208,10 +208,12 @@ function processEvents(){
         }
         
       if(evt=="audio stalled"){
-          //already delayed 5000
-          checkInternet();
+        //already delayed 5000
+         checkInternet();
+        if(state.uiPlaying){
           var url=createStream();
           evt+=" - createStream() "+url; 
+          }
         }
       
 
@@ -278,11 +280,13 @@ function processEvents(){
         window.clearTimeout(waitTimeout);
         }
       if(evt=="audio play"){
+        document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Connecting...";
         window.clearTimeout(waitTimeout);
         waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
         }
       if(evt=="wait timeout"){
         if(state.audioPlaying==false){
+          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Retrying...";
           state.waitEvents++;
           checkInternet();
           var url=createStream();
@@ -312,6 +316,7 @@ function processEvents(){
 var singTimeout;
 
 function createStream(){
+  
   var loop=false;
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
   if((state.waitEvents>2)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
@@ -326,6 +331,14 @@ function createStream(){
     loop=true;
     window.clearTimeout(singTimeout);
     singTimeout=window.setTimeout("eventStack.push('sing timeout')", 10000);
+    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Something is wrong.";
+    if((state.online==true)&&(state.internet==false)){
+      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Online but no stream";
+      }
+    if((state.online==true)&&(state.internet==false)){
+      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="No Connection";
+      }
+
     }
 
   if(state.playerType=="HTML"){
@@ -796,14 +809,16 @@ function returnGradStyle(){
   //gradStyle="";// hack to test speed
   return gradStyle;
   }
+
 function updateNowPlaying(){
   //dbuga('updateNowPlaying()')
-  if((connection)&&(uiPlaying)){
+  if((state.online)&&(state.internet)&&(state.uiPlaying)){
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
-    document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
+    //document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
     //if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
     }
   }
+
 function dateTimeToTime(theDateTime){
   var parts=theDateTime.split(" ");
   var timePart=parts[1];
