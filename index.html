@@ -344,7 +344,8 @@ function createStream(){
       iosStreamAudio.onplaying = null;
 
     iosStreamAudio = null;
-    iosStreamAudio = new Audio(myStreamUrl);
+    if(state.ios){iosStreamAudio = new Audio(myStreamUrl);}
+    if(state.android){iosStreamAudio = new Video(myStreamUrl);}
     state.audioCount++;
     iosStreamAudio.audioNum=state.audioCount;
     iosStreamAudio.loop = loop;
