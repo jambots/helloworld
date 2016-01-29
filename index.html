@@ -157,17 +157,15 @@ function onDeviceReady(){
   document.addEventListener("online", onOnline, false);
   document.addEventListener("resume", appResumed, false);
   document.addEventListener("pause", appPaused, false);
-/*
+
   if (device.platform == "Android") {
     state.android=true;
+    state.playerType="HTML";
     }
   if (device.platform == "iOS") {
     state.ios=true;
     state.playerType="HTML";
     }
-*/
-    state.ios=true;
-    state.playerType="HTML";
 
   state.deviceReady=true;
   state.appActive=true;
@@ -330,7 +328,7 @@ function createStream(){
     singTimeout=window.setTimeout("eventStack.push('sing timeout')", 10000);
     }
 
-  if(state.ios){
+  if(state.playerType=="HTML"){
       if(state.audioCreated){
         iosStreamAudio.pause();
         }    
@@ -360,7 +358,8 @@ function createStream(){
     }, false);
     iosStreamAudio.addEventListener("error", function() {
        if(state.audioPlaying==false){
-         eventStack.push('audio error '+event.target.audioNum);
+         //eventStack.push('audio error '+event.target.audioNum);
+         eventStack.push('audio error '+event.target.audioNum+" "+JSON.stringify(event));
          }
     }, false);
     iosStreamAudio.addEventListener("pause", function() {
