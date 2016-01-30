@@ -195,7 +195,7 @@ function stateTick(){
 
 function processEvents(){
   if(eventStack.length>0){
-    dbug('processEvents()');
+    dbug('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
