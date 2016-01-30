@@ -23,7 +23,7 @@ var state={
 "online":false,
 "internet":false,
 "uiPlaying":false,
-"audioCreated":false,
+"streamCreated":false,
 "buffering":false,
 "audioPlaying":false,
 "remotePaused":false,
@@ -247,7 +247,7 @@ function processEvents(){
         state.retryAttempts=0;
         state.waitEvents=0;
         dbuga('2');
-        if(state.audioCreated){
+        if(state.streamCreated){
           dbuga('2a');
 
           playStream();
@@ -262,7 +262,7 @@ function processEvents(){
         }
         dbuga('3');
 
-      if((evt=="audio created")&&(state.uiPlaying)){
+      if((evt=="stream created")&&(state.uiPlaying)){
         evt+=" - playStream()";
         playStream();
         }
@@ -337,9 +337,11 @@ function processEvents(){
 //new
 function pauseStream(){
   if(state.ios){stream.pause();}
+  if(state.android){stream.pause();}
   }
 function playStream(){
   if(state.ios){stream.play();}
+  if(state.android){stream.play();}
   }
 
 var singTimeout;
@@ -375,7 +377,7 @@ function createStream(){
   if(state.playerType=="audio"){
     dbuga('createStream() 3 audio'); 
 
-    if(state.audioCreated){
+    if(state.streamCreated){
       stream.pause();
       }    
     stream.abort = null;
@@ -454,7 +456,7 @@ function createStream(){
     //stream.audioNum=state.audioCount;
     dbuga('createStream() 4b'); 
 
-    if(state.audioCreated){
+    if(state.streamCreated){
       dbuga('createStream() 4c'); 
 
       stream.stop();
@@ -469,8 +471,8 @@ function createStream(){
     }
   dbuga('createStream() 5'); 
 
-  state.audioCreated=true;
-  eventStack.push("audio created");
+  state.streamCreated=true;
+  eventStack.push("stream created");
   return myStreamUrl;
   }
 function mediaStatus(theStatus){
