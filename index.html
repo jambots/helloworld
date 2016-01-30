@@ -39,21 +39,20 @@ var staleStack=[];
 
 var myStreamUrl="";
 var stream={};
-// html5 audio
-      stream.onabort = null;
-      stream.onemptied = null;
-      stream.onerror = null;
-      stream.onpause = null;
-      stream.onseking = null;
-      stream.onended = null;
-      stream.onstalled = null;
-      stream.onwaiting = null;
-      stream.onplay = null;
-      stream.onplaying = null;
-//media plugin
-stream.mediaSucces=null;
-stream.statusCallback =null;
-stream.mediaError=null;
+/*
+      // html5 audio
+
+      stream.abort = null;
+      stream.emptied = null;
+      stream.error = null;
+      stream.epause = null;
+      stream.seeking = null;
+      stream.ended = null;
+      stream.stalled = null;
+      stream.waiting = null;
+      stream.play = null;
+      stream.playing = null;
+*/
 
 var debugging=true;
 var waitEvents=0;
@@ -170,7 +169,7 @@ function onDeviceReady(){
     }
   if (device.platform == "iOS") {
     state.ios=true;
-    state.playerType="HTML";
+    state.playerType="audio";
     }
 
   state.deviceReady=true;
@@ -351,22 +350,22 @@ function createStream(){
       }
 
     }
-
-  if(state.playerType=="HTML"){
+  // url figured out now go
+  if(state.playerType=="audio"){
       if(state.audioCreated){
         stream.pause();
         }    
-      stream.onabort = null;
-      stream.onemptied = null;
-      stream.onerror = null;
-      stream.onpause = null;
-      stream.onseking = null;
-      stream.onended = null;
-      stream.onstalled = null;
-      stream.onwaiting = null;
-      stream.onplay = null;
-      stream.onplaying = null;
-
+      stream.abort = null;
+      stream.emptied = null;
+      stream.error = null;
+      stream.pause = null;
+      stream.seeking = null;
+      stream.ended = null;
+      stream.stalled = null;
+      stream.waiting = null;
+      stream.play = null;
+      stream.playing = null;
+      }
     stream = null;
     if(state.ios){stream = new Audio(myStreamUrl);}
     if(state.android){stream = new Media(myStreamUrl);}
@@ -422,7 +421,11 @@ function createStream(){
 
     }, false);
 
+    if(state.playerType=="media"){
+      }
+
     }
+
   state.audioCreated=true;
   eventStack.push("audio created");
   return myStreamUrl;
