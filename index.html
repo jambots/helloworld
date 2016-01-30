@@ -477,6 +477,7 @@ function createStream(){
   }
 function mediaStatus(theStatus){
   eventStack.push("mediaStatus "+theStatus);
+  var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
 /*
   var prevStatus=androidStreamStatus;
   androidStreamStatus=theStatus;
@@ -610,7 +611,7 @@ function onOnline() {
 
 
 function getRecentSong(){
-  //dbuga('getRecentSong()');
+  eventStack.push('getRecentSong()');
   //return false;
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_song";
       $.ajax({
@@ -656,7 +657,7 @@ function parseRecentSongs(theData){
 function parseRecentSong(theData){
   recentSong=JSON.parse(theData);
   var songKeys=Object.keys(recentSong);
-  //dbuga("parseRecentSong("+songKeys.length+")");
+  eventStack.push("parseRecentSong("+songKeys.length+")");
 
   songKeys.sort();
   songKeys.reverse();
@@ -1918,6 +1919,7 @@ function handleButton(pageName, buttonName){
   }
 
 function minuteTick(){
+  eventStack.push("minuteTick()");
   //if((uiPlaying==true)&&(streamPlaying==true)){
   //  updateNowPlaying();
   //  }
