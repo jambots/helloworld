@@ -236,9 +236,12 @@ function processEvents(){
           state.uiPlaying=false;
           buttonOff('listen', 'playpause');
           evt+=" - remotePaused, shut down stream"; 
+          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Paused...";
+
           }
         else{
           evt+=" - normal"; 
+          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
           }
         }
       
