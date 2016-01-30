@@ -228,6 +228,15 @@ function processEvents(){
           evt+=" - createStream() "+url; 
           }
         }
+      if(evt=="audio pause"){
+        if(state.uiPlaying){
+
+          state.remotePaused=true;
+          state.streamCreated=false;
+          state.uiPlaying=false;
+          buttonOff('listen', 'playpause');
+          }
+        }
       
 
       if(evt.indexOf("audio error")>-1){
@@ -247,6 +256,7 @@ function processEvents(){
         state.retryAttempts=0;
         state.waitEvents=0;
         dbuga('2');
+        state.remotePaused=false;
         if(state.streamCreated){
           dbuga('2a');
 
