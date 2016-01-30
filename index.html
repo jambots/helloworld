@@ -319,7 +319,8 @@ function processEvents(){
       
       if(evt=="audio playing"){
         if(state.remotePaused){
-          evt+=" - "while remotePaused";// so must recreate stream to keep handles 
+          evt+=" - while remotePaused";
+          // so must recreate stream to keep handles 
           createStream();
           }
         else{
