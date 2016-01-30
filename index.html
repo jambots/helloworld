@@ -230,20 +230,22 @@ function processEvents(){
         }
       if(evt=="audio pause"){
         if(state.uiPlaying){
-
+          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Paused.";
           state.remotePaused=true;
           state.streamCreated=false;
           state.uiPlaying=false;
+          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
           buttonOff('listen', 'playpause');
           evt+=" - remotePaused, shut down stream"; 
-          stream.pause();
+          pauseStream();
+          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
           stream=null;
-          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Paused...";
+          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
 
           }
         else{
           evt+=" - normal"; 
-          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
+          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="pause";
           }
         }
       
