@@ -33,7 +33,8 @@ var state={
 "audioCount":0,
 "waitEvents":0,
 "loop":false,
-"playerType":""
+"playerType":"",
+"errorPause":false
 }
 var stateKeys=Object.keys(state);
 var staleStack=[];
@@ -194,6 +195,12 @@ function stateTick(){
   }
 
 function processEvents(){
+  if(state.errorPause){
+    dbuga('errorPause');
+    return false;
+    }
+  state.errorPause=true;
+
   if(eventStack.length>0){
     dbug('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
@@ -324,6 +331,8 @@ function processEvents(){
     dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
     //dbuga(staleString);
     }//end if event stack 
+  state.errorPause=false;
+
   }
 //new
 function pauseStream(){
