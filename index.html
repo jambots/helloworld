@@ -313,9 +313,11 @@ function processEvents(){
         state.streamPlaying=true;
         state.buffering=false;
         window.clearTimeout(waitTimeout);
+        e=eventStash.length; //cease in case immediate play 
+        
         }
       if(evt=="audio play"){
-        document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Connecting...";
+        
         window.clearTimeout(waitTimeout);
         waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
         }
@@ -363,7 +365,7 @@ var singTimeout;
 function createStream(){
   
   state.loop=false;
-  dbuga('createStream() 1'); 
+ 
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
   if((state.waitEvents>2)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
     state.retryAttempts=0;
@@ -384,12 +386,12 @@ function createStream(){
     if((state.online==true)&&(state.internet==false)){
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="No Connection";
       }
-    dbuga('createStream() 2 error loop'); 
+   else{// try stream
+    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Connecting..."; 
 
     }
   // url figured out now go
   if(state.playerType=="audio"){
-    dbuga('createStream() 3 audio'); 
 
     if(state.streamCreated){
       stream.pause();
@@ -463,11 +465,9 @@ function createStream(){
     }
 
   if(state.playerType=="media"){
-    dbuga('createStream() 4'); 
     //stream = null;
     //stream = new Audio(myStreamUrl);
     state.audioCount++;
-    dbuga('createStream() 4a'); 
 
     //stream.audioNum=state.audioCount;
     dbuga('createStream() 4b'); 
@@ -904,8 +904,10 @@ function returnGradStyle(){
   }
 
 function updateNowPlaying(){
-  //dbuga('updateNowPlaying()')
+  
   if((state.online)&&(state.internet)&&(state.uiPlaying)){
+    eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
+    
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
     //document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
     //if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
@@ -1107,7 +1109,7 @@ function secondTick(){
       singing=true;
       alarming=true;
       buttonOn("listen", "playpause");
-      document.getElementById('page_listen_content_djDiv').innerHTML="Connecting...";
+      document.getElementById('page_listen_content_djDiv').innerHTML="Connecting..";
       startRetrying();
       uiPlaying=true;
       selectPage("wakeup");
