@@ -32,6 +32,7 @@ var state={
 "retryAttempts":0,
 "audioCount":0,
 "waitEvents":0,
+"loop":false,
 "playerType":""
 }
 var stateKeys=Object.keys(state);
@@ -327,7 +328,7 @@ var singTimeout;
 
 function createStream(){
   
-  var loop=false;
+  state.loop=false;
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
   if((state.waitEvents>2)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
     state.retryAttempts=0;
@@ -338,7 +339,7 @@ function createStream(){
     if(state.ios){
       myStreamUrl="sounds/singing.mp3";
       }
-    loop=true;
+    state.loop=true;
     window.clearTimeout(singTimeout);
     singTimeout=window.setTimeout("eventStack.push('sing timeout')", 10000);
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Something is wrong.";
@@ -367,11 +368,10 @@ function createStream(){
     stream.playing = null;
 
     stream = null;
-    if(state.ios){stream = new Audio(myStreamUrl);}
-    if(state.android){stream = new Media(myStreamUrl);}
+    stream = new Audio(myStreamUrl);
     state.audioCount++;
     stream.audioNum=state.audioCount;
-    stream.loop = loop;
+    stream.loop = state.loop;
     stream.addEventListener("abort", function() {
        state.audioPlaying=false;
        eventStack.push('audio abort');
@@ -423,12 +423,56 @@ function createStream(){
     }
 
   if(state.playerType=="media"){
-  
+    //stream = null;
+    //stream = new Audio(myStreamUrl);
+    state.audioCount++;
+    //stream.audioNum=state.audioCount;
+    state.loop = loop;
+
+    if(state.audioCreated){
+      stream.stop();
+      stream.release();
+      }
+    //dbuga("createStream() android "+myStreamUrl);
+    stream = new Media(myStreamUrl, mediaSuccess, mediaError, mediaStatus);  
     }
 
   state.audioCreated=true;
   eventStack.push("audio created");
   return myStreamUrl;
+  }
+function mediaStatus(theStatus){
+  eventStack.push("mediaStatus "+theStatus);
+/*
+  var prevStatus=androidStreamStatus;
+  androidStreamStatus=theStatus;
+  dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus] +" prevStatus:"+prevStatus);
+  if(androidStreamStatus==2){
+    androidStreamPlaying=true;
+    streamPlaying=true;
+    singing=false;
+    retrying=false;
+    uiPlaying=true;
+    stateMessage="Streaming...";
+    if(prevStatus==1){updateNowPlaying();}    
+    }
+  else{
+    androidStreamPlaying=false;
+    streamPlaying=false;
+    }
+  if((uiPlaying)&&(androidStreamStatus==4)&&(prevStatus==2)){
+    // interrupted
+    stateMessage="Interrupted, retrying...";
+    startRetrying();
+    }
+*/
+  }
+
+function mediaError(er){
+  eventStack.push("mediaError "+er);
+  }
+function mediaSuccess(){
+  eventStack.push("mediaSuccess");
   }
 
 
