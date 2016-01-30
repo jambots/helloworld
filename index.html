@@ -38,17 +38,23 @@ var stateKeys=Object.keys(state);
 var staleStack=[];
 
 var myStreamUrl="";
-var iosStreamAudio={};
-      iosStreamAudio.onabort = null;
-      iosStreamAudio.onemptied = null;
-      iosStreamAudio.onerror = null;
-      iosStreamAudio.onpause = null;
-      iosStreamAudio.onseking = null;
-      iosStreamAudio.onended = null;
-      iosStreamAudio.onstalled = null;
-      iosStreamAudio.onwaiting = null;
-      iosStreamAudio.onplay = null;
-      iosStreamAudio.onplaying = null;
+var stream={};
+// html5 audio
+      stream.onabort = null;
+      stream.onemptied = null;
+      stream.onerror = null;
+      stream.onpause = null;
+      stream.onseking = null;
+      stream.onended = null;
+      stream.onstalled = null;
+      stream.onwaiting = null;
+      stream.onplay = null;
+      stream.onplaying = null;
+//media plugin
+stream.mediaSucces=null;
+stream.statusCallback =null;
+stream.mediaError=null;
+
 var debugging=true;
 var waitEvents=0;
 var waitTimeout;
@@ -160,7 +166,7 @@ function onDeviceReady(){
 
   if (device.platform == "Android") {
     state.android=true;
-    state.playerType="HTML";
+    state.playerType="media";
     }
   if (device.platform == "iOS") {
     state.ios=true;
@@ -202,8 +208,8 @@ function processEvents(){
 
 
       if(evt=="ui pause"){
-        iosStreamAudio.pause();
-        evt+=" - iosStreamAudio.pause()"; 
+        pauseStream();
+        evt+=" - pauseStream()"; 
         e=eventStash.length; //cease in case of twitchy user 
         }
         
@@ -233,8 +239,8 @@ function processEvents(){
         state.retryAttempts=0;
         state.waitEvents=0;
         if(state.audioCreated){
-          iosStreamAudio.play();
-          evt+=" - iosStreamAudio.play()"; 
+          playStream();
+          evt+=" - playStream()"; 
           }
         else{
           var url=createStream();
@@ -244,14 +250,14 @@ function processEvents(){
         }
 
       if((evt=="audio created")&&(state.uiPlaying)){
-        evt+=" - iosStreamAudio.play()";
-        iosStreamAudio.play();
+        evt+=" - playStream()";
+        playStream();
         }
 
       if((evt=="audio ended")&&(state.uiPlaying)){
-        //evt+=" - iosStreamAudio.play()";
+        evt+=" - playStream()";
         //checkInternet();
-        //iosStreamAudio.play();
+        playStream();
         }
 
       if(evt=="alarm fired"){
@@ -310,8 +316,13 @@ function processEvents(){
     //dbuga(staleString);
     }//end if event stack 
   }
-
-
+//new
+function pauseStream(){
+  if(state.ios){stream.pause();}
+  }
+function playStream(){
+  if(state.ios){stream.play();}
+  }
 
 var singTimeout;
 
@@ -343,68 +354,68 @@ function createStream(){
 
   if(state.playerType=="HTML"){
       if(state.audioCreated){
-        iosStreamAudio.pause();
+        stream.pause();
         }    
-      iosStreamAudio.onabort = null;
-      iosStreamAudio.onemptied = null;
-      iosStreamAudio.onerror = null;
-      iosStreamAudio.onpause = null;
-      iosStreamAudio.onseking = null;
-      iosStreamAudio.onended = null;
-      iosStreamAudio.onstalled = null;
-      iosStreamAudio.onwaiting = null;
-      iosStreamAudio.onplay = null;
-      iosStreamAudio.onplaying = null;
+      stream.onabort = null;
+      stream.onemptied = null;
+      stream.onerror = null;
+      stream.onpause = null;
+      stream.onseking = null;
+      stream.onended = null;
+      stream.onstalled = null;
+      stream.onwaiting = null;
+      stream.onplay = null;
+      stream.onplaying = null;
 
-    iosStreamAudio = null;
-    if(state.ios){iosStreamAudio = new Audio(myStreamUrl);}
-    if(state.android){iosStreamAudio = new Video(myStreamUrl);}
+    stream = null;
+    if(state.ios){stream = new Audio(myStreamUrl);}
+    if(state.android){stream = new Media(myStreamUrl);}
     state.audioCount++;
-    iosStreamAudio.audioNum=state.audioCount;
-    iosStreamAudio.loop = loop;
-    iosStreamAudio.addEventListener("abort", function() {
+    stream.audioNum=state.audioCount;
+    stream.loop = loop;
+    stream.addEventListener("abort", function() {
        state.audioPlaying=false;
        eventStack.push('audio abort');
     }, false);
-    iosStreamAudio.addEventListener("emptied", function() {
+    stream.addEventListener("emptied", function() {
        state.audioPlaying=false;
        eventStack.push('audio emptied');
     }, false);
-    iosStreamAudio.addEventListener("error", function() {
+    stream.addEventListener("error", function() {
        if(state.audioPlaying==false){
          //eventStack.push('audio error '+event.target.audioNum);
          eventStack.push('audio error '+event.target.audioNum+" "+JSON.stringify(event));
          }
     }, false);
-    iosStreamAudio.addEventListener("pause", function() {
+    stream.addEventListener("pause", function() {
        state.audioPlaying=false;
        eventStack.push('audio pause');
        }, false);
-    iosStreamAudio.addEventListener("seeking", function() {
+    stream.addEventListener("seeking", function() {
        state.audioPlaying=false;
        eventStack.push('audio seeking');
     }, false);
-    iosStreamAudio.addEventListener("ended", function() {
+    stream.addEventListener("ended", function() {
        state.audioPlaying=false;
        eventStack.push('audio ended');
     }, false);
-    iosStreamAudio.addEventListener("stalled", function() {
+    stream.addEventListener("stalled", function() {
        state.audioPlaying=false;
        window.setTimeout("eventStack.push('audio stalled')", 5000);
     }, false);
-    iosStreamAudio.addEventListener("waiting", function() {
+    stream.addEventListener("waiting", function() {
        state.audioPlaying=false;
        state.buffering=true;
        eventStack.push('audio wait');
 
     }, false);
-    iosStreamAudio.addEventListener("play", function() {
+    stream.addEventListener("play", function() {
        state.audioPlaying=false;
        state.buffering=true;
        eventStack.push('audio play');
     }, false);
 
-    iosStreamAudio.addEventListener("playing", function() {
+    stream.addEventListener("playing", function() {
        state.audioPlaying=true;
        eventStack.push('audio playing');
        updateNowPlaying();
@@ -417,20 +428,7 @@ function createStream(){
   return myStreamUrl;
   }
 
-function playStream(){
-/*
-  //stopStream();
-  if(android){
-    //dbuga("androidStreamMedia.play()");
-    stopStream();
-    androidStreamMedia.play();
-    }
-  if(ios){
-    iosStreamAudio.play();
-    //connectStream();
-    }
-*/
-  }
+
 function togglePlaying(){
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
   document.getElementById('page_listen_content_djDiv').innerHTML="";
