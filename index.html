@@ -403,6 +403,9 @@ function createStream(){
 
     if(state.streamCreated){
       stream.pause();
+
+      }    
+/*
     stream.abort = null;
     stream.emptied = null;
     stream.error = null;
@@ -413,8 +416,7 @@ function createStream(){
     stream.waiting = null;
     stream.play = null;
     stream.playing = null;
-      }    
-
+*/
     stream = null;
     stream = new Audio(myStreamUrl);
     state.audioCount++;
