@@ -352,20 +352,20 @@ function createStream(){
     }
   // url figured out now go
   if(state.playerType=="audio"){
-      if(state.audioCreated){
-        stream.pause();
-        }    
-      stream.abort = null;
-      stream.emptied = null;
-      stream.error = null;
-      stream.pause = null;
-      stream.seeking = null;
-      stream.ended = null;
-      stream.stalled = null;
-      stream.waiting = null;
-      stream.play = null;
-      stream.playing = null;
-      }
+    if(state.audioCreated){
+      stream.pause();
+      }    
+    stream.abort = null;
+    stream.emptied = null;
+    stream.error = null;
+    stream.pause = null;
+    stream.seeking = null;
+    stream.ended = null;
+    stream.stalled = null;
+    stream.waiting = null;
+    stream.play = null;
+    stream.playing = null;
+
     stream = null;
     if(state.ios){stream = new Audio(myStreamUrl);}
     if(state.android){stream = new Media(myStreamUrl);}
