@@ -236,6 +236,8 @@ function processEvents(){
           state.uiPlaying=false;
           buttonOff('listen', 'playpause');
           evt+=" - remotePaused, shut down stream"; 
+          stream.pause();
+          stream=null;
           document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Paused...";
 
           }
