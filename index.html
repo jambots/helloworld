@@ -454,6 +454,8 @@ function createStream(){
 
     stream.addEventListener("playing", function() {
        state.streamPlaying=true;
+       state.uiPlaying=true;
+       buttonOn('listen', 'playpause');
        eventStack.push('audio playing');
        updateNowPlaying();
 
