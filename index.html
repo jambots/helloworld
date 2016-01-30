@@ -386,9 +386,9 @@ function createStream(){
     if((state.online==true)&&(state.internet==false)){
       document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="No Connection";
       }
-   else{// try stream
+    }
+  else{// try stream
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Connecting..."; 
-
     }
   // url figured out now go
   if(state.playerType=="audio"){
