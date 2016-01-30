@@ -25,7 +25,7 @@ var state={
 "uiPlaying":false,
 "streamCreated":false,
 "buffering":false,
-"audioPlaying":false,
+"streamPlaying":false,
 "remotePaused":false,
 "alarmSet":false,
 "alarmTriggered":false,
@@ -296,7 +296,7 @@ function processEvents(){
 
       
       if(evt=="audio playing"){
-        state.audioPlaying=true;
+        state.streamPlaying=true;
         state.buffering=false;
         window.clearTimeout(waitTimeout);
         }
@@ -306,7 +306,7 @@ function processEvents(){
         waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
         }
       if(evt=="wait timeout"){
-        if(state.audioPlaying==false){
+        if(state.streamPlaying==false){
           document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Retrying...";
           state.waitEvents++;
           checkInternet();
@@ -397,49 +397,49 @@ function createStream(){
     stream.audioNum=state.audioCount;
     stream.loop = state.loop;
     stream.addEventListener("abort", function() {
-       state.audioPlaying=false;
+       state.streamPlaying=false;
        eventStack.push('audio abort');
     }, false);
     stream.addEventListener("emptied", function() {
-       state.audioPlaying=false;
+       state.streamPlaying=false;
        eventStack.push('audio emptied');
     }, false);
     stream.addEventListener("error", function() {
-       if(state.audioPlaying==false){
+       if(state.streamPlaying==false){
          //eventStack.push('audio error '+event.target.audioNum);
          eventStack.push('audio error '+event.target.audioNum+" "+JSON.stringify(event));
          }
     }, false);
     stream.addEventListener("pause", function() {
-       state.audioPlaying=false;
+       state.streamPlaying=false;
        eventStack.push('audio pause');
        }, false);
     stream.addEventListener("seeking", function() {
-       state.audioPlaying=false;
+       state.streamPlaying=false;
        eventStack.push('audio seeking');
     }, false);
     stream.addEventListener("ended", function() {
-       state.audioPlaying=false;
+       state.streamPlaying=false;
        eventStack.push('audio ended');
     }, false);
     stream.addEventListener("stalled", function() {
-       state.audioPlaying=false;
+       state.streamPlaying=false;
        window.setTimeout("eventStack.push('audio stalled')", 5000);
     }, false);
     stream.addEventListener("waiting", function() {
-       state.audioPlaying=false;
+       state.streamPlaying=false;
        state.buffering=true;
        eventStack.push('audio wait');
 
     }, false);
     stream.addEventListener("play", function() {
-       state.audioPlaying=false;
+       state.streamPlaying=false;
        state.buffering=true;
        eventStack.push('audio play');
     }, false);
 
     stream.addEventListener("playing", function() {
-       state.audioPlaying=true;
+       state.streamPlaying=true;
        eventStack.push('audio playing');
        updateNowPlaying();
 
@@ -483,8 +483,8 @@ function mediaStatus(theStatus){
   androidStreamStatus=theStatus;
   dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus] +" prevStatus:"+prevStatus);
   if(androidStreamStatus==2){
-    androidStreamPlaying=true;
-    streamPlaying=true;
+    state.streamPlaying=true;
+    
     singing=false;
     retrying=false;
     uiPlaying=true;
@@ -492,8 +492,7 @@ function mediaStatus(theStatus){
     if(prevStatus==1){updateNowPlaying();}    
     }
   else{
-    androidStreamPlaying=false;
-    streamPlaying=false;
+    state.streamPlaying=false;
     }
   if((uiPlaying)&&(androidStreamStatus==4)&&(prevStatus==2)){
     // interrupted
@@ -675,9 +674,7 @@ function parseRecentSong(theData){
       song = replaceAll("'", "&apos;", song);
       }
     nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
-    //dbuga("uiPlaying ="+ uiPlaying);
-    //dbuga("streamPlaying ="+ streamPlaying);
-    if((uiPlaying==true)&&(streamPlaying==true)){
+    if((state.uiPlaying==true)&&(state.streamPlaying==true)){
       updateNowPlaying();
       }
     }
@@ -1587,7 +1584,7 @@ function remoteLink(theUrl){
     uiPlaying=false;
     retrying=false;
     buttonOff("listen", "playpause");
-    if(streamPlaying){stopStream();}
+    if(state.streamPlaying){stopStream();}
     }
   var ref = window.open(theUrl, "_system");
 
@@ -1655,7 +1652,7 @@ function handleButton(pageName, buttonName){
       }
 
     if(buttonName=="set"){
-      if(streamPlaying){stopStream();}
+      if(state.streamPlaying){stopStream();}
       sleepSeconds=0;
       var mil=""+minuteOfDayToHH(genericGet("alarmMinuteOfDay"))+minuteOfDayToMM(genericGet("alarmMinuteOfDay"));
       buttonOn("alarm", "set");
@@ -1920,9 +1917,6 @@ function handleButton(pageName, buttonName){
 
 function minuteTick(){
   eventStack.push("minuteTick()");
-  //if((uiPlaying==true)&&(streamPlaying==true)){
-  //  updateNowPlaying();
-  //  }
   getRecentSong();
   }
 function remoteControlPause(){
