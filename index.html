@@ -221,18 +221,19 @@ function processEvents(){
         }
         
       if(evt.indexOf("audio stalled")>-1){
-        //var parts=evt.split(" ");
-        //var audioNum=Number(parts[2]);
-        ////if(audioNum==state.audioCount){
+        var parts=evt.split(" ");
+        var audioNum=Number(parts[2]);
+        if(audioNum==state.audioCount){
           window.clearTimeout(waitTimeout);
           //already delayed 5000
           checkInternet();
           state.streamPlaying=false;
+          state.audioCreated=false;
           evt+=" - current"; 
-        //  }
-        //else{
-        //  evt+=" - IGNORE"; 
-        //  }
+          }
+        else{
+          evt+=" - IGNORE"; 
+          }
         }
       if(evt=="audio pause"){
         window.clearTimeout(waitTimeout);
