@@ -251,11 +251,13 @@ function processEvents(){
         if(audioNum==state.audioCount){
           window.clearTimeout(waitTimeout);
           document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Paused.";
-          if(state.uiPlaying){
+          if(state.uiPlaying){// REMOTE PAUSE
             document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+="uiPlaying.";
             state.remotePaused=true;
             state.streamCreated=false;
+            state.streamPlaying=false;
             state.uiPlaying=false;
+            
             document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
             buttonOff('listen', 'playpause');
             evt+=" - remotePaused, shut down stream"; 
@@ -268,6 +270,7 @@ function processEvents(){
           else{
             evt+=" - normal"; 
             document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="pause";
+            state.streamPlaying=false;
             }
           evt+=" - current"; 
           }
