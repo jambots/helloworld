@@ -202,6 +202,7 @@ function appPaused(){
 function stateTick(){
   graphState();
   processEvents();
+
   }
 
 function processEvents(){
@@ -378,6 +379,13 @@ function processEvents(){
 
         window.clearTimeout(waitTimeout);
         waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
+
+        }
+      if(evt=="online true"){
+        if(state.uiPlaying){
+          var url=createStream();
+          evt+=" - createStream() "+url; 
+          }
 
         }
         //dbuga('6');
