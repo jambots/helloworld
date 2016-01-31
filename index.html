@@ -319,10 +319,11 @@ function processEvents(){
       
       if(evt=="audio playing"){
         if(state.remotePaused){
-          evt+=" - while remotePaused";
+          state.streamPlaying=false;
+          evt+=" - while remotePaused CAUTION";
           // so must recreate stream to keep handles 
           pauseStream();
-          createStream();
+          //createStream();
           }
         else{
           state.streamPlaying=true;
@@ -367,15 +368,18 @@ function processEvents(){
 
   }
 //new
-function pauseStream(){
+function pauseStream(){ 
+  if (typeof stream.pause == 'function'){
     if(state.ios){stream.pause();}
     if(state.android){stream.pause();}
+    }
   }
 function playStream(){
-  if(state.ios){stream.play();}
-  if(state.android){stream.play();}
+  if (typeof stream.play == 'function'){
+    if(state.ios){stream.play();}
+    if(state.android){stream.play();}
+    }
   }
-
 var singTimeout;
 
 function createStream(){
