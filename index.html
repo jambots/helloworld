@@ -221,6 +221,7 @@ function processEvents(){
         }
         
       if(evt=="audio stalled"){
+        window.clearTimeout(waitTimeout);
         //already delayed 5000
         checkInternet();
         state.uiPlaying=false;
@@ -229,6 +230,8 @@ function processEvents(){
 
         }
       if(evt=="audio pause"){
+        window.clearTimeout(waitTimeout);
+
         document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Paused.";
         if(state.uiPlaying){
           document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+="uiPlaying.";
@@ -318,17 +321,18 @@ function processEvents(){
 
       
       if(evt=="audio playing"){
+        window.clearTimeout(waitTimeout);
+
         if(state.remotePaused){
           state.streamPlaying=false;
           evt+=" - while remotePaused CAUTION";
           // so must recreate stream to keep handles 
-          //pauseStream();
-          //createStream();
+          pauseStream();
+          createStream();
           }
         else{
           state.streamPlaying=true;
           state.buffering=false;
-          window.clearTimeout(waitTimeout);
           }
         e=eventStash.length; //cease in case immediate play 
         
