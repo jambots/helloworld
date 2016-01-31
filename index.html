@@ -222,11 +222,11 @@ function processEvents(){
         
       if(evt=="audio stalled"){
         //already delayed 5000
-         checkInternet();
-        if(state.uiPlaying){
-          var url=createStream();
-          evt+=" - createStream() "+url; 
-          }
+        checkInternet();
+        state.uiPlaying=false;
+        buttonOff('listen', 'playpause');
+        state.streamPlaying=false;
+
         }
       if(evt=="audio pause"){
         document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Paused.";
