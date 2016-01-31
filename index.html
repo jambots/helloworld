@@ -440,11 +440,9 @@ function createStream(){
     }
   // url figured out now go
   if(state.playerType=="audio"){
-    var audioCount=state.audioCount;
 
     if(state.streamCreated){
-      stream.pause();
-
+      //stream.pause();
       }    
     
 /*
@@ -463,6 +461,8 @@ function createStream(){
     eventStack.push("stream nullified"); 
     stream = new Audio(myStreamUrl);
     state.audioCount++;
+    var audioCount=state.audioCount;
+
     stream.audioNum=state.audioCount;
     stream.loop = state.loop;
     stream.addEventListener("abort", function() {
