@@ -272,25 +272,25 @@ function processEvents(){
           }
         }
       if(evt=="ui play"){
-        dbuga('1');
+        //dbuga('1');
         state.retryAttempts=0;
         state.waitEvents=0;
-        dbuga('2');
+        //dbuga('2');
         state.remotePaused=false;
         if(state.streamCreated){
-          dbuga('2a');
+          //dbuga('2a');
 
           playStream();
           evt+=" - playStream()"; 
           }
         else{
-          dbuga('2b');
+          //dbuga('2b');
           var url=createStream();
           evt+=" - createStream() "+url; 
           }
         e=eventStash.length; //cease in case of twitchy user 
         }
-        dbuga('3');
+        //dbuga('3');
 
       if((evt=="stream created")&&(state.uiPlaying)){
         evt+=" - playStream()";
@@ -302,7 +302,7 @@ function processEvents(){
         //checkInternet();
         playStream();
         }
-        dbuga('4');
+        //dbuga('4');
 
       if(evt=="alarm fired"){
         state.retryAttempts=0;
@@ -322,7 +322,7 @@ function processEvents(){
           evt+=" - test internet then createStream() "+url; 
           }
         }
-        dbuga('5');
+        //dbuga('5');
 
       
       if(evt=="audio playing"){
@@ -363,7 +363,7 @@ function processEvents(){
         waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
 
         }
-        dbuga('6');
+        //dbuga('6');
       
       staleStack.unshift(evt);
       dbuga(evt);
@@ -663,7 +663,7 @@ function onOnline() {
 
 
 function getRecentSong(){
-  eventStack.push('getRecentSong()');
+  //eventStack.push('getRecentSong()');
   //return false;
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_song";
       $.ajax({
@@ -709,7 +709,6 @@ function parseRecentSongs(theData){
 function parseRecentSong(theData){
   recentSong=JSON.parse(theData);
   var songKeys=Object.keys(recentSong);
-  eventStack.push("parseRecentSong("+songKeys.length+")");
 
   songKeys.sort();
   songKeys.reverse();
@@ -728,6 +727,7 @@ function parseRecentSong(theData){
       }
     nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
     if((state.uiPlaying==true)&&(state.streamPlaying==true)){
+      //eventStack.push("parseRecentSong("+songKeys.length+") updateNowPlaying");
       updateNowPlaying();
       }
     }
