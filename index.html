@@ -345,27 +345,31 @@ function processEvents(){
         }
         //dbuga('5');
 
-      
-      if(evt=="audio playing"){
-        
-        if(state.remotePaused){
-          state.streamPlaying=false;
-          evt+=" - while remotePaused CAUTION";
-          // so must recreate stream to keep handles 
-          pauseStream();
-          state.streamCreated=false;
-          createStream();
+      if(evt.indexOf("audio playing")>-1){
+        var parts=evt.split(" ");
+        var audioNum=Number(parts[2]);
+        if(audioNum==state.audioCount){
+          if(state.remotePaused){
+            state.streamPlaying=false;
+            evt+=" - while remotePaused CAUTION";
+            // so must recreate stream to keep handles 
+            pauseStream();
+            state.streamCreated=false;
+            createStream();
+            }
+          else{
+            evt+=" - current";
+            state.streamPlaying=true;
+            state.buffering=false;
+            window.clearTimeout(waitTimeout);
+            }
+          e=eventStash.length; //cease in case immediate play 
           }
         else{
-          state.streamPlaying=true;
-          state.buffering=false;
-          window.clearTimeout(waitTimeout);
+          evt+=" - IGNORE old object";
           }
-        e=eventStash.length; //cease in case immediate play 
-        
         }
       if(evt=="audio play"){
-        
         window.clearTimeout(waitTimeout);
         waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
         }
@@ -513,17 +517,17 @@ function createStream(){
        eventStack.push('audio play');
     }, false);
 
-    stream.addEventListener("playing", function() {
+/*
        if(state.remotePaused){
          stream=event.target;
          }
-       state.streamPlaying=true;
-       state.uiPlaying=true;
-       buttonOn('listen', 'playpause');
-       eventStack.push('audio playing');
-       updateNowPlaying();
+*/
 
-    }, false);
+    stream.addEventListener("playing", function(theVar) {
+      return function(){playingFunction(theVar)};
+    }(audioCount), false);
+
+
     }
 
   if(state.playerType=="media"){
@@ -552,6 +556,14 @@ function createStream(){
   state.streamCreated=true;
   eventStack.push("stream created");
   return myStreamUrl;
+  }
+function playingFunction(audioCount){
+       state.streamPlaying=true;
+       state.uiPlaying=true;
+       buttonOn('listen', 'playpause');
+       eventStack.push('audio playing '+audioCount);
+       updateNowPlaying();
+
   }
 function stalledFunction(audioCount){
   eventStack.push('stalledFunction '+audioCount);
