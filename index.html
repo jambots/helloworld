@@ -224,10 +224,8 @@ function processEvents(){
         window.clearTimeout(waitTimeout);
         //already delayed 5000
         checkInternet();
-        state.uiPlaying=false;
-        buttonOff('listen', 'playpause');
         state.streamPlaying=false;
-
+        
         }
       if(evt=="audio pause"){
         window.clearTimeout(waitTimeout);
@@ -321,18 +319,19 @@ function processEvents(){
 
       
       if(evt=="audio playing"){
-        window.clearTimeout(waitTimeout);
-
+        
         if(state.remotePaused){
           state.streamPlaying=false;
           evt+=" - while remotePaused CAUTION";
           // so must recreate stream to keep handles 
           pauseStream();
-          createStream();
+          window.clearTimeout(waitTimeout);
+          waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
           }
         else{
           state.streamPlaying=true;
           state.buffering=false;
+          window.clearTimeout(waitTimeout);
           }
         e=eventStash.length; //cease in case immediate play 
         
