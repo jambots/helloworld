@@ -254,18 +254,12 @@ function processEvents(){
           if(state.uiPlaying){// REMOTE PAUSE
             document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+="uiPlaying.";
             state.remotePaused=true;
-            state.streamCreated=false;
             state.streamPlaying=false;
             state.uiPlaying=false;
             
             document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
             buttonOff('listen', 'playpause');
             evt+=" - remotePaused, shut down stream"; 
-            pauseStream();
-            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
-            stream=null;
-            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
-
             }
           else{
             evt+=" - normal"; 
