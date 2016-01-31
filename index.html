@@ -226,8 +226,8 @@ function processEvents(){
 
       if(evt=="ui pause"){
         pauseStream();
-        state.audioCreated=false;
-        evt+=" - pauseStream()"; 
+        state.streamCreated=false;
+        evt+=" - set streamCreated=false"; 
         e=eventStash.length; //cease in case of twitchy user 
         }
         
