@@ -489,7 +489,7 @@ function createStream(){
        var audioCount=state.audioCount;
        eventStack.push('stalled event');
        eventStack.push('stalled event '+audioCount);
-       window.setTimeout('eventStack.push("audio stalled '+theVar+'")', 5000);
+       eventStack.push('audio stalled '+theVar);
     }(audioCount), false);
 
     stream.addEventListener("stalled",
