@@ -235,7 +235,8 @@ function processEvents(){
         var parts=evt.split(" ");
         var audioNum=Number(parts[2]);
         if(audioNum==state.audioCount){
-          if(state.remotePaused==false){state.streamCreated=false;}
+          //if(state.remotePaused==false){state.streamCreated=false;}//not sure why this instance don't play no more
+          state.streamCreated=false;
           window.clearTimeout(waitTimeout);
           //already delayed 5000
           checkInternet();
