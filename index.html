@@ -474,6 +474,7 @@ function createStream(){
     }, false);
     stream.addEventListener("stalled", function() {
        state.streamPlaying=false;
+       eventStack.push('stalled event');
        window.setTimeout("eventStack.push('audio stalled '"+event.target.audioNum+"')", 5000);
     }, false);
     stream.addEventListener("waiting", function() {
