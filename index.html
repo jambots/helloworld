@@ -477,7 +477,7 @@ function createStream(){
        state.streamPlaying=false;
        eventStack.push('stalled event');
        eventStack.push('stalled event '+state.audioCount);
-       window.setTimeout("eventStack.push('audio stalled '+state.audioCount)", 5000);
+       window.setTimeout('eventStack.push("audio stalled '+state.audioCount+'")', 5000);
     }, false);
 
     stream.addEventListener("stalled",
