@@ -245,6 +245,15 @@ function processEvents(){
           checkInternet();
           state.streamPlaying=false;
           evt+=" - current"; 
+          if(state.uiPlaying){
+            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Stalled.";
+            if((state.internet==false)&&(state.online==true)){
+              document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=" Connected but no internet.";
+              }
+            if((state.online==false)){
+              document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=" No Connection.";
+              } 
+            } 
           }
         else{
           evt+=" - IGNORE"; 
