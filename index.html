@@ -350,12 +350,18 @@ function processEvents(){
         var audioNum=Number(parts[2]);
         if(audioNum==state.audioCount){
           if(state.remotePaused){
+            evt+=" - current";
+            state.streamPlaying=true;
+            state.buffering=false;
+            window.clearTimeout(waitTimeout);
+/*
             state.streamPlaying=false;
             evt+=" - while remotePaused CAUTION";
             // so must recreate stream to keep handles 
             pauseStream();
             state.streamCreated=false;
             createStream();
+*/
             }
           else{
             evt+=" - current";
@@ -363,6 +369,7 @@ function processEvents(){
             state.buffering=false;
             window.clearTimeout(waitTimeout);
             }
+
           e=eventStash.length; //cease in case immediate play 
           }
         else{
