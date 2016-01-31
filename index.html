@@ -343,8 +343,8 @@ function processEvents(){
           evt+=" - while remotePaused CAUTION";
           // so must recreate stream to keep handles 
           pauseStream();
-          window.clearTimeout(waitTimeout);
-          waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
+          state.streamCreated=false;
+          createStream();
           }
         else{
           state.streamPlaying=true;
@@ -961,7 +961,7 @@ function returnGradStyle(){
 function updateNowPlaying(){
   
   if((state.online)&&(state.internet)&&(state.uiPlaying)){
-    eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
+    //eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
     
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
     //document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
