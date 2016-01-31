@@ -245,27 +245,34 @@ function processEvents(){
           evt+=" - IGNORE"; 
           }
         }
-      if(evt=="audio pause"){
-        window.clearTimeout(waitTimeout);
+      if(evt.indexOf("audio pause")>-1){
+        var parts=evt.split(" ");
+        var audioNum=Number(parts[2]);
+        if(audioNum==state.audioCount){
+          window.clearTimeout(waitTimeout);
+          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Paused.";
+          if(state.uiPlaying){
+            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+="uiPlaying.";
+            state.remotePaused=true;
+            state.streamCreated=false;
+            state.uiPlaying=false;
+            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
+            buttonOff('listen', 'playpause');
+            evt+=" - remotePaused, shut down stream"; 
+            pauseStream();
+            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
+            stream=null;
+            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
 
-        document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Paused.";
-        if(state.uiPlaying){
-          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+="uiPlaying.";
-          state.remotePaused=true;
-          state.streamCreated=false;
-          state.uiPlaying=false;
-          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
-          buttonOff('listen', 'playpause');
-          evt+=" - remotePaused, shut down stream"; 
-          pauseStream();
-          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
-          stream=null;
-          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
-
+            }
+          else{
+            evt+=" - normal"; 
+            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="pause";
+            }
+          evt+=" - current"; 
           }
         else{
-          evt+=" - normal"; 
-          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="pause";
+          evt+=" - IGNORE"; 
           }
         }
       
@@ -433,6 +440,7 @@ function createStream(){
     }
   // url figured out now go
   if(state.playerType=="audio"){
+    var audioCount=state.audioCount;
 
     if(state.streamCreated){
       stream.pause();
@@ -471,10 +479,11 @@ function createStream(){
          eventStack.push('audio error '+event.target.audioNum);
          }
     }, false);
-    stream.addEventListener("pause", function() {
-       state.streamPlaying=false;
-       eventStack.push('audio pause');
-       }, false);
+
+    stream.addEventListener("pause", function(theVar) {
+      return function(){pausedFunction(theVar)};
+    }(audioCount), false);
+
     stream.addEventListener("seeking", function() {
        state.streamPlaying=false;
        eventStack.push('audio seeking');
@@ -485,7 +494,6 @@ function createStream(){
     }, false);
 
 
-    var audioCount=state.audioCount;
     stream.addEventListener("stalled", function(theVar) {
       return function(){stalledFunction(theVar)};
     }(audioCount), false);
@@ -545,6 +553,9 @@ function createStream(){
 function stalledFunction(audioCount){
   eventStack.push('stalledFunction '+audioCount);
   eventStack.push('audio stalled '+audioCount);// put timer on this
+  }
+function pausedFunction(audioCount){
+  eventStack.push('audio pause '+audioCount);
   }
 function mediaStatus(theStatus){
   eventStack.push("mediaStatus "+theStatus);
