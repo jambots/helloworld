@@ -483,20 +483,13 @@ function createStream(){
        state.streamPlaying=false;
        eventStack.push('audio ended');
     }, false);
+
     var audioCount=state.audioCount;
     stream.addEventListener("stalled", function(theVar) {
-       state.streamPlaying=false;
-       var audioCount=state.audioCount;
-       eventStack.push('stalled event');
-       eventStack.push('stalled event '+audioCount);
-       eventStack.push('audio stalled '+theVar);
+      return function(){stalledFunction(theVar)};
     }(audioCount), false);
 
-    stream.addEventListener("stalled",
-      function(){
-      var newVar = someVar;
-      stallHandler(someVar);
-      }, false);
+
     stream.addEventListener("waiting", function() {
        state.streamPlaying=false;
        state.buffering=true;
@@ -548,6 +541,10 @@ function createStream(){
   state.streamCreated=true;
   eventStack.push("stream created");
   return myStreamUrl;
+  }
+function stalledFunction(audioCount){
+  eventStack.push('stalledFunction '+audioCount);
+  eventStack.push('audio stalled '+audioCount);// put timer on this
   }
 function mediaStatus(theStatus){
   eventStack.push("mediaStatus "+theStatus);
