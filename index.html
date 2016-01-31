@@ -354,7 +354,9 @@ function processEvents(){
           state.streamPlaying=true;
           state.buffering=false;
           window.clearTimeout(waitTimeout);
-
+          if(state.internet==false){
+            checkInternet();
+            }
 
           e=eventStash.length; //cease in case immediate play 
           }
