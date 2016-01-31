@@ -253,6 +253,9 @@ function processEvents(){
             if((state.online==false)){
               document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=" No Connection.";
               } 
+            if((state.internet==true)&&(state.online==true)){
+              document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=" Internet but no stream.";
+              }
             } 
           }
         else{
