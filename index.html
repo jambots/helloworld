@@ -478,6 +478,9 @@ function createStream(){
     }, false);
 
     stream.addEventListener("playing", function() {
+       if(state.remotePaused){
+         stream=event.target;
+         }
        state.streamPlaying=true;
        state.uiPlaying=true;
        buttonOn('listen', 'playpause');
