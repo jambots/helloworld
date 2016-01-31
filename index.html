@@ -231,14 +231,15 @@ function processEvents(){
         }
         
       if(evt.indexOf("audio stalled")>-1){
+        // stall from control center then resume leaves streamCreated false. Odd but no harm.
         var parts=evt.split(" ");
         var audioNum=Number(parts[2]);
         if(audioNum==state.audioCount){
+          if(state.remotePaused==false){state.streamCreated=false;}
           window.clearTimeout(waitTimeout);
           //already delayed 5000
           checkInternet();
           state.streamPlaying=false;
-          state.streamCreated=false;
           evt+=" - current"; 
           }
         else{
@@ -252,14 +253,14 @@ function processEvents(){
           window.clearTimeout(waitTimeout);
           document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Paused.";
           if(state.uiPlaying){// REMOTE PAUSE
-            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+="uiPlaying.";
+            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+="remote.";
             state.remotePaused=true;
             state.streamPlaying=false;
             state.uiPlaying=false;
             
             document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
             buttonOff('listen', 'playpause');
-            evt+=" - remotePaused, shut down stream"; 
+            evt+=" - remotePaused"; 
             }
           else{
             evt+=" - normal"; 
@@ -343,26 +344,12 @@ function processEvents(){
         var parts=evt.split(" ");
         var audioNum=Number(parts[2]);
         if(audioNum==state.audioCount){
-          if(state.remotePaused){
-            evt+=" - current";
-            state.streamPlaying=true;
-            state.buffering=false;
-            window.clearTimeout(waitTimeout);
-/*
-            state.streamPlaying=false;
-            evt+=" - while remotePaused CAUTION";
-            // so must recreate stream to keep handles 
-            pauseStream();
-            state.streamCreated=false;
-            createStream();
-*/
-            }
-          else{
-            evt+=" - current";
-            state.streamPlaying=true;
-            state.buffering=false;
-            window.clearTimeout(waitTimeout);
-            }
+          state.remotePaused=false;
+          evt+=" - current";
+          state.streamPlaying=true;
+          state.buffering=false;
+          window.clearTimeout(waitTimeout);
+
 
           e=eventStash.length; //cease in case immediate play 
           }
