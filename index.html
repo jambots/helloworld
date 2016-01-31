@@ -420,6 +420,7 @@ function createStream(){
       stream.pause();
 
       }    
+    
 /*
     stream.abort = null;
     stream.emptied = null;
@@ -433,7 +434,7 @@ function createStream(){
     stream.playing = null;
 */
     stream = null;
-    eventStack.push("stream null"); 
+    eventStack.push("stream nullified"); 
     stream = new Audio(myStreamUrl);
     state.audioCount++;
     stream.audioNum=state.audioCount;
@@ -447,9 +448,9 @@ function createStream(){
        eventStack.push('audio emptied');
     }, false);
     stream.addEventListener("error", function() {
-       if(state.streamPlaying==false){
+       if(state.streamPlaying==false){// may be called by ghosts
          //eventStack.push('audio error '+event.target.audioNum);
-         eventStack.push('audio error '+event.target.audioNum+" "+JSON.stringify(event));
+         eventStack.push('audio error '+event.target.audioNum);
          }
     }, false);
     stream.addEventListener("pause", function() {
@@ -1963,7 +1964,7 @@ function handleButton(pageName, buttonName){
   }
 
 function minuteTick(){
-  eventStack.push("minuteTick()");
+  //eventStack.push("minuteTick()");
   getRecentSong();
   }
 function remoteControlPause(){
