@@ -483,13 +483,14 @@ function createStream(){
        state.streamPlaying=false;
        eventStack.push('audio ended');
     }, false);
-
-    stream.addEventListener("stalled", function() {
+    var audioCount=state.audioCount;
+    stream.addEventListener("stalled", function(theVar) {
        state.streamPlaying=false;
+       var audioCount=state.audioCount;
        eventStack.push('stalled event');
-       eventStack.push('stalled event '+state.audioCount);
-       window.setTimeout('eventStack.push("audio stalled '+state.audioCount+'")', 5000);
-    }, false);
+       eventStack.push('stalled event '+audioCount);
+       window.setTimeout('eventStack.push("audio stalled '+theVar+'")', 5000);
+    }(audioCount), false);
 
     stream.addEventListener("stalled",
       function(){
