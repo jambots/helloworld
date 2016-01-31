@@ -238,7 +238,7 @@ function processEvents(){
           //already delayed 5000
           checkInternet();
           state.streamPlaying=false;
-          state.audioCreated=false;
+          state.streamCreated=false;
           evt+=" - current"; 
           }
         else{
@@ -484,6 +484,7 @@ function createStream(){
        eventStack.push('audio ended');
     }, false);
 
+
     var audioCount=state.audioCount;
     stream.addEventListener("stalled", function(theVar) {
       return function(){stalledFunction(theVar)};
@@ -494,7 +495,6 @@ function createStream(){
        state.streamPlaying=false;
        state.buffering=true;
        eventStack.push('audio wait');
-
     }, false);
     stream.addEventListener("play", function() {
        state.streamPlaying=false;
