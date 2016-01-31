@@ -389,6 +389,8 @@ function processEvents(){
         }
       if(evt=="online false"){
         document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="No Connection";
+        state.streamPlaying==false;// activates wait timeout
+        state.streamCreated==false;// allows createStream
         if(state.uiPlaying){
           window.clearTimeout(waitTimeout);
           waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
