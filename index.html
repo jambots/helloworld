@@ -321,6 +321,7 @@ function processEvents(){
         if(state.remotePaused){
           evt+=" - while remotePaused";
           // so must recreate stream to keep handles 
+          pauseStream();
           createStream();
           }
         else{
@@ -367,10 +368,8 @@ function processEvents(){
   }
 //new
 function pauseStream(){
-  if(state.streamCreated){
     if(state.ios){stream.pause();}
     if(state.android){stream.pause();}
-    }
   }
 function playStream(){
   if(state.ios){stream.play();}
@@ -427,6 +426,7 @@ function createStream(){
     stream.playing = null;
 */
     stream = null;
+    eventStack.push("stream null"); 
     stream = new Audio(myStreamUrl);
     state.audioCount++;
     stream.audioNum=state.audioCount;
