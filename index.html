@@ -386,6 +386,13 @@ function processEvents(){
           var url=createStream();
           evt+=" - createStream() "+url; 
           }
+      if(evt=="online false"){
+        document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="No Connection";
+        if(state.uiPlaying){
+          window.clearTimeout(waitTimeout);
+          waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
+          }
+
 
         }
         //dbuga('6');
