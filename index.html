@@ -221,18 +221,18 @@ function processEvents(){
         }
         
       if(evt.indexOf("audio stalled")>-1){
-        var parts=evt.split(" ");
-        var audioNum=Number(parts[2]);
-        if(audioNum==state.audioCount){
+        //var parts=evt.split(" ");
+        //var audioNum=Number(parts[2]);
+        ////if(audioNum==state.audioCount){
           window.clearTimeout(waitTimeout);
           //already delayed 5000
           checkInternet();
           state.streamPlaying=false;
           evt+=" - current"; 
-          }
-        else{
-          evt+=" - IGNORE"; 
-          }
+        //  }
+        //else{
+        //  evt+=" - IGNORE"; 
+        //  }
         }
       if(evt=="audio pause"){
         window.clearTimeout(waitTimeout);
@@ -475,7 +475,8 @@ function createStream(){
     stream.addEventListener("stalled", function() {
        state.streamPlaying=false;
        eventStack.push('stalled event');
-       window.setTimeout("eventStack.push('audio stalled '"+event.target.audioNum+"')", 5000);
+       eventStack.push('stalled event '+JSON.parse(event));
+       window.setTimeout("eventStack.push('audio stalled')", 5000);
     }, false);
     stream.addEventListener("waiting", function() {
        state.streamPlaying=false;
