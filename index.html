@@ -258,6 +258,7 @@ function processEvents(){
           if(state.uiPlaying){// REMOTE PAUSE
             document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+="remote.";
             state.remotePaused=true;
+            state.streamCreated=false;
             state.streamPlaying=false;
             state.uiPlaying=false;
             
