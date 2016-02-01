@@ -26,7 +26,6 @@
 <gap:plugin name="org.apache.cordova.network-information" />
 <gap:plugin name="nl.kingsquare.background-audio" version="1.0.0" />
 <gap:plugin name="org.apache.cordova.inappbrowser" />
-<gap:plugin name="cordova-plugin-whitelist" />
 <preference name="fullscreen" value="true" />
 <preference name="orientation" value="portrait" />
 
@@ -90,6 +89,10 @@
 <gap:splash src="res/Default-Portrait@2x.png" gap:platform="ios" width="1536" height="2048" />
 <gap:splash src="res/Default-Landscape@2x.png" gap:platform="ios" width="2048" height="1536" />
 
+
+<gap:plugin name="cordova-plugin-whitelist" source="npm" />
+<allow-navigation href="radiok.org/*" />
+<access origin="*" />
 
 
 </widget>
