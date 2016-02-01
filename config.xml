@@ -26,7 +26,7 @@
 <gap:plugin name="org.apache.cordova.network-information" />
 <gap:plugin name="nl.kingsquare.background-audio" version="1.0.0" />
 <gap:plugin name="org.apache.cordova.inappbrowser" />
-
+<gap:plugin name="cordova-plugin-whitelist" />
 <preference name="fullscreen" value="true" />
 <preference name="orientation" value="portrait" />
 
