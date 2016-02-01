@@ -1709,7 +1709,7 @@ function remoteLink(theUrl){
   }
 
 function handleButton(pageName, buttonName){
-  //dbug("handleButton("+pageName+", "+buttonName+")");
+  dbug("handleButton("+pageName+", "+buttonName+")");
   if(pageName=="alarm"){
     if(buttonName=="timeset"){
       mouseStartX=mouseX;
@@ -1767,7 +1767,7 @@ function handleButton(pageName, buttonName){
       }
 
     if(buttonName=="set"){
-      if(state.streamPlaying){stopStream();}
+      if(state.streamPlaying){pauseStream();}
       sleepSeconds=0;
       var mil=""+minuteOfDayToHH(genericGet("alarmMinuteOfDay"))+minuteOfDayToMM(genericGet("alarmMinuteOfDay"));
       buttonOn("alarm", "set");
