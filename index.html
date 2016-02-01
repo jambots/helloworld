@@ -338,6 +338,7 @@ function processEvents(){
         //dbuga('4');
 
       if(evt=="alarm fired"){
+        state.alarmTriggered=true;
         state.retryAttempts=0;
         state.waitEvents=0;
         state.uiPlaying=true;
@@ -1205,18 +1206,9 @@ function secondTick(){
       //    -----    alarming, wake up! --------------
 
       //dbuga('alarm');
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
+      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Alarming";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
-      buttonOn("listen", "playpause");
-      document.getElementById('page_listen_content_djDiv').innerHTML="";
-      //dbuga('alarming so singing=true');
-
-      singing=true;
-      alarming=true;
-      buttonOn("listen", "playpause");
-      document.getElementById('page_listen_content_djDiv').innerHTML="Connecting..";
-      startRetrying();
-      uiPlaying=true;
+      eventStack.push("alarm fired");
       selectPage("wakeup");
       }
     }
