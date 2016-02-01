@@ -1775,13 +1775,12 @@ function handleButton(pageName, buttonName){
       document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
       window.setTimeout('buttonOff("alarm", "set"); selectPage("armed");', navDelay);
       snoozeMinutes=0;
-      alarming=false;
-      uiPlaying=false;
+      state.alarmTriggered=false;
+      state.uiPlaying=false;
+      state.streamCreated=false;
+      pauseStream();
+      
       buttonOff("listen", "playpause");
-      //dbuga("in set singMedia.play() singing=false");
-      singing=false;
-      singMedia.play();
-      //dbuga("--passed");
       }
     if(buttonName=="cancel"){
       buttonOn("alarm", "cancel");
@@ -1792,13 +1791,11 @@ function handleButton(pageName, buttonName){
   if(pageName=="wakeup"){
     if(buttonName=="alarmoff"){
 
-      uiPlaying=false;
+      state.uiPlaying=false;
       buttonOff("listen", "playpause");
-      alarming=false;
-      stopStream();
-      singMedia.stop();
-      //dbuga('alarmoff so singing=false');
-      singing=false;
+      state.streamCreated=false;
+      state.alarmTriggered=false;
+      pauseStream();
       buttonOn("wakeup", "alarmoff");
       window.setTimeout('buttonOff("wakeup", "alarmoff"); selectPage("listen");', navDelay);
       }
@@ -1808,14 +1805,11 @@ function handleButton(pageName, buttonName){
       snoozeMinutes=nowMod-genericGet("alarmMinuteOfDay")+7;
       var textTime=minuteOfDayToHour(genericGet("alarmMinuteOfDay")+snoozeMinutes)+":"+minuteOfDayToMM(genericGet("alarmMinuteOfDay")+snoozeMinutes)+" "+minuteOfDayToAmPm(genericGet("alarmMinuteOfDay")+snoozeMinutes);
       document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
-      uiPlaying=false;
+      state.streamCreated=false;
+      state.alarmTriggered=false;
+      state.uiPlaying=false;
+      pauseStream();
       buttonOff("listen", "playpause");
-      singMedia.stop();
-      singing=false;
-      //dbuga('snooze so singing=false'); 
-
-      alarming=false;
-      stopStream();
       buttonOn("wakeup", "snooze");
       window.setTimeout('buttonOff("wakeup", "snooze"); selectPage("armed");', navDelay);
       }
