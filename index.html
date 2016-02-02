@@ -384,6 +384,7 @@ function processEvents(){
         }
         //dbuga('3');
       if(evt=="ui pause"){
+        nowPlaying="";
         pauseStream();
         state.streamCreated=false;
         evt+=" - set streamCreated=false"; 
