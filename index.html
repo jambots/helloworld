@@ -104,7 +104,6 @@ var mouseY=0;
 var mouseStartX=0;
 var mouseStartY=0;
 var alarmFailsafeTimeout;
-/*
 //official
 var urlByQuality={
   "low":"http://radiokstreams.cce.umn.edu:8056/;", 
@@ -113,14 +112,7 @@ var urlByQuality={
   "higher":"http://radiokstreams.cce.umn.edu:8256/;", 
   "broken":"http://radiokstreams.cce.umn.edu:8168/;"
 };
-*/
-var urlByQuality={
-  "low":"http://radiokstreams.cce.umn.edu:8056/;", 
-  "medium":"http://somafm.com/dronezone.pls/;", 
-  "high":"http://radiokstreams.cce.umn.edu:8256/;", 
-  "higher":"http://radiokstreams.cce.umn.edu:8256/;", 
-  "broken":"http://radiokstreams.cce.umn.edu:8168/;"
-};
+
 //http://somafm.com/dronezone.pls
 //http://wtbu.bu.edu:1800/listen.m3u
 
@@ -217,19 +209,25 @@ function mediaEvent(evt){
         evt+=" - createStream() "+url; 
         }  
       if(evt=="media starting"){
-        nowPlaying="Connecting";
+        nowPlaying="Connecting.";
+        if(state.waitEvents>0){nowPlaying="Retrying.";}
+        for(var w=0; w<state.waitEvents; w++){nowPlaying+=".";}
+        window.clearTimeout(waitTimeout);
+        waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
         }  
       if(evt=="media running"){
         updateNowPlaying();
+        window.clearTimeout(waitTimeout);
         }  
       if(evt=="media paused"){
         nowPlaying="Paused";
-
+        window.clearTimeout(waitTimeout);
         }  
       if(evt=="media stopped"){
-        nowPlaying="Stopped";
+        //nowPlaying="Stopped";
+        if(state.loop){stream.play();}
+        window.clearTimeout(waitTimeout);
         }  
-
   }
 function processEvents(){
   if(state.errorPause){
@@ -481,6 +479,10 @@ function createStream(){
  
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
   if((state.waitEvents>2)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
+    if(state.waitEvents>2){
+      nowPlaying="Timed out, no stream";
+      }
+
     state.retryAttempts=0;
     state.waitEvents=0;
     if(state.android){ 
@@ -492,9 +494,8 @@ function createStream(){
     state.loop=true;
     window.clearTimeout(singTimeout);
     singTimeout=window.setTimeout("eventStack.push('sing timeout')", 10000);
-    nowPlaying="Something is wrong.";
     if((state.online==true)&&(state.internet==false)){
-      nowPlaying="Online but no stream";
+      nowPlaying="Online but no internet";
       }
     if((state.online==true)&&(state.internet==false)){
       nowPlaying="No Connection";
