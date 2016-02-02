@@ -302,7 +302,7 @@ function processEvents(){
             }
           else{
             evt+=" - normal"; 
-            nowPlaying="NORM";
+            nowPlaying="";
             state.streamPlaying=false;
             }
           evt+=" - current"; 
@@ -781,7 +781,7 @@ function onOnline() {
 
 
 function getRecentSong(){
-  eventStack.push('getRecentSong()');
+  //eventStack.push('getRecentSong()');
   //return false;
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_song";
       $.ajax({
@@ -791,7 +791,7 @@ function getRecentSong(){
       });
   }
 function parseRecentSong(theData){
-  eventStack.push('parseRecentSong()');
+  //eventStack.push('parseRecentSong()');
   recentSong=JSON.parse(theData);
   var songKeys=Object.keys(recentSong);
 
