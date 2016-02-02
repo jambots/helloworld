@@ -216,7 +216,7 @@ function mediaEvent(evt){
         waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
         }  
       if(evt=="media running"){
-        updateNowPlaying();
+        getRecentSong();
         window.clearTimeout(waitTimeout);
         }  
       if(evt=="media paused"){
@@ -460,6 +460,8 @@ function processEvents(){
 
   }
 function pauseStream(){ 
+  window.clearTimeout(waitTimeout);
+
   if (typeof stream.pause == 'function'){
     if(state.ios){stream.pause();}
     if(state.android){stream.pause();}
@@ -1045,10 +1047,10 @@ function returnGradStyle(){
 
 function updateNowPlaying(){
   
-  if((state.online)&&(state.internet)&&(state.uiPlaying)){
+  if((state.online)&&(state.internet)&&(state.uiPlaying)&&(state.loop==false)){
     //eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
     
-    nowPlaying=nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
+    nowPlaying="UNP "+nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
     //document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
     //if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
     }
