@@ -198,8 +198,8 @@ function appPaused(){
 function stateTick(){
   graphState();
   processEvents();
-
   }
+
 function mediaEvent(evt){
       //'media none', 'media starting', 'media running', 'media paused', 'media stopped';
       if(evt=="media none"){
@@ -209,13 +209,16 @@ function mediaEvent(evt){
         evt+=" - createStream() "+url; 
         }  
       if(evt=="media starting"){
-        nowPlaying="Connecting.";
-        if(state.waitEvents>0){nowPlaying="Retrying.";}
-        for(var w=0; w<state.waitEvents; w++){nowPlaying+=".";}
-        window.clearTimeout(waitTimeout);
-        waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
+        if(state.loop==false){
+          nowPlaying="Connecting.";
+          if(state.waitEvents>0){nowPlaying="Retrying.";}
+          for(var w=0; w<state.waitEvents; w++){nowPlaying+=".";}
+          window.clearTimeout(waitTimeout);
+          waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
+          }
         }  
       if(evt=="media running"){
+        state.streamPlaying=true;
         getRecentSong();
         window.clearTimeout(waitTimeout);
         }  
@@ -229,6 +232,7 @@ function mediaEvent(evt){
         window.clearTimeout(waitTimeout);
         }  
   }
+
 function processEvents(){
   if(state.errorPause){
     dbuga('errorPause');
@@ -372,7 +376,13 @@ function processEvents(){
         playStream();
         }
 
-
+      if(evt.indexOf('setting')>-1){
+        if(state.uiPlaying){
+          state.streamCreated=false;
+          state.streamPlaying=false;
+          createStream();
+          }
+        }
 
       if(evt=="alarm fired"){
         state.alarmTriggered=true;
@@ -768,7 +778,7 @@ function onOnline() {
 
 
 function getRecentSong(){
-  //eventStack.push('getRecentSong()');
+  eventStack.push('getRecentSong()');
   //return false;
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_song";
       $.ajax({
@@ -777,6 +787,34 @@ function getRecentSong(){
       success: function(data) {parseRecentSong(data);}
       });
   }
+function parseRecentSong(theData){
+  eventStack.push('parseRecentSong()');
+  recentSong=JSON.parse(theData);
+  var songKeys=Object.keys(recentSong);
+
+  songKeys.sort();
+  songKeys.reverse();
+  if(songKeys.length>0){
+    //dbuga("songKeys[0]="+songKeys[0]);
+    var album=recentSong[songKeys[0]].song_album;
+    var song=recentSong[songKeys[0]].song_title;
+    //dbuga("song="+song);
+    var artist=recentSong[songKeys[0]].song_artist;
+    //dbuga("artist="+artist);
+    var time=recentSong[songKeys[0]].song_timestamp;
+    var dj=recentSong[songKeys[0]].dj;
+    //dbuga("dj="+dj);
+    if(song.indexOf("'")>-1){
+      song = replaceAll("'", "&apos;", song);
+      }
+    nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
+    if((state.uiPlaying==true)&&(state.streamPlaying==true)){
+      eventStack.push("parseRecentSong("+songKeys.length+") updateNowPlaying");
+      updateNowPlaying();
+      }
+    }
+  }
+
 function getRecentSongs(){
   //dbuga('getRecentSongs()');
   //return false;
@@ -811,32 +849,6 @@ function parseRecentSongs(theData){
   updatePlaylist();
   }
 
-function parseRecentSong(theData){
-  recentSong=JSON.parse(theData);
-  var songKeys=Object.keys(recentSong);
-
-  songKeys.sort();
-  songKeys.reverse();
-  if(songKeys.length>0){
-    //dbuga("songKeys[0]="+songKeys[0]);
-    var album=recentSong[songKeys[0]].song_album;
-    var song=recentSong[songKeys[0]].song_title;
-    //dbuga("song="+song);
-    var artist=recentSong[songKeys[0]].song_artist;
-    //dbuga("artist="+artist);
-    var time=recentSong[songKeys[0]].song_timestamp;
-    var dj=recentSong[songKeys[0]].dj;
-    //dbuga("dj="+dj);
-    if(song.indexOf("'")>-1){
-      song = replaceAll("'", "&apos;", song);
-      }
-    nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
-    if((state.uiPlaying==true)&&(state.streamPlaying==true)){
-      //eventStack.push("parseRecentSong("+songKeys.length+") updateNowPlaying");
-      updateNowPlaying();
-      }
-    }
-  }
 
 function getDownloads(){
   //dbuga("getDownloads()");
@@ -1983,9 +1995,7 @@ function handleButton(pageName, buttonName){
       genericSet("quality", "medium");
       
       
-      if(state.uiPlaying){
-        createStream();
-        }
+
       }
     if(buttonName=="higher"){
       eventStack.push("setting higher");
@@ -1993,9 +2003,7 @@ function handleButton(pageName, buttonName){
       buttonOn("settings", "higher");
       buttonOff("settings", "broken");
       genericSet("quality", "higher");
-      if(state.uiPlaying){
-        createStream();
-        }
+
       }
     if(buttonName=="broken"){
       eventStack.push("setting broken");
@@ -2004,9 +2012,8 @@ function handleButton(pageName, buttonName){
       buttonOn("settings", "broken");
 
       genericSet("quality", "broken");
-      if(state.uiPlaying){
-        createStream();
-        }
+
+
       }
 
     }
