@@ -131,7 +131,7 @@ var totdDownloads=[];
 var wrsDownloads=[];
 var spotlightImage="";
 //new
-var nowPlaying="";
+var nowPlaying="VAR";
 
 //// state changing functions
 function checkInternet(){
@@ -298,7 +298,7 @@ function processEvents(){
             }
           else{
             evt+=" - normal"; 
-            nowPlaying="";
+            nowPlaying="NORM";
             state.streamPlaying=false;
             }
           evt+=" - current"; 
@@ -667,7 +667,7 @@ function mediaSuccess(){
 
 
 function togglePlaying(){
-  nowPlaying="";
+  nowPlaying="TP";
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   if(state.uiPlaying==true){
     state.uiPlaying=false;
