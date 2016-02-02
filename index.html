@@ -260,12 +260,13 @@ function processEvents(){
         if(audioNum==state.audioCount){
           //if(state.remotePaused==false){state.streamCreated=false;}
           //not sure why this instance don't play no more, actually from long pause.
-          state.streamCreated=false;
-          window.clearTimeout(waitTimeout);
+          //state.streamCreated=false;
+          //window.clearTimeout(waitTimeout);
           //already delayed 5000
-          checkInternet();
-          state.streamPlaying=false;
-          evt+=" - current"; 
+          //checkInternet();
+          //state.streamPlaying=false;
+          evt+=" - current, ignore anyways"; 
+/*
           if(state.uiPlaying){
             nowPlaying="Stalled.";
             if((state.internet==false)&&(state.online==true)){
@@ -278,6 +279,7 @@ function processEvents(){
               nowPlaying+=" Internet but no stream.";
               }
             } 
+*/
           }
         else{
           evt+=" - IGNORE"; 
@@ -290,7 +292,7 @@ function processEvents(){
           window.clearTimeout(waitTimeout);
           nowPlaying="Paused.";
           if(state.uiPlaying){// REMOTE PAUSE
-            nowPlaying+="remote.";
+            nowPlaying=="Remote Paused";
             state.remotePaused=true;
             state.streamCreated=false;
             state.streamPlaying=false;
@@ -336,6 +338,25 @@ function processEvents(){
       if(evt=="audio play"){
         window.clearTimeout(waitTimeout);
         waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
+        }
+      if(evt.indexOf("audio playing")>-1){
+        var parts=evt.split(" ");
+        var audioNum=Number(parts[2]);
+        if(audioNum==state.audioCount){
+          state.remotePaused=false;
+          evt+=" - current";
+          state.streamPlaying=true;
+          state.buffering=false;
+          window.clearTimeout(waitTimeout);
+          if(state.internet==false){
+            checkInternet();
+            }
+
+          e=eventStash.length; //cease in case immediate play 
+          }
+        else{
+          evt+=" - IGNORE old object";
+          }
         }
 
 
@@ -408,25 +429,6 @@ function processEvents(){
         }
         //dbuga('5');
 
-      if(evt.indexOf("audio playing")>-1){
-        var parts=evt.split(" ");
-        var audioNum=Number(parts[2]);
-        if(audioNum==state.audioCount){
-          state.remotePaused=false;
-          evt+=" - current";
-          state.streamPlaying=true;
-          state.buffering=false;
-          window.clearTimeout(waitTimeout);
-          if(state.internet==false){
-            checkInternet();
-            }
-
-          e=eventStash.length; //cease in case immediate play 
-          }
-        else{
-          evt+=" - IGNORE old object";
-          }
-        }
       if(evt=="wait timeout"){
         if(state.streamPlaying==false){
           nowPlaying="Retrying...";
@@ -1759,7 +1761,7 @@ function remoteLink(theUrl){
   }
 
 function handleButton(pageName, buttonName){
-  dbug("handleButton("+pageName+", "+buttonName+")");
+  //dbug("handleButton("+pageName+", "+buttonName+")");
   if(pageName=="alarm"){
     if(buttonName=="timeset"){
       mouseStartX=mouseX;
