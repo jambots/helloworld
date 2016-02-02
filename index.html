@@ -377,6 +377,7 @@ function processEvents(){
         }
 
       if(evt.indexOf('setting')>-1){
+        if(state.streamPlaying){stream.pause();}
         if(state.uiPlaying){
           state.streamCreated=false;
           state.streamPlaying=false;
@@ -679,7 +680,7 @@ function mediaSuccess(){
 
 
 function togglePlaying(){
-  nowPlaying="TP";
+  //nowPlaying="";
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   if(state.uiPlaying==true){
     state.uiPlaying=false;
