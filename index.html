@@ -397,6 +397,8 @@ function processEvents(){
         }
       if(evt=="sing timeout"){
         //state.retryAttempts++;
+        pauseStream();
+        state.loop=false;
         state.waitEvents=0;
         if(state.uiPlaying){
           checkInternet();
