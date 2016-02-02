@@ -472,7 +472,7 @@ function processEvents(){
   }
 function pauseStream(){ 
   window.clearTimeout(waitTimeout);
-
+  state.streamPlaying=false;
   if (typeof stream.pause == 'function'){
     if(state.ios){stream.pause();}
     if(state.android){stream.pause();}
