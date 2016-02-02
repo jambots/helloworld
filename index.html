@@ -290,9 +290,9 @@ function processEvents(){
         var audioNum=Number(parts[2]);
         if(audioNum==state.audioCount){
           window.clearTimeout(waitTimeout);
-          nowPlaying="Paused.";
+          nowPlaying="Paused";
           if(state.uiPlaying){// REMOTE PAUSE
-            nowPlaying=="Remote Paused";
+            nowPlaying="Remote Paused";
             state.remotePaused=true;
             state.streamCreated=false;
             state.streamPlaying=false;
