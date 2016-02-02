@@ -131,7 +131,7 @@ var totdDownloads=[];
 var wrsDownloads=[];
 var spotlightImage="";
 //new
-var nowPlaying="VAR";
+var nowPlaying="";
 
 //// state changing functions
 function checkInternet(){
@@ -223,7 +223,7 @@ function mediaEvent(evt){
         window.clearTimeout(waitTimeout);
         }  
       if(evt=="media paused"){
-        nowPlaying="Paused";
+        nowPlaying="";
         window.clearTimeout(waitTimeout);
         }  
       if(evt=="media stopped"){
@@ -812,7 +812,7 @@ function parseRecentSong(theData){
       }
     nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
     if((state.uiPlaying==true)&&(state.streamPlaying==true)){
-      eventStack.push("parseRecentSong("+songKeys.length+") updateNowPlaying");
+      //eventStack.push("parseRecentSong("+songKeys.length+") updateNowPlaying");
       updateNowPlaying();
       }
     }
@@ -1061,11 +1061,10 @@ function returnGradStyle(){
   }
 
 function updateNowPlaying(){
-  
   if((state.online)&&(state.internet)&&(state.uiPlaying)&&(state.loop==false)){
     //eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
     
-    nowPlaying="UNP "+nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
+    nowPlaying=""+nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
     //document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
     //if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
     }
