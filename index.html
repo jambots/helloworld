@@ -34,6 +34,7 @@ var state={
 "waitEvents":0,
 "loop":false,
 "playerType":"",
+"mediaStatus":-1,
 "errorPause":false
 }
 var stateKeys=Object.keys(state);
@@ -137,6 +138,9 @@ var singMedia;
 var totdDownloads=[];
 var wrsDownloads=[];
 var spotlightImage="";
+//new
+var nowPlaying="";
+
 //// state changing functions
 function checkInternet(){
   if(state.online==false){
@@ -204,7 +208,29 @@ function stateTick(){
   processEvents();
 
   }
+function mediaEvent(evt){
+      //'media none', 'media starting', 'media running', 'media paused', 'media stopped';
+      if(evt=="media none"){
+        nowPlaying="no media?";
+        state.retryAttempts++;
+        var url=createStream();
+        evt+=" - createStream() "+url; 
+        }  
+      if(evt=="media starting"){
+        nowPlaying="Connecting";
+        }  
+      if(evt=="media running"){
+        updateNowPlaying();
+        }  
+      if(evt=="media paused"){
+        nowPlaying="Paused";
 
+        }  
+      if(evt=="media stopped"){
+        nowPlaying="Stopped";
+        }  
+
+  }
 function processEvents(){
   if(state.errorPause){
     dbuga('errorPause');
@@ -223,15 +249,8 @@ function processEvents(){
     eventStack=[];
     for (var e=0; e<eventStash.length; e++){
       var evt=eventStash[e];
-
-
-      if(evt=="ui pause"){
-        pauseStream();
-        state.streamCreated=false;
-        evt+=" - set streamCreated=false"; 
-        e=eventStash.length; //cease in case of twitchy user 
-        }
-        
+      mediaEvent(evt);
+     
       if(evt.indexOf("audio stalled")>-1){
         // stall from control center then resume leaves streamCreated false. Odd but no harm.
         var parts=evt.split(" ");
@@ -246,15 +265,15 @@ function processEvents(){
           state.streamPlaying=false;
           evt+=" - current"; 
           if(state.uiPlaying){
-            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Stalled.";
+            nowPlaying="Stalled.";
             if((state.internet==false)&&(state.online==true)){
-              document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=" Connected but no internet.";
+              nowPlaying+=" Connected but no internet.";
               }
             if((state.online==false)){
-              document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=" No Connection.";
+              nowPlaying+=" No Connection.";
               } 
             if((state.internet==true)&&(state.online==true)){
-              document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=" Internet but no stream.";
+              nowPlaying+=" Internet but no stream.";
               }
             } 
           }
@@ -267,21 +286,21 @@ function processEvents(){
         var audioNum=Number(parts[2]);
         if(audioNum==state.audioCount){
           window.clearTimeout(waitTimeout);
-          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Paused.";
+          nowPlaying="Paused.";
           if(state.uiPlaying){// REMOTE PAUSE
-            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+="remote.";
+            nowPlaying+="remote.";
             state.remotePaused=true;
             state.streamCreated=false;
             state.streamPlaying=false;
             state.uiPlaying=false;
             
-            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML+=".";
+            nowPlaying+=".";
             buttonOff('listen', 'playpause');
             evt+=" - remotePaused"; 
             }
           else{
             evt+=" - normal"; 
-            document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
+            nowPlaying="";
             state.streamPlaying=false;
             }
           evt+=" - current"; 
@@ -290,8 +309,6 @@ function processEvents(){
           evt+=" - IGNORE"; 
           }
         }
-      
-
       if(evt.indexOf("audio error")>-1){
         var parts=evt.split(" ");
         var audioNum=Number(parts[2]);
@@ -304,6 +321,25 @@ function processEvents(){
           evt+=" - IGNORE old object";
           }
         }
+      if((evt=="audio ended")&&(state.uiPlaying)){
+        evt+=" - playStream()";
+        //checkInternet();
+        playStream();
+        }
+        //dbuga('4');
+      if(evt=="audio wait"){
+        window.clearTimeout(waitTimeout);
+        waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
+        }
+      if(evt=="audio play"){
+        window.clearTimeout(waitTimeout);
+        waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
+        }
+
+
+
+
+
       if(evt=="ui play"){
         //dbuga('1');
         state.retryAttempts=0;
@@ -324,18 +360,21 @@ function processEvents(){
         e=eventStash.length; //cease in case of twitchy user 
         }
         //dbuga('3');
+      if(evt=="ui pause"){
+        pauseStream();
+        state.streamCreated=false;
+        evt+=" - set streamCreated=false"; 
+        e=eventStash.length; //cease in case of twitchy user 
+        }
+        
+
 
       if((evt=="stream created")&&(state.uiPlaying)){
         evt+=" - playStream()";
         playStream();
         }
 
-      if((evt=="audio ended")&&(state.uiPlaying)){
-        evt+=" - playStream()";
-        //checkInternet();
-        playStream();
-        }
-        //dbuga('4');
+
 
       if(evt=="alarm fired"){
         state.alarmTriggered=true;
@@ -377,25 +416,19 @@ function processEvents(){
           evt+=" - IGNORE old object";
           }
         }
-      if(evt=="audio play"){
-        window.clearTimeout(waitTimeout);
-        waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
-        }
       if(evt=="wait timeout"){
         if(state.streamPlaying==false){
-          document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Retrying...";
+          nowPlaying="Retrying...";
           state.waitEvents++;
           checkInternet();
           var url=createStream();
           evt+=" - test internet then createStream() "+url; 
           }
         }
-      if(evt=="audio wait"){
 
-        window.clearTimeout(waitTimeout);
-        waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
 
-        }
+
+
       if(evt=="online true"){
         if(state.uiPlaying){
           var url=createStream();
@@ -403,7 +436,7 @@ function processEvents(){
           }
         }
       if(evt=="online false"){
-        document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="No Connection";
+        nowPlaying="No Connection";
         state.streamPlaying==false;// activates wait timeout
         state.streamCreated==false;// allows createStream
         if(state.uiPlaying){
@@ -423,11 +456,11 @@ function processEvents(){
 
     dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
     //dbuga(staleString);
-    }//end if event stack 
+    }//end if event stack
+  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying; 
   state.errorPause=false;
 
   }
-//new
 function pauseStream(){ 
   if (typeof stream.pause == 'function'){
     if(state.ios){stream.pause();}
@@ -459,16 +492,16 @@ function createStream(){
     state.loop=true;
     window.clearTimeout(singTimeout);
     singTimeout=window.setTimeout("eventStack.push('sing timeout')", 10000);
-    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Something is wrong.";
+    nowPlaying="Something is wrong.";
     if((state.online==true)&&(state.internet==false)){
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Online but no stream";
+      nowPlaying="Online but no stream";
       }
     if((state.online==true)&&(state.internet==false)){
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="No Connection";
+      nowPlaying="No Connection";
       }
     }
   else{// try stream
-    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Connecting..."; 
+    nowPlaying="Connecting..."; 
     }
   // url figured out now go
   if(state.playerType=="audio"){
@@ -598,8 +631,9 @@ function pausedFunction(audioCount){
   eventStack.push('audio pause '+audioCount);
   }
 function mediaStatus(theStatus){
-  eventStack.push("mediaStatus "+theStatus);
-  var statusArray=['MEDIA_NONE', 'MEDIA_STARTING', 'MEDIA_RUNNING', 'MEDIA_PAUSED', 'MEDIA_STOPPED'];
+  var statusArray=['media none', 'media starting', 'media running', 'media paused', 'media stopped'];
+  eventStack.push(statusArray[theStatus]);
+  }
 /*
   var prevStatus=androidStreamStatus;
   androidStreamStatus=theStatus;
@@ -622,7 +656,6 @@ function mediaStatus(theStatus){
     startRetrying();
     }
 */
-  }
 
 function mediaError(er){
   eventStack.push("mediaError "+er);
@@ -633,7 +666,7 @@ function mediaSuccess(){
 
 
 function togglePlaying(){
-  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="";
+  nowPlaying="";
   document.getElementById('page_listen_content_djDiv').innerHTML="";
   if(state.uiPlaying==true){
     state.uiPlaying=false;
@@ -1014,7 +1047,7 @@ function updateNowPlaying(){
   if((state.online)&&(state.internet)&&(state.uiPlaying)){
     //eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
     
-    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
+    nowPlaying=nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
     //document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
     //if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
     }
@@ -1206,7 +1239,7 @@ function secondTick(){
       //    -----    alarming, wake up! --------------
 
       //dbuga('alarm');
-      document.getElementById('page_listen_content_nowPlayingDiv').innerHTML="Alarming";
+      nowPlaying="Alarming";
       document.getElementById('page_listen_content_djDiv').innerHTML="";
       eventStack.push("alarm fired");
       selectPage("wakeup");
