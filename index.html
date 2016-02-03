@@ -129,6 +129,30 @@ var singMedia;
 
 var totdDownloads=[];
 var wrsDownloads=[];
+var instDownloads=[{
+		"artist": "Warehouse Eyes",
+		"website": "http://warehouseeyes.com",
+		"date": "Jan 22, 2016",
+		"images": [{
+			"title": "",
+			"url": "http://www.radiok.org/files/3414/5410/0604/warehouse_eyes.png"
+		}],
+		"videos": [{
+			"title": "",
+			"url": "https://youtu.be/1_mKqvndbuw"
+		}],
+		"audios": [{
+			"title": "I Think I Can Live With It (Live on Radio K)",
+			"url": "http://www.radiok.org/files/9714/5410/0446/01_I_Think_I_Can_Live_With_It_Live_on_Radio_K.mp3"
+		}, {
+			"title": "Without You Or Me (Live on Radio K)",
+			"url": "http://www.radiok.org/files/4514/5410/0447/02_Without_You_Or_Me_Live_on_Radio_K.mp3"
+		}, {
+			"title": "Smoke (Live on Radio K)",
+			"url": "http://www.radiok.org/files/2514/5410/0448/03_Smoke_Live_on_Radio_K.mp3"
+		}]
+	}];
+
 var spotlightImage="";
 //new
 var nowPlaying="";
@@ -235,13 +259,13 @@ function mediaEvent(evt){
 
 function processEvents(){
   if(state.errorPause){
-    dbuga('errorPause');
+    ////dbuga('errorPause');
     return false;
     }
   state.errorPause=true;
 
   if(eventStack.length>0){
-    dbug('processEvents() '+eventStack.join('|'));
+    ////dbug('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
@@ -330,7 +354,6 @@ function processEvents(){
         //checkInternet();
         playStream();
         }
-        //dbuga('4');
       if(evt=="audio wait"){
         window.clearTimeout(waitTimeout);
         waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
@@ -364,25 +387,19 @@ function processEvents(){
 
 
       if(evt=="ui play"){
-        //dbuga('1');
         state.retryAttempts=0;
         state.waitEvents=0;
-        //dbuga('2');
         state.remotePaused=false;
         if(state.streamCreated){
-          //dbuga('2a');
-
           playStream();
           evt+=" - playStream()"; 
           }
         else{
-          //dbuga('2b');
           var url=createStream();
           evt+=" - createStream() "+url; 
           }
         e=eventStash.length; //cease in case of twitchy user 
         }
-        //dbuga('3');
       if(evt=="ui pause"){
         nowPlaying="";
         pauseStream();
@@ -428,8 +445,7 @@ function processEvents(){
           evt+=" - test internet then createStream() "+url; 
           }
         }
-        //dbuga('5');
-
+        
       if(evt=="wait timeout"){
         if(state.streamPlaying==false){
           nowPlaying="Retrying...";
@@ -460,16 +476,14 @@ function processEvents(){
 
 
         }
-        //dbuga('6');
-      
+        
       staleStack.unshift(evt);
-      dbuga(evt);
+      ////dbuga(evt);
 
       }
     staleStack.unshift(" ");
 
-    dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
-    //dbuga(staleString);
+    ////dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
     }//end if event stack
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying; 
   state.errorPause=false;
@@ -857,7 +871,7 @@ function parseRecentSongs(theData){
 
 
 function getDownloads(){
-  //dbuga("getDownloads()");
+  dbuga("getDownloads()");
   getCalendar();
   totdDownloads=[];
   wrsDownloads=[];
@@ -887,11 +901,11 @@ function getDownloads(){
 // remove errors on publish
 
 function parseDownloads(theXml, source){
-  //dbuga("parseDownloads() "+source);
+  dbuga("parseDownloads() "+source);
   if(source=="Track of the Day"){
     var totdObj=xmlToJson(theXml);
     var itemsArray=totdObj.rss.channel.item;
-    //dbug('itemsArray.length='+itemsArray.length);
+    dbug('itemsArray.length='+itemsArray.length);
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
@@ -924,7 +938,7 @@ function parseDownloads(theXml, source){
   if(source=="Weekly Release Spotlight"){
     var wrsObj=xmlToJson(theXml);
     var itemsArray=wrsObj.rss.channel.item;
-    //dbug('itemsArray.length='+itemsArray.length);
+    dbuga('itemsArray.length='+itemsArray.length);
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];

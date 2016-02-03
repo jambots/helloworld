@@ -112,7 +112,7 @@ var pages=[
     {"name":"events", "top":9, "left":2, "height":11, "width":11},
     {"name":"totd", "top":21, "left":2, "height":11, "width":11},
     {"name":"wrs", "top":33, "left":2, "height":11, "width":11},
-    {"name":"vc", "top":45, "left":2, "height":11, "width":11},
+    {"name":"inst", "top":45, "left":2, "height":11, "width":11},
   ],
   "contents":[
     {"name":"eventsDesc", "top":9, "left":15, "width":32, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','events');\">EVENTS</a><br />Calendar of Upcoming Events."},
@@ -136,6 +136,14 @@ var pages=[
   ],
   "contents":[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="wrsHolder"><div id="wrsScroller"></div></div>'}
+  ]
+},
+{"name":"inst", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "buttons":[
+    {"name":"done", "top":0, "left":39, "height":7, "width":9},
+  ],
+  "contents":[
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="instHolder"><div id="instScroller"></div></div>'}
   ]
 },
 {"name":"faqs", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
