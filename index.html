@@ -764,6 +764,7 @@ function resumeInit(){
   //dbuga(' init 4');
   //minuteTick();
   getFaqs();
+  getInst();
   //dbuga(' init 5');
   //retryInterval=window.setInterval("retryTick()", 15000);    
 
@@ -881,12 +882,15 @@ function getDownloads(){
   document.getElementById('wrsHolder').style.height=grid*51+'px'; 
   totdDownloads=[];
   wrsDownloads=[];
-  
+/* 
+  //fubar from & in title
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F",
     dataType: "xml",        
     success: function(xml) {parseDownloads(xml, "Weekly Release Spotlight");}
     });
+*/
+
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Ftotd",
     dataType: "xml",        
@@ -899,7 +903,7 @@ function getDownloads(){
 
   }
 // remove errors on publish
-
+var wrsObject={}
 function parseDownloads(theXml, source){
   dbuga("parseDownloads() "+source);
   if(source=="Track of the Day"){
@@ -936,7 +940,7 @@ function parseDownloads(theXml, source){
     updateTotdDownloads();
     }
   if(source=="Weekly Release Spotlight"){
-    var wrsObj=xmlToJson(theXml);
+    wrsObj=xmlToJson(theXml);
     var itemsArray=wrsObj.rss.channel.item;
     dbuga('itemsArray.length='+itemsArray.length);
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
@@ -1161,6 +1165,7 @@ function populateCalendar(){
   document.getElementById('calendarHolder').style.width=grid*48+'px'; 
   document.getElementById('calendarHolder').style.height=grid*51+'px'; 
   }
+
 function getFaqs(){
   faqs=[];
   var feedUrl="http://www.radiok.org/app-faq/";
@@ -1177,6 +1182,7 @@ function getFaqs(){
     });
   //dbuga('getFaqs() completed');
   }
+var inst=[];
 var faqs=[
   {"q":"What is Radio K?", "a":"Radio K, the award-winning radio station of the University of Minnesota, is nationally recognized as one of the best student-run college radio stations in the country, playing an eclectic variety of independent music both old and new.<br /><br />Radio K educates students, breaks ground in musical programming, and provides cutting-edge cultural coverage through our specialty shows, web content and Culture Queue."},
   {"q":"How can I contact Radio K?", "a":"Email: <a href=\"mailto:radiokdj@umn.edu\">radiokdj@umn.edu</a><br /><br />Phone: <a href=\"tel:+16126253500\">612-625-3500</a><br /><br />Web: <a href=\"http://www.radiok.org/\">www.radiok.org</a><br /><br />Mobile:<br /><a href=\"http://twitter.com/radiok\"><img src=\"social/twitter.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"https://www.facebook.com/20658369592\"><img src=\"social/facebook.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"http://www.youtube.com/user/RadioK770?feature=watch\"><img src=\"social/youtube.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"https://plus.google.com/u/0/106019319997650127214/about\"><img src=\"social/googleplus.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"http://www.radiok.org/blogs/new/tag/track%20of%20the%20day\"><img src=\"social/rss.png\" width=\"socialSize\" height=\"socialSize\" /></a>"},
@@ -1210,6 +1216,48 @@ function parseFaqs(theScrape){
       }
     }
   populateFaqs();
+  }
+function getInst(){
+  faqs=[];
+  var feedUrl="http://www.radiok.org/instudios/";
+  //var feedUrl="app-faq.txt";
+  //dbuga('getFaqs()');
+  $.ajax({
+    url: feedUrl,
+    dataType: "text",        // < new bit
+    
+    success: function(data) {
+      //console.log(data);
+      parseInst(data);
+      }
+    });
+  dbuga('getInst() completed');
+  }
+
+function parseInst(theScrape){
+  var instBlocks=theScrape.split('<div class="instudio_list_item clearfix"');
+  dbuga('parseInst instBlocks.length=' +instBlocks.length);
+/*
+  if(instBlocks.length>1){
+    inst=[];
+    for (var s=1; s<faqBlocks.length; s++){
+      var faqBlock=faqBlocks[s];
+      var headingTempParts=faqBlock.split('<div class="faq_heading"><h2>');
+      var headingTemp=headingTempParts[1];
+      var headingParts=headingTemp.split('</h2></div>');
+      var headingText=headingParts[0];
+
+      var contentTempParts=faqBlock.split('<div class="faq_content"><p>');
+      var contentTemp=contentTempParts[1];
+      var contentParts=contentTemp.split('</p></div>');
+      var contentText=contentParts[0];
+      var thisEntry={"q":headingText, "a":contentText};
+      inst.push(thisEntry);
+      //dbuga('<h2>'+headingText+'</h2><p>'+contentText+'</p>');
+      }
+    }
+  populateInst();
+*/
   }
 
 function getCalendar(){
@@ -1621,6 +1669,22 @@ function populateFaqs(){
   htmlString+=  '&copy; Regents of the University of Minnesota 2013.<br>All rights reserved. Developed by <a href="http://jambots.com">Jambots.com</a>'; 
   htmlString+='</div>'
   document.getElementById('page_faqs_content_regentsDiv').innerHTML=htmlString;
+  }
+function populateInst(){
+  var htmlString="";
+  for (var f=0; f<faqs.length; f++){
+    var q=faqs[f].q;
+    var a=faqs[f].a;
+
+    var quoteParts=a.split('"');
+    for(var p=0; p<quoteParts.length; p++){
+      var thisPart= quoteParts[p];
+      if(thisPart.indexOf('http')>-1){
+        quoteParts[p]='javascript:remoteLink(\''+thisPart+'\');'+returnFalse;
+        }
+      }
+    a=quoteParts.join('"');
+  document.getElementById('page_inst_content_regentsDiv').innerHTML=htmlString;
   }
 
 function selectTwistie(theTwistie){
