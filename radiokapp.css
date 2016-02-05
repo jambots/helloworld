@@ -55,6 +55,14 @@ src: url('akzidenzgroteskbold.ttf');
   overflow:auto;
   -webkit-overflow-scrolling: touch;
 }
+#instHolder{
+  position:absolute;
+  z-index:1;
+  width:100%;
+  background:#aaa;
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
+}
 #cqHolder{
   position:absolute;
   z-index:1;
