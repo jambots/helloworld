@@ -762,7 +762,7 @@ function resumeInit(){
 
 function getInst(){
   faqs=[];
-  var feedUrl="http://www.radiok.org/instudios/";
+  var feedUrl="http://www.radiok.org/instudios/page/"+instPage+"/";
   //var feedUrl="app-faq.txt";
   dbuga('getInst()');
   $.ajax({
@@ -777,32 +777,24 @@ function getInst(){
   }
 
 var inst=[];
+var instPage=1;
 function parseInst(theScrape){
   var instBlocks=theScrape.split('<div class="instudio_list_item');
-  dbuga('parseInst instBlocks.length=' +instBlocks.length);
+  dbug('parseInst instBlocks.length=' +instBlocks.length);
 
   if(instBlocks.length>1){
     inst=[];
-    var instBlock=instBlocks[0];
-    var quoteParts=instBlock.split('"');
-    dbuga('quoteParts '+quoteParts.length);
-    for (var p=0; p<quoteParts.length; p++){
-      dbuga(" "+p+' '+quoteParts[p]);
-      }
       
     for (var i=1; i<instBlocks.length; i++){
       var instBlock=instBlocks[i];
       var quoteParts=instBlock.split('"');
-      var linkUrl=quoteParts[5];
-      var imageSrc=quoteParts[9];
+      var linkUrl=quoteParts[8];
+      var imageSrc=quoteParts[12];
       var artist=quoteParts[14];	//ok
       var dateStr=quoteParts[19];	//ok
-      dbuga('quoteParts '+quoteParts.length);
       var paraParts=dateStr.split("<p>");
-      dbuga('dateStr '+dateStr);
-      dbuga('paraParts '+paraParts.length);
       var dateStr=paraParts[1];
-      var brParts=dateStr.split("<br>");
+      var brParts=dateStr.split("<br");
       var dateStr=brParts[0];
 
       var thisEntry={"artist":artist, "dateStr":dateStr, "linkUrl":linkUrl, "imageSrc":imageSrc};
@@ -2040,6 +2032,8 @@ function handleButton(pageName, buttonName){
       window.setTimeout('buttonOff("extras", "wrs"); selectPage("wrs");', navDelay);
       }
     if(buttonName=="inst"){
+      instPage=1;
+      getInst();
       buttonOn("extras", "inst");
       window.setTimeout('buttonOff("extras", "inst"); selectPage("inst");', navDelay);
       }
