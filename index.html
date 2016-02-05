@@ -783,19 +783,29 @@ function parseInst(theScrape){
 
   if(instBlocks.length>1){
     inst=[];
+    var instBlock=instBlocks[0];
+    var quoteParts=instBlock.split('"');
+    dbuga('quoteParts '+quoteParts.length);
+    for (var p=0; p<quoteParts.length; p++){
+      dbuga(" "+p+' '+quoteParts[p]);
+      }
+      
     for (var i=1; i<instBlocks.length; i++){
       var instBlock=instBlocks[i];
       var quoteParts=instBlock.split('"');
-      var artist=quoteParts[11];
-      var dateStr=quoteParts[16];
       var linkUrl=quoteParts[5];
       var imageSrc=quoteParts[9];
+      var artist=quoteParts[14];	//ok
+      var dateStr=quoteParts[19];	//ok
+      dbuga('quoteParts '+quoteParts.length);
       var paraParts=dateStr.split("<p>");
+      dbuga('dateStr '+dateStr);
+      dbuga('paraParts '+paraParts.length);
       var dateStr=paraParts[1];
       var brParts=dateStr.split("<br>");
       var dateStr=brParts[0];
 
-      var thisEntry={"artist":artist, "dateStr":dateStr, "linkUrl":linkUrl, "imageSrc":imgSrc};
+      var thisEntry={"artist":artist, "dateStr":dateStr, "linkUrl":linkUrl, "imageSrc":imageSrc};
       inst.push(thisEntry);
       dbuga(JSON.stringify(thisEntry));
       }
