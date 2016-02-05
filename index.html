@@ -1300,23 +1300,21 @@ function parseCalendarJson(theJson){
   calendarJson=[];
 
   for (var c=0; c<calendarEvents.length; c++){
-     var dateTime=calendarEvents[c].start;
-     var parts=dateTime.split(",");
-     var time=parts.pop();
-     var date=parts.join(",");
-     var rowObj={
-       "date":date,
-       "time":time,
-       "performers":calendarEvents[c].title,
-       "venue":calendarEvents[c].venue,
-       "url":calendarEvents[c].path
-       }; 
+    var dateTime=calendarEvents[c].start;
+    var parts=dateTime.split(",");
+    var time=parts.pop();
+    var date=parts.join(",");
+    var rowObj={
+      "date":date,
+      "time":time,
+      "performers":calendarEvents[c].title,
+      "venue":calendarEvents[c].venue,
+      "url":calendarEvents[c].path
+      }; 
     calendarJson.push(rowObj);
     }
-  );
   populateCalendarJson();
   
-
   }
 function populateCalendarJson(){
   //dbuga('populateCalendar() '+calendar.length);
