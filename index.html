@@ -127,6 +127,7 @@ var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
 var recentSongs={};
 var singMedia;
 
+var instDownloads=[];
 var totdDownloads=[];
 var wrsDownloads=[];
 var spotlightImage="";
@@ -759,12 +760,11 @@ function resumeInit(){
   //window.setInterval("hostReachable('')", 10000);
   }
 
-var inst=[];
 function getInst(){
   faqs=[];
   var feedUrl="http://www.radiok.org/instudios/";
   //var feedUrl="app-faq.txt";
-  //dbuga('getFaqs()');
+  dbuga('getInst()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
@@ -776,27 +776,28 @@ function getInst(){
   dbuga('getInst() completed');
   }
 
-
+var inst=[];
 function parseInst(theScrape){
-  var instBlocks=theScrape.split('<div class="instudio_list_item clearfix"');
+  var instBlocks=theScrape.split('<div class="instudio_list_item');
   dbuga('parseInst instBlocks.length=' +instBlocks.length);
 
   if(instBlocks.length>1){
     inst=[];
-    for (var s=1; s<faqBlocks.length; s++){
-      var faqBlock=faqBlocks[s];
-      var headingTempParts=faqBlock.split('<div class="faq_heading"><h2>');
-      var headingTemp=headingTempParts[1];
-      var headingParts=headingTemp.split('</h2></div>');
-      var headingText=headingParts[0];
+    for (var i=1; i<instBlocks.length; i++){
+      var instBlock=instBlocks[i];
+      var quoteParts=instBlock.split('"');
+      var artist=quoteParts[11];
+      var dateStr=quoteParts[16];
+      var linkUrl=quoteParts[5];
+      var imageSrc=quoteParts[9];
+      var paraParts=dateStr.split("<p>");
+      var dateStr=paraParts[1];
+      var brParts=dateStr.split("<br>");
+      var dateStr=brParts[0];
 
-      var contentTempParts=faqBlock.split('<div class="faq_content"><p>');
-      var contentTemp=contentTempParts[1];
-      var contentParts=contentTemp.split('</p></div>');
-      var contentText=contentParts[0];
-      var thisEntry={"q":headingText, "a":contentText};
+      var thisEntry={"artist":artist, "dateStr":dateStr, "linkUrl":linkUrl, "imageSrc":imgSrc};
       inst.push(thisEntry);
-      //dbuga('<h2>'+headingText+'</h2><p>'+contentText+'</p>');
+      dbuga(JSON.stringify(thisEntry));
       }
     }
   populateInst();
@@ -804,7 +805,8 @@ function parseInst(theScrape){
 
 function populateInst(){
   var htmlString="";
-
+  console.log(inst);
+/*
   for (var f=0; f<inst.length; f++){
     var q=faqs[f].q;
     var a=faqs[f].a;
@@ -820,6 +822,7 @@ function populateInst(){
     }
 
   document.getElementById('page_inst_content_regentsDiv').innerHTML=htmlString;
+*/
   }
 
 
@@ -952,7 +955,7 @@ function parseDownloads(theXml, source){
   if(source=="Track of the Day"){
     var totdObj=xmlToJson(theXml);
     var itemsArray=totdObj.rss.channel.item;
-    dbug('itemsArray.length='+itemsArray.length);
+    dbuga('itemsArray.length='+itemsArray.length);
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
@@ -2026,10 +2029,11 @@ function handleButton(pageName, buttonName){
       buttonOn("extras", "wrs");
       window.setTimeout('buttonOff("extras", "wrs"); selectPage("wrs");', navDelay);
       }
-
-    if(buttonName=="vc"){
-      window.setTimeout("remoteLink('http://www.radiok.org/vinylcloset/')", navDelay);
+    if(buttonName=="inst"){
+      buttonOn("extras", "inst");
+      window.setTimeout('buttonOff("extras", "inst"); selectPage("inst");', navDelay);
       }
+
     }
   if(pageName=="totd"){
     if(buttonName=="done"){
@@ -2045,6 +2049,12 @@ function handleButton(pageName, buttonName){
     if(buttonName=="done"){
       buttonOn("wrs", "done");
       window.setTimeout('buttonOff("wrs", "done"); selectPage("extras");', navDelay);
+      }
+    }
+  if(pageName=="inst"){
+    if(buttonName=="done"){
+      buttonOn("inst", "done");
+      window.setTimeout('buttonOff("inst", "done"); selectPage("extras");', navDelay);
       }
     }
   if(pageName=="settings"){
@@ -2239,7 +2249,7 @@ function mousemove(e){
   mouseY=e.pageY;
   }
 function touchMove(event){
-  if((currentPage !="totd")&&(currentPage !="wrs")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
+  if((currentPage !="totd")&&(currentPage !="wrs")&&(currentPage !="inst")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
     event.preventDefault();
     }
   if(currentPage =="alarm"){
