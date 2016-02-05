@@ -152,7 +152,7 @@ function checkInternet(){
 }
 function checkConnection() {
   var con=navigator.connection.type;
-  dbuga("checkConnection() navigator.connection.type="+con);
+  //dbuga("checkConnection() navigator.connection.type="+con);
   if((con=="connection.NONE")||(con=="connection.UNKNOWN")){
     state.online=false;
     }
@@ -604,22 +604,22 @@ function createStream(){
     state.audioCount++;
 
     //stream.audioNum=state.audioCount;
-    dbuga('createStream() 4b'); 
+    //dbuga('createStream() 4b'); 
 
     if(state.streamCreated){
-      dbuga('createStream() 4c'); 
+      //dbuga('createStream() 4c'); 
 
       stream.stop();
       stream.release();
       }
-    dbuga('createStream() 4d'); 
+    //dbuga('createStream() 4d'); 
 
     //dbuga("createStream() android "+myStreamUrl);
     stream = new Media(myStreamUrl, mediaSuccess, mediaError, mediaStatus);  
-    dbuga('createStream() 4e'); 
+    //dbuga('createStream() 4e'); 
 
     }
-  dbuga('createStream() 5'); 
+  //dbuga('createStream() 5'); 
 
   state.streamCreated=true;
   eventStack.push("stream created");
@@ -644,28 +644,6 @@ function mediaStatus(theStatus){
   var statusArray=['media none', 'media starting', 'media running', 'media paused', 'media stopped'];
   eventStack.push(statusArray[theStatus]);
   }
-/*
-  var prevStatus=androidStreamStatus;
-  androidStreamStatus=theStatus;
-  dbuga('androidStatusCallback '+theStatus+" "+statusArray[theStatus] +" prevStatus:"+prevStatus);
-  if(androidStreamStatus==2){
-    state.streamPlaying=true;
-    
-    singing=false;
-    retrying=false;
-    uiPlaying=true;
-    stateMessage="Streaming...";
-    if(prevStatus==1){updateNowPlaying();}    
-    }
-  else{
-    state.streamPlaying=false;
-    }
-  if((uiPlaying)&&(androidStreamStatus==4)&&(prevStatus==2)){
-    // interrupted
-    stateMessage="Interrupted, retrying...";
-    startRetrying();
-    }
-*/
 
 function mediaError(er){
   eventStack.push("mediaError "+er);
@@ -764,7 +742,7 @@ function getInst(){
   faqs=[];
   var feedUrl="http://www.radiok.org/instudios/page/"+instPage+"/";
   //var feedUrl="app-faq.txt";
-  dbuga('getInst()');
+  //dbuga('getInst()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
@@ -773,14 +751,14 @@ function getInst(){
       parseInst(data);
       }
     });
-  dbuga('getInst() completed');
+  //dbuga('getInst() completed');
   }
 var returnFalse="";
 var inst=[];
 var instPage=1;
 function parseInst(theScrape){
   var instBlocks=theScrape.split('<div class="instudio_list_item');
-  dbug('parseInst instBlocks.length=' +instBlocks.length);
+  //dbug('parseInst instBlocks.length=' +instBlocks.length);
 
   if(instBlocks.length>1){
     inst=[];
@@ -946,7 +924,7 @@ function parseRecentSongs(theData){
 
 
 function getDownloads(){
-  dbuga("getDownloads()");
+  //dbuga("getDownloads()");
   getCalendar();
   totdDownloads=[];
   wrsDownloads=[];
@@ -974,16 +952,16 @@ function getDownloads(){
 
 
 
-  dbuga('getDownloads completed');
+  //dbuga('getDownloads completed');
   }
 // remove errors on publish
 var wrsObject={}
 function parseDownloads(theXml, source){
-  dbuga("parseDownloads() "+source);
+  //dbuga("parseDownloads() "+source);
   if(source=="Track of the Day"){
     var totdObj=xmlToJson(theXml);
     var itemsArray=totdObj.rss.channel.item;
-    dbuga('itemsArray.length='+itemsArray.length);
+    //dbuga('itemsArray.length='+itemsArray.length);
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
@@ -1016,7 +994,7 @@ function parseDownloads(theXml, source){
   if(source=="Weekly Release Spotlight"){
     wrsObj=xmlToJson(theXml);
     var itemsArray=wrsObj.rss.channel.item;
-    dbuga('itemsArray.length='+itemsArray.length);
+    //dbuga('itemsArray.length='+itemsArray.length);
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
@@ -1290,7 +1268,79 @@ function parseFaqs(theScrape){
   populateFaqs();
   }
 
+function getCalendarJson(){
+  var feedUrl="http://www.radiok.org/events.json";
+  dbuga('getCalendarJson()');
+  $.ajax({
+    url: feedUrl,
+    dataType: "json",        // new bit
+    success: function(data) {parseCalendarJson(data);}
+    });
+  dbuga('getCalendarJson() completed');
+  }
+var calendarEvents=[];
+var calendarJson=[];
+/*
+[
+Object
+all_day: 0
+description: ""
+end: "Saturday, February 6, 2016 - 8:00pm"
+more_info_links: Array[0]
+path: "http://www.radiok.org/events/caspian-obrother"
+special_guests: Array[0]
+start: "Saturday, February 6, 2016 - 8:00pm"
+tags: Array[0]
+title: "Caspian with O'Brother"
+venue: "Triple Rock Social Club"
+*/
+function parseCalendarJson(theJson){
+  console.log('parseCalendarJson()');
+  calendarEvents=theJson.events;
+  calendarJson=[];
 
+  for (var c=0; c<calendarEvents.length; c++){
+     var dateTime=calendarEvents[c].start;
+     var parts=dateTime.split(",");
+     var time=parts.pop();
+     var date=parts.join(",");
+     var rowObj={
+       "date":date,
+       "time":time,
+       "performers":calendarEvents[c].title,
+       "venue":calendarEvents[c].venue,
+       "url":calendarEvents[c].path
+       }; 
+    calendarJson.push(rowObj);
+    }
+  );
+  populateCalendarJson();
+  
+
+  }
+function populateCalendarJson(){
+  //dbuga('populateCalendar() '+calendar.length);
+
+  var gradStyle=returnGradStyle();
+
+  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
+  var htmlBlock="";
+  for(var e=0; e<calendarJson.length; e++){
+    var eventData=calendarJson[e];
+    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+ eventData.url +'\');">'+eventData.performers+'</a>';
+    htmlBlock+=  '<br />'+eventData.venue+'';
+    htmlBlock+=  ' &mdash; '+eventData.date;
+    htmlBlock+=  '<br /><span style="font-family:akziregular;">'+eventData.time+'</span>';
+    htmlBlock+='</div>';
+    }
+
+  document.getElementById('calendarScroller').innerHTML=htmlBlock; 
+  document.getElementById('calendarHolder').style.width=grid*48+'px'; 
+  document.getElementById('calendarHolder').style.height=grid*51+'px'; 
+  }
+
+// old calendar
 function getCalendar(){
   var feedUrl="http://www.radiok.org/tools/blocks/pro_event_list/rss.php?ctID=&bID=14940&ordering=ASC";
   //dbuga('getCalendar()');
