@@ -129,30 +129,6 @@ var singMedia;
 
 var totdDownloads=[];
 var wrsDownloads=[];
-var instDownloads=[{
-		"artist": "Warehouse Eyes",
-		"website": "http://warehouseeyes.com",
-		"date": "Jan 22, 2016",
-		"images": [{
-			"title": "",
-			"url": "http://www.radiok.org/files/3414/5410/0604/warehouse_eyes.png"
-		}],
-		"videos": [{
-			"title": "",
-			"url": "https://youtu.be/1_mKqvndbuw"
-		}],
-		"audios": [{
-			"title": "I Think I Can Live With It (Live on Radio K)",
-			"url": "http://www.radiok.org/files/9714/5410/0446/01_I_Think_I_Can_Live_With_It_Live_on_Radio_K.mp3"
-		}, {
-			"title": "Without You Or Me (Live on Radio K)",
-			"url": "http://www.radiok.org/files/4514/5410/0447/02_Without_You_Or_Me_Live_on_Radio_K.mp3"
-		}, {
-			"title": "Smoke (Live on Radio K)",
-			"url": "http://www.radiok.org/files/2514/5410/0448/03_Smoke_Live_on_Radio_K.mp3"
-		}]
-	}];
-
 var spotlightImage="";
 //new
 var nowPlaying="";
@@ -782,6 +758,73 @@ function resumeInit(){
   //dbug('init okay');
   //window.setInterval("hostReachable('')", 10000);
   }
+
+var inst=[];
+function getInst(){
+  faqs=[];
+  var feedUrl="http://www.radiok.org/instudios/";
+  //var feedUrl="app-faq.txt";
+  //dbuga('getFaqs()');
+  $.ajax({
+    url: feedUrl,
+    dataType: "text",        // < new bit
+    success: function(data) {
+      //console.log(data);
+      parseInst(data);
+      }
+    });
+  dbuga('getInst() completed');
+  }
+
+
+function parseInst(theScrape){
+  var instBlocks=theScrape.split('<div class="instudio_list_item clearfix"');
+  dbuga('parseInst instBlocks.length=' +instBlocks.length);
+
+  if(instBlocks.length>1){
+    inst=[];
+    for (var s=1; s<faqBlocks.length; s++){
+      var faqBlock=faqBlocks[s];
+      var headingTempParts=faqBlock.split('<div class="faq_heading"><h2>');
+      var headingTemp=headingTempParts[1];
+      var headingParts=headingTemp.split('</h2></div>');
+      var headingText=headingParts[0];
+
+      var contentTempParts=faqBlock.split('<div class="faq_content"><p>');
+      var contentTemp=contentTempParts[1];
+      var contentParts=contentTemp.split('</p></div>');
+      var contentText=contentParts[0];
+      var thisEntry={"q":headingText, "a":contentText};
+      inst.push(thisEntry);
+      //dbuga('<h2>'+headingText+'</h2><p>'+contentText+'</p>');
+      }
+    }
+  populateInst();
+  }
+
+function populateInst(){
+  var htmlString="";
+
+  for (var f=0; f<inst.length; f++){
+    var q=faqs[f].q;
+    var a=faqs[f].a;
+
+    var quoteParts=a.split('"');
+    for(var p=0; p<quoteParts.length; p++){
+      var thisPart= quoteParts[p];
+      if(thisPart.indexOf('http')>-1){
+        quoteParts[p]='javascript:remoteLink(\''+thisPart+'\');'+returnFalse;
+        }
+      }
+    a=quoteParts.join('"');
+    }
+
+  document.getElementById('page_inst_content_regentsDiv').innerHTML=htmlString;
+  }
+
+
+
+
 function onOffline() {
   dbuga('onOffline()');
   state.online=false;
@@ -1182,7 +1225,6 @@ function getFaqs(){
     });
   //dbuga('getFaqs() completed');
   }
-var inst=[];
 var faqs=[
   {"q":"What is Radio K?", "a":"Radio K, the award-winning radio station of the University of Minnesota, is nationally recognized as one of the best student-run college radio stations in the country, playing an eclectic variety of independent music both old and new.<br /><br />Radio K educates students, breaks ground in musical programming, and provides cutting-edge cultural coverage through our specialty shows, web content and Culture Queue."},
   {"q":"How can I contact Radio K?", "a":"Email: <a href=\"mailto:radiokdj@umn.edu\">radiokdj@umn.edu</a><br /><br />Phone: <a href=\"tel:+16126253500\">612-625-3500</a><br /><br />Web: <a href=\"http://www.radiok.org/\">www.radiok.org</a><br /><br />Mobile:<br /><a href=\"http://twitter.com/radiok\"><img src=\"social/twitter.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"https://www.facebook.com/20658369592\"><img src=\"social/facebook.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"http://www.youtube.com/user/RadioK770?feature=watch\"><img src=\"social/youtube.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"https://plus.google.com/u/0/106019319997650127214/about\"><img src=\"social/googleplus.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"http://www.radiok.org/blogs/new/tag/track%20of%20the%20day\"><img src=\"social/rss.png\" width=\"socialSize\" height=\"socialSize\" /></a>"},
@@ -1217,48 +1259,7 @@ function parseFaqs(theScrape){
     }
   populateFaqs();
   }
-function getInst(){
-  faqs=[];
-  var feedUrl="http://www.radiok.org/instudios/";
-  //var feedUrl="app-faq.txt";
-  //dbuga('getFaqs()');
-  $.ajax({
-    url: feedUrl,
-    dataType: "text",        // < new bit
-    
-    success: function(data) {
-      //console.log(data);
-      parseInst(data);
-      }
-    });
-  dbuga('getInst() completed');
-  }
 
-function parseInst(theScrape){
-  var instBlocks=theScrape.split('<div class="instudio_list_item clearfix"');
-  dbuga('parseInst instBlocks.length=' +instBlocks.length);
-/*
-  if(instBlocks.length>1){
-    inst=[];
-    for (var s=1; s<faqBlocks.length; s++){
-      var faqBlock=faqBlocks[s];
-      var headingTempParts=faqBlock.split('<div class="faq_heading"><h2>');
-      var headingTemp=headingTempParts[1];
-      var headingParts=headingTemp.split('</h2></div>');
-      var headingText=headingParts[0];
-
-      var contentTempParts=faqBlock.split('<div class="faq_content"><p>');
-      var contentTemp=contentTempParts[1];
-      var contentParts=contentTemp.split('</p></div>');
-      var contentText=contentParts[0];
-      var thisEntry={"q":headingText, "a":contentText};
-      inst.push(thisEntry);
-      //dbuga('<h2>'+headingText+'</h2><p>'+contentText+'</p>');
-      }
-    }
-  populateInst();
-*/
-  }
 
 function getCalendar(){
   var feedUrl="http://www.radiok.org/tools/blocks/pro_event_list/rss.php?ctID=&bID=14940&ordering=ASC";
@@ -1670,22 +1671,7 @@ function populateFaqs(){
   htmlString+='</div>'
   document.getElementById('page_faqs_content_regentsDiv').innerHTML=htmlString;
   }
-function populateInst(){
-  var htmlString="";
-  for (var f=0; f<faqs.length; f++){
-    var q=faqs[f].q;
-    var a=faqs[f].a;
 
-    var quoteParts=a.split('"');
-    for(var p=0; p<quoteParts.length; p++){
-      var thisPart= quoteParts[p];
-      if(thisPart.indexOf('http')>-1){
-        quoteParts[p]='javascript:remoteLink(\''+thisPart+'\');'+returnFalse;
-        }
-      }
-    a=quoteParts.join('"');
-  document.getElementById('page_inst_content_regentsDiv').innerHTML=htmlString;
-  }
 
 function selectTwistie(theTwistie){
   //dbuga('selectTwistie('+theTwistie+')');
