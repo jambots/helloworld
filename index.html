@@ -236,13 +236,13 @@ function mediaEvent(evt){
 
 function processEvents(){
   if(state.errorPause){
-    ////dbuga('errorPause');
+    dbuga('errorPause');
     return false;
     }
   state.errorPause=true;
 
   if(eventStack.length>0){
-    ////dbug('processEvents() '+eventStack.join('|'));
+    dbug('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
@@ -455,12 +455,12 @@ function processEvents(){
         }
         
       staleStack.unshift(evt);
-      ////dbuga(evt);
+      dbuga(evt);
 
       }
     staleStack.unshift(" ");
 
-    ////dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
+    dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
     }//end if event stack
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying; 
   state.errorPause=false;
@@ -799,14 +799,14 @@ function parseInst(theScrape){
 
       var thisEntry={"artist":artist, "dateStr":dateStr, "linkUrl":"http://www.radiok.org"+linkUrl, "imageSrc":"http://www.radiok.org"+imageSrc};
       inst.push(thisEntry);
-      dbuga(JSON.stringify(thisEntry));
+      //dbuga(JSON.stringify(thisEntry));
       }
     }
   //populateInst();
   updateInstDownloads();
   }
 function updateInstDownloads(){
-  dbuga('updateInstDownloads()');
+  //dbuga('updateInstDownloads()');
 
   var gradStyle=returnGradStyle();
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
@@ -820,8 +820,8 @@ function updateInstDownloads(){
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.linkUrl+'\');'+returnFalse+'"><img src="'+downloadItem.imageSrc+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
+    htmlBlock+=  '<br /><a href="javascript:remoteLink(\''+downloadItem.linkUrl+'\');'+returnFalse+'">'+downloadItem.artist+'</a>';
     htmlBlock+=  '<br />'+downloadItem.dateStr+' ';
-    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.linkUrl+'\');'+returnFalse+'">'+downloadItem.artist+'</a>';
     htmlBlock+='</div></div>';
     }
   document.getElementById('instScroller').innerHTML=htmlBlock;
@@ -857,13 +857,13 @@ function populateInst(){
 
 
 function onOffline() {
-  dbuga('onOffline()');
+  //dbuga('onOffline()');
   state.online=false;
   state.internet=false;
   eventStack.push("online false");
   }
 function onOnline() {
-  dbuga('onOnline()');
+  //dbuga('onOnline()');
   state.online=true;
   checkInternet();
   eventStack.push("online true");
