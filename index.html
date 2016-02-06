@@ -2199,6 +2199,14 @@ function handleButton(pageName, buttonName){
       buttonOn("extras", "wrs");
       window.setTimeout('buttonOff("extras", "wrs"); selectPage("wrs");', navDelay);
       }
+    if(buttonName=="rcp"){
+      buttonOn("extras", "rcp");
+      window.setTimeout('buttonOff("extras", "rcp"); selectPage("rcp");', navDelay);
+      }
+    if(buttonName=="whl"){
+      buttonOn("extras", "whl");
+      window.setTimeout('buttonOff("extras", "whl"); selectPage("whl");', navDelay);
+      }
     if(buttonName=="inst"){
       instPage=1;
       getInst();
@@ -2215,6 +2223,24 @@ function handleButton(pageName, buttonName){
     if(buttonName=="stotd"){
       buttonOn("totd", "stotd");
       window.setTimeout('buttonOff("totd", "stotd"); remoteLink("https://itunes.apple.com/us/podcast/radio-ks-track-of-the-day/id389816740?mt=2");', navDelay);
+      }
+  if(pageName=="totd"){
+    if(buttonName=="done"){
+      buttonOn("rcp", "done");
+      window.setTimeout('buttonOff("rcp", "done"); selectPage("extras");', navDelay);
+      }
+    if(buttonName=="srcp"){
+      buttonOn("rcp", "srcp");
+      window.setTimeout('buttonOff("rcp", "srcp"); remoteLink("https://itunes.apple.com/us/podcast/real-college-podcast/id1018935053?mt=2");', navDelay);
+      }
+  if(pageName=="whl"){
+    if(buttonName=="done"){
+      buttonOn("whl", "done");
+      window.setTimeout('buttonOff("whl", "done"); selectPage("extras");', navDelay);
+      }
+    if(buttonName=="swhl"){
+      buttonOn("whl", "swhl");
+      window.setTimeout('buttonOff("whl", "swhl"); remoteLink("https://itunes.apple.com/us/podcast/weekend-hit-list/id1019774674?mt=2");', navDelay);
       }
     }
   if(pageName=="wrs"){
