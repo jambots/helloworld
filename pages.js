@@ -142,6 +142,22 @@ var pages=[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="wrsHolder"><div id="wrsScroller"></div></div>'}
   ]
 },
+{"name":"rcp", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "buttons":[
+    {"name":"done", "top":0, "left":39, "height":7, "width":9},
+  ],
+  "contents":[
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="rcpHolder"><div id="rcpScroller"></div></div>'}
+  ]
+},
+{"name":"whl", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "buttons":[
+    {"name":"done", "top":0, "left":39, "height":7, "width":9},
+  ],
+  "contents":[
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="whlHolder"><div id="whlScroller"></div></div>'}
+  ]
+},
 {"name":"inst", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
