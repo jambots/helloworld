@@ -130,6 +130,8 @@ var singMedia;
 var instDownloads=[];
 var totdDownloads=[];
 var wrsDownloads=[];
+var rcpDownloads=[];
+var whlDownloads=[];
 var spotlightImage="";
 //new
 var nowPlaying="";
@@ -926,16 +928,24 @@ function parseRecentSongs(theData){
 function getDownloads(){
   //dbuga("getDownloads()");
   getCalendarJson();
+
   totdDownloads=[];
   wrsDownloads=[];
+  rcpDownloads=[];
+  whlDownloads=[];
   document.getElementById('totdHolder').style.width=grid*48+'px'; 
   document.getElementById('totdHolder').style.height=grid*51+'px'; 
   document.getElementById('wrsHolder').style.width=grid*48+'px'; 
   document.getElementById('wrsHolder').style.height=grid*51+'px'; 
-  totdDownloads=[];
-  wrsDownloads=[];
+  document.getElementById('rcpHolder').style.width=grid*48+'px'; 
+  document.getElementById('rcpHolder').style.height=grid*51+'px'; 
+  document.getElementById('whlHolder').style.width=grid*48+'px'; 
+  document.getElementById('whlHolder').style.height=grid*51+'px'; 
 
-  //fubar from & in title
+    
+
+
+
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F",
     dataType: "xml",        
@@ -947,6 +957,18 @@ function getDownloads(){
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Ftotd",
     dataType: "xml",        
     success: function(xml) {parseDownloads(xml, "Track of the Day");}
+    });
+
+  $.ajax({
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
+    dataType: "xml",        
+    success: function(xml) {parseDownloads(xml, "Real College Podcast");}
+    });
+
+  $.ajax({
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Fweekendhitlist",
+    dataType: "xml",        
+    success: function(xml) {parseDownloads(xml, "Weekend Hit List");}
     });
 
 
@@ -1022,6 +1044,74 @@ function parseDownloads(theXml, source){
       wrsDownloads.push(item);
       }
     updateWrsDownloads();
+    }
+  if(source=="Real College Podcast"){
+    rcpObj=xmlToJson(theXml);
+    var itemsArray=rcpObj.rss.channel.item;
+    dbuga('itemsArray.length='+itemsArray.length);
+/*
+    for (var i=0; (i<itemsArray.length)&&(i<14); i++){
+      var thisObj=itemsArray[i];
+      var dateStr=thisObj.pubDate["#text"];
+      var parts=dateStr.split(" ");
+      var yyyy=parts[3];
+      var mm=monToMM[parts[2]];
+      var dd=parts[1];
+      var timeCode=parts[4];
+      var timeParts=timeCode.split(":");
+      var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
+      var sortNum=yyyy+mm+dd+hhmmss;
+      var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
+      var band=thisObj.title["#text"];
+      var album=thisObj.description["#text"];
+      var link=thisObj.link["#text"];
+      var item={
+        "sort":sortNum, 
+        "source":source, 
+        "date":dispDate, 
+        "image":thisObj["itunes:image"]["@attributes"]["href"], 
+        "title":band,
+        "description":album, 
+        "link":link
+        };
+      rcpDownloads.push(item);
+      }
+*/
+    updateRcpDownloads();
+    }
+  if(source=="Weekend Hit List"){
+    whlObj=xmlToJson(theXml);
+    var itemsArray=whlObj.rss.channel.item;
+    //dbuga('itemsArray.length='+itemsArray.length);
+/*
+    for (var i=0; (i<itemsArray.length)&&(i<14); i++){
+      var thisObj=itemsArray[i];
+      var dateStr=thisObj.pubDate["#text"];
+      var parts=dateStr.split(" ");
+      var yyyy=parts[3];
+      var mm=monToMM[parts[2]];
+      var dd=parts[1];
+      var timeCode=parts[4];
+      var timeParts=timeCode.split(":");
+      var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
+      var sortNum=yyyy+mm+dd+hhmmss;
+      var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
+      var band=thisObj.title["#text"];
+      var album=thisObj.description["#text"];
+      var link=thisObj.link["#text"];
+      var item={
+        "sort":sortNum, 
+        "source":source, 
+        "date":dispDate, 
+        "image":thisObj["itunes:image"]["@attributes"]["href"], 
+        "title":band,
+        "description":album, 
+        "link":link
+        };
+      whlDownloads.push(item);
+      }
+*/
+    updateWhlDownloads();
     }
   }
 function xmlToJson(xml) {
