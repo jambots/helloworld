@@ -117,7 +117,9 @@ var pages=[
     {"name":"whl", "top":41, "left":30, "height":11, "width":11},
   ],
   "contents":[
-    {"name":"eventsBox", "top":20.5, "left":.5, "width":24, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"eventsBox", "top":8.5, "left":.5, "width":24, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"totdBox", "top":24.5, "left":.5, "width":24, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"instBox", "top":24.5, "left":24.5, "width":24, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
     {"name":"eventsDesc", "top":21, "left":1, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','events');\">EVENTS</a>"},
     {"name":"totdDesc", "top":37, "left":1, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','totd');\">TRACK OF THE DAY</a>"},
     {"name":"wrsDesc", "top":53, "left":1, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">WEEKLY RELEASE SPOTLIGHT</a>"},

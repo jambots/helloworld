@@ -1826,8 +1826,19 @@ function populateContainer(){
     contents=page.contents;
     for(var c=0; c<contents.length; c++){
       content=contents[c];
+      var contentName=content.name;
       htmlString+='<div id="page_'+page.name+'_content_'+content.name+'" style="overflow:hidden; ';
-      htmlString+='width:'+ grid*content.width +'px; height:'+ grid*content.height +'px;  line-height:'+ Math.floor(grid*content.lineHeight) +'px;  ';
+      if(contentName.indexOf('Box')==-1){
+        htmlString+='width:'+ grid*content.width +'px; ';
+        htmlString+='height:'+ grid*content.height +'px; ';
+        }
+      else{
+        htmlString+='width:'+ (grid*content.width-2) +'px; ';
+        htmlString+='height:'+ (grid*content.height-2) +'px; ';
+        htmlString+='border:1px solid white; ';
+        }
+
+      htmlString+='line-height:'+ Math.floor(grid*content.lineHeight) +'px;  ';
       htmlString+='font-size:'+ grid*content.fontSize +'px; text-align:'+content.textAlign+'; ';
       htmlString+='color:'+content.color +'; left:'+grid*content.left+'px;  ';
       htmlString+='font-family:'+ content.fontFamily +'; top:'+ grid*content.top +'px;">';
