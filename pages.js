@@ -111,9 +111,9 @@ var pages=[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
     {"name":"events", "top":9, "left":6.5, "height":11, "width":11},
     {"name":"totd", "top":25, "left":6.5, "height":11, "width":11},
-    {"name":"wrs", "top":41, "left":6.5, "height":11, "width":11},
+    {"name":"rcp", "top":41, "left":6.5, "height":11, "width":11},
     {"name":"inst", "top":9, "left":31.5, "height":11, "width":11},
-    {"name":"rcp", "top":25, "left":31.5, "height":11, "width":11},
+    {"name":"wrs", "top":25, "left":31.5, "height":11, "width":11},
     {"name":"whl", "top":41, "left":31.5, "height":11, "width":11},
   ],
   "contents":[
@@ -125,9 +125,9 @@ var pages=[
     {"name":"whlBox", "top":40.5, "left":24.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
     {"name":"eventsDesc", "top":21, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','events');\">EVENTS</a>"},
     {"name":"totdDesc", "top":37, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','totd');\">TRACK OF THE DAY</a>"},
-    {"name":"wrsDesc", "top":53, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">WEEKLY RELEASE SPOTLIGHT</a>"},
+    {"name":"rcpDesc", "top":53, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">REAL COLLEGE PODCAST</a>"},
     {"name":"instDesc", "top":21, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','inst');\">IN-STUDIOS</a>"},
-    {"name":"rcpDesc", "top":37, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','rcp');\">REAL COLLEGE PODCAST</a>"},
+    {"name":"wrsDesc", "top":37, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','rcp');\">WEEKLY RELEASE SPOTLIGHT</a>"},
     {"name":"whlDesc", "top":53, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','whl');\">WEEKEND HIT LIST</a>"},
   ]
 },
