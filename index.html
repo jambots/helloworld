@@ -1242,12 +1242,41 @@ function updateRcpDownloads(){
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
     if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
     if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
-    htmlBlock+=  downloadItem.title+' - <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
+    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+'</a>';
     htmlBlock+='</div></div>';
     }
   document.getElementById('rcpScroller').innerHTML=htmlBlock;
   document.getElementById('rcpHolder').style.width=grid*48+'px'; 
   document.getElementById('rcpHolder').style.height=grid*51+'px'; 
+  }
+function updateWhlDownloads(){
+  dbuga('updateWhlDownloads()');
+  var sortedDownloads=rcpDownloads.sort(function(a, b){
+      // furthest to nearest
+      return b.sort-a.sort
+    });
+
+  var gradStyle=returnGradStyle();
+  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
+  var htmlBlock="";
+  for(var d=0; d<sortedDownloads.length; d++){
+    var downloadItem=sortedDownloads[d];
+    if(d==0){
+      document.getElementById("page_extras_button_whl").style.backgroundImage='url('+downloadItem.image+')';
+      document.getElementById("page_extras_button_whl_on").style.backgroundImage='url('+downloadItem.image+')';
+      }
+    //dbuga(downloadItem.link);
+    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
+    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
+    if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
+    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+'</a>';
+    htmlBlock+='</div></div>';
+    }
+  document.getElementById('whlScroller').innerHTML=htmlBlock;
+  document.getElementById('whlHolder').style.width=grid*48+'px'; 
+  document.getElementById('whlHolder').style.height=grid*51+'px'; 
   }
 
 
@@ -1827,7 +1856,7 @@ function populateContainer(){
   totdHolderScroll=new iScroll('totdHolder');
   wrsHolderScroll=new iScroll('wrsHolder');
   */
-  var scrollIdArray=["resultsHolder", "playlistHolder", "calendarHolder", "totdHolder", "wrsHolder", "instHolder"];
+  var scrollIdArray=["resultsHolder", "playlistHolder", "calendarHolder", "totdHolder", "wrsHolder", "rcpHolder", "whlHolder", "instHolder"];
   for (var s=0; s<scrollIdArray.length; s++){
     new ScrollFix(document.getElementById(scrollIdArray[s]));
     }
@@ -2480,7 +2509,7 @@ function mousemove(e){
   mouseY=e.pageY;
   }
 function touchMove(event){
-  if((currentPage !="totd")&&(currentPage !="wrs")&&(currentPage !="inst")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
+  if((currentPage !="totd")&&(currentPage !="wrs")&&(currentPage !="rcp")&&(currentPage !="whl")&&(currentPage !="inst")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
     event.preventDefault();
     }
   if(currentPage =="alarm"){
