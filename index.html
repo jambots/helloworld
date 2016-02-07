@@ -1807,6 +1807,29 @@ function populateContainer(){
     htmlString+='<div id="page_'+page.name+'" class="pages" style="background-image:url('+imagePath+'/bg_'+page.name+'.jpg); width:'+ grid*48 +'px; height:'+ grid*page.height +'px; '+hideStyle+'">';
     pageArray.push(page.name);
     hideByPage[page.name]={"top":(grid*page.hideTop+page.hideTopMargin*topOffset), "left":(grid*page.hideLeft+page.hideLeftMargin*leftOffset), "opac":page.hideOpac};
+    contents=page.contents;
+    for(var c=0; c<contents.length; c++){
+      content=contents[c];
+      var contentName=content.name;
+      htmlString+='<div id="page_'+page.name+'_content_'+content.name+'" style="overflow:hidden; ';
+      if(contentName.indexOf('Box')==-1){
+        htmlString+='width:'+ grid*content.width +'px; ';
+        htmlString+='height:'+ grid*content.height +'px; ';
+        }
+      else{
+        htmlString+='width:'+ (grid*content.width-2) +'px; ';
+        htmlString+='height:'+ (grid*content.height-2) +'px; ';
+        htmlString+='border:1px solid #666; ';
+        htmlString+='background-color:#333; ';
+        }
+
+      htmlString+='line-height:'+ Math.floor(grid*content.lineHeight) +'px;  ';
+      htmlString+='font-size:'+ grid*content.fontSize +'px; text-align:'+content.textAlign+'; ';
+      htmlString+='color:'+content.color +'; left:'+grid*content.left+'px;  ';
+      htmlString+='font-family:'+ content.fontFamily +'; top:'+ grid*content.top +'px;">';
+      htmlString+=content.defaultText;
+      htmlString+='</div>'
+      }
     buttons=page.buttons;
     for(var b=0; b<buttons.length; b++){
       button=buttons[b];
@@ -1823,30 +1846,10 @@ function populateContainer(){
         htmlString+='</div>'
         }
       }
-    contents=page.contents;
-    for(var c=0; c<contents.length; c++){
-      content=contents[c];
-      var contentName=content.name;
-      htmlString+='<div id="page_'+page.name+'_content_'+content.name+'" style="overflow:hidden; ';
-      if(contentName.indexOf('Box')==-1){
-        htmlString+='width:'+ grid*content.width +'px; ';
-        htmlString+='height:'+ grid*content.height +'px; ';
-        }
-      else{
-        htmlString+='width:'+ (grid*content.width-2) +'px; ';
-        htmlString+='height:'+ (grid*content.height-2) +'px; ';
-        htmlString+='border:1px solid #666; ';
-        }
 
-      htmlString+='line-height:'+ Math.floor(grid*content.lineHeight) +'px;  ';
-      htmlString+='font-size:'+ grid*content.fontSize +'px; text-align:'+content.textAlign+'; ';
-      htmlString+='color:'+content.color +'; left:'+grid*content.left+'px;  ';
-      htmlString+='font-family:'+ content.fontFamily +'; top:'+ grid*content.top +'px;">';
-      htmlString+=content.defaultText;
-      htmlString+='</div>'
-      }
     htmlString+='</div>'
     }
+
   document.getElementById('container').innerHTML=htmlString;
   clearInterval(secondInterval);
   clearInterval(dimensionInterval);
