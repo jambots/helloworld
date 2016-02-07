@@ -1083,7 +1083,6 @@ function parseDownloads(theXml, source){
     whlObj=xmlToJson(theXml);
     var itemsArray=whlObj.rss.channel.item;
     //dbuga('itemsArray.length='+itemsArray.length);
-/*
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
@@ -1096,24 +1095,25 @@ function parseDownloads(theXml, source){
       var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
       var sortNum=yyyy+mm+dd+hhmmss;
       var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
-      var band=thisObj.title["#text"];
-      var album=thisObj.description["#text"];
+      var title=thisObj.title["#text"];
+      var description=thisObj.description["#text"];
       var link=thisObj.link["#text"];
       var item={
         "sort":sortNum, 
         "source":source, 
         "date":dispDate, 
         "image":thisObj["itunes:image"]["@attributes"]["href"], 
-        "title":band,
-        "description":album, 
+        "title":title,
+        "description":description, 
         "link":link
         };
       whlDownloads.push(item);
       }
-*/
+
     updateWhlDownloads();
     }
   }
+
 function updateWhlDownloads(){
   }
 function updateWhlDownloads(){
