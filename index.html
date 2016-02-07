@@ -132,7 +132,6 @@ var totdDownloads=[];
 var wrsDownloads=[];
 var rcpDownloads=[];
 var whlDownloads=[];
-var spotlightImage="";
 //new
 var nowPlaying="";
 
@@ -1082,7 +1081,7 @@ function parseDownloads(theXml, source){
   if(source=="Weekend Hit List"){
     whlObj=xmlToJson(theXml);
     var itemsArray=whlObj.rss.channel.item;
-    //dbuga('itemsArray.length='+itemsArray.length);
+    dbuga(source+' itemsArray.length='+itemsArray.length);
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
@@ -1114,10 +1113,6 @@ function parseDownloads(theXml, source){
     }
   }
 
-function updateWhlDownloads(){
-  }
-function updateWhlDownloads(){
-  }
 
 function xmlToJson(xml) {
   
@@ -1165,7 +1160,7 @@ function updateWrsDownloads(){
 
   var gradStyle=returnGradStyle();
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
-  spotlightImage=sortedDownloads[0].image;
+  var spotlightImage=sortedDownloads[0].image;
   //dbuga("spotlightImage="+spotlightImage);
   document.getElementById("page_extras_button_wrs").style.backgroundImage='url('+spotlightImage+')';
   document.getElementById("page_extras_button_wrs_on").style.backgroundImage='url('+spotlightImage+')';
@@ -1251,7 +1246,7 @@ function updateRcpDownloads(){
   }
 function updateWhlDownloads(){
   dbuga('updateWhlDownloads()');
-  var sortedDownloads=rcpDownloads.sort(function(a, b){
+  var sortedDownloads=whlDownloads.sort(function(a, b){
       // furthest to nearest
       return b.sort-a.sort
     });
