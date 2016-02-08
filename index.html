@@ -221,7 +221,7 @@ function mediaEvent(evt){
         }  
       if(evt=="media running"){
         state.streamPlaying=true;
-        getRecentSong();
+        getRecentSongJson();
         window.clearTimeout(waitTimeout);
         }  
       if(evt=="media paused"){
@@ -726,7 +726,7 @@ function resumeInit(){
 
   selectPage("listen");
    //dbuga(' init 7');
-  getRecentSong();
+  getRecentSongJson();
 
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
@@ -2209,7 +2209,7 @@ function handleButton(pageName, buttonName){
       buttonOff("footnav", "listen");
       buttonOn("listen", "playlist");
       window.setTimeout('buttonOff("listen", "playlist"); selectPage("playlist");', navDelay);
-      getRecentSongs();
+      getRecentSongsJson();
       }
     if(buttonName=="playpause"){
       togglePlaying();
@@ -2408,14 +2408,14 @@ function handleButton(pageName, buttonName){
     if(buttonName=="refresh"){
       buttonOn("playlist", "refresh");
       window.setTimeout('buttonOff("playlist", "refresh")', navDelay*2);
-      getRecentSongs();
+      getRecentSongsJson();
       }
     }
   }
 
 function minuteTick(){
   //eventStack.push("minuteTick()");
-  getRecentSong();
+  getRecentSongJson();
   }
 function remoteControlPause(){
   eventStack.push("remote paused");
