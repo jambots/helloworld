@@ -890,7 +890,7 @@ function parseRecentSong(theData){
   }
 
 function getRecentSongs(){
-  //dbuga('getRecentSongs()');
+  dbuga('getRecentSongs()');
   //return false;
   //var feedUrl="http://www.radiok.org/";
   var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_songs";
@@ -906,7 +906,7 @@ function getRecentSongs(){
 function parseRecentSongs(theData){
   recentSongs=JSON.parse(theData);
   var songKeys=Object.keys(recentSongs);
-  //dbuga("parseRecentSongs("+songKeys.length+")");
+  dbuga("parseRecentSongs("+songKeys.length+")");
   songKeys.sort();
   songKeys.reverse();
   if(songKeys.length>0){
@@ -1306,7 +1306,7 @@ function dateTimeToTime(theDateTime){
   return textTime;
   }
 function updatePlaylist(){
-  //dbuga('updatePlaylist()');
+  dbuga('updatePlaylist()');
   var songKeys=Object.keys(recentSongs);
   songKeys.sort();
   songKeys.reverse();
