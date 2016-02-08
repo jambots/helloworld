@@ -898,7 +898,7 @@ function getRecentSongsJson(){
   }
 function epochToTime(s){
   var d=new Date(s*1000);
-  var t=d.toTimeString();
+  var t=d.toLocaleTimeString();
   console.log(d+"|"+t);
   var parts=t.split(" ");
   return parts[0];
