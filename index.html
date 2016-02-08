@@ -164,7 +164,7 @@ function checkConnection() {
   
 
 function init(){
-  dbuga('init()');
+  //dbuga('init()');
   }
 function onDeviceReady(){
   eventStack.push('device ready');
@@ -955,7 +955,7 @@ function updatePlaylistJson(){
   document.getElementById('playlistScroller').innerHTML=htmlBlock; 
   document.getElementById('playlistHolder').style.width=grid*48+'px'; 
   document.getElementById('playlistHolder').style.height=grid*51+'px'; 
-  dbuga('updatePlaylistJson complted ');
+  //dbuga('updatePlaylistJson completed ');
   //playlistScrollerTimeout=window.setTimeout("refreshPlaylistHolderScroll()", 100);
   }
 
@@ -1117,7 +1117,7 @@ function parseDownloads(theXml, source){
   if(source=="Weekend Hit List"){
     whlObj=xmlToJson(theXml);
     var itemsArray=whlObj.rss.channel.item;
-    dbuga(source+' itemsArray.length='+itemsArray.length);
+    //dbuga(source+' itemsArray.length='+itemsArray.length);
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
@@ -1252,7 +1252,7 @@ function updateTotdDownloads(){
   }
 
 function updateRcpDownloads(){
-  dbuga('updateRcpDownloads()');
+  //dbuga('updateRcpDownloads()');
   var sortedDownloads=rcpDownloads.sort(function(a, b){
       // furthest to nearest
       return b.sort-a.sort
@@ -1281,7 +1281,7 @@ function updateRcpDownloads(){
   document.getElementById('rcpHolder').style.height=grid*51+'px'; 
   }
 function updateWhlDownloads(){
-  dbuga('updateWhlDownloads()');
+  //dbuga('updateWhlDownloads()');
   var sortedDownloads=whlDownloads.sort(function(a, b){
       // furthest to nearest
       return b.sort-a.sort
@@ -1417,13 +1417,13 @@ function parseFaqs(theScrape){
 
 function getCalendarJson(){
   var feedUrl="http://www.radiok.org/events.json";
-  dbuga('getCalendarJson()');
+  //dbuga('getCalendarJson()');
   $.ajax({
     url: feedUrl,
     dataType: "json",        // new bit
     success: function(data) {parseCalendarJson(data);}
     });
-  dbuga('getCalendarJson() completed');
+  //dbuga('getCalendarJson() completed');
   }
 var calendarEvents=[];
 var calendarJson=[];
@@ -1805,9 +1805,12 @@ function populateContainer(){
     htmlString+='<div id="page_'+page.name+'" class="pages" style="background-image:url('+imagePath+'/bg_'+page.name+'.jpg); width:'+ grid*48 +'px; height:'+ grid*page.height +'px; '+hideStyle+'">';
     pageArray.push(page.name);
     hideByPage[page.name]={"top":(grid*page.hideTop+page.hideTopMargin*topOffset), "left":(grid*page.hideLeft+page.hideLeftMargin*leftOffset), "opac":page.hideOpac};
-    contents=page.contents;
-    for(var c=0; c<contents.length; c++){
-      content=contents[c];
+
+
+
+    var boxes=page.boxes;
+    for(var b=0; b<boxes.length; b++){
+      var content=boxes[b];
       var contentName=content.name;
       htmlString+='<div id="page_'+page.name+'_content_'+content.name+'" style="overflow:hidden; ';
       if(contentName.indexOf('Box')==-1){
@@ -1828,9 +1831,10 @@ function populateContainer(){
       htmlString+=content.defaultText;
       htmlString+='</div>'
       }
-    buttons=page.buttons;
+
+    var buttons=page.buttons;
     for(var b=0; b<buttons.length; b++){
-      button=buttons[b];
+      var button=buttons[b];
       if((button.name=="phone")&&(topOffset==0)){
         htmlString+='<div id="page_'+page.name+'_button_'+button.name+'" style="font-size:'+3.3*grid+'px; line-height:'+5.5*grid+'px; text-align:center; width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:'+ grid*button.left +'px; top:'+ grid*button.top +'px;">';
         htmlString+='<a href="tel:+16126264770"><img src="'+imagePath+'/page_'+page.name+'_button_'+button.name+'_off.png" style="border:0;" width="'+grid*button.width+'" height="'+grid*button.height+'" /></a>';
@@ -1843,6 +1847,30 @@ function populateContainer(){
         htmlString+='</div>'
         htmlString+='</div>'
         }
+      }
+
+    var contents=page.contents;
+    for(var c=0; c<contents.length; c++){
+      var content=contents[c];
+      var contentName=content.name;
+      htmlString+='<div id="page_'+page.name+'_content_'+content.name+'" style="overflow:hidden; ';
+      if(contentName.indexOf('Box')==-1){
+        htmlString+='width:'+ grid*content.width +'px; ';
+        htmlString+='height:'+ grid*content.height +'px; ';
+        }
+      else{
+        htmlString+='width:'+ (grid*content.width-2) +'px; ';
+        htmlString+='height:'+ (grid*content.height-2) +'px; ';
+        htmlString+='border:1px solid #666; ';
+        htmlString+='background-color:#333; ';
+        }
+
+      htmlString+='line-height:'+ Math.floor(grid*content.lineHeight) +'px;  ';
+      htmlString+='font-size:'+ grid*content.fontSize +'px; text-align:'+content.textAlign+'; ';
+      htmlString+='color:'+content.color +'; left:'+grid*content.left+'px;  ';
+      htmlString+='font-family:'+ content.fontFamily +'; top:'+ grid*content.top +'px;">';
+      htmlString+=content.defaultText;
+      htmlString+='</div>'
       }
 
     htmlString+='</div>'

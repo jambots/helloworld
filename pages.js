@@ -1,5 +1,6 @@
 var pages=[
 {"name":"footnav", "hideLeft":0, "hideTop":0,  "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":1, "height":64,
+   "boxes":[],
    "buttons":[
     {"name":"listen", "top":58, "left":0, "height":6, "width":16},
     {"name":"request", "top":58, "left":16, "height":6, "width":16},
@@ -9,6 +10,7 @@ var pages=[
   ]
 },
 {"name":"listen", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":1, "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"more", "top":0, "left":0, "height":7, "width":16},
     {"name":"playlist", "top":0, "left":32, "height":7, "width":16},
@@ -20,6 +22,7 @@ var pages=[
   ]
 },
 {"name":"more", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
     {"name":"extras", "top":11, "left":9, "height":6, "width":30},
@@ -31,6 +34,7 @@ var pages=[
   ]
 },
 {"name":"alarm", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"cancel", "top":0, "left":36, "height":7, "width":12},
     {"name":"timeset", "top":21, "left":9, "height":12, "width":30},
@@ -43,6 +47,7 @@ var pages=[
   ]
 },
 {"name":"armed", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":64,
+  "boxes":[],
   "buttons":[
     {"name":"cancelalarm", "top":17, "left":9, "height":6, "width":30},
   ],
@@ -53,6 +58,7 @@ var pages=[
   ]
 },
 {"name":"wakeup", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":64,
+  "boxes":[],
   "buttons":[
     {"name":"alarmoff", "top":17, "left":9, "height":6, "width":30},
     {"name":"snooze", "top":47, "left":9, "height":6, "width":30},
@@ -63,6 +69,7 @@ var pages=[
   ]
 },
 {"name":"shop", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
   ],
@@ -71,6 +78,7 @@ var pages=[
   ]
 },
 {"name":"settings", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
     {"name":"medium", "top":14, "left":9, "height":6, "width":30},
@@ -81,6 +89,7 @@ var pages=[
   ]
 },
 {"name":"request", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
     {"name":"phone", "top":11, "left":9, "height":6, "width":30},
@@ -91,6 +100,7 @@ var pages=[
   ]
 },
 {"name":"playlist", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"refresh", "top":0, "left":36, "height":7, "width":12},
   ],
@@ -99,6 +109,7 @@ var pages=[
   ]
 },
 {"name":"events", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
   ],
@@ -107,6 +118,14 @@ var pages=[
   ]
 },
 {"name":"extras", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[
+    {"name":"eventsBox", "top":8.5, "left":.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"totdBox", "top":24.5, "left":.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"wrsBox", "top":40.5, "left":.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"instBox", "top":8.5, "left":24.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"rcpBox", "top":24.5, "left":24.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"whlBox", "top":40.5, "left":24.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+  ],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
     {"name":"events", "top":9, "left":6.5, "height":11, "width":11},
@@ -117,12 +136,6 @@ var pages=[
     {"name":"whl", "top":41, "left":31.5, "height":11, "width":11},
   ],
   "contents":[
-    {"name":"eventsBox", "top":8.5, "left":.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"totdBox", "top":24.5, "left":.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"wrsBox", "top":40.5, "left":.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"instBox", "top":8.5, "left":24.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"rcpBox", "top":24.5, "left":24.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"whlBox", "top":40.5, "left":24.5, "width":23, "height":15, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
     {"name":"eventsDesc", "top":21, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','events');\">EVENTS</a>"},
     {"name":"totdDesc", "top":37, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','totd');\">TRACK OF THE DAY</a>"},
     {"name":"rcpDesc", "top":53, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">REAL COLLEGE PODCAST</a>"},
@@ -132,6 +145,7 @@ var pages=[
   ]
 },
 {"name":"totd", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
     {"name":"stotd", "top":0, "left":0, "height":7, "width":12},
@@ -141,6 +155,7 @@ var pages=[
   ]
 },
 {"name":"wrs", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
   ],
@@ -149,6 +164,7 @@ var pages=[
   ]
 },
 {"name":"rcp", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
     {"name":"srcp", "top":0, "left":0, "height":7, "width":12},
@@ -158,6 +174,7 @@ var pages=[
   ]
 },
 {"name":"whl", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
     {"name":"swhl", "top":0, "left":0, "height":7, "width":12},
@@ -167,6 +184,7 @@ var pages=[
   ]
 },
 {"name":"inst", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
   ],
@@ -175,6 +193,7 @@ var pages=[
   ]
 },
 {"name":"faqs", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
+  "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9}
   ],
