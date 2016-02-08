@@ -868,9 +868,7 @@ function getRecentSongJson(){
       });
   }
 function parseRecentSongJson(theData){
-  console.log(theData); // the data is object
-  
-  //eventStack.push('parseRecentSongJson()');
+  dbuga('parseRecentSongJson' +theData.songs.length);
   if(theData.songs.length>0){
     recentSong=theData.songs[0];
     var album=recentSong.album;
@@ -890,7 +888,7 @@ function parseRecentSongJson(theData){
   }
 
 function getRecentSongsJson(){
-  dbuga('getRecentSongsJson()');
+  //dbuga('getRecentSongsJson()');
   var feedUrl="http://www.radiok.org/playlist.json";
       $.ajax({
       url: feedUrl,
@@ -902,7 +900,7 @@ function getRecentSongsJson(){
 function parseRecentSongsJson(theData){
   
   recentSongs=theData.songs;
-  dbuga('parseRecentSongsJson '+recentSongs.length);
+  //dbuga('parseRecentSongsJson '+recentSongs.length);
   if(theData.songs.length>0){
     recentSong=theData.songs[0];
     var album=recentSong.album;
@@ -919,7 +917,7 @@ function parseRecentSongsJson(theData){
   updatePlaylistJson();
   }
 function updatePlaylistJson(){
-  dbuga('updatePlaylistJson()');
+  //dbuga('updatePlaylistJson()');
   var gradStyle=returnGradStyle();
 
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
@@ -931,7 +929,7 @@ function updatePlaylistJson(){
     var artist=recentSongs[s].artist;
     var time=recentSongs[s].timestamp;
     var dj=recentSongs[s].dj;
-    dbuga(s+' '+song);
+    //dbuga(s+' '+song);
 
     if(song.indexOf("'")>-1){
       song = replaceAll("'", "&apos;", song);
