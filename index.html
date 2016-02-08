@@ -858,7 +858,7 @@ function onOnline() {
 // new json  playlist and now playing
 
 function getRecentSongJson(){
-  eventStack.push('getRecentSongJson()');
+  //eventStack.push('getRecentSongJson()');
   //return false;
   var feedUrl="http://radiok.org/latest.json";
       $.ajax({
@@ -932,22 +932,22 @@ function updatePlaylistJson(){
     var time=recentSongs[s].timestamp;
     var dj=recentSongs[s].dj;
     dbuga(s+' '+song);
-/*
+
     if(song.indexOf("'")>-1){
       song = replaceAll("'", "&apos;", song);
       }
     if(song.indexOf("'")>-1){song = replaceAll("'", "", song);}
     if(artist.indexOf("'")>-1){artist = replaceAll("'", "", artist);}
     if(album.indexOf("'")>-1){album = replaceAll("'", "", album);}
-*/
+
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  ''+artist+' &#8220;'+song+'&#8221;';
     htmlBlock+=  '<br /><a href="javascript:shop(\''+artist+'\', \''+album+'\', \''+song+'\');">';
     htmlBlock+=  ''+album+'</a>';
-    htmlBlock+=  '<br /><span style="font-family:akziregular;">'+dateTimeToTime(time)+'</span>';
+    //htmlBlock+=  '<br /><span style="font-family:akziregular;">'+dateTimeToTime(time)+'</span>';htmlBlock+=  '<br /><span style="font-family:akziregular;">'+time+'</span>';
     htmlBlock+='</div>';
     }
-  if(songKeys.length==0){
+  if(recentSongs.length==0){
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  'Stuck on AM Mix';
     htmlBlock+=  '<br /><span style="font-family:akziregular;">Live Performances from Radio K</span>';
@@ -957,6 +957,7 @@ function updatePlaylistJson(){
   document.getElementById('playlistScroller').innerHTML=htmlBlock; 
   document.getElementById('playlistHolder').style.width=grid*48+'px'; 
   document.getElementById('playlistHolder').style.height=grid*51+'px'; 
+  dbuga('updatePlaylistJson complted ');
   //playlistScrollerTimeout=window.setTimeout("refreshPlaylistHolderScroll()", 100);
   }
 
