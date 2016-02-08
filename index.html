@@ -931,6 +931,7 @@ function updatePlaylistJson(){
     var artist=recentSongs[s].artist;
     var time=recentSongs[s].timestamp;
     var dj=recentSongs[s].dj;
+    dbuga(s+' '+song);
 /*
     if(song.indexOf("'")>-1){
       song = replaceAll("'", "&apos;", song);
@@ -943,7 +944,7 @@ function updatePlaylistJson(){
     htmlBlock+=  ''+artist+' &#8220;'+song+'&#8221;';
     htmlBlock+=  '<br /><a href="javascript:shop(\''+artist+'\', \''+album+'\', \''+song+'\');">';
     htmlBlock+=  ''+album+'</a>';
-    htmlBlock+=  '<br /><span style="font-family:akziregular;">'+dateTimeToTime(songData.song_timestamp)+'</span>';
+    htmlBlock+=  '<br /><span style="font-family:akziregular;">'+dateTimeToTime(time)+'</span>';
     htmlBlock+='</div>';
     }
   if(songKeys.length==0){
