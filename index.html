@@ -851,76 +851,112 @@ function onOnline() {
 
 
 
-function getRecentSong(){
-  //eventStack.push('getRecentSong()');
+
+
+
+
+// new json  playlist and now playing
+
+function getRecentSongJson(){
+  eventStack.push('getRecentSongJson()');
   //return false;
-  var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_song";
+  var feedUrl="http://radiok.org/latest.json";
       $.ajax({
       url: feedUrl,
-      dataType: "text",        //  new bit
-      success: function(data) {parseRecentSong(data);}
+      dataType: "json",        //  new bit
+      success: function(data) {parseRecentSongJson(data);}
       });
   }
-function parseRecentSong(theData){
-  //eventStack.push('parseRecentSong()');
-  recentSong=JSON.parse(theData);
-  var songKeys=Object.keys(recentSong);
-
-  songKeys.sort();
-  songKeys.reverse();
-  if(songKeys.length>0){
-    //dbuga("songKeys[0]="+songKeys[0]);
-    var album=recentSong[songKeys[0]].song_album;
-    var song=recentSong[songKeys[0]].song_title;
-    //dbuga("song="+song);
-    var artist=recentSong[songKeys[0]].song_artist;
-    //dbuga("artist="+artist);
-    var time=recentSong[songKeys[0]].song_timestamp;
-    var dj=recentSong[songKeys[0]].dj;
-    //dbuga("dj="+dj);
+function parseRecentSongJson(theData){
+  console.log(theData); // the data is object
+  
+  //eventStack.push('parseRecentSongJson()');
+  if(theData.songs.length>0){
+    recentSong=theData.songs[0];
+    var album=recentSong.album;
+    var song=recentSong.title
+    var artist=recentSong.artist;
+    var time=recentSong.timestamp;
+    var dj=recentSong.dj;
+    
     if(song.indexOf("'")>-1){
       song = replaceAll("'", "&apos;", song);
       }
     nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
     if((state.uiPlaying==true)&&(state.streamPlaying==true)){
-      //eventStack.push("parseRecentSong("+songKeys.length+") updateNowPlaying");
       updateNowPlaying();
       }
     }
   }
 
-function getRecentSongs(){
-  dbuga('getRecentSongs()');
-  //return false;
-  //var feedUrl="http://www.radiok.org/";
-  var feedUrl="http://www.radiok.org/tools/packages/radiok/recent_songs";
-  //var feedUrl="recent_songs.txt";
+function getRecentSongsJson(){
+  dbuga('getRecentSongsJson()');
+  var feedUrl="http://www.radiok.org/playlist.json";
       $.ajax({
       url: feedUrl,
-      dataType: "text",        //  new bit
-      success: function(data) {parseRecentSongs(data);}
+      dataType: "json",        //  new bit
+      success: function(data) {parseRecentSongsJson(data);}
       });
   }
-// remove errors on publish
 
-function parseRecentSongs(theData){
-  recentSongs=JSON.parse(theData);
-  var songKeys=Object.keys(recentSongs);
-  dbuga("parseRecentSongs("+songKeys.length+")");
-  songKeys.sort();
-  songKeys.reverse();
-  if(songKeys.length>0){
-    var album=recentSongs[songKeys[0]].song_album;
-    var song=recentSongs[songKeys[0]].song_title;
-    var artist=recentSongs[songKeys[0]].song_artist;
-    var time=recentSongs[songKeys[0]].song_timestamp;
-    var dj=recentSongs[songKeys[0]].dj;
+function parseRecentSongsJson(theData){
+  
+  recentSongs=theData.songs;
+  dbuga('parseRecentSongsJson '+recentSongs.length);
+  if(theData.songs.length>0){
+    recentSong=theData.songs[0];
+    var album=recentSong.album;
+    var song=recentSong.title
+    var artist=recentSong.artist;
+    var time=recentSong.timestamp;
+    var dj=recentSong.dj;
+    
     if(song.indexOf("'")>-1){
       song = replaceAll("'", "&apos;", song);
       }
     nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
     }
-  updatePlaylist();
+  updatePlaylistJson();
+  }
+function updatePlaylistJson(){
+  dbuga('updatePlaylistJson()');
+  var gradStyle=returnGradStyle();
+
+  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
+  var htmlBlock="";
+
+  for(var s=0; s<recentSongs.length; s++){
+    var album=recentSongs[s].album;
+    var song=recentSongs[s].title;
+    var artist=recentSongs[s].artist;
+    var time=recentSongs[s].timestamp;
+    var dj=recentSongs[s].dj;
+/*
+    if(song.indexOf("'")>-1){
+      song = replaceAll("'", "&apos;", song);
+      }
+    if(song.indexOf("'")>-1){song = replaceAll("'", "", song);}
+    if(artist.indexOf("'")>-1){artist = replaceAll("'", "", artist);}
+    if(album.indexOf("'")>-1){album = replaceAll("'", "", album);}
+*/
+    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
+    htmlBlock+=  ''+artist+' &#8220;'+song+'&#8221;';
+    htmlBlock+=  '<br /><a href="javascript:shop(\''+artist+'\', \''+album+'\', \''+song+'\');">';
+    htmlBlock+=  ''+album+'</a>';
+    htmlBlock+=  '<br /><span style="font-family:akziregular;">'+dateTimeToTime(songData.song_timestamp)+'</span>';
+    htmlBlock+='</div>';
+    }
+  if(songKeys.length==0){
+    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
+    htmlBlock+=  'Stuck on AM Mix';
+    htmlBlock+=  '<br /><span style="font-family:akziregular;">Live Performances from Radio K</span>';
+    htmlBlock+='</div>';
+   }
+
+  document.getElementById('playlistScroller').innerHTML=htmlBlock; 
+  document.getElementById('playlistHolder').style.width=grid*48+'px'; 
+  document.getElementById('playlistHolder').style.height=grid*51+'px'; 
+  //playlistScrollerTimeout=window.setTimeout("refreshPlaylistHolderScroll()", 100);
   }
 
 
@@ -1304,44 +1340,6 @@ function dateTimeToTime(theDateTime){
     }
   var textTime=hour+":"+minute+" "+period;
   return textTime;
-  }
-function updatePlaylist(){
-  dbuga('updatePlaylist()');
-  var songKeys=Object.keys(recentSongs);
-  songKeys.sort();
-  songKeys.reverse();
-  var gradStyle=returnGradStyle();
-
-  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
-  var htmlBlock="";
-
-  for(var s=0; s<songKeys.length; s++){
-    var songData=recentSongs[songKeys[s]];
-    var song=songData.song_title;
-    var artist=songData.song_artist;
-    var album=songData.song_album;
-    if(song.indexOf("'")>-1){song = replaceAll("'", "", song);}
-    if(artist.indexOf("'")>-1){artist = replaceAll("'", "", artist);}
-    if(album.indexOf("'")>-1){album = replaceAll("'", "", album);}
-
-    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  ''+artist+' &#8220;'+song+'&#8221;';
-    htmlBlock+=  '<br /><a href="javascript:shop(\''+artist+'\', \''+album+'\', \''+song+'\');">';
-    htmlBlock+=  ''+album+'</a>';
-    htmlBlock+=  '<br /><span style="font-family:akziregular;">'+dateTimeToTime(songData.song_timestamp)+'</span>';
-    htmlBlock+='</div>';
-    }
-  if(songKeys.length==0){
-    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  'Stuck on AM Mix';
-    htmlBlock+=  '<br /><span style="font-family:akziregular;">Live Performances from Radio K</span>';
-    htmlBlock+='</div>';
-   }
-
-  document.getElementById('playlistScroller').innerHTML=htmlBlock; 
-  document.getElementById('playlistHolder').style.width=grid*48+'px'; 
-  document.getElementById('playlistHolder').style.height=grid*51+'px'; 
-  //playlistScrollerTimeout=window.setTimeout("refreshPlaylistHolderScroll()", 100);
   }
 
 function populateCalendar(){
