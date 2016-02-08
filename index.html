@@ -896,25 +896,12 @@ function getRecentSongsJson(){
       success: function(data) {parseRecentSongsJson(data);}
       });
   }
-
-function parseRecentSongsJson(theData){
-  
-  recentSongs=theData.songs;
-  //dbuga('parseRecentSongsJson '+recentSongs.length);
-  if(theData.songs.length>0){
-    recentSong=theData.songs[0];
-    var album=recentSong.album;
-    var song=recentSong.title
-    var artist=recentSong.artist;
-    var time=recentSong.timestamp;
-    var dj=recentSong.dj;
-    
-    if(song.indexOf("'")>-1){
-      song = replaceAll("'", "&apos;", song);
-      }
-    nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
-    }
-  updatePlaylistJson();
+function epochToTime(s){
+  var d=new Date(s*1000);
+  var t=d.toTimeString();
+  console.log(d+"|"+t);
+  var parts=t.split(" ");
+  return parts[0];
   }
 function updatePlaylistJson(){
   //dbuga('updatePlaylistJson()');
@@ -942,7 +929,8 @@ function updatePlaylistJson(){
     htmlBlock+=  ''+artist+' &#8220;'+song+'&#8221;';
     htmlBlock+=  '<br /><a href="javascript:shop(\''+artist+'\', \''+album+'\', \''+song+'\');">';
     htmlBlock+=  ''+album+'</a>';
-    //htmlBlock+=  '<br /><span style="font-family:akziregular;">'+dateTimeToTime(time)+'</span>';htmlBlock+=  '<br /><span style="font-family:akziregular;">'+time+'</span>';
+    htmlBlock+=  '<br /><span style="font-family:akziregular;">'+epochToTime(time)+'</span>';
+    //htmlBlock+=  '<br /><span style="font-family:akziregular;">'+time+'</span>';
     htmlBlock+='</div>';
     }
   if(recentSongs.length==0){
@@ -957,6 +945,26 @@ function updatePlaylistJson(){
   document.getElementById('playlistHolder').style.height=grid*51+'px'; 
   //dbuga('updatePlaylistJson completed ');
   //playlistScrollerTimeout=window.setTimeout("refreshPlaylistHolderScroll()", 100);
+  }
+
+function parseRecentSongsJson(theData){
+  
+  recentSongs=theData.songs;
+  //dbuga('parseRecentSongsJson '+recentSongs.length);
+  if(theData.songs.length>0){
+    recentSong=theData.songs[0];
+    var album=recentSong.album;
+    var song=recentSong.title
+    var artist=recentSong.artist;
+    var time=recentSong.timestamp;
+    var dj=recentSong.dj;
+    
+    if(song.indexOf("'")>-1){
+      song = replaceAll("'", "&apos;", song);
+      }
+    nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
+    }
+  updatePlaylistJson();
   }
 
 
