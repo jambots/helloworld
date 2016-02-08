@@ -868,7 +868,7 @@ function getRecentSongJson(){
       });
   }
 function parseRecentSongJson(theData){
-  dbuga('parseRecentSongJson' +theData.songs.length);
+  //dbuga('parseRecentSongJson' +theData.songs.length);
   if(theData.songs.length>0){
     recentSong=theData.songs[0];
     var album=recentSong.album;
@@ -1083,7 +1083,7 @@ function parseDownloads(theXml, source){
   if(source=="Real College Podcast"){
     rcpObj=xmlToJson(theXml);
     var itemsArray=rcpObj.rss.channel.item;
-    dbuga('itemsArray.length='+itemsArray.length);
+    //dbuga('itemsArray.length='+itemsArray.length);
 
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       var thisObj=itemsArray[i];
