@@ -124,7 +124,7 @@ user-select: none;
 -webkit-transition:opacity 50ms linear;
 -webkit-background-size:100% 100%; 
 background-repeat:no-repeat;
--webkit-background-size:cover;
+-webkit-background-size:contain;
 background-position:center center;
 }
 

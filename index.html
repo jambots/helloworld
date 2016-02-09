@@ -1351,8 +1351,8 @@ function updateNowPlaying(){
   if((state.online)&&(state.internet)&&(state.uiPlaying)&&(state.loop==false)){
     //eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
     
-    nowPlaying=""+nowData.artist+"<br>"+nowData.song+"<br>"+nowData.album;  
-    //document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
+    nowPlaying="<b>"+nowData.artist+"</b><br>&quot;"+nowData.song+"&quot;<br /><i>"+nowData.album+"</i>";  
+    document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
     //if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
     }
   }
@@ -2487,6 +2487,9 @@ function remoteControlPlay(){
 
 //// touch
 function handleTouchEvent(e){
+  if(e.type=="touchend"){
+    e.preventDefault();
+    }
   if(e.type=="touchstart"){
     if(e.touches.length==3){dbug('');}
     px=e.touches[0].pageX-leftOffset;

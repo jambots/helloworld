@@ -138,9 +138,9 @@ var pages=[
   "contents":[
     {"name":"eventsDesc", "top":21, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','events');\">EVENTS</a>"},
     {"name":"totdDesc", "top":37, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','totd');\">TRACK OF THE DAY</a>"},
-    {"name":"rcpDesc", "top":53, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">REAL COLLEGE PODCAST</a>"},
+    {"name":"rcpDesc", "top":53, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','rcp');\">REAL COLLEGE PODCAST</a>"},
     {"name":"instDesc", "top":21, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','inst');\">IN-STUDIOS</a>"},
-    {"name":"wrsDesc", "top":37, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','rcp');\">WEEKLY RELEASE SPOTLIGHT</a>"},
+    {"name":"wrsDesc", "top":37, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">WEEKLY RELEASE SPOTLIGHT</a>"},
     {"name":"whlDesc", "top":53, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','whl');\">WEEKEND HIT LIST</a>"},
   ]
 },
