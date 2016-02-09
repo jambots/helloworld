@@ -123,7 +123,7 @@ var dialInterval;
 var stateInterval;
 var eventStack=[];
 var recentSong={};
-var nowData={"dj":"", "time":"", "artist":"", "song":"", "album":""};
+var nowData={"dj":"", "show":"", "time":"", "artist":"", "song":"", "album":""};
 var recentSongs={};
 var singMedia;
 
@@ -879,20 +879,24 @@ function getRecentSongJson(){
       success: function(data) {parseRecentSongJson(data);}
       });
   }
+function songObjToNowData(songObj){
+  recentSong=songObj;
+  var album=recentSong.album;
+  var song=recentSong.title
+  var artist=recentSong.artist;
+  var time=recentSong.timestamp;
+  var dj=recentSong.dj;
+  var show=recentSong.show_name;
+    
+  if(song.indexOf("'")>-1){
+    song = replaceAll("'", "&apos;", song);
+    }
+  nowData={"dj":dj, "show":show, "time":time, "artist":artist, "song":song, "album":album};
+  }
 function parseRecentSongJson(theData){
   //dbuga('parseRecentSongJson' +theData.songs.length);
   if(theData.songs.length>0){
-    recentSong=theData.songs[0];
-    var album=recentSong.album;
-    var song=recentSong.title
-    var artist=recentSong.artist;
-    var time=recentSong.timestamp;
-    var dj=recentSong.dj;
-    
-    if(song.indexOf("'")>-1){
-      song = replaceAll("'", "&apos;", song);
-      }
-    nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
+    songObjToNowData(theData.songs[0]);
     if((state.uiPlaying==true)&&(state.streamPlaying==true)){
       updateNowPlaying();
       }
@@ -964,17 +968,7 @@ function parseRecentSongsJson(theData){
   recentSongs=theData.songs;
   //dbuga('parseRecentSongsJson '+recentSongs.length);
   if(theData.songs.length>0){
-    recentSong=theData.songs[0];
-    var album=recentSong.album;
-    var song=recentSong.title
-    var artist=recentSong.artist;
-    var time=recentSong.timestamp;
-    var dj=recentSong.dj;
-    
-    if(song.indexOf("'")>-1){
-      song = replaceAll("'", "&apos;", song);
-      }
-    nowData={"dj":dj, "time":time, "artist":artist, "song":song, "album":album};
+    songObjToNowData(theData.songs[0]);
     }
   updatePlaylistJson();
   }
@@ -1359,12 +1353,12 @@ function updateNowPlaying(){
     //eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
     
     nowPlaying="<b>"+nowData.artist+"</b><br>&quot;"+nowData.song+"&quot;<br /><i>"+nowData.album+"</i>";  
-    nowDj="DJ: "+nowData.dj;  
+    nowDj=nowData.show+" "+nowData.dj;  
 
     //if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
     }
   }
-var nowDj;
+var nowDj="";
 function dateTimeToTime(theDateTime){
   var parts=theDateTime.split(" ");
   var timePart=parts[1];
@@ -1486,9 +1480,9 @@ function parseCalendarJson(theJson){
 
   for (var c=0; c<calendarEvents.length; c++){
     var dateTime=calendarEvents[c].start;
-    var parts=dateTime.split(",");
+    var parts=dateTime.split(" - ");
     var time=parts.pop();
-    var date=parts.join(",");
+    var date=parts.shift();
     var rowObj={
       "date":date,
       "time":time,
@@ -1513,7 +1507,7 @@ function populateCalendarJson(){
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<a href="javascript:remoteLink(\''+ eventData.url +'\');">'+eventData.performers+'</a>';
     htmlBlock+=  '<br />'+eventData.venue+'';
-    htmlBlock+=  ' &mdash; '+eventData.date;
+    htmlBlock+=  '<br />'+eventData.date;
     htmlBlock+=  '<br /><span style="font-family:akziregular;">'+eventData.time+'</span>';
     htmlBlock+='</div>';
     }
