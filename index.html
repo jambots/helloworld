@@ -1234,7 +1234,7 @@ function updateWrsDownloads(){
   //wrsScrollerTimeout=window.setTimeout("refreshWrsHolderScroll()", 100);
   }
 
-var squareShrink=90;
+var squareShrink=95;
 
 function updateTotdDownloads(){
   //dbuga('updateTotdDownloads()');
@@ -1253,6 +1253,10 @@ function updateTotdDownloads(){
       document.getElementById("page_extras_button_totd_on").style.backgroundColor='#333';
       document.getElementById("page_extras_button_totd_on").style.backgroundImage='url('+downloadItem.image+')';
       document.getElementById("page_extras_button_totd_on").style.backgroundSize=squareShrink+'%';
+
+      document.getElementById("page_extras_button_events_on").style.backgroundColor='#333';
+      document.getElementById("page_extras_button_events_on").style.backgroundSize=squareShrink+'%';
+
       }
     //dbuga(downloadItem.link);
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
