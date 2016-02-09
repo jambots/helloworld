@@ -887,7 +887,10 @@ function songObjToNowData(songObj){
   var time=recentSong.timestamp;
   var dj=recentSong.dj;
   var show=recentSong.show_name;
-    
+  var days=["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  for(var d=0; d<days.length; d++){
+    if(show.indexOf(days[d])>-1){show="";}
+    }
   if(song.indexOf("'")>-1){
     song = replaceAll("'", "&apos;", song);
     }
