@@ -657,9 +657,9 @@ function mediaSuccess(){
 
 function togglePlaying(){
   //nowPlaying="";
-  document.getElementById('page_listen_content_djDiv').innerHTML="";
   if(state.uiPlaying==true){
     state.uiPlaying=false;
+    document.getElementById('page_listen_content_djDiv').innerHTML="";
     eventStack.push('ui pause');
     buttonOff("listen", "playpause");
     }
@@ -1354,6 +1354,7 @@ function updateNowPlaying(){
     
     nowPlaying="<b>"+nowData.artist+"</b><br>&quot;"+nowData.song+"&quot;<br /><i>"+nowData.album+"</i>";  
     document.getElementById('page_listen_content_djDiv').innerHTML="DJ: "+nowData.dj;  
+
     //if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
     }
   }
