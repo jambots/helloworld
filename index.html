@@ -947,13 +947,15 @@ function updatePlaylistJson(){
 
     var dj=recentSongs[s].dj;
     //dbuga(s+' '+song);
-
     if(song.indexOf("'")>-1){
-      song = replaceAll("'", "&apos;", song);
+      song = replaceAll("'", "-", song);
       }
-    if(song.indexOf("'")>-1){song = replaceAll("'", "", song);}
-    if(artist.indexOf("'")>-1){artist = replaceAll("'", "", artist);}
-    if(album.indexOf("'")>-1){album = replaceAll("'", "", album);}
+    if(song.indexOf("'")>-1){
+      artist = replaceAll("'", "-", artist);
+      }
+    if(song.indexOf("'")>-1){
+      album = replaceAll("'", "-", album);
+      }
 
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  ''+artist+' &#8220;'+song+'&#8221;';
