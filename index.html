@@ -248,7 +248,7 @@ function processEvents(){
   state.errorPause=true;
 
   if(eventStack.length>0){
-    //dbug('processEvents() '+eventStack.join('|'));
+    dbug('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
@@ -969,7 +969,7 @@ function updatePlaylistJson(){
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<br />';
     htmlBlock+=  '<a href="javascript:remoteLink(\'http://www.radiok.org/playlist/\');">';
-    htmlBlock+=  'More at the Radio K website</a>';
+    htmlBlock+=  'More at RadioK.org</a>';
     htmlBlock+='</div>';
     }
 
@@ -2128,7 +2128,7 @@ function parseItunesResults(theData){
 
 
 function remoteLink(theUrl){
-  dbuga("remoteLink "+theUrl);
+  //dbuga("remoteLink "+theUrl);
   
   if(theUrl.indexOf('mp3')>-1){
     uiPlaying=false;
@@ -2140,18 +2140,18 @@ function remoteLink(theUrl){
 
 
 
-  dbuga("remoteLink ran");
+  //dbuga("remoteLink ran");
   }
 var touchPageName="";
 var touchButtonName="";
 function rememberButton(pageName, buttonName){
-  dbuga("rememberButton("+pageName+", "+buttonName+")");
+  //dbuga("rememberButton("+pageName+", "+buttonName+")");
   buttonOn(pageName, buttonName);
   touchPageName=pageName;
   touchButtonName=buttonName;
   }
 function handleButton(pageName, buttonName){
-  dbuga("handleButton("+pageName+", "+buttonName+")");
+  //dbuga("handleButton("+pageName+", "+buttonName+")");
   if(pageName=="alarm"){
     if(buttonName=="timeset"){
       mouseStartX=mouseX;
@@ -2516,7 +2516,7 @@ function remoteControlPlay(){
 //// touch
 function handleTouchEvent(e){
   if(e.type=="touchstart"){dbuga("<br />");}
-  dbuga("handleTouchEvent "+e.type);
+  //dbuga("handleTouchEvent "+e.type);
   if(e.type=="touchend"){
     //e.preventDefault();
     if(touchPageName != ""){
@@ -2529,13 +2529,13 @@ function handleTouchEvent(e){
     if(e.touches.length==3){dbug('');}
     px=e.touches[0].pageX-leftOffset;
     py=e.touches[0].pageY-topOffset; 
-    dbuga('px:'+px+' py:'+py);
+    //dbuga('px:'+px+' py:'+py);
     var target=e.touches[0].target;
     lastTouchId=targetId;
     var targetId=target.id; 
     var targetType=typeof target;
-    dbuga(' &nbsp; target='+target+' target.id='+targetId);
-    dbuga(' - javascript? '+targetType);
+    //dbuga(' &nbsp; target='+target+' target.id='+targetId);
+    //dbuga(' - javascript? '+targetType);
     if((currentPage=="faqs")&&(targetId.indexOf('twistie')>-1)){// skip to twisties if faqs and target match
       if(selectedTwistie==-1){
         var parts=targetId.split('_');
