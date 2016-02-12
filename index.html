@@ -2126,6 +2126,8 @@ function parseItunesResults(theData){
 
 
 function remoteLink(theUrl){
+  dbuga("remoteLink "+theUrl);
+  
   if(theUrl.indexOf('mp3')>-1){
     uiPlaying=false;
     retrying=false;
@@ -2136,7 +2138,7 @@ function remoteLink(theUrl){
 
 
 
-  //dbuga("remoteLink ran");
+  dbuga("remoteLink ran");
   }
 
 function handleButton(pageName, buttonName){
