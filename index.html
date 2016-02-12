@@ -2512,9 +2512,10 @@ function remoteControlPlay(){
 
 //// touch
 function handleTouchEvent(e){
+  if(e.type=="touchstart"){dbuga("<br />");}
   dbuga("handleTouchEvent "+e.type);
   if(e.type=="touchend"){
-    e.preventDefault();
+    //e.preventDefault();
     if(touchPageName != ""){
       handleButton(touchPageName, touchButtonName);
       touchPageName="";
@@ -2525,12 +2526,13 @@ function handleTouchEvent(e){
     if(e.touches.length==3){dbug('');}
     px=e.touches[0].pageX-leftOffset;
     py=e.touches[0].pageY-topOffset; 
-    //dbuga('px:'+px+' py:'+py);
+    dbuga('px:'+px+' py:'+py);
     var target=e.touches[0].target;
-    var targetId=target.id; 
     lastTouchId=targetId;
-    dbuga(' target='+target+' target.id='+targetId);
-
+    var targetId=target.id; 
+    var targetType=typeof target;
+    dbuga(' &nbsp; target='+target+' target.id='+targetId);
+    dbuga(' - javascript? '+targetType);
     if((currentPage=="faqs")&&(targetId.indexOf('twistie')>-1)){// skip to twisties if faqs and target match
       if(selectedTwistie==-1){
         var parts=targetId.split('_');
