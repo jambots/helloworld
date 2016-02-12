@@ -2142,7 +2142,7 @@ function remoteLink(theUrl){
   }
 
 function handleButton(pageName, buttonName){
-  //dbug("handleButton("+pageName+", "+buttonName+")");
+  dbuga("handleButton("+pageName+", "+buttonName+")");
   if(pageName=="alarm"){
     if(buttonName=="timeset"){
       mouseStartX=mouseX;
@@ -2506,8 +2506,9 @@ function remoteControlPlay(){
 
 //// touch
 function handleTouchEvent(e){
+  dbuga("handleTouchEvent "+e.type);
   if(e.type=="touchend"){
-    e.preventDefault();
+    //e.preventDefault();
     }
   if(e.type=="touchstart"){
     if(e.touches.length==3){dbug('');}
@@ -2517,7 +2518,7 @@ function handleTouchEvent(e){
     var target=e.touches[0].target;
     var targetId=target.id; 
     lastTouchId=targetId;
-    //dbuga(' target='+target+' target.id='+targetId);
+    dbuga(' target='+target+' target.id='+targetId);
 
     if((currentPage=="faqs")&&(targetId.indexOf('twistie')>-1)){// skip to twisties if faqs and target match
       if(selectedTwistie==-1){
