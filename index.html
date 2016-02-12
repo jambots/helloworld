@@ -166,6 +166,9 @@ function checkConnection() {
 function init(){
   //dbuga('init()');
   }
+var androidWaitMs=30000;
+var iosWaitMs=20000;
+var waitMs=iosWaitMs;
 function onDeviceReady(){
   eventStack.push('device ready');
   document.addEventListener("offline", onOffline, false);
@@ -176,10 +179,12 @@ function onDeviceReady(){
   if (device.platform == "Android") {
     state.android=true;
     state.playerType="media";
+    waitMs=androidWaitMs;
     }
   if (device.platform == "iOS") {
     state.ios=true;
     state.playerType="audio";
+    waitMs=iosWaitMs;
     }
 
   state.deviceReady=true;
@@ -216,7 +221,7 @@ function mediaEvent(evt){
           if(state.waitEvents>0){nowPlaying="Retrying.";}
           for(var w=0; w<state.waitEvents; w++){nowPlaying+=".";}
           window.clearTimeout(waitTimeout);
-          waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
+          waitTimeout=window.setTimeout("eventStack.push('wait timeout')", waitMs);
           }
         }  
       if(evt=="media running"){
@@ -335,11 +340,11 @@ function processEvents(){
         }
       if(evt=="audio wait"){
         window.clearTimeout(waitTimeout);
-        waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
+        waitTimeout=window.setTimeout("eventStack.push('wait timeout')", waitMs);
         }
       if(evt=="audio play"){
         window.clearTimeout(waitTimeout);
-        waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
+        waitTimeout=window.setTimeout("eventStack.push('wait timeout')", waitMs);
         }
       if(evt.indexOf("audio playing")>-1){
         var parts=evt.split(" ");
@@ -453,7 +458,7 @@ function processEvents(){
         state.streamCreated==false;// allows createStream
         if(state.uiPlaying){
           window.clearTimeout(waitTimeout);
-          waitTimeout=window.setTimeout("eventStack.push('wait timeout')", 20000);
+          waitTimeout=window.setTimeout("eventStack.push('wait timeout')", waitMs);
           }
 
 
