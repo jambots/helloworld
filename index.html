@@ -243,7 +243,7 @@ function processEvents(){
   state.errorPause=true;
 
   if(eventStack.length>0){
-    dbug('processEvents() '+eventStack.join('|'));
+    //dbug('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
