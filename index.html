@@ -948,9 +948,9 @@ function updatePlaylistJson(){
     var dj=recentSongs[s].dj;
     //dbuga(s+' '+song);
 
-    song = replaceAll("'", "-", song);
-    artist = replaceAll("'", "-", artist);
-    album = replaceAll("'", "-", album);
+    song = replaceAll("'", "&#39;", song);
+    artist = replaceAll("'", "&#39;", artist);
+    album = replaceAll("'", "&#39;", album);
 
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  ''+artist+' &#8220;'+song+'&#8221;';
