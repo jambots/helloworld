@@ -2140,7 +2140,13 @@ function remoteLink(theUrl){
 
   dbuga("remoteLink ran");
   }
-
+var touchPageName="";
+var touchButtonName="";
+function rememberButton(pageName, buttonName){
+  dbuga("rememberButton("+pageName+", "+buttonName+")");
+  touchPageName=pageName;
+  touchButtonName=buttonName;
+  }
 function handleButton(pageName, buttonName){
   dbuga("handleButton("+pageName+", "+buttonName+")");
   if(pageName=="alarm"){
@@ -2508,7 +2514,12 @@ function remoteControlPlay(){
 function handleTouchEvent(e){
   dbuga("handleTouchEvent "+e.type);
   if(e.type=="touchend"){
-    //e.preventDefault();
+    e.preventDefault();
+    if(touchPageName != ""){
+      handleButton(touchPageName, touchButtonName);
+      touchPageName="";
+      touchbuttonName="";
+      }
     }
   if(e.type=="touchstart"){
     if(e.touches.length==3){dbug('');}
@@ -2546,7 +2557,7 @@ function handleTouchEvent(e){
               if(tenth>5){alarmIncDec=12*pol*60;}
               }
             //dbuga(area.page+" "+area.name);
-            handleButton(area.page, area.name);
+            rememberButton(area.page, area.name);
             }
           }
         }
