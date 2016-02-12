@@ -79,7 +79,7 @@ var wh=400;
 var leftOffset=0;
 var topOffset=0;
 var grid=32;
-var navDelay=400;
+var navDelay=100;
 var imagePath="images_small";
 
 var selectedTwistie=-1;
@@ -2144,6 +2144,7 @@ var touchPageName="";
 var touchButtonName="";
 function rememberButton(pageName, buttonName){
   dbuga("rememberButton("+pageName+", "+buttonName+")");
+  buttonOn(pageName, buttonName);
   touchPageName=pageName;
   touchButtonName=buttonName;
   }
