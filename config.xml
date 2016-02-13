@@ -98,6 +98,7 @@
 
 <gap:plugin name="cordova-plugin-whitelist" source="npm" />
 <allow-navigation href="radiok.org/*" />
+<allow-navigation href="http://*/*" />
 <access origin="*" />
 
 
