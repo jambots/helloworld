@@ -95,8 +95,10 @@
 <gap:splash src="res/Default-Landscape@2x.png" gap:platform="ios" width="2048" height="1536" />
 
 
+<!--
 <gap:plugin name="cordova-plugin-whitelist" source="npm" />
 <allow-navigation href="radiok.org/*" />
+-->
 <access origin="*" />
 
 
