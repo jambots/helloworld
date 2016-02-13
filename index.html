@@ -166,7 +166,7 @@ function checkConnection() {
 function init(){
   //dbuga('init()');
   }
-var androidWaitMs=50000;
+var androidWaitMs=120000;
 var iosWaitMs=20000;
 var waitMs=iosWaitMs;
 function onDeviceReady(){
@@ -2423,7 +2423,7 @@ function handleButton(pageName, buttonName){
       eventStack.push("setting medium");
       buttonOn("settings", "medium");
       buttonOff("settings", "higher");
-      buttonOff("settings", "broken");
+      //buttonOff("settings", "broken");
       genericSet("quality", "medium");
       
       
@@ -2433,7 +2433,7 @@ function handleButton(pageName, buttonName){
       eventStack.push("setting higher");
       buttonOff("settings", "medium");
       buttonOn("settings", "higher");
-      buttonOff("settings", "broken");
+      //buttonOff("settings", "broken");
       genericSet("quality", "higher");
 
       }
