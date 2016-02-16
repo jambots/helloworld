@@ -2130,19 +2130,15 @@ function parseItunesResults(theData){
 
 
 function remoteLink(theUrl){
-  //dbuga("remoteLink "+theUrl);
+  dbuga("remoteLink "+theUrl);
   
   if(theUrl.indexOf('mp3')>-1){
-    uiPlaying=false;
-    retrying=false;
+    state.uiPlaying=false;
     buttonOff("listen", "playpause");
-    if(state.streamPlaying){stopStream();}
+    if(state.streamPlaying){pauseStream();}
     }
   var ref = window.open(theUrl, "_system");
-
-
-
-  //dbuga("remoteLink ran");
+  dbuga("remoteLink ran");
   }
 var touchPageName="";
 var touchButtonName="";
