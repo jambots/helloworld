@@ -2130,7 +2130,7 @@ function parseItunesResults(theData){
 
 
 function remoteLink(theUrl){
-  dbuga("remoteLink "+theUrl);
+  //dbuga("remoteLink "+theUrl);
   
   if(theUrl.indexOf('mp3')>-1){
     state.uiPlaying=false;
@@ -2138,7 +2138,7 @@ function remoteLink(theUrl){
     if(state.streamPlaying){pauseStream();}
     }
   var ref = window.open(theUrl, "_system");
-  dbuga("remoteLink ran");
+  //dbuga("remoteLink ran");
   }
 var touchPageName="";
 var touchButtonName="";
@@ -2558,9 +2558,12 @@ function handleTouchEvent(e){
               if(tenth<4){alarmIncDec=pol*60;}
               if((tenth==4)||(tenth==5)){alarmIncDec=pol;}
               if(tenth>5){alarmIncDec=12*pol*60;}
+              handleButton(area.page, area.name)
+              }
+            else{
+              rememberButton(area.page, area.name);
               }
             //dbuga(area.page+" "+area.name);
-            rememberButton(area.page, area.name);
             }
           }
         }
@@ -2583,19 +2586,6 @@ function touchCancel(event){
   event.preventDefault(); 
   }
 var debugCount=0;
-function touchStart(event){
-  if(event.touches.length>2){
-    debugCount++;
-    if(debugCount>2){
-      debugCount=0;
-      debugging=!(debugging);
-      }
-
-    }
-  mouseX=event.touches[0].pageX;
-  mouseY=event.touches[0].pageY;
-  handleTouchEvent(event);
-  }
 function mouseup(e){
   //dbuga('mouseup(e) touchingDial='+touchingDial);
   endDialTouch();
@@ -2610,6 +2600,20 @@ function mousemove(e){
   mouseX=e.pageX;
   mouseY=e.pageY;
   }
+function touchStart(event){
+  if(event.touches.length>2){
+    debugCount++;
+    if(debugCount>2){
+      debugCount=0;
+      debugging=!(debugging);
+      }
+
+    }
+  mouseX=event.touches[0].pageX;
+  mouseY=event.touches[0].pageY;
+  handleTouchEvent(event);
+  }
+
 function touchMove(event){
   if((currentPage !="totd")&&(currentPage !="wrs")&&(currentPage !="rcp")&&(currentPage !="whl")&&(currentPage !="inst")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
     event.preventDefault();
@@ -2617,6 +2621,7 @@ function touchMove(event){
   if(currentPage =="alarm"){
     mouseX=event.touches[0].pageX;
     mouseY=event.touches[0].pageY; 
+    //dbuga(mouseX+" "+mouseY);
     }
   if(lastTouchId.indexOf("page_")>-1){
     event.preventDefault();
