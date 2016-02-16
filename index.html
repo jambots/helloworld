@@ -1370,9 +1370,9 @@ function updateNowPlaying(){
     //eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
     
     nowPlaying="<b>"+nowData.artist+"</b><br>&quot;"+nowData.song+"&quot;<br /><i>"+nowData.album+"</i>"; 
-    var nowShow=nowData.show
-    if(nowShow !=""){nowShow+=". ";}
-    nowDj=nowData.show+"DJ: "+nowData.dj;  
+    var nowShow=nowData.show; 
+    if(nowShow !=""){nowShow+=" &nbsp; ";}
+    nowDj=nowShow+"DJ: "+nowData.dj;  
 
     //if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
     }
