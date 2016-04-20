@@ -5,11 +5,13 @@
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
+<!--
 <script src="phonegap.js"></script>
+-->
 <script src="jquerymin.js"></script>
 <script src="scrollfix.js"></script>
 <script src="pages.js"></script>
-<link rel="stylesheet" type="text/css" href="reset-min.css?1">
+<link rel="stylesheet" type="text/css" href="reset-min.css">
 <link rel="stylesheet" type="text/css" href="radiokapp.css">
 <script type="text/javascript">
 
@@ -57,7 +59,7 @@ var stream={};
       stream.playing = null;
 */
 
-var debugging=false;
+var debugging=true;
 var waitEvents=0;
 var waitTimeout;
 
@@ -153,7 +155,8 @@ function checkInternet(){
 }
 function checkConnection() {
   var con=navigator.connection.type;
-  //dbuga("checkConnection() navigator.connection.type="+con);
+  dbuga("checkConnection() ...");
+  dbuga("navigator.connection.type="+con);
   if((con=="connection.NONE")||(con=="connection.UNKNOWN")){
     state.online=false;
     }
@@ -164,18 +167,23 @@ function checkConnection() {
   
 
 function init(){
-  //dbuga('init()');
+  dbuga('init()');
+  //onDeviceReady();// web testing only!
   }
+var device={"platform":"browser"};
+
 var androidWaitMs=120000;
 var iosWaitMs=20000;
 var waitMs=iosWaitMs;
 function onDeviceReady(){
+  dbuga("onDeviceReady()");
   eventStack.push('device ready');
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
   document.addEventListener("resume", appResumed, false);
   document.addEventListener("pause", appPaused, false);
-
+  dbuga("onDeviceReady() 2");
+  
   if (device.platform == "Android") {
     state.android=true;
     state.playerType="media";
@@ -186,12 +194,19 @@ function onDeviceReady(){
     state.playerType="audio";
     waitMs=iosWaitMs;
     }
+  dbuga("onDeviceReady() 3");
 
   state.deviceReady=true;
+  dbuga("onDeviceReady() 4");
   state.appActive=true;
+  dbuga("onDeviceReady() 5");
   checkConnection();
+  dbuga("onDeviceReady() 6");
   checkInternet();
+  dbuga("onDeviceReady() 7");
   resumeInit();
+  dbuga("onDeviceReady()8");
+
   }
 function appResumed(){
   state.appActive=true;
@@ -714,7 +729,7 @@ function genericGet(itemName){
   }
 
 function resumeInit(){
-  //dbuga('init 0.0');
+  dbuga('resumeInit 0.0');
   currentPage="listen";
 
   populateContainer();
@@ -1805,7 +1820,7 @@ function populateContainer(){
 
   imagePath="images_large";//ipad retina 1536, viewport 768 down to iph0ne6+
   if(ww<414){imagePath="images_medium";}// 
-  if(ww<640){imagePath="images_small";}//iphone, quarter scale is 384
+  console.log(ww+" "+imagePath);
   if(ww==414)
   //dbuga(imagePath);
   var wAspect=ww/wh;
@@ -1894,8 +1909,8 @@ function populateContainer(){
         }
       else{
         buttonMap.push({"page":page.name, "name":button.name, "left":grid*button.left, "right":grid*button.left+grid*button.width, "top":grid*button.top, "bottom":grid*button.top+grid*button.height});
-        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'" class="buttons" style="background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_off.png?1); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:'+ grid*button.left +'px; top:'+ grid*button.top +'px;">';
-        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'_on" class="buttons" style="opacity:0; background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_on.png?1); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:0px; top:0px;">';
+        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'" class="buttons" style="background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_off.png); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:'+ grid*button.left +'px; top:'+ grid*button.top +'px;">';
+        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'_on" class="buttons" style="opacity:0; background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_on.png); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:0px; top:0px;">';
         htmlString+='</div>'
         htmlString+='</div>'
         }
