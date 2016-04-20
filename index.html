@@ -1803,9 +1803,10 @@ function populateContainer(){
   ww=window.innerWidth;
   wh=window.innerHeight;
 
-  imagePath="images_large";//ipad retina
-  if(ww<1536){imagePath="images_medium";}// ipad, iPhone retina can handle 768
+  imagePath="images_large";//ipad retina 1536, viewport 768 down to iph0ne6+
+  if(ww<414){imagePath="images_medium";}// 
   if(ww<640){imagePath="images_small";}//iphone, quarter scale is 384
+  if(ww==414)
   //dbuga(imagePath);
   var wAspect=ww/wh;
   leftOffset=0;
