@@ -140,21 +140,18 @@ background-position:center center;
 }
 .answer{
   position:absolute; font-family:akziregular;
-  //float:left; 
-  //background-color:#336;
   display:none; 
 }
 a:link{color:#2dbdda; font-family:akzibold; text-decoration:none;}
 
-//a:visited{color:#2BBED8; font-family:akzibold; text-decoration:none;}
 a:visited{color:#2dbdda; font-family:akzibold; text-decoration:none;}
 .pages{
 opacity:0;
--webkit-transition:opacity 100ms linear;
--webkit-background-size:100% 100%; 
+transition:opacity 100ms linear;
+background-size:66%; 
 background-repeat:no-repeat;
 background-color:#000;
-//-webkit-background-size:contain;
+Z-webkit-background-size:contain;
 background-position:top center;
 }
 body{

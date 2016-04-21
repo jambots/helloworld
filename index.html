@@ -9,9 +9,9 @@
 <script src="phonegap.js"></script>
 <script src="jquerymin.js"></script>
 <script src="scrollfix.js"></script>
-<script src="pages.js"></script>
+<script src="pages.js?3"></script>
 <link rel="stylesheet" type="text/css" href="reset-min.css">
-<link rel="stylesheet" type="text/css" href="radiokapp.css">
+<link rel="stylesheet" type="text/css" href="radiokapp.css?4">
 <script type="text/javascript">
 
 document.addEventListener("deviceready", onDeviceReady, false);
@@ -58,7 +58,7 @@ var stream={};
       stream.playing = null;
 */
 
-var debugging=true;
+var debugging=false;
 var waitEvents=0;
 var waitTimeout;
 
@@ -153,8 +153,8 @@ function checkInternet(){
   }
 }
 function checkConnection() {
-  //var con=navigator.connection.type;
-  var con="wifi";// web testing only!
+  var con=navigator.connection.type;
+  //var con="wifi";// web testing only!
   dbuga("checkConnection() ...");
   dbuga("navigator.connection.type="+con);
   if((con=="connection.NONE")||(con=="connection.UNKNOWN")){
@@ -168,7 +168,7 @@ function checkConnection() {
 
 function init(){
   dbuga('init()');
-  onDeviceReady(); // web testing only!!
+  // onDeviceReady(); // web testing only!!
   }
 
 
@@ -182,7 +182,7 @@ function onDeviceReady(){
   document.addEventListener("online", onOnline, false);
   document.addEventListener("resume", appResumed, false);
   document.addEventListener("pause", appPaused, false);
-  dbuga("onDeviceReady() 2");
+  //dbuga("onDeviceReady() 2");
   
   if (device.platform == "Android") {
     state.android=true;
@@ -194,18 +194,18 @@ function onDeviceReady(){
     state.playerType="audio";
     waitMs=iosWaitMs;
     }
-  dbuga("onDeviceReady() 3");
+  //dbuga("onDeviceReady() 3");
 
   state.deviceReady=true;
-  dbuga("onDeviceReady() 4");
+  //dbuga("onDeviceReady() 4");
   state.appActive=true;
-  dbuga("onDeviceReady() 5");
+  //dbuga("onDeviceReady() 5");
   checkConnection();
-  dbuga("onDeviceReady() 6");
+  //dbuga("onDeviceReady() 6");
   checkInternet();
-  dbuga("onDeviceReady() 7");
+  //dbuga("onDeviceReady() 7");
   resumeInit();
-  dbuga("onDeviceReady()8");
+  //dbuga("onDeviceReady()8");
 
   }
 function appResumed(){
@@ -263,7 +263,7 @@ function processEvents(){
   state.errorPause=true;
 
   if(eventStack.length>0){
-    dbug('processEvents() '+eventStack.join('|'));
+    dbuga('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
@@ -425,6 +425,7 @@ function processEvents(){
         }
 
       if(evt=="alarm fired"){
+        state.alarmSet=false; 
         state.alarmTriggered=true;
         state.retryAttempts=0;
         state.waitEvents=0;
@@ -770,7 +771,7 @@ function getInst(){
   faqs=[];
   var feedUrl="http://www.radiok.org/instudios/page/"+instPage+"/";
   //var feedUrl="app-faq.txt";
-  //dbuga('getInst()');
+  dbuga('getInst()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
@@ -837,7 +838,7 @@ function updateInstDownloads(){
     }
   document.getElementById('instScroller').innerHTML=htmlBlock;
   document.getElementById('instHolder').style.width=grid*48+'px'; 
-  document.getElementById('instHolder').style.height=grid*51+'px'; 
+  document.getElementById('instHolder').style.height="100%"; 
   //wrsScrollerTimeout=window.setTimeout("refreshInstHolderScroll()", 100);
   }
 
@@ -929,6 +930,7 @@ function parseRecentSongJson(theData){
 function getRecentSongsJson(){
   //dbuga('getRecentSongsJson()');
   var feedUrl="http://www.radiok.org/playlist.json";
+  //var feedUrl="playlist.json";
       $.ajax({
       url: feedUrl,
       dataType: "json",        //  new bit
@@ -990,7 +992,7 @@ function updatePlaylistJson(){
 
   document.getElementById('playlistScroller').innerHTML=htmlBlock; 
   document.getElementById('playlistHolder').style.width=grid*48+'px'; 
-  document.getElementById('playlistHolder').style.height=grid*51+'px'; 
+  document.getElementById('playlistHolder').style.height='100%'; 
   //dbuga('updatePlaylistJson completed ');
   //playlistScrollerTimeout=window.setTimeout("refreshPlaylistHolderScroll()", 100);
   }
@@ -1015,13 +1017,13 @@ function getDownloads(){
   rcpDownloads=[];
   whlDownloads=[];
   document.getElementById('totdHolder').style.width=grid*48+'px'; 
-  document.getElementById('totdHolder').style.height=grid*51+'px'; 
+  document.getElementById('totdHolder').style.height="100%"; 
   document.getElementById('wrsHolder').style.width=grid*48+'px'; 
-  document.getElementById('wrsHolder').style.height=grid*51+'px'; 
+  document.getElementById('wrsHolder').style.height="100%"; 
   document.getElementById('rcpHolder').style.width=grid*48+'px'; 
-  document.getElementById('rcpHolder').style.height=grid*51+'px'; 
+  document.getElementById('rcpHolder').style.height="100%"; 
   document.getElementById('whlHolder').style.width=grid*48+'px'; 
-  document.getElementById('whlHolder').style.height=grid*51+'px'; 
+  document.getElementById('whlHolder').style.height="100%"; 
 
     
 
@@ -1263,7 +1265,7 @@ function updateWrsDownloads(){
     }
   document.getElementById('wrsScroller').innerHTML=htmlBlock;
   document.getElementById('wrsHolder').style.width=grid*48+'px'; 
-  document.getElementById('wrsHolder').style.height=grid*51+'px'; 
+  document.getElementById('wrsHolder').style.height="100%"; 
   //wrsScrollerTimeout=window.setTimeout("refreshWrsHolderScroll()", 100);
   }
 
@@ -1302,7 +1304,7 @@ function updateTotdDownloads(){
     }
   document.getElementById('totdScroller').innerHTML=htmlBlock;
   document.getElementById('totdHolder').style.width=grid*48+'px'; 
-  document.getElementById('totdHolder').style.height=grid*51+'px'; 
+  document.getElementById('totdHolder').style.height="100%"; 
   //totdScrollerTimeout=window.setTimeout("refreshTotdHolderScroll()", 100);
   }
 
@@ -1337,7 +1339,7 @@ function updateRcpDownloads(){
     }
   document.getElementById('rcpScroller').innerHTML=htmlBlock;
   document.getElementById('rcpHolder').style.width=grid*48+'px'; 
-  document.getElementById('rcpHolder').style.height=grid*51+'px'; 
+  document.getElementById('rcpHolder').style.height="100%"; 
   }
 function updateWhlDownloads(){
   //dbuga('updateWhlDownloads()');
@@ -1370,7 +1372,7 @@ function updateWhlDownloads(){
     }
   document.getElementById('whlScroller').innerHTML=htmlBlock;
   document.getElementById('whlHolder').style.width=grid*48+'px'; 
-  document.getElementById('whlHolder').style.height=grid*51+'px'; 
+  document.getElementById('whlHolder').style.height="100%"; 
   }
 
 
@@ -1427,7 +1429,7 @@ function populateCalendar(){
 
   document.getElementById('calendarScroller').innerHTML=htmlBlock; 
   document.getElementById('calendarHolder').style.width=grid*48+'px'; 
-  document.getElementById('calendarHolder').style.height=grid*51+'px'; 
+  document.getElementById('calendarHolder').style.height="100%"; 
   }
 
 function getFaqs(){
@@ -1548,7 +1550,7 @@ function populateCalendarJson(){
 
   document.getElementById('calendarScroller').innerHTML=htmlBlock; 
   document.getElementById('calendarHolder').style.width=grid*48+'px'; 
-  document.getElementById('calendarHolder').style.height=grid*51+'px'; 
+  document.getElementById('calendarHolder').style.height="100%"; 
   }
 
 // old calendar
@@ -1773,44 +1775,42 @@ function populateDials(){
     dialCode+=m+"<br />";
     }
   dialCode+="</div>";
-
   }
+
+
 function selectPage(selectedPage){
-  //dbuga("selectPage "+selectedPage);
-  if(selectedPage=="extras"){
-    getDownloads();
-    }
+  dbuga("selectPage "+selectedPage);
   currentPage=selectedPage;
-  for(var p=0; p<pageArray.length; p++){
-    if(pageArray[p]==selectedPage){showPage(pageArray[p]);}
-    else{
+  if(state.alarmSet==true){hidePage(pageArray[0]);}
+  for(var p=1; p<pageArray.length; p++){
+    if(pageArray[p] != selectedPage){
       hidePage(pageArray[p]);
-      //dbuga('hidePage pageArray['+p+']='+pageArray[p]);
       }
     }
+  hideTimeout=setTimeout('hideTick()', navDelay);
   }
 
 function showPage(thePage){
   var pageStyle=document.getElementById('page_'+thePage).style;  
   pageStyle.display="block";
-  window.setTimeout('currentOpacity1()', 10);
   }
-function currentOpacity1(){
-  document.getElementById('page_'+currentPage).style.opacity="1";
-  }
-
 function hidePage(thePage){
-  document.getElementById('page_'+thePage).style.opacity=hideByPage[thePage].opac;
-  hideTimeout=setTimeout('hideTick()', 400);
+  var pageStyle=document.getElementById('page_'+thePage).style;  
+  pageStyle.display="none";
   }
 
 function hideTick(){
+  if(state.alarmSet==false){showPage(pageArray[0]);}
   for(var p=1; p<pageArray.length; p++){
-    if(pageArray[p]!=currentPage){
-      document.getElementById('page_'+pageArray[p]).style.display="none";  
+    if(pageArray[p]==currentPage){
+      showPage(pageArray[p]);
       }
     }
   }
+var cellsDown=64; //iPad, will be more for phones
+var containerHeight=1000;
+var originalHeight=1000;
+var contentPad=0;
 function populateContainer(){
   hideByPage={};
   buttonMap=[];
@@ -1826,35 +1826,21 @@ function populateContainer(){
   var wAspect=ww/wh;
   leftOffset=0;
   topOffset=0;
-  grid=32;
-  var cw=320;
-  var ch=480;
-  //dbuga(" w:"+ww+" h:"+wh+" a:"+wAspect);
-  if(wAspect<.75){//is taller than iPad so offset top
-    leftOffset=0;
-    cw=ww;
-    ch=ww/.75;
-    topOffset=(wh-ch)/2;
-    grid=cw/48;
-    }
-  else{// iPad or fatter, offset left
-    topOffset=0;
-    ch=wh;
-    cw=wh*.75;
-    leftOffset=(ww-cw)/2;
-    grid=cw/48;
-    }
+  grid=ww/48;
+  containerHeight=wh;
+  originalHeight=grid*58;
+  contentPad=(containerHeight-originalHeight-grid*6)/2;
   document.getElementById('debugDiv').style.top=grid*0+"px";
   document.getElementById('wrapper').style.backgroundSize=grid*4+"px";
-  document.getElementById('container').style.width=cw+"px";
-  document.getElementById('container').style.height=ch+"px";
-  document.getElementById('container').style.left=leftOffset+"px";
-  document.getElementById('container').style.top=topOffset+"px";
+  document.getElementById('container').style.width=ww+"px";
+  document.getElementById('container').style.height=containerHeight+"px";
+  document.getElementById('container').style.left=leftOffset+"px"; // 0
+  document.getElementById('container').style.top=topOffset+"px"; // 0
 
-  document.getElementById('stateCanvas').width=cw/3;
-  document.getElementById('stateCanvas').height=ch/2;
-  document.getElementById('stateCanvas').style.left=cw/1.5+"px";
-  document.getElementById('stateCanvas').style.top=ch/4+"px";
+  document.getElementById('stateCanvas').width=ww/3;
+  document.getElementById('stateCanvas').height=wh/2;
+  document.getElementById('stateCanvas').style.left=ww/1.5+"px";
+  document.getElementById('stateCanvas').style.top=wh/4+"px";
   document.getElementById('stateCanvas').style.position="absolute";
   document.getElementById('stateCanvas').style.backgroundColor="rgba(25,255,255,.2)";
 
@@ -1866,10 +1852,14 @@ function populateContainer(){
 
     page=pages[p];
     //dbuga("populateContainer() "+page.name);
+    var pageHeight=grid*page.height;
+    if(p>0){pageHeight-=grid*6;}
+    if(page.vAlign != "middle"){pageHeight+=contentPad*2;}
+    heightsByPage[page.name]=pageHeight;
+    //hideStyle='top:'+(grid*page.hideTop+page.hideTopMargin*topOffset)+'px; left:'+(grid*page.hideLeft+page.hideLeftMargin*leftOffset)+'px; opacity:'+page.hideOpac+';';
+    hideStyle='top:'+(grid*page.hideTop+page.hideTopMargin*topOffset)+'px; left:'+(grid*page.hideLeft+page.hideLeftMargin*leftOffset)+'px; opacity:'+1+';';
 
-    heightsByPage[page.name]=grid*page.height;
-    hideStyle='top:'+(grid*page.hideTop+page.hideTopMargin*topOffset)+'px; left:'+(grid*page.hideLeft+page.hideLeftMargin*leftOffset)+'px; opacity:'+page.hideOpac+';';
-    htmlString+='<div id="page_'+page.name+'" class="pages" style="background-image:url('+imagePath+'/bg_'+page.name+'.jpg); width:'+ grid*48 +'px; height:'+ grid*page.height +'px; '+hideStyle+'">';
+    htmlString+='<div id="page_'+page.name+'" class="pages" style="background-image:url('+imagePath+'/bg_'+page.name+'.jpg); width:'+ grid*48 +'px; height:'+ pageHeight +'px; '+hideStyle+'">';
     pageArray.push(page.name);
     hideByPage[page.name]={"top":(grid*page.hideTop+page.hideTopMargin*topOffset), "left":(grid*page.hideLeft+page.hideLeftMargin*leftOffset), "opac":page.hideOpac};
 
@@ -1878,6 +1868,9 @@ function populateContainer(){
     var boxes=page.boxes;
     for(var b=0; b<boxes.length; b++){
       var content=boxes[b];
+      var top=grid*content.top;
+      if(page.vAlign=="middle"){top+=contentPad};
+
       var contentName=content.name;
       htmlString+='<div id="page_'+page.name+'_content_'+content.name+'" style="overflow:hidden; ';
       if(contentName.indexOf('Box')==-1){
@@ -1894,7 +1887,7 @@ function populateContainer(){
       htmlString+='line-height:'+ Math.floor(grid*content.lineHeight) +'px;  ';
       htmlString+='font-size:'+ grid*content.fontSize +'px; text-align:'+content.textAlign+'; ';
       htmlString+='color:'+content.color +'; left:'+grid*content.left+'px;  ';
-      htmlString+='font-family:'+ content.fontFamily +'; top:'+ grid*content.top +'px;">';
+      htmlString+='font-family:'+ content.fontFamily +'; top:'+ top +'px;">';
       htmlString+=content.defaultText;
       htmlString+='</div>'
       }
@@ -1902,14 +1895,19 @@ function populateContainer(){
     var buttons=page.buttons;
     for(var b=0; b<buttons.length; b++){
       var button=buttons[b];
+      var top=grid*button.top;
+      if((top>0)&&(page.vAlign=="middle")){top+=contentPad};
+      if(page.vAlign=="bottom"){
+        top=wh+grid*button.top;
+        }
       if((button.name=="phone")&&(topOffset==0)){
-        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'" style="font-size:'+3.3*grid+'px; line-height:'+5.5*grid+'px; text-align:center; width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:'+ grid*button.left +'px; top:'+ grid*button.top +'px;">';
+        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'" style="font-size:'+3.3*grid+'px; line-height:'+5.5*grid+'px; text-align:center; width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:'+ grid*button.left +'px; top:'+ top +'px;">';
         htmlString+='<a href="tel:+16126264770"><img src="'+imagePath+'/page_'+page.name+'_button_'+button.name+'_off.png" style="border:0;" width="'+grid*button.width+'" height="'+grid*button.height+'" /></a>';
         htmlString+='</div>'
         }
       else{
-        buttonMap.push({"page":page.name, "name":button.name, "left":grid*button.left, "right":grid*button.left+grid*button.width, "top":grid*button.top, "bottom":grid*button.top+grid*button.height});
-        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'" class="buttons" style="background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_off.png); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:'+ grid*button.left +'px; top:'+ grid*button.top +'px;">';
+        buttonMap.push({"page":page.name, "name":button.name, "left":grid*button.left, "right":grid*button.left+grid*button.width, "top":top, "bottom":top+grid*button.height});
+        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'" class="buttons" style="background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_off.png); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:'+ grid*button.left +'px; top:'+ top +'px;">';
         htmlString+='<div id="page_'+page.name+'_button_'+button.name+'_on" class="buttons" style="opacity:0; background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_on.png); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:0px; top:0px;">';
         htmlString+='</div>'
         htmlString+='</div>'
@@ -1919,15 +1917,22 @@ function populateContainer(){
     var contents=page.contents;
     for(var c=0; c<contents.length; c++){
       var content=contents[c];
+      var contentHeight=grid*content.height;
+      if(content.height==51){
+        contentHeight+=contentPad*2;
+        }
+      var top=grid*content.top;
+      if(page.vAlign=="middle"){top+=contentPad};
+
       var contentName=content.name;
       htmlString+='<div id="page_'+page.name+'_content_'+content.name+'" style="overflow:hidden; ';
       if(contentName.indexOf('Box')==-1){
         htmlString+='width:'+ grid*content.width +'px; ';
-        htmlString+='height:'+ grid*content.height +'px; ';
+        htmlString+='height:'+ contentHeight +'px; ';
         }
       else{
         htmlString+='width:'+ (grid*content.width-2) +'px; ';
-        htmlString+='height:'+ (grid*content.height-2) +'px; ';
+        htmlString+='height:'+ (contentHeight-2) +'px; ';
         htmlString+='border:1px solid #666; ';
         htmlString+='background-color:#333; ';
         }
@@ -1935,7 +1940,7 @@ function populateContainer(){
       htmlString+='line-height:'+ Math.floor(grid*content.lineHeight) +'px;  ';
       htmlString+='font-size:'+ grid*content.fontSize +'px; text-align:'+content.textAlign+'; ';
       htmlString+='color:'+content.color +'; left:'+grid*content.left+'px;  ';
-      htmlString+='font-family:'+ content.fontFamily +'; top:'+ grid*content.top +'px;">';
+      htmlString+='font-family:'+ content.fontFamily +'; top:'+ top +'px;">';
       htmlString+=content.defaultText;
       htmlString+='</div>'
       }
@@ -2141,7 +2146,7 @@ function parseItunesResults(theData){
     }
   document.getElementById('resultsScroller').innerHTML=htmlBlock;
   document.getElementById('resultsHolder').style.width=grid*48+'px'; 
-  document.getElementById('resultsHolder').style.height=grid*51+'px'; 
+  document.getElementById('resultsHolder').style.height="100%"; 
   }
 
 
@@ -2231,6 +2236,7 @@ function handleButton(pageName, buttonName){
       document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
       window.setTimeout('buttonOff("alarm", "set"); selectPage("armed");', navDelay);
       snoozeMinutes=0;
+      state.alarmSet=true;
       state.alarmTriggered=false;
       state.uiPlaying=false;
       state.streamCreated=false;
@@ -2263,6 +2269,7 @@ function handleButton(pageName, buttonName){
       document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
       state.streamCreated=false;
       state.alarmTriggered=false;
+      state.alarmSet=true; 
       state.uiPlaying=false;
       pauseStream();
       buttonOff("listen", "playpause");
@@ -2273,7 +2280,7 @@ function handleButton(pageName, buttonName){
   if(pageName=="armed"){
     if(buttonName=="cancelalarm"){
       buttonOn("armed", "cancelalarm");
-      window.setTimeout('buttonOff("armed", "cancelalarm"); selectPage("alarm");', navDelay);
+      window.setTimeout('buttonOff("armed", "cancelalarm"); state.alarmSet=false; selectPage("alarm");', navDelay);
       }
     }
   if(pageName=="footnav"){
@@ -2323,7 +2330,7 @@ function handleButton(pageName, buttonName){
     if(buttonName=="extras"){
       buttonOff("footnav", "listen");
       buttonOn("more", "extras");
-      window.setTimeout('buttonOff("more", "extras"); selectPage("extras");', navDelay);
+      window.setTimeout('buttonOff("more", "extras"); getDownloads(); selectPage("extras");', navDelay);
       }
     if(buttonName=="alarm"){
       buttonOff("footnav", "listen");
@@ -2545,9 +2552,9 @@ function handleTouchEvent(e){
     py=e.touches[0].pageY-topOffset; 
     //dbuga('px:'+px+' py:'+py);
     var target=e.touches[0].target;
-    lastTouchId=targetId;
     var targetId=target.id; 
-    var targetType=typeof target;
+    lastTouchId=targetId;
+    //var targetType=typeof target;
     //dbuga(' &nbsp; target='+target+' target.id='+targetId);
     //dbuga(' - javascript? '+targetType);
     if((currentPage=="faqs")&&(targetId.indexOf('twistie')>-1)){// skip to twisties if faqs and target match
@@ -2618,6 +2625,7 @@ function mousemove(e){
   }
 function touchStart(event){
   if(event.touches.length>2){
+    dbuga('');
     debugCount++;
     if(debugCount>2){
       debugCount=0;

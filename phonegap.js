@@ -1,1 +1,0 @@
-var device={"platform":"browser"};
