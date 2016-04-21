@@ -2574,6 +2574,7 @@ function handleTouchEvent(e){
       for (m=0; m<buttonMap.length; m++){
         area=buttonMap[m];
         if((px>area.left)&&(px<area.right)&&(py>area.top)&&(py<area.bottom)){
+          dbuga("py=" +py +" heightsByPage["+currentPage+"]="+heightsByPage[currentPage]);
           if((currentPage==area.page)||(py>heightsByPage[currentPage])){// on page or footnav
             dbuga('page:'+area.page+' name:'+area.name);
             if(area.name.indexOf('timeset')>-1){
