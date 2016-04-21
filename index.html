@@ -2540,10 +2540,11 @@ function remoteControlPlay(){
 //// touch
 function handleTouchEvent(e){
   if(e.type=="touchstart"){
+    dbug('');
     }
   dbuga("handleTouchEvent "+e.type);
   if(e.type=="touchend"){
-    //e.preventDefault();
+    e.preventDefault();
     if(touchPageName != ""){
       handleButton(touchPageName, touchButtonName);
       touchPageName="";
