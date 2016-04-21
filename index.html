@@ -153,7 +153,8 @@ function checkInternet(){
   }
 }
 function checkConnection() {
-  var con=navigator.connection.type;
+  //var con=navigator.connection.type;
+  var con="wifi";// web testing only!
   dbuga("checkConnection() ...");
   dbuga("navigator.connection.type="+con);
   if((con=="connection.NONE")||(con=="connection.UNKNOWN")){
@@ -167,9 +168,9 @@ function checkConnection() {
 
 function init(){
   dbuga('init()');
-  //onDeviceReady();// web testing only!
+  onDeviceReady(); // web testing only!!
   }
-var device={"platform":"browser"};
+
 
 var androidWaitMs=120000;
 var iosWaitMs=20000;
