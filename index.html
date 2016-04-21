@@ -2167,13 +2167,13 @@ function remoteLink(theUrl){
 var touchPageName="";
 var touchButtonName="";
 function rememberButton(pageName, buttonName){
-  //dbuga("rememberButton("+pageName+", "+buttonName+")");
+  dbuga("rememberButton("+pageName+", "+buttonName+")");
   buttonOn(pageName, buttonName);
   touchPageName=pageName;
   touchButtonName=buttonName;
   }
 function handleButton(pageName, buttonName){
-  //dbuga("handleButton("+pageName+", "+buttonName+")");
+  dbuga("handleButton("+pageName+", "+buttonName+")");
   if(pageName=="alarm"){
     if(buttonName=="timeset"){
       mouseStartX=mouseX;
@@ -2575,7 +2575,7 @@ function handleTouchEvent(e){
         area=buttonMap[m];
         if((px>area.left)&&(px<area.right)&&(py>area.top)&&(py<area.bottom)){
           if((currentPage==area.page)||(py>heightsByPage[currentPage])){// on page or footnav
-            //dbuga('page:'+area.page+' name:'+area.name);
+            dbuga('page:'+area.page+' name:'+area.name);
             if(area.name.indexOf('timeset')>-1){
               var mid=(area.top+area.bottom)/2;
               var tenth=Math.floor(10*(px-area.left)/(area.right-area.left));
@@ -2589,7 +2589,7 @@ function handleTouchEvent(e){
             else{
               rememberButton(area.page, area.name);
               }
-            dbuga(area.page+" "+area.name);
+            //dbuga(area.page+" "+area.name);
             }
           }
         }
