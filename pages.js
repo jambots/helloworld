@@ -26,10 +26,10 @@ var pages=[
   "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
-    {"name":"extras", "top":11, "left":9, "height":6, "width":30},
-    {"name":"alarm", "top":18, "left":9, "height":6, "width":30},
-    {"name":"settings", "top":25, "left":9, "height":6, "width":30},
-    {"name":"faqs", "top":32, "left":9, "height":6, "width":30}
+    {"name":"extras", "top":18, "left":9, "height":6, "width":30},
+    {"name":"alarm", "top":25, "left":9, "height":6, "width":30},
+    {"name":"settings", "top":32, "left":9, "height":6, "width":30},
+    {"name":"faqs", "top":39, "left":9, "height":6, "width":30}
   ],
   "contents":[
   ]
@@ -69,7 +69,7 @@ var pages=[
     {"name":"nowAmPm", "top":34, "left":39, "width":8, "height":7, "lineHeight":4, "fontSize":2.9, "fontFamily":"akzilight", "color":"#fff", "textAlign":"center", "defaultText":"AM"}
   ]
 },
-{"name":"shop", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
+{"name":"shop", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
   "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
@@ -155,7 +155,7 @@ var pages=[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="totdHolder"><div id="totdScroller"></div></div>'}
   ]
 },
-{"name":"wrs", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+{"name":"wrs", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
@@ -164,7 +164,7 @@ var pages=[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="wrsHolder"><div id="wrsScroller"></div></div>'}
   ]
 },
-{"name":"rcp", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+{"name":"rcp", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
@@ -174,7 +174,7 @@ var pages=[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="rcpHolder"><div id="rcpScroller"></div></div>'}
   ]
 },
-{"name":"whl", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+{"name":"whl", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
@@ -184,7 +184,7 @@ var pages=[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="whlHolder"><div id="whlScroller"></div></div>'}
   ]
 },
-{"name":"inst", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+{"name":"inst", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
