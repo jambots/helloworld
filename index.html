@@ -156,7 +156,7 @@ function checkConnection() {
   var con=navigator.connection.type;
   //var con="wifi";// web testing only!
   //dbuga("checkConnection() ...");
-  dbuga("navigator.connection.type="+con);
+  //dbuga("navigator.connection.type="+con);
   if((con=="connection.NONE")||(con=="connection.UNKNOWN")){
     state.online=false;
     }
@@ -167,7 +167,7 @@ function checkConnection() {
   
 
 function init(){
-  dbuga('init()');
+  //dbuga('init()');
   // onDeviceReady(); // web testing only!!
   }
 
@@ -176,7 +176,7 @@ var androidWaitMs=120000;
 var iosWaitMs=20000;
 var waitMs=iosWaitMs;
 function onDeviceReady(){
-  dbuga("onDeviceReady()");
+  //dbuga("onDeviceReady()");
   eventStack.push('device ready');
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
@@ -257,13 +257,13 @@ function mediaEvent(evt){
 
 function processEvents(){
   if(state.errorPause){
-    dbuga('errorPause');
+    //dbuga('errorPause');
     return false;
     }
   state.errorPause=true;
 
   if(eventStack.length>0){
-    dbuga('processEvents() '+eventStack.join('|'));
+    //dbuga('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
@@ -481,12 +481,12 @@ function processEvents(){
         }
         
       staleStack.unshift(evt);
-      dbuga(evt);
+      //dbuga(evt);
 
       }
     staleStack.unshift(" ");
 
-    dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
+    //dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
     }//end if event stack
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying;
   document.getElementById('page_listen_content_djDiv').innerHTML=nowDj;
@@ -685,7 +685,7 @@ function mediaSuccess(){
 
 
 function togglePlaying(){
-  dbuga('togglePlaying');
+  //dbuga('togglePlaying');
   console.log('togglePlaying');
 
   if(state.uiPlaying==true){
@@ -733,7 +733,7 @@ function genericGet(itemName){
   }
 
 function resumeInit(){
-  dbuga('resumeInit 0.0');
+  //dbuga('resumeInit 0.0');
   currentPage="listen";
 
   populateContainer();
@@ -774,7 +774,7 @@ function getInst(){
   faqs=[];
   var feedUrl="http://www.radiok.org/instudios/page/"+instPage+"/";
   //var feedUrl="app-faq.txt";
-  dbuga('getInst()');
+  //dbuga('getInst()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
@@ -1782,7 +1782,7 @@ function populateDials(){
 
 
 function selectPage(selectedPage){
-  dbuga("selectPage "+selectedPage);
+  //dbuga("selectPage "+selectedPage);
   currentPage=selectedPage;
   if(state.alarmSet==true){hidePage(pageArray[0]);}
   for(var p=1; p<pageArray.length; p++){
@@ -2167,7 +2167,7 @@ function remoteLink(theUrl){
 var touchPageName="";
 var touchButtonName="";
 function rememberButton(pageName, buttonName){
-  dbuga("rememberButton("+pageName+", "+buttonName+")");
+  //dbuga("rememberButton("+pageName+", "+buttonName+")");
   buttonOn(pageName, buttonName);
   touchPageName=pageName;
   touchButtonName=buttonName;
@@ -2539,7 +2539,8 @@ function remoteControlPlay(){
 
 //// touch
 function handleTouchEvent(e){
-  if(e.type=="touchstart"){dbuga("<br />");}
+  if(e.type=="touchstart"){
+    }
   dbuga("handleTouchEvent "+e.type);
   if(e.type=="touchend"){
     //e.preventDefault();
@@ -2558,7 +2559,7 @@ function handleTouchEvent(e){
     var targetId=target.id; 
     lastTouchId=targetId;
     //var targetType=typeof target;
-    //dbuga(' &nbsp; target='+target+' target.id='+targetId);
+    dbuga(' &nbsp; target='+target+' target.id='+targetId);
     //dbuga(' - javascript? '+targetType);
     if((currentPage=="faqs")&&(targetId.indexOf('twistie')>-1)){// skip to twisties if faqs and target match
       if(selectedTwistie==-1){
@@ -2574,9 +2575,9 @@ function handleTouchEvent(e){
       for (m=0; m<buttonMap.length; m++){
         area=buttonMap[m];
         if((px>area.left)&&(px<area.right)&&(py>area.top)&&(py<area.bottom)){
-          dbuga("py=" +py +" heightsByPage["+currentPage+"]="+heightsByPage[currentPage]);
+          //dbuga("py=" +py +" heightsByPage["+currentPage+"]="+heightsByPage[currentPage]);
           if((currentPage==area.page)||(py>heightsByPage[currentPage])){// on page or footnav
-            dbuga('page:'+area.page+' name:'+area.name);
+            //dbuga('page:'+area.page+' name:'+area.name);
             if(area.name.indexOf('timeset')>-1){
               var mid=(area.top+area.bottom)/2;
               var tenth=Math.floor(10*(px-area.left)/(area.right-area.left));
@@ -2596,7 +2597,7 @@ function handleTouchEvent(e){
         }
       }
     }
-  dbuga('handle completed');
+  //dbuga('handle completed');
   }
 
 
@@ -2630,7 +2631,7 @@ function mousemove(e){
   }
 function touchStart(event){
   if(event.touches.length>2){
-    dbuga('');
+    //dbuga('');
     debugCount++;
     if(debugCount>2){
       debugCount=0;
