@@ -155,7 +155,7 @@ function checkInternet(){
 function checkConnection() {
   var con=navigator.connection.type;
   //var con="wifi";// web testing only!
-  dbuga("checkConnection() ...");
+  //dbuga("checkConnection() ...");
   dbuga("navigator.connection.type="+con);
   if((con=="connection.NONE")||(con=="connection.UNKNOWN")){
     state.online=false;
@@ -2589,12 +2589,13 @@ function handleTouchEvent(e){
             else{
               rememberButton(area.page, area.name);
               }
-            //dbuga(area.page+" "+area.name);
+            dbuga(area.page+" "+area.name);
             }
           }
         }
       }
     }
+  dbuga('handle completed');
   }
 
 
