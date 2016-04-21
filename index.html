@@ -2555,12 +2555,12 @@ function handleTouchEvent(e){
     if(e.touches.length==3){dbug('');}
     px=e.touches[0].pageX-leftOffset;
     py=e.touches[0].pageY-topOffset; 
-    //dbuga('px:'+px+' py:'+py);
+    dbuga('px:'+px+' py:'+py);
     var target=e.touches[0].target;
     var targetId=target.id; 
     lastTouchId=targetId;
     //var targetType=typeof target;
-    dbuga(' &nbsp; target='+target+' target.id='+targetId);
+    dbuga(currentPage+' &nbsp; target='+target+' target.id='+targetId);
     //dbuga(' - javascript? '+targetType);
     if((currentPage=="faqs")&&(targetId.indexOf('twistie')>-1)){// skip to twisties if faqs and target match
       if(selectedTwistie==-1){
