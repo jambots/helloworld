@@ -58,7 +58,7 @@ var stream={};
       stream.playing = null;
 */
 
-var debugging=false;
+var debugging=true;
 var waitEvents=0;
 var waitTimeout;
 
@@ -685,6 +685,9 @@ function mediaSuccess(){
 
 
 function togglePlaying(){
+  dbuga('togglePlaying');
+  console.log('togglePlaying');
+
   if(state.uiPlaying==true){
     state.uiPlaying=false;
     eventStack.push('ui pause');
@@ -2537,7 +2540,7 @@ function remoteControlPlay(){
 //// touch
 function handleTouchEvent(e){
   if(e.type=="touchstart"){dbuga("<br />");}
-  //dbuga("handleTouchEvent "+e.type);
+  dbuga("handleTouchEvent "+e.type);
   if(e.type=="touchend"){
     //e.preventDefault();
     if(touchPageName != ""){
