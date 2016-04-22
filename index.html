@@ -2144,13 +2144,13 @@ function parseItunesResults(theData){
       htmlBlock+=  '<br /><a href="javascript:remoteLink(\''+result.collectionViewUrl+'\');'+returnFalse+'"><span style="">'+result.collectionName+'</span></a>';
       htmlBlock+='</div>';
       }
+    document.getElementById('resultsScroller').innerHTML=htmlBlock;
+    document.getElementById('resultsHolder').style.width=grid*48+'px'; 
+    document.getElementById('resultsHolder').style.height="100%"; 
     }
   else{
-    htmlBlock="Sorry, no items found.";
+    selectPage("shopempty");
     }
-  document.getElementById('resultsScroller').innerHTML=htmlBlock;
-  document.getElementById('resultsHolder').style.width=grid*48+'px'; 
-  document.getElementById('resultsHolder').style.height="100%"; 
   }
 
 
@@ -2357,6 +2357,12 @@ function handleButton(pageName, buttonName){
     if(buttonName=="done"){
       buttonOn("shop", "done");
       window.setTimeout('buttonOff("shop", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
+      }
+    }
+  if(pageName=="shopempty"){
+    if(buttonName=="done"){
+      buttonOn("shopempty", "done");
+      window.setTimeout('buttonOff("shopempty", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
       }
     }
   if(pageName=="extras"){
