@@ -1823,8 +1823,9 @@ function populateContainer(){
 
   imagePath="images_large";//ipad retina 1536, viewport 768 down to iph0ne6+
   if(ww<414){imagePath="images_medium";}// 
+  imagePath="images_medium";// force test lo res
   console.log(ww+" "+imagePath);
-  if(ww==414)
+  
   //dbuga(imagePath);
   var wAspect=ww/wh;
   leftOffset=0;
