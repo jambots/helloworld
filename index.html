@@ -974,7 +974,7 @@ function updatePlaylistJson(){
 
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+='<b>'+artist+'</b><br>&quot;'+song+'&quot;<br />';
-    htmlBlock+='<a href="javascript:shop(\''+artistClean+'\', \''+albumClean+'\', \''+songClean+'\');"><i>'+album+'</i></a>'; 
+    htmlBlock+='<a id="shopLink" href="javascript:shop(\''+artistClean+'\', \''+albumClean+'\', \''+songClean+'\');"><i>'+album+'</i></a>'; 
     htmlBlock+='<br /><span style="font-family:akziregular;">'+epochToTime(time)+'</span>';
     htmlBlock+='</div>';
     }

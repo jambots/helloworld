@@ -85,7 +85,7 @@ var pages=[
     {"name":"radiok", "top":33, "left":8, "height":20, "width":32}
   ],
   "contents":[
-    {"name":"nowPlayingDiv", "top":20, "left":1, "width":46, "height":8, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"Sorry...this track not found in store."},  ]
+    {"name":"nowPlayingDiv", "top":20, "left":1, "width":46, "height":8, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"Sorry... this track not found in iTunes Store."},  ]
 },
 {"name":"settings", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
   "boxes":[],
