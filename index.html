@@ -2095,7 +2095,7 @@ function buttonOff(thePage, theButton){
 
 
 function shop(artist, album, song){
-  //dbuga("shop("+artist+", "+album+", "+song+")");
+  dbuga("shop("+artist+", "+album+", "+song+")");
   selectPage("shop");
   var artistAlbumSong=artist+" "+album+" "+song;
   var terms=artistAlbumSong.replace(/ /g, "+");
@@ -2109,7 +2109,7 @@ function shop(artist, album, song){
   }
 
 function parseItunesResults(theData){
-  //dbuga("parseItunesResults");
+  dbuga("parseItunesResults");
   var itunesJson=JSON.parse(theData);
   var allResults=itunesJson.results;
   var glom="|";
@@ -2605,7 +2605,7 @@ function handleTouchEvent(e){
         }
       }
     }
-  //dbuga('handle completed');
+  dbuga('handle completed');
   }
 
 
