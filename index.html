@@ -2551,7 +2551,7 @@ function handleTouchEvent(e){
     }
   dbuga("handleTouchEvent "+e.type);
   if(e.type=="touchend"){
-    e.preventDefault();
+    //e.preventDefault();
     if(touchPageName != ""){
       handleButton(touchPageName, touchButtonName);
       touchPageName="";
