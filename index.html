@@ -2152,7 +2152,7 @@ function parseItunesResults(theData){
     }
   else{
     dbuga('shop empty')
-    selectPage("shopempty");
+    document.getElementById('page_shopempty_content_shopStatusDiv').innerHTML="Sorry... this track not found in iTunes Store.";
     }
   }
 
