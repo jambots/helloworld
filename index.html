@@ -2109,7 +2109,6 @@ function shop(artist, album, song){
   }
 
 function parseItunesResults(theData){
-  selectPage("shop");
   dbuga("parseItunesResults");
   var itunesJson=JSON.parse(theData);
   var allResults=itunesJson.results;
@@ -2131,8 +2130,10 @@ function parseItunesResults(theData){
   var textStyle='clear:both; padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*16 +'px;  line-height:'+ grid*2.5 +'px; text-align:left;';
   var imgStyle='float:left; padding-top:'+grid*1.8+'px; width:'+ grid*12 +'px; height:'+ grid*12 +'px; margin:0 '+ grid*2 +'px 0 '+ grid*2 +'px;'
   var htmlBlock="";
-  //dbuga("results.length="+results.length);
+  dbuga("results.length="+results.length);
   if(results.length>0){
+    selectPage("shop");
+
     htmlBlock='<div class="playlistItem" style="'+headStyle+' '+gradStyle+' ">';
     htmlBlock+=  'iTunes Results';
     htmlBlock+='</div>';
@@ -2150,6 +2151,7 @@ function parseItunesResults(theData){
     document.getElementById('resultsHolder').style.height="100%"; 
     }
   else{
+    dbuga('shop empty')
     selectPage("shopempty");
     }
   }
