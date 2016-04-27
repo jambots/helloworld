@@ -2097,16 +2097,23 @@ function buttonOff(thePage, theButton){
 
 function shop(artist, album, song){
   dbuga("shop("+artist+", "+album+", "+song+")");
-  selectPage("shopempty");
-  var artistAlbumSong=artist+" "+album+" "+song;
-  var terms=artistAlbumSong.replace(/ /g, "+");
-  document.getElementById('page_shopempty_content_shopStatusDiv').innerHTML="Searching: "+artist+"<br>"+album;
-  var feedUrl="https://itunes.apple.com/search?limit=20&term="+terms;
-  $.ajax({
-    url: feedUrl,
-    dataType: "text",        //  new bit
-    success: function(data) {parseItunesResults(data);}
-    });
+  if(state.android){
+    var keywords=artist+" "+album+" "+song;
+    var shopUrl="http://www.amazon.com/s?ie=UTF8&keywords="+keywords+"&index=music&link_code=qs";
+    window.setTimeout("remoteLink('"+shopUrl+"')", navDelay);
+    }
+  else{
+    selectPage("shopempty");
+    var artistAlbumSong=artist+" "+album+" "+song;
+    var terms=artistAlbumSong.replace(/ /g, "+");
+    document.getElementById('page_shopempty_content_shopStatusDiv').innerHTML="Searching: "+artist+"<br>"+album;
+    var feedUrl="https://itunes.apple.com/search?limit=20&term="+terms;
+    $.ajax({
+      url: feedUrl,
+      dataType: "text",        //  new bit
+      success: function(data) {parseItunesResults(data);}
+      });
+    }
   }
 
 function parseItunesResults(theData){
