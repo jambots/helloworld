@@ -2096,10 +2096,10 @@ function buttonOff(thePage, theButton){
 
 function shop(artist, album, song){
   dbuga("shop("+artist+", "+album+", "+song+")");
-  selectPage("shop");
+  selectPage("shopempty");
   var artistAlbumSong=artist+" "+album+" "+song;
   var terms=artistAlbumSong.replace(/ /g, "+");
-  document.getElementById('resultsScroller').innerHTML="searching: "+artist+"<br>"+album;
+  document.getElementById('shopStatusDiv').innerHTML="Searching: "+artist+"<br>"+album;
   var feedUrl="https://itunes.apple.com/search?limit=20&term="+terms;
   $.ajax({
     url: feedUrl,
@@ -2109,6 +2109,7 @@ function shop(artist, album, song){
   }
 
 function parseItunesResults(theData){
+  selectPage("shop");
   dbuga("parseItunesResults");
   var itunesJson=JSON.parse(theData);
   var allResults=itunesJson.results;
