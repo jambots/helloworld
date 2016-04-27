@@ -2100,9 +2100,7 @@ function shop(artist, album, song){
   selectPage("shopempty");
   var artistAlbumSong=artist+" "+album+" "+song;
   var terms=artistAlbumSong.replace(/ /g, "+");
-  dbuga('shopStatusDiv:'+document.getElementById('shopStatusDiv'));
-   
-  document.getElementById('shopStatusDiv').innerHTML="Searching: "+artist+"<br>"+album;
+  document.getElementById('page_shopempty_content_shopStatusDiv').innerHTML="Searching: "+artist+"<br>"+album;
   var feedUrl="https://itunes.apple.com/search?limit=20&term="+terms;
   $.ajax({
     url: feedUrl,
@@ -2136,7 +2134,6 @@ function parseItunesResults(theData){
   dbuga("results.length="+results.length);
   if(results.length>0){
     selectPage("shop");
-    dbuga('resultsScroller:'+document.getElementById('resultsScroller'));
     htmlBlock='<div class="playlistItem" style="'+headStyle+' '+gradStyle+' ">';
     htmlBlock+=  'iTunes Results';
     htmlBlock+='</div>';
@@ -2155,7 +2152,7 @@ function parseItunesResults(theData){
     }
   else{
     dbuga('shop empty')
-    //selectPage("shopempty");
+    selectPage("shopempty");
     }
   }
 
