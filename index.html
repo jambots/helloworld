@@ -2096,7 +2096,7 @@ function buttonOff(thePage, theButton){
 
 
 function shop(artist, album, song){
-  dbuga("shop("+artist+", "+album+", "+song+")");
+  //dbuga("shop("+artist+", "+album+", "+song+")");
   if(state.android){
     var keywords=artist+" "+album+" "+song;
     var shopUrl="http://www.amazon.com/s?ie=UTF8&keywords="+keywords+"&index=music&link_code=qs";
@@ -2117,7 +2117,7 @@ function shop(artist, album, song){
   }
 
 function parseItunesResults(theData){
-  dbuga("parseItunesResults");
+  //dbuga("parseItunesResults");
   var itunesJson=JSON.parse(theData);
   var allResults=itunesJson.results;
   var glom="|";
@@ -2138,7 +2138,7 @@ function parseItunesResults(theData){
   var textStyle='clear:both; padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*16 +'px;  line-height:'+ grid*2.5 +'px; text-align:left;';
   var imgStyle='float:left; padding-top:'+grid*1.8+'px; width:'+ grid*12 +'px; height:'+ grid*12 +'px; margin:0 '+ grid*2 +'px 0 '+ grid*2 +'px;'
   var htmlBlock="";
-  dbuga("results.length="+results.length);
+  //dbuga("results.length="+results.length);
   if(results.length>0){
     selectPage("shop");
     htmlBlock='<div class="playlistItem" style="'+headStyle+' '+gradStyle+' ">';
@@ -2158,7 +2158,7 @@ function parseItunesResults(theData){
     document.getElementById('resultsHolder').style.height="100%"; 
     }
   else{
-    dbuga('shop empty')
+    //dbuga('shop empty')
     document.getElementById('page_shopempty_content_shopStatusDiv').innerHTML="Sorry... this track not found in iTunes Store.";
     }
   }
@@ -2184,7 +2184,7 @@ function rememberButton(pageName, buttonName){
   touchButtonName=buttonName;
   }
 function handleButton(pageName, buttonName){
-  dbuga("handleButton("+pageName+", "+buttonName+")");
+  //dbuga("handleButton("+pageName+", "+buttonName+")");
   if(pageName=="alarm"){
     if(buttonName=="timeset"){
       mouseStartX=mouseX;
@@ -2559,7 +2559,7 @@ function handleTouchEvent(e){
   if(e.type=="touchstart"){
     dbug('');
     }
-  dbuga("handleTouchEvent "+e.type);
+  //dbuga("handleTouchEvent "+e.type);
   if(e.type=="touchend"){
     if(touchPageName != ""){
       e.preventDefault();
@@ -2572,12 +2572,12 @@ function handleTouchEvent(e){
     if(e.touches.length==3){dbug('');}
     px=e.touches[0].pageX-leftOffset;
     py=e.touches[0].pageY-topOffset; 
-    dbuga('px:'+px+' py:'+py);
+    //dbuga('px:'+px+' py:'+py);
     var target=e.touches[0].target;
     var targetId=target.id; 
     lastTouchId=targetId;
     //var targetType=typeof target;
-    dbuga(currentPage+' &nbsp; target='+target+' target.id='+targetId);
+    //dbuga(currentPage+' &nbsp; target='+target+' target.id='+targetId);
     //dbuga(' - javascript? '+targetType);
     if((currentPage=="faqs")&&(targetId.indexOf('twistie')>-1)){// skip to twisties if faqs and target match
       if(selectedTwistie==-1){
@@ -2615,7 +2615,7 @@ function handleTouchEvent(e){
         }
       }
     }
-  dbuga('handle completed');
+  //dbuga('handle completed');
   }
 
 
