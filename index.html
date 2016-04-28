@@ -1439,17 +1439,17 @@ function getFaqs(){
   faqs=[];
   var feedUrl="http://www.radiok.org/app-faq/";
   //var feedUrl="app-faq.txt";
-  //dbuga('getFaqs()');
+  dbuga('getFaqs()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
     
     success: function(data) {
-      //console.log(data);
+      console.log(data);
       parseFaqs(data);
       }
     });
-  //dbuga('getFaqs() completed');
+  dbuga('getFaqs() completed');
   }
 var faqs=[
   {"q":"What is Radio K?", "a":"Radio K, the award-winning radio station of the University of Minnesota, is nationally recognized as one of the best student-run college radio stations in the country, playing an eclectic variety of independent music both old and new.<br /><br />Radio K educates students, breaks ground in musical programming, and provides cutting-edge cultural coverage through our specialty shows, web content and Culture Queue."},
@@ -1464,7 +1464,7 @@ var faqs=[
 ];
 function parseFaqs(theScrape){
   var faqBlocks=theScrape.split('<div class="faq_item">');
-  //dbuga('parseFaqs faqBlocks.length=' +faqBlocks.length);
+  dbuga('parseFaqs faqBlocks.length=' +faqBlocks.length);
   if(faqBlocks.length>1){
     faqs=[];
     for (var s=1; s<faqBlocks.length; s++){
