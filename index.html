@@ -750,7 +750,7 @@ function resumeInit(){
   stateInterval=setInterval('stateTick()', 1000);
   //dbuga(' init 4');
   //minuteTick();
-  getFaqs();
+  getLocalFaqs();
   getInst();
   //dbuga(' init 5');
   //retryInterval=window.setInterval("retryTick()", 15000);    
@@ -1435,11 +1435,28 @@ function populateCalendar(){
   document.getElementById('calendarHolder').style.height="100%"; 
   }
 
-function getFaqs(){
+function getLocalFaqs(){
   faqs=[];
   //var feedUrl="http://www.radiok.org/app-faq/";
   var feedUrl="faq.txt";
-  dbuga('getFaqs()');
+  dbuga('getLocalFaqs()');
+  $.ajax({
+    url: feedUrl,
+    dataType: "text",        // < new bit
+    
+    success: function(data) {
+      console.log(data);
+      parseFaqs(data);
+      getWebFaqs();
+      }
+    });
+  dbuga('getLocalFaqs() completed');
+  }
+function getWebFaqs(){
+  faqs=[];
+  var feedUrl="http://www.radiok.org/app-faq/";
+  //var feedUrl="faq.txt";
+  dbuga('getWebFaqs()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
@@ -1449,19 +1466,9 @@ function getFaqs(){
       parseFaqs(data);
       }
     });
-  dbuga('getFaqs() completed');
+  dbuga('getWebFaqs() completed');
   }
-var faqs=[
-  {"q":"What is Radio K?", "a":"Radio K, the award-winning radio station of the University of Minnesota, is nationally recognized as one of the best student-run college radio stations in the country, playing an eclectic variety of independent music both old and new.<br /><br />Radio K educates students, breaks ground in musical programming, and provides cutting-edge cultural coverage through our specialty shows, web content and Culture Queue."},
-  {"q":"How can I contact Radio K?", "a":"Email: <a href=\"mailto:radiokdj@umn.edu\">radiokdj@umn.edu</a><br /><br />Phone: <a href=\"tel:+16126253500\">612-625-3500</a><br /><br />Web: <a href=\"http://www.radiok.org/\">www.radiok.org</a><br /><br />Mobile:<br /><a href=\"http://twitter.com/radiok\"><img src=\"social/twitter.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"https://www.facebook.com/20658369592\"><img src=\"social/facebook.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"http://www.youtube.com/user/RadioK770?feature=watch\"><img src=\"social/youtube.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"https://plus.google.com/u/0/106019319997650127214/about\"><img src=\"social/googleplus.png\" width=\"socialSize\" height=\"socialSize\" /></a> <a href=\"http://www.radiok.org/blogs/new/tag/track%20of%20the%20day\"><img src=\"social/rss.png\" width=\"socialSize\" height=\"socialSize\" /></a>"},
-  {"q":"How can I keep Radio K playing music?","a":"You can keep your already rad support going by <a href=\"http://www.radiok.org/donate/\">donating</a> to the station and becoming a member. And, we like to keep it chill so donating literally any amount makes you a member. Got a spare $10? Throw it our way and we can keep the CDs spinning."},
-  {"q":"How do I get my band's music on Radio K?","a":"Head over to <a href=\"http://www.radiok.org/about/contact-information/music-submissions/\">RadioK.org</a>"},
-  {"q":"How can I download the Track of the Day?","a":"Radio K\'s Track of the Day can be found <a href=\"http://www.radiok.org/blogs/new/tag/track%20of%20the%20day\">here</a>."},
-  {"q":"What cool things do you have going on?","a":"We love live music even more than we love recorded music&mdash;check out our <a href=\"http://www.radiok.org/events/\">Events Calendar</a>."},
-  {"q":"When is that awesome local show,<br>Off The Record?","a":"Off The Record is every Friday from 3 p.m. to 5 p.m. CST. Local music and local trivia comin&apos; at you for two hours, not to mention an interview and studio session with a local band during each show!"},
-  {"q":"You wanna be a DJ, too?","a":"University of Minnesota student taking 1 credit or more? If so then just email <a href=\"mailto:volunteer@radiok.org\">volunteer@radiok.org</a> and you&apos;ll be on your way to becoming a rich, fabulous, glamorous DJ. (OK, we know those adjectives are, like, kind of an exaggeration but whatever, right?)"},
-  {"q":"Your Mom listens to commercial radio.<br>What&apos;s the deal with that?","a":"You heard wrong&mdash;our moms totally listen to us. They appreciate the fact that we&apos;re trying to keep &apos;em \"hip and groovy\" (their words, not ours). Real College Radio is for the cutting edge, the risk takers, the people who know that music matters most. That&apos;s you. That&apos;s us. That&apos;s them&mdash;&apos;cause we&apos;ve taught our mothers well."}
-];
+var faqs=[];
 function parseFaqs(theScrape){
   var faqBlocks=theScrape.split('<div class="faq_item">');
   dbuga('parseFaqs faqBlocks.length=' +faqBlocks.length);
