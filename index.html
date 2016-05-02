@@ -210,7 +210,9 @@ function onDeviceReady(){
   }
 function appResumed(){
   state.appActive=true;
+  dbuga("App resumed");
   eventStack.push("App resumed");
+  if(currentPage=="faqs"){populateFaqs();}
   }
 function appPaused(){
   state.appActive=false;
@@ -1445,7 +1447,7 @@ function getLocalFaqs(){
     dataType: "text",        // < new bit
     
     success: function(data) {
-      console.log(data);
+      //console.log(data);
       parseFaqs(data);
       getWebFaqs();
       }
@@ -2018,7 +2020,7 @@ function populateFaqs(){
   htmlString+=  'padding-bottom:'+1*grid+'px; width:'+44*grid+'px; ';
   htmlString+=  'padding-left:'+grid*3+'px; padding-right:'+grid*2+'px; ';
   htmlString+=  'line-height:'+1.8*grid+'px; font-size:'+1.6*grid+'px;">';
-  htmlString+=  '&copy; Regents of the University of Minnesota 2013.<br>All rights reserved. Developed by <a href="http://jambots.com">Jambots.com</a>'; 
+  htmlString+=  '&copy; Regents of the University of Minnesota 2013.<br>All rights reserved. Developed by Jambots.com'; 
   htmlString+='</div>'
   document.getElementById('page_faqs_content_regentsDiv').innerHTML=htmlString;
   }
