@@ -210,11 +210,8 @@ function onDeviceReady(){
   }
 function appResumed(){
   state.appActive=true;
-  dbuga("App resumed");
+  //dbuga("App resumed");
   eventStack.push("App resumed");
-  if(currentPage=="faqs"){
-    window.setTimeout('populateFaqs()', 200);
-    }
   }
 function appPaused(){
   state.appActive=false;
@@ -690,7 +687,7 @@ function mediaSuccess(){
 
 function togglePlaying(){
   //dbuga('togglePlaying');
-  console.log('togglePlaying');
+  //console.log('togglePlaying');
 
   if(state.uiPlaying==true){
     state.uiPlaying=false;
@@ -948,7 +945,7 @@ function epochToTime(s){
   var d=new Date(s*1000);
   var t=d.toLocaleTimeString();
 
-  console.log(d+"|"+t);
+  //console.log(d+"|"+t);
   var parts=t.split(" ");
   var hhmmss=parts[0];
   var parts=hhmmss.split(":");
@@ -1443,7 +1440,7 @@ function getLocalFaqs(){
   faqs=[];
   //var feedUrl="http://www.radiok.org/app-faq/";
   var feedUrl="faq.txt";
-  dbuga('getLocalFaqs()');
+  //dbuga('getLocalFaqs()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
@@ -1454,28 +1451,28 @@ function getLocalFaqs(){
       getWebFaqs();
       }
     });
-  dbuga('getLocalFaqs() completed');
+  //dbuga('getLocalFaqs() completed');
   }
 function getWebFaqs(){
   faqs=[];
   var feedUrl="http://www.radiok.org/app-faq/";
   //var feedUrl="faq.txt";
-  dbuga('getWebFaqs()');
+  //dbuga('getWebFaqs()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
     
     success: function(data) {
-      console.log(data);
+      //console.log(data);
       parseFaqs(data);
       }
     });
-  dbuga('getWebFaqs() completed');
+  //dbuga('getWebFaqs() completed');
   }
 var faqs=[];
 function parseFaqs(theScrape){
   var faqBlocks=theScrape.split('<div class="faq_item">');
-  dbuga('parseFaqs faqBlocks.length=' +faqBlocks.length);
+  //dbuga('parseFaqs faqBlocks.length=' +faqBlocks.length);
   if(faqBlocks.length>1){
     faqs=[];
     for (var s=1; s<faqBlocks.length; s++){
@@ -1524,7 +1521,7 @@ title: "Caspian with O'Brother"
 venue: "Triple Rock Social Club"
 */
 function parseCalendarJson(theJson){
-  console.log('parseCalendarJson()');
+  //console.log('parseCalendarJson()');
   calendarEvents=theJson.events;
   calendarJson=[];
 
@@ -1581,7 +1578,7 @@ function getCalendar(){
  
 var calendar=[];
 function parseCalendarRss(theRss){
-  console.log('parseCalendarRss()');
+  //console.log('parseCalendarRss()');
   calendar=[];
     $(theRss).find('item').each(function() {
      var $this = $(this);
@@ -1827,7 +1824,7 @@ var containerHeight=1000;
 var originalHeight=1000;
 var contentPad=0;
 function populateContainer(){
-  dbuga('populateContainer()');
+  //dbuga('populateContainer()');
   hideByPage={};
   buttonMap=[];
   pageArray=[];
@@ -1837,7 +1834,7 @@ function populateContainer(){
   imagePath="images_large";//ipad retina 1536, viewport 768 down to iphone6+
   if(ww<414){imagePath="images_medium";}// 
   //imagePath="images_medium";// force test lo res iphone5
-  console.log(ww+" "+imagePath);
+  //console.log(ww+" "+imagePath);
   
   //dbuga(imagePath);
   var wAspect=ww/wh;
@@ -1985,9 +1982,10 @@ function populateContainer(){
     new ScrollFix(document.getElementById(scrollIdArray[s]));
     }
   //dbuga('populate ran ok');
+  populateFaqs();
   }
 function populateFaqs(){
-  dbuga('populateFaqs()');
+  //dbuga('populateFaqs()');
   var htmlString="";
   var answersString="";
   for (var f=0; f<faqs.length; f++){
