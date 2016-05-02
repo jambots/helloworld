@@ -212,7 +212,9 @@ function appResumed(){
   state.appActive=true;
   dbuga("App resumed");
   eventStack.push("App resumed");
-  if(currentPage=="faqs"){populateFaqs();}
+  if(currentPage=="faqs"){
+    window.setTimeout('populateFaqs()', 200);
+    }
   }
 function appPaused(){
   state.appActive=false;
@@ -1825,6 +1827,7 @@ var containerHeight=1000;
 var originalHeight=1000;
 var contentPad=0;
 function populateContainer(){
+  dbuga('populateContainer()');
   hideByPage={};
   buttonMap=[];
   pageArray=[];
@@ -1984,6 +1987,7 @@ function populateContainer(){
   //dbuga('populate ran ok');
   }
 function populateFaqs(){
+  dbuga('populateFaqs()');
   var htmlString="";
   var answersString="";
   for (var f=0; f<faqs.length; f++){
