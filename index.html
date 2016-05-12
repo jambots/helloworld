@@ -1972,7 +1972,7 @@ function populateContainer(){
     bCtx=bCanv.getContext('2d');
     bCanv.width=grid*6;
     bCanv.height=grid*6;
-    bCanv.style.backgroundColor="rgba(255,255,0,.3);
+    bCanv.style.backgroundColor="rgba(255,255,0,.3)";
     }
 
   clearInterval(secondInterval);
@@ -1996,6 +1996,9 @@ function populateContainer(){
   //dbuga('populate ran ok');
   populateFaqs();
   }
+var bCanv;
+var bCtx;
+
 function populateFaqs(){
   //dbuga('populateFaqs()');
   var htmlString="";
