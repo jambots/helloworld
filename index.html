@@ -233,7 +233,7 @@ function mediaEvent(evt){
         }  
       if(evt=="media starting"){
         if(state.loop==false){
-          nowPlaying="Connecting.";
+          nowPlaying="Connecting...";
           if(state.waitEvents>0){nowPlaying="Retrying.";}
           for(var w=0; w<state.waitEvents; w++){nowPlaying+=".";}
           window.clearTimeout(waitTimeout);
@@ -505,7 +505,7 @@ function pauseStream(){
     }
   }
 function playStream(){
-  dbuga('playStream()');
+  //dbuga('playStream()');
   if (typeof stream.play == 'function'){
     if(state.ios){stream.play();}
     if(state.android){stream.play();}
@@ -1999,6 +1999,7 @@ function populateContainer(){
   }
 var bufferTimeout;
 var bufferMs=0;
+var bufferSec=0;
 var bCanv;
 var bCtx;
 function bufferEnd(){
@@ -2010,6 +2011,7 @@ function bufferStart(){
   state.buffering=true;
   var d = new Date();
   bufferMs = d.getTime();
+  bufferSec= Math.floor(bufferMs/400);
   bufferTick(); 
   }
 function bufferTick(){
@@ -2018,7 +2020,8 @@ function bufferTick(){
   var d = new Date();
   var n = d.getTime();
   var deltaMs=n-bufferMs;
-  dbug(deltaMs);
+  var deltaSec=(Math.floor(deltaMs/400))%4;
+  dbug("deltaSec "+deltaSec);
   if(deltaMs<60000){
     var prog=deltaMs/60000;
     bCtx.lineWidth=grid*.6;
@@ -2027,6 +2030,10 @@ function bufferTick(){
     bCtx.arc(grid*6.1, grid*6.2, grid*4.1, pi*1.5, pi*1.5+pi*2*prog, true);
     bCtx.stroke();
     bufferTimeout=window.setTimeout("bufferTick()", 60);
+    var message="Connecting";
+    for(var e=0; e<deltaSec; e++){message+=".";}
+    nowPlaying=message;
+    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying;
     }
   }
 function populateFaqs(){
