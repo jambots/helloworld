@@ -2006,6 +2006,7 @@ function bufferEnd(){
   state.buffering=false;
   bufferMs=0;
   //bufferTick(); 
+  bCanv.width=Math.floor(grid*12);
   }
 function bufferStart(){
   state.buffering=true;
