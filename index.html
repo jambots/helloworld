@@ -2005,7 +2005,7 @@ var bCtx;
 function bufferEnd(){
   state.buffering=false;
   bufferMs=0;
-  bufferTick(); 
+  //bufferTick(); 
   }
 function bufferStart(){
   state.buffering=true;
@@ -2021,7 +2021,7 @@ function bufferTick(){
   var n = d.getTime();
   var deltaMs=n-bufferMs;
   var deltaSec=(Math.floor(deltaMs/400))%4;
-  dbug("deltaSec "+deltaSec);
+  //dbug("deltaSec "+deltaSec);
   if(deltaMs<60000){
     var prog=deltaMs/60000;
     bCtx.lineWidth=grid*.6;
@@ -2620,7 +2620,7 @@ function remoteControlPlay(){
 //// touch
 function handleTouchEvent(e){
   if(e.type=="touchstart"){
-    dbug('');
+    //dbug('');
     }
   //dbuga("handleTouchEvent "+e.type);
   if(e.type=="touchend"){
