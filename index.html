@@ -356,6 +356,7 @@ function processEvents(){
         playStream();
         }
       if(evt=="audio wait"){
+        bufferStart();
         window.clearTimeout(waitTimeout);
         waitTimeout=window.setTimeout("eventStack.push('wait timeout')", waitMs);
         }
@@ -370,7 +371,6 @@ function processEvents(){
           state.remotePaused=false;
           evt+=" - current";
           state.streamPlaying=true;
-          state.buffering=false;
           window.clearTimeout(waitTimeout);
           if(state.internet==false){
             checkInternet();
@@ -389,7 +389,6 @@ function processEvents(){
 
       if(evt=="ui play"){
         bufferStart();
-        state.buffering=true;
         state.retryAttempts=0;
         state.waitEvents=0;
         state.remotePaused=false;
@@ -612,12 +611,10 @@ function createStream(){
 
     stream.addEventListener("waiting", function() {
        state.streamPlaying=false;
-       state.buffering=true;
        eventStack.push('audio wait');
     }, false);
     stream.addEventListener("play", function() {
        state.streamPlaying=false;
-       state.buffering=true;
        eventStack.push('audio play');
     }, false);
 
@@ -2005,10 +2002,12 @@ var bufferMs=0;
 var bCanv;
 var bCtx;
 function bufferEnd(){
+  state.buffering=false;
   bufferMs=0;
   bufferTick(); 
   }
 function bufferStart(){
+  state.buffering=true;
   var d = new Date();
   bufferMs = d.getTime();
   bufferTick(); 
