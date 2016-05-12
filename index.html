@@ -241,6 +241,7 @@ function mediaEvent(evt){
           }
         }  
       if(evt=="media running"){
+        bufferEnd();
         state.streamPlaying=true;
         getRecentSongJson();
         window.clearTimeout(waitTimeout);
@@ -387,6 +388,8 @@ function processEvents(){
 
 
       if(evt=="ui play"){
+        bufferStart();
+        state.buffering=true;
         state.retryAttempts=0;
         state.waitEvents=0;
         state.remotePaused=false;
@@ -1973,7 +1976,7 @@ function populateContainer(){
     bCtx=bCanv.getContext('2d');
     bCanv.width=grid*12;
     bCanv.height=grid*12;
-    bCanv.style.backgroundColor="rgba(255,255,0,.3)";
+    //bCanv.style.backgroundColor="rgba(255,255,0,.3)";
     }
 
   clearInterval(secondInterval);
@@ -1998,9 +2001,13 @@ function populateContainer(){
   populateFaqs();
   }
 var bufferTimeout;
-var bufferMs;
+var bufferMs=0;
 var bCanv;
 var bCtx;
+function bufferEnd(){
+  bufferMs=0;
+  bufferTick(); 
+  }
 function bufferStart(){
   var d = new Date();
   bufferMs = d.getTime();
@@ -2016,7 +2023,7 @@ function bufferTick(){
   if(deltaMs<60000){
     var prog=deltaMs/60000;
     bCtx.lineWidth=grid*.6;
-    bCtx.strokeStyle="rgba(0,0,0,.5)";
+    bCtx.strokeStyle="rgba(0,0,0,1)";
     bCtx.beginPath();
     bCtx.arc(grid*6.1, grid*6.2, grid*4.1, pi*1.5, pi*1.5+pi*2*prog, true);
     bCtx.stroke();
