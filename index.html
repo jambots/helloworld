@@ -264,7 +264,7 @@ function processEvents(){
   state.errorPause=true;
 
   if(eventStack.length>0){
-    //dbuga('processEvents() '+eventStack.join('|'));
+    dbuga('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
@@ -503,6 +503,7 @@ function pauseStream(){
     }
   }
 function playStream(){
+  dbuga('playStream()');
   if (typeof stream.play == 'function'){
     if(state.ios){stream.play();}
     if(state.android){stream.play();}
@@ -1996,9 +1997,32 @@ function populateContainer(){
   //dbuga('populate ran ok');
   populateFaqs();
   }
+var bufferTimeout;
+var bufferMs;
 var bCanv;
 var bCtx;
-
+function bufferStart(){
+  var d = new Date();
+  bufferMs = d.getTime();
+  bufferTick(); 
+  }
+function bufferTick(){
+  bCanv.width=Math.floor(grid*12);
+  window.clearTimeout(bufferTimeout);
+  var d = new Date();
+  var n = d.getTime();
+  var deltaMs=n-bufferMs;
+  dbug(deltaMs);
+  if(deltaMs<60000){
+    var prog=deltaMs/60000;
+    bCtx.lineWidth=grid*.6;
+    bCtx.strokeStyle="rgba(0,0,0,.5)";
+    bCtx.beginPath();
+    bCtx.arc(grid*6.1, grid*6.2, grid*4.1, pi*1.5, pi*1.5+pi*2*prog, true);
+    bCtx.stroke();
+    bufferTimeout=window.setTimeout("bufferTick()", 60);
+    }
+  }
 function populateFaqs(){
   //dbuga('populateFaqs()');
   var htmlString="";
