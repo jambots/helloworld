@@ -403,6 +403,7 @@ function processEvents(){
         e=eventStash.length; //cease in case of twitchy user 
         }
       if(evt=="ui pause"){
+        bufferEnd();
         nowPlaying="";
         nowDj="";
         pauseStream();
