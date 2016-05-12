@@ -3,8 +3,8 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "com.radiok.kuom"
-        versionCode="37" 
-        version   = "3.0.37">
+        versionCode="38" 
+        version   = "3.0.38">
 
 <preference name="phonegap-version" value="cli-5.2.0" />
     <name>Radio K - KUOM</name>/Users/admin/android/radiok/helloworld/index.html
