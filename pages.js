@@ -19,6 +19,7 @@ var pages=[
   ],
   "contents":[
     {"name":"nowPlayingDiv", "top":29.5, "left":1, "width":46, "height":8, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":""},
+    {"name":"bufferDiv", "top":38, "left":18, "height":12, "width":12, "lineHeight":2.5, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":'<canvas id="bufferingCanvas"></canvas>'},
     {"name":"djDiv", "top":51, "left":1, "width":46, "height":8, "lineHeight":2.5, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":""}
   ]
 },

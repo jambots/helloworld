@@ -1963,6 +1963,18 @@ function populateContainer(){
     }
 
   document.getElementById('container').innerHTML=htmlString;
+
+  if(state.ios){
+    document.getElementById("page_listen_content_bufferingDiv").style.display="none";
+    }
+  else{
+    bCanv=document.getElementById("bufferingCanvas");
+    bCtx=bCanv.getContext('2d');
+    bCanv.width=grid*6;
+    bCanv.height=grid*6;
+    bCanv.style.backgroundColor="rgba(255,255,0,.3);
+    }
+
   clearInterval(secondInterval);
   clearInterval(dimensionInterval);
   dimensionInterval=setInterval('dimensionTick()', 1000);
