@@ -233,7 +233,7 @@ function mediaEvent(evt){
         }  
       if(evt=="media starting"){
         if(state.loop==false){
-          nowPlaying="Connecting...";
+          //nowPlaying="Connecting...";
           if(state.waitEvents>0){nowPlaying="Retrying.";}
           for(var w=0; w<state.waitEvents; w++){nowPlaying+=".";}
           window.clearTimeout(waitTimeout);
@@ -546,7 +546,7 @@ function createStream(){
       }
     }
   else{// try stream
-    nowPlaying="Connecting..."; 
+    //nowPlaying="Connecting..."; 
     nowDj="";
     }
   // url figured out now go
