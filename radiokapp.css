@@ -109,6 +109,7 @@ src: url('akzidenzgroteskbold.ttf');
 #alarmTimeAmPm{overflow:hidden;}
 #sleepTime{overflow:hidden;}
 
+.black{color:black;}
 .loading{color:black; font-family:akzibold;}
 .playlistItem{color:black; font-family:akzibold; position:static; text-align:center;}
 #debugDiv{position:absolute; width:100%; top:0px;

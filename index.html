@@ -2034,7 +2034,7 @@ function bufferTick(){
     bufferTimeout=window.setTimeout("bufferTick()", 60);
     var message="Connecting";
     for(var e=0; e<deltaSec; e++){
-      message="&nbsp;"+message+"."; 
+      message='<span class="black">.</span>'+message+"."; 
       }
     nowPlaying=message;
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying;
