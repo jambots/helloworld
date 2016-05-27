@@ -1015,7 +1015,7 @@ function parseRecentSongsJson(theData){
 
 
 function getDownloads(){
-  //dbuga("getDownloads()");
+  dbuga("getDownloads() 0");
   getCalendarJson();
 
   totdDownloads=[];
@@ -1034,25 +1034,29 @@ function getDownloads(){
     
 
 
+  dbuga("getDownloads() 1");
 
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F",
     dataType: "xml",        
     success: function(xml) {parseDownloads(xml, "Weekly Release Spotlight");}
     });
-
+   
+  dbuga("getDownloads() 2");
 
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Ftotd",
     dataType: "xml",        
     success: function(xml) {parseDownloads(xml, "Track of the Day");}
     });
+  dbuga("getDownloads() 3");
 
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
     dataType: "xml",        
     success: function(xml) {parseDownloads(xml, "Real College Podcast");}
     });
+  dbuga("getDownloads() 4");
 
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Fweekendhitlist",
@@ -1060,6 +1064,7 @@ function getDownloads(){
     success: function(xml) {parseDownloads(xml, "Weekend Hit List");}
     });
 
+  dbuga("getDownloads() 6");
 
 
 
@@ -1068,11 +1073,11 @@ function getDownloads(){
 // remove errors on publish
 var wrsObject={}
 function parseDownloads(theXml, source){
-  //dbuga("parseDownloads() "+source);
+  dbuga("parseDownloads() "+source);
   if(source=="Track of the Day"){
     var totdObj=xmlToJson(theXml);
     var itemsArray=totdObj.rss.channel.item;
-    //dbuga('itemsArray.length='+itemsArray.length);
+    dbuga('itemsArray.length='+itemsArray.length);
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
@@ -1137,9 +1142,10 @@ function parseDownloads(theXml, source){
   if(source=="Real College Podcast"){
     rcpObj=xmlToJson(theXml);
     var itemsArray=rcpObj.rss.channel.item;
-    //dbuga('itemsArray.length='+itemsArray.length);
+    dbuga(' RCP itemsArray.length='+itemsArray.length);
 
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
+      dbuga('i:'+i)
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
       var parts=dateStr.split(" ");
@@ -1154,6 +1160,7 @@ function parseDownloads(theXml, source){
       var title=thisObj.title["#text"];
       var description=thisObj.description["#text"];
       var link=thisObj.link["#text"];
+      dbuga(i+' okay');
       var item={
         "sort":sortNum, 
         "source":source, 
@@ -1315,7 +1322,7 @@ function updateTotdDownloads(){
   }
 
 function updateRcpDownloads(){
-  //dbuga('updateRcpDownloads()');
+  dbuga('updateRcpDownloads()');
   var sortedDownloads=rcpDownloads.sort(function(a, b){
       // furthest to nearest
       return b.sort-a.sort
@@ -1334,7 +1341,7 @@ function updateRcpDownloads(){
       document.getElementById("page_extras_button_rcp_on").style.backgroundSize=squareShrink+'%';
 
       }
-    //dbuga(downloadItem.link);
+    dbuga(downloadItem.link);
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
