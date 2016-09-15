@@ -598,12 +598,41 @@ function createStream(){
        state.streamPlaying=false;
        eventStack.push('audio emptied');
     }, false);
+/*
     stream.addEventListener("error", function() {
        if(state.streamPlaying==false){// may be called by ghosts
          //eventStack.push('audio error '+event.target.audioNum);
-         eventStack.push('audio error '+event.target.audioNum);
+         dbuga('audio error '+event.target.audioNum);
          }
     }, false);
+*/
+
+
+
+    stream.addEventListener('error', function failed(e) {
+   // audio playback failed - show a message saying why
+   // to get the source of the audio element use $(this).src
+   switch (e.target.error.code) {
+     case e.target.error.MEDIA_ERR_ABORTED:
+       dbuga('You aborted the video playback.');
+       break;
+     case e.target.error.MEDIA_ERR_NETWORK:
+       dbuga('A network error caused the audio download to fail.');
+       break;
+     case e.target.error.MEDIA_ERR_DECODE:
+       dbuga('The audio playback was aborted due to a corruption problem or because the video used features your browser did not support.');
+       break;
+     case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
+       dbuga('The video audio not be loaded, either because the server or network failed or because the format is not supported.');
+       break;
+     default:
+       dbuga('An unknown error occurred.');
+       break;
+   }
+ }, true);
+
+
+
 
     stream.addEventListener("pause", function(theVar) {
       return function(){pausedFunction(theVar)};
