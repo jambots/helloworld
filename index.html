@@ -740,18 +740,19 @@ function resumeInit(){
   currentPage="listen";
 
   populateContainer();
+  dbuga('resumeInit 1');
   genericDefault("alarmMinuteOfDay", 11*60+30);
   genericDefault("sleepMinutesDefault", 10);
   genericDefault("quality", "higher");
-
+  dbuga('resumeInit 2');
   buttonOn("settings", genericGet("quality"));
   buttonOn("footnav", "listen");
-  //dbuga(' init 3');
+  dbuga(' resumeInit 3');
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', minuteMs);
   dialInterval=setInterval('dialTick()', 25);
   stateInterval=setInterval('stateTick()', 1000);
-    dbuga(' init 4');
+    dbuga(' resumeInit 4');
   //minuteTick();
   getLocalFaqs();
   getInst();
