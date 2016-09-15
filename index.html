@@ -598,14 +598,14 @@ function createStream(){
        state.streamPlaying=false;
        eventStack.push('audio emptied');
     }, false);
-/*
+
     stream.addEventListener("error", function() {
        if(state.streamPlaying==false){// may be called by ghosts
          //eventStack.push('audio error '+event.target.audioNum);
          dbuga('audio error '+event.target.audioNum);
          }
     }, false);
-*/
+
 
 
 
@@ -779,23 +779,23 @@ function genericGet(itemName){
   }
 
 function resumeInit(){
-  dbuga('resumeInit 0.0');
+  //dbuga('resumeInit 0.0');
   currentPage="listen";
   
   populateContainer();
-  dbuga('resumeInit 1');
+  //dbuga('resumeInit 1');
   genericDefault("alarmMinuteOfDay", 11*60+30);
   genericDefault("sleepMinutesDefault", 10);
   genericDefault("quality", "higher");
-  dbuga('resumeInit 2');
+  //dbuga('resumeInit 2');
   buttonOn("settings", genericGet("quality"));
   buttonOn("footnav", "listen");
-  dbuga(' resumeInit 3');
+  //dbuga(' resumeInit 3');
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', minuteMs);
   dialInterval=setInterval('dialTick()', 25);
   stateInterval=setInterval('stateTick()', 1000);
-    dbuga(' resumeInit 4');
+    //dbuga(' resumeInit 4');
   //minuteTick();
   getLocalFaqs();
   getInst();
@@ -811,9 +811,9 @@ function resumeInit(){
   //dbuga(' init 7');
   myStreamUrl = urlByQuality[genericGet("quality")]+"";
   
-  dbuga(' init 7');
+  //dbuga(' init 7');
   //////if(ios){createStream();}
-  dbuga('resume init okay');
+  //dbuga('resume init okay');
   //window.setInterval("hostReachable('')", 10000);
   }
 
