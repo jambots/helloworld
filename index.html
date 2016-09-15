@@ -401,18 +401,28 @@ function processEvents(){
 
 
       if(evt=="ui play"){
+        dbuga(' - in ui play 1');
         bufferStart();
         state.retryAttempts=0;
         state.waitEvents=0;
         state.remotePaused=false;
+        dbuga(' - in ui play 2 ' + state.streamCreated);
+
         if(state.streamCreated){
+          dbuga(' - in ui play 3 ' + state.streamCreated);
           playStream();
           evt+=" - playStream()"; 
+          dbuga(' - in ui play 4 ' + state.streamCreated);
           }
         else{
+          dbuga(' - in ui play 5 ' + state.streamCreated);
           var url=createStream();
           evt+=" - createStream() "+url; 
+          dbuga(' - in ui play 6 ' + state.streamCreated);
+
           }
+        dbuga(' - in ui play 8');
+
         e=eventStash.length; //cease in case of twitchy user 
         }
       if(evt=="ui pause"){
