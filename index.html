@@ -272,7 +272,7 @@ function mediaEvent(evt){
 
 function processEvents(){
   if(state.errorPause){
-      dbuga('errorPause');
+      //dbuga('errorPause');
     return false;
     }
   state.errorPause=true;
@@ -532,6 +532,7 @@ function createStream(){
   state.loop=false;
  
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
+  dbuga('createStream() '+myStreamUrl);
   if((state.waitEvents>2)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
     if(state.waitEvents>2){
       nowPlaying="Timed out, no stream";
