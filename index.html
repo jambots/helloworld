@@ -2081,6 +2081,7 @@ var bufferSec=0;
 var bCanv;
 var bCtx;
 function bufferEnd(){
+  dbuga('bufferEnd');
   state.buffering=false;
   bufferMs=0;
   //bufferTick(); 
@@ -2089,52 +2090,41 @@ function bufferEnd(){
 function bufferStart(){
   dbuga('bufferStart 1');
   state.buffering=true;
-  dbuga('bufferStart 2');
   var d = new Date();
   bufferMs = d.getTime();
-  dbuga('bufferStart 3');
   bufferSec= Math.floor(bufferMs/400);
-  dbuga('bufferStart 4');
   bufferTick(); 
-  dbuga('bufferStart 5');
   }
 function bufferTick(){
   dbuga('bufferTick 1');
   bCanv.width=Math.floor(grid*12);
-  dbuga('bufferTick 1.1');
   window.clearTimeout(bufferTimeout);
-  dbuga('bufferTick 1.2');
   var d = new Date();
-  dbuga('bufferTick 1.3');
   var n = d.getTime();
-  dbuga('bufferTick 1.4');
   var deltaMs=n-bufferMs;
-  dbuga('bufferTick 1.5');
   var deltaSec=(Math.floor(deltaMs/400))%4;
   //dbug("deltaSec "+deltaSec);
   dbuga('bufferTick 2');
   if(deltaMs<60000){
-  dbuga('bufferTick 3');
+    dbuga('bufferTick 3');
     var prog=deltaMs/60000;
     bCtx.lineWidth=grid*.6;
     bCtx.strokeStyle="rgba(0,0,0,1)";
     bCtx.beginPath();
     bCtx.arc(grid*6.1, grid*6.2, grid*4.1, pi*1.5, pi*1.5+pi*2*prog, true);
     bCtx.stroke();
-  dbuga('bufferTick 4');
     bufferTimeout=window.setTimeout("bufferTick()", 60);
     var message="Connecting";
     for(var e=0; e<deltaSec; e++){
       message='<span class="black">.</span>'+message+"."; 
       }
-  dbuga('bufferTick 7');
     nowPlaying=message;
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying;
     if(deltaMs>30000){bufferMs+=15;}
     if(deltaMs>45000){bufferMs+=30;}
     if(deltaMs>55000){bufferMs+=55;}
     }
-  dbuga('bufferTick 8');
+  dbuga('bufferTick  completed');
   }
 function populateFaqs(){
   //dbuga('populateFaqs()');
