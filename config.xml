@@ -49,9 +49,10 @@
     <false/>
 </gap:config-file>
 
-<preference name="permissions" value="none"/>
 
 <!--
+<preference name="permissions" value="none"/>
+
 <allow-navigation href="radiok.org/*" />
 <allow-navigation href="http://*/*" />
 <access origin="*" />
