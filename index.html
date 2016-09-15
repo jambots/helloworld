@@ -138,6 +138,7 @@ var nowPlaying="";
 
 //// state changing functions
 function checkInternet(){
+  dbuga('checkInternet() '+state.online);
   if(state.online==false){
     state.internet=false;
     return false;
@@ -148,7 +149,9 @@ function checkInternet(){
   try {
     xhr.send();
     state.internet=true;
+    dbuga('xhr returned');
   } catch (error) {
+    dbuga('xhr fail');
     state.internet=false;
   }
 }
@@ -1872,7 +1875,7 @@ function populateContainer(){
 
 
   var htmlString="";
-  dbug('populateContainer() 5 ');
+  //dbuga('populateContainer() 5 ');
 
   for(var p=0; p<pages.length; p++){
 
@@ -1917,11 +1920,11 @@ function populateContainer(){
       htmlString+=content.defaultText;
       htmlString+='</div>'
       }
-    dbuga(' - boxes finished');
+    //dbuga(' - boxes finished');
     var buttons=page.buttons;
     for(var b=0; b<buttons.length; b++){
       var button=buttons[b];
-      dbuga(' - '+b+' - '+button.name);
+      //dbuga(' - '+b+' - '+button.name);
 
       var top=grid*button.top;
       if((top>0)&&(page.vAlign=="middle")){top+=contentPad};
@@ -1941,7 +1944,7 @@ function populateContainer(){
         htmlString+='</div>'
         }
       }
-    dbuga(' -- buttons finished ');
+    //dbuga(' -- buttons finished ');
 
     var contents=page.contents;
     for(var c=0; c<contents.length; c++){
@@ -1973,17 +1976,17 @@ function populateContainer(){
       htmlString+=content.defaultText;
       htmlString+='</div>'
       }
-    dbuga(' -- contents finished ');
+    //dbuga(' -- contents finished ');
 
     htmlString+='</div>'
     }
-  dbuga('populateContainer() 6 ');
+  //dbuga('populateContainer() 6 ');
 
   document.getElementById('container').innerHTML=htmlString;
 
   if(state.ios){
     // sept 15 2016//document.getElementById("page_listen_content_bufferingDiv").style.display="none";
-    dbuga('populateContainer() 7 ios ');
+    //dbuga('populateContainer() 7 ios ');
     }
   else{
     bCanv=document.getElementById("bufferingCanvas");
@@ -1992,7 +1995,7 @@ function populateContainer(){
     bCanv.height=grid*12;
     //bCanv.style.backgroundColor="rgba(255,255,0,.3)";
     }
-  dbuga('populateContainer 7');
+  //dbuga('populateContainer 7');
 
   clearInterval(secondInterval);
   clearInterval(dimensionInterval);
@@ -2000,7 +2003,7 @@ function populateContainer(){
   secondInterval=setInterval('secondTick()', 1000);
   populateDials();
   selectCurrentPage();
-  dbuga('add iScrolls');
+  //dbuga('add iScrolls');
   /*
   resultsHolderScroll=new iScroll('resultsHolder');
   playlistHolderScroll=new iScroll('playlistHolder');
@@ -2008,13 +2011,13 @@ function populateContainer(){
   totdHolderScroll=new iScroll('totdHolder');
   wrsHolderScroll=new iScroll('wrsHolder');
   */
-  dbuga('populateContainer 8');
+  //dbuga('populateContainer 8');
 
   var scrollIdArray=["resultsHolder", "playlistHolder", "calendarHolder", "totdHolder", "wrsHolder", "rcpHolder", "whlHolder", "instHolder"];
   for (var s=0; s<scrollIdArray.length; s++){
     new ScrollFix(document.getElementById(scrollIdArray[s]));
     }
-  dbuga('populate ran ok so populateFaqs()');
+  dbuga('populateContainer ran ok so populateFaqs()');
   populateFaqs();
   }
 var bufferTimeout;
