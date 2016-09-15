@@ -181,8 +181,8 @@ var waitMs=iosWaitMs;
 function onDeviceReady(){
   dbuga("onDeviceReady()");
   eventStack.push('device ready');
-  document.addEventListener("offline", onOffline, false);
-  document.addEventListener("online", onOnline, false);
+  //document.addEventListener("offline", onOffline, false);
+  //document.addEventListener("online", onOnline, false);
   document.addEventListener("resume", appResumed, false);
   document.addEventListener("pause", appPaused, false);
   //dbuga("onDeviceReady() 2");
@@ -879,13 +879,13 @@ function populateInst(){
 
 
 function onOffline() {
-  //dbuga('onOffline()');
+  dbuga('onOffline()');
   state.online=false;
   state.internet=false;
   eventStack.push("online false");
   }
 function onOnline() {
-  //dbuga('onOnline()');
+  dbuga('onOnline()');
   state.online=true;
   checkInternet();
   eventStack.push("online true");
