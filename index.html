@@ -1872,12 +1872,12 @@ function populateContainer(){
 
 
   var htmlString="";
-  dbuga('populateContainer() 5 ');
+  dbug('populateContainer() 5 ');
 
   for(var p=0; p<pages.length; p++){
 
     page=pages[p];
-    //dbuga("populateContainer() "+page.name);
+    dbuga(" - "+p +" "+page.name);
     var pageHeight=grid*page.height;
     if(p==0){pageHeight+=grid*6;}
     if(page.vAlign != "middle"){pageHeight+=contentPad*2;}
@@ -1917,10 +1917,12 @@ function populateContainer(){
       htmlString+=content.defaultText;
       htmlString+='</div>'
       }
-
+    dbuga(' - boxes finished');
     var buttons=page.buttons;
     for(var b=0; b<buttons.length; b++){
       var button=buttons[b];
+      dbuga(' - '+b+' - '+button.name);
+
       var top=grid*button.top;
       if((top>0)&&(page.vAlign=="middle")){top+=contentPad};
       if(page.vAlign=="bottom"){
@@ -1939,6 +1941,7 @@ function populateContainer(){
         htmlString+='</div>'
         }
       }
+    dbuga(' -- buttons finished ');
 
     var contents=page.contents;
     for(var c=0; c<contents.length; c++){
@@ -1970,6 +1973,7 @@ function populateContainer(){
       htmlString+=content.defaultText;
       htmlString+='</div>'
       }
+    dbuga(' -- contents finished ');
 
     htmlString+='</div>'
     }
@@ -1988,6 +1992,7 @@ function populateContainer(){
     bCanv.height=grid*12;
     //bCanv.style.backgroundColor="rgba(255,255,0,.3)";
     }
+  dbuga('populateContainer 7');
 
   clearInterval(secondInterval);
   clearInterval(dimensionInterval);
@@ -2003,6 +2008,8 @@ function populateContainer(){
   totdHolderScroll=new iScroll('totdHolder');
   wrsHolderScroll=new iScroll('wrsHolder');
   */
+  dbuga('populateContainer 8');
+
   var scrollIdArray=["resultsHolder", "playlistHolder", "calendarHolder", "totdHolder", "wrsHolder", "rcpHolder", "whlHolder", "instHolder"];
   for (var s=0; s<scrollIdArray.length; s++){
     new ScrollFix(document.getElementById(scrollIdArray[s]));
