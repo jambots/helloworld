@@ -1898,7 +1898,7 @@ function populateContainer(){
   //imagePath="images_medium";// force test lo res iphone5
   //console.log(ww+" "+imagePath);
   
-  dbuga('populateContainer() 2 ' +imagePath);
+  //dbuga('populateContainer() 2 ' +imagePath);
   var wAspect=ww/wh;
   leftOffset=0;
   topOffset=0;
@@ -1906,14 +1906,14 @@ function populateContainer(){
   containerHeight=wh;
   originalHeight=grid*58;
   contentPad=(containerHeight-originalHeight-grid*6)/2;
-  dbuga('populateContainer() 3 ');
+  //dbuga('populateContainer() 3 ');
   document.getElementById('debugDiv').style.top=grid*0+"px";
   document.getElementById('wrapper').style.backgroundSize=grid*4+"px";
   document.getElementById('container').style.width=ww+"px";
   document.getElementById('container').style.height=containerHeight+"px";
   document.getElementById('container').style.left=leftOffset+"px"; // 0
   document.getElementById('container').style.top=topOffset+"px"; // 0
-  dbuga('populateContainer() 4 ');
+  //dbuga('populateContainer() 4 ');
 
   document.getElementById('stateCanvas').width=ww/3;
   document.getElementById('stateCanvas').height=wh/2;
@@ -2082,11 +2082,16 @@ function bufferEnd(){
   bCanv.width=Math.floor(grid*12);
   }
 function bufferStart(){
+  dbuga('bufferStart 1');
   state.buffering=true;
+  dbuga('bufferStart 2');
   var d = new Date();
   bufferMs = d.getTime();
+  dbuga('bufferStart 3');
   bufferSec= Math.floor(bufferMs/400);
+  dbuga('bufferStart 4');
   bufferTick(); 
+  dbuga('bufferStart 5');
   }
 function bufferTick(){
   bCanv.width=Math.floor(grid*12);
