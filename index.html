@@ -144,6 +144,12 @@ function checkInternet(){
     state.internet=false;
     return false;
     }
+  $.ajax({
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
+    dataType: "xml",        
+    success: function(xml) {state.internet=true; dbuga('ajax worked');}
+    });
+/*
   var xhr = new  XMLHttpRequest;
   var status;
   xhr.open( "GET", 'http://www.google-analytics.com/__utm.gif', false );
@@ -157,6 +163,7 @@ function checkInternet(){
     dbuga(JSON.stringify(error));
     state.internet=false;
   }
+*/
 }
 function checkConnection() {
   var con=navigator.connection.type;
