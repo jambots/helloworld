@@ -738,7 +738,7 @@ function genericGet(itemName){
 function resumeInit(){
   dbuga('resumeInit 0.0');
   currentPage="listen";
-
+  
   populateContainer();
   dbuga('resumeInit 1');
   genericDefault("alarmMinuteOfDay", 11*60+30);
@@ -1833,7 +1833,7 @@ var containerHeight=1000;
 var originalHeight=1000;
 var contentPad=0;
 function populateContainer(){
-  //dbuga('populateContainer()');
+  dbuga('populateContainer()');
   hideByPage={};
   buttonMap=[];
   pageArray=[];
@@ -1845,7 +1845,7 @@ function populateContainer(){
   //imagePath="images_medium";// force test lo res iphone5
   //console.log(ww+" "+imagePath);
   
-  //dbuga(imagePath);
+  dbuga('populateContainer() 2 ' +imagePath);
   var wAspect=ww/wh;
   leftOffset=0;
   topOffset=0;
@@ -1853,12 +1853,14 @@ function populateContainer(){
   containerHeight=wh;
   originalHeight=grid*58;
   contentPad=(containerHeight-originalHeight-grid*6)/2;
+  dbuga('populateContainer() 3 ');
   document.getElementById('debugDiv').style.top=grid*0+"px";
   document.getElementById('wrapper').style.backgroundSize=grid*4+"px";
   document.getElementById('container').style.width=ww+"px";
   document.getElementById('container').style.height=containerHeight+"px";
   document.getElementById('container').style.left=leftOffset+"px"; // 0
   document.getElementById('container').style.top=topOffset+"px"; // 0
+  dbuga('populateContainer() 4 ');
 
   document.getElementById('stateCanvas').width=ww/3;
   document.getElementById('stateCanvas').height=wh/2;
@@ -1870,6 +1872,7 @@ function populateContainer(){
 
 
   var htmlString="";
+  dbuga('populateContainer() 5 ');
 
   for(var p=0; p<pages.length; p++){
 
@@ -1970,11 +1973,13 @@ function populateContainer(){
 
     htmlString+='</div>'
     }
+  dbuga('populateContainer() 6 ');
 
   document.getElementById('container').innerHTML=htmlString;
 
   if(state.ios){
     document.getElementById("page_listen_content_bufferingDiv").style.display="none";
+    dbuga('populateContainer() 7 ios ');
     }
   else{
     bCanv=document.getElementById("bufferingCanvas");
@@ -1990,7 +1995,7 @@ function populateContainer(){
   secondInterval=setInterval('secondTick()', 1000);
   populateDials();
   selectCurrentPage();
-  //dbuga('add iScrolls');
+  dbuga('add iScrolls');
   /*
   resultsHolderScroll=new iScroll('resultsHolder');
   playlistHolderScroll=new iScroll('playlistHolder');
@@ -2002,7 +2007,7 @@ function populateContainer(){
   for (var s=0; s<scrollIdArray.length; s++){
     new ScrollFix(document.getElementById(scrollIdArray[s]));
     }
-  //dbuga('populate ran ok');
+  dbuga('populate ran ok so populateFaqs()');
   populateFaqs();
   }
 var bufferTimeout;
