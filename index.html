@@ -2037,13 +2037,18 @@ function populateContainer(){
   if(state.ios){
     // sept 15 2016//document.getElementById("page_listen_content_bufferingDiv").style.display="none";
     //dbuga('populateContainer() 7 ios ');
+    bCanv=document.getElementById("bufferingCanvas");
+    bCtx=bCanv.getContext('2d');
+    bCanv.width=grid*12;
+    bCanv.height=grid*12;
+    bCanv.style.backgroundColor="rgba(255,255,0,.3)";
     }
   else{
     bCanv=document.getElementById("bufferingCanvas");
     bCtx=bCanv.getContext('2d');
     bCanv.width=grid*12;
     bCanv.height=grid*12;
-    //bCanv.style.backgroundColor="rgba(255,255,0,.3)";
+    bCanv.style.backgroundColor="rgba(255,255,0,.3)";
     }
   //dbuga('populateContainer 7');
 
