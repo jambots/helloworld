@@ -35,7 +35,7 @@
 <plugin name="cordova-plugin-device"         source="npm" spec="1.0.1" />
 <plugin name="cordova-plugin-network-information" source="npm" spec="1.0.1" />
 <plugin name="cordova-plugin-inappbrowser"   source="npm" spec="1.0.1" />
-<plugin name="cordova-plugin-whitelist"      source="npm" spec="1.1.0" />
+<plugin name="cordova-plugin-whitelist"      source="npm" spec="1.2.2" />
 
 <preference name="fullscreen" value="true" />
 <preference name="orientation" value="portrait" />
