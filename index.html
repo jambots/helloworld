@@ -2096,10 +2096,15 @@ function bufferStart(){
 function bufferTick(){
   dbuga('bufferTick 1');
   bCanv.width=Math.floor(grid*12);
+  dbuga('bufferTick 1.1');
   window.clearTimeout(bufferTimeout);
+  dbuga('bufferTick 1.2');
   var d = new Date();
+  dbuga('bufferTick 1.3');
   var n = d.getTime();
+  dbuga('bufferTick 1.4');
   var deltaMs=n-bufferMs;
+  dbuga('bufferTick 1.5');
   var deltaSec=(Math.floor(deltaMs/400))%4;
   //dbug("deltaSec "+deltaSec);
   dbuga('bufferTick 2');
