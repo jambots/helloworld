@@ -155,8 +155,8 @@ function checkInternet(){
 function checkConnection() {
   var con=navigator.connection.type;
   //var con="wifi";// web testing only!
-  //dbuga("checkConnection() ...");
-  //dbuga("navigator.connection.type="+con);
+  dbuga("checkConnection() ...");
+  dbuga("navigator.connection.type="+con);
   if((con=="connection.NONE")||(con=="connection.UNKNOWN")){
     state.online=false;
     }
@@ -167,7 +167,7 @@ function checkConnection() {
   
 
 function init(){
-  //dbuga('init()');
+  dbuga('init()');
   // onDeviceReady(); // web testing only!!
   }
 
@@ -176,7 +176,7 @@ var androidWaitMs=120000;
 var iosWaitMs=20000;
 var waitMs=iosWaitMs;
 function onDeviceReady(){
-  //dbuga("onDeviceReady()");
+  dbuga("onDeviceReady()");
   eventStack.push('device ready');
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
@@ -205,12 +205,12 @@ function onDeviceReady(){
   checkInternet();
   //dbuga("onDeviceReady() 7");
   resumeInit();
-  //dbuga("onDeviceReady()8");
+  dbuga("onDeviceReady()8");
 
   }
 function appResumed(){
   state.appActive=true;
-  //dbuga("App resumed");
+  dbuga("App resumed");
   eventStack.push("App resumed");
   }
 function appPaused(){
@@ -259,13 +259,13 @@ function mediaEvent(evt){
 
 function processEvents(){
   if(state.errorPause){
-    //dbuga('errorPause');
+      dbuga('errorPause');
     return false;
     }
   state.errorPause=true;
 
   if(eventStack.length>0){
-    //dbuga('processEvents() '+eventStack.join('|'));
+      dbuga('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
@@ -485,7 +485,7 @@ function processEvents(){
         }
         
       staleStack.unshift(evt);
-      //dbuga(evt);
+        dbuga(evt);
 
       }
     staleStack.unshift(" ");
@@ -506,7 +506,7 @@ function pauseStream(){
     }
   }
 function playStream(){
-  //dbuga('playStream()');
+    dbuga('playStream()');
   if (typeof stream.play == 'function'){
     if(state.ios){stream.play();}
     if(state.android){stream.play();}
@@ -638,7 +638,7 @@ function createStream(){
     state.audioCount++;
 
     //stream.audioNum=state.audioCount;
-    //dbuga('createStream() 4b'); 
+      dbuga('createStream() 4b'); 
 
     if(state.streamCreated){
       //dbuga('createStream() 4c'); 
@@ -650,7 +650,7 @@ function createStream(){
 
     //dbuga("createStream() android "+myStreamUrl);
     stream = new Media(myStreamUrl, mediaSuccess, mediaError, mediaStatus);  
-    //dbuga('createStream() 4e'); 
+      dbuga('createStream() 4e'); 
 
     }
   //dbuga('createStream() 5'); 
@@ -736,7 +736,7 @@ function genericGet(itemName){
   }
 
 function resumeInit(){
-  //dbuga('resumeInit 0.0');
+  dbuga('resumeInit 0.0');
   currentPage="listen";
 
   populateContainer();
@@ -751,7 +751,7 @@ function resumeInit(){
   minuteInterval=setInterval('minuteTick()', minuteMs);
   dialInterval=setInterval('dialTick()', 25);
   stateInterval=setInterval('stateTick()', 1000);
-  //dbuga(' init 4');
+    dbuga(' init 4');
   //minuteTick();
   getLocalFaqs();
   getInst();
@@ -767,9 +767,9 @@ function resumeInit(){
   //dbuga(' init 7');
   myStreamUrl = urlByQuality[genericGet("quality")]+"";
   
-  //dbuga(' init 7');
+  dbuga(' init 7');
   //////if(ios){createStream();}
-  //dbug('init okay');
+  dbug('init okay');
   //window.setInterval("hostReachable('')", 10000);
   }
 
