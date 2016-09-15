@@ -265,7 +265,7 @@ function processEvents(){
   state.errorPause=true;
 
   if(eventStack.length>0){
-    dbuga('processEvents() '+eventStack.join('|'));
+    //dbuga('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
@@ -1064,11 +1064,7 @@ function getDownloads(){
     success: function(xml) {parseDownloads(xml, "Weekend Hit List");}
     });
 
-  dbuga("getDownloads() 6");
-
-
-
-  //dbuga('getDownloads completed');
+  dbuga('getDownloads completed');
   }
 // remove errors on publish
 var wrsObject={}
@@ -1160,7 +1156,7 @@ function parseDownloads(theXml, source){
       var title=thisObj.title["#text"];
       var description=thisObj.description["#text"];
       var link=thisObj.link["#text"];
-      dbuga(i+' okay');
+      dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
       var item={
         "sort":sortNum, 
         "source":source, 
@@ -1171,6 +1167,8 @@ function parseDownloads(theXml, source){
         "link":link
         };
       rcpDownloads.push(item);
+      dbuga('rcpDownloads.length='+rcpDownloads.length);
+
       }
 
     updateRcpDownloads();
@@ -1208,6 +1206,7 @@ function parseDownloads(theXml, source){
 
     updateWhlDownloads();
     }
+  dbuga('parse completed');
   }
 
 
