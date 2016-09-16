@@ -387,11 +387,14 @@ function processEvents(){
           state.remotePaused=false;
           evt+=" - current";
           dbuga('  processEvents so streamPlaying=true '+evt)
+          bufferEnd();
           state.streamPlaying=true;
+          getRecentSongJson();
           window.clearTimeout(waitTimeout);
           if(state.internet==false){
             checkInternet();
             }
+
           updateNowPlaying();
           e=eventStash.length; //cease in case immediate play 
           }
@@ -405,22 +408,22 @@ function processEvents(){
 
 
       if(evt=="ui play"){
-        dbuga(' - in ui play 1');
+        //dbuga(' - in ui play 1');
         bufferStart();
         state.retryAttempts=0;
         state.waitEvents=0;
         state.remotePaused=false;
-        dbuga(' - in ui play 2 ' + state.streamCreated);
+        //dbuga(' - in ui play 2 ' + state.streamCreated);
 
         if(state.streamCreated){
           playStream();
           evt+=" - playStream()"; 
-          dbuga(' - in ui play 4 ' + state.streamCreated);
+          //dbuga(' - in ui play 4 ' + state.streamCreated);
           }
         else{
           var url=createStream();
           evt+=" - createStream() "+url; 
-          dbuga(' - in ui play 6 ' + state.streamCreated);
+          //dbuga(' - in ui play 6 ' + state.streamCreated);
 
           }
 
@@ -1447,7 +1450,7 @@ function returnGradStyle(){
   }
 
 function updateNowPlaying(){
-  dbuga('updateNowPlaying()');
+  //dbuga('updateNowPlaying() '+nowPlaying);
   if((state.online)&&(state.internet)&&(state.uiPlaying)&&(state.loop==false)){
     //eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
     
@@ -1458,10 +1461,10 @@ function updateNowPlaying(){
 
     if(state.ios){
       //nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);
-      dbuga('updateNowPlaying() is ios');
+      //dbuga('updateNowPlaying() is ios');
       }
     }
-  dbuga('updateNowPlaying() completed ok');
+  dbuga('updateNowPlaying() completed ok '+nowPlaying);
   }
 var nowDj="";
 function dateTimeToTime(theDateTime){
