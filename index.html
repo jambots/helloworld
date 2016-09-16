@@ -237,6 +237,7 @@ function stateTick(){
   }
 
 function mediaEvent(evt){
+  dbuga('mediaEvent('+evt+')');
       //'media none', 'media starting', 'media running', 'media paused', 'media stopped';
       if(evt=="media none"){
         nowPlaying="no media?";
@@ -383,6 +384,7 @@ function processEvents(){
         if(audioNum==state.audioCount){
           state.remotePaused=false;
           evt+=" - current";
+          dbuga('processEvents so streamPlaying=true '+evt)
           state.streamPlaying=true;
           window.clearTimeout(waitTimeout);
           if(state.internet==false){
@@ -2096,7 +2098,7 @@ function bufferStart(){
   bufferTick(); 
   }
 function bufferTick(){
-  dbuga('bufferTick 1');
+  //dbuga('bufferTick 1');
   bCanv.width=Math.floor(grid*12);
   window.clearTimeout(bufferTimeout);
   var d = new Date();
@@ -2106,7 +2108,7 @@ function bufferTick(){
   //dbug("deltaSec "+deltaSec);
   dbuga('bufferTick 2');
   if(deltaMs<60000){
-    dbuga('bufferTick 3');
+    //dbuga('bufferTick 3');
     var prog=deltaMs/60000;
     bCtx.lineWidth=grid*.6;
     bCtx.strokeStyle="rgba(0,0,0,1)";
@@ -2124,7 +2126,7 @@ function bufferTick(){
     if(deltaMs>45000){bufferMs+=30;}
     if(deltaMs>55000){bufferMs+=55;}
     }
-  dbuga('bufferTick  completed');
+  //dbuga('bufferTick  completed');
   }
 function populateFaqs(){
   //dbuga('populateFaqs()');
