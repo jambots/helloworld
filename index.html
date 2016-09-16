@@ -2125,6 +2125,7 @@ function bufferTick(){
       }
     nowPlaying=message;
     document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying;
+    dbuga('bufffffff');
     if(deltaMs>30000){bufferMs+=15;}
     if(deltaMs>45000){bufferMs+=30;}
     if(deltaMs>55000){bufferMs+=55;}
