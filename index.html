@@ -1451,6 +1451,7 @@ function returnGradStyle(){
   }
 
 function updateNowPlaying(){
+  dbuga('updateNowPlaying()');
   if((state.online)&&(state.internet)&&(state.uiPlaying)&&(state.loop==false)){
     //eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
     
@@ -1459,7 +1460,7 @@ function updateNowPlaying(){
     if(nowShow !=""){nowShow+=" &nbsp; ";}
     nowDj=nowShow+"DJ: "+nowData.dj;  
 
-    //if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
+    if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
     }
   }
 var nowDj="";
