@@ -273,7 +273,7 @@ function mediaEvent(evt){
 
 function processEvents(){
   if(state.errorPause){
-      //dbuga('errorPause');
+    dbuga('errorPause');
     return false;
     }
   state.errorPause=true;
@@ -517,6 +517,7 @@ function processEvents(){
 
     //dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
     }//end if event stack
+  dbuga('end of processEvents() '+nowPlaying)
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying;
   document.getElementById('page_listen_content_djDiv').innerHTML=nowDj;
   state.errorPause=false;
