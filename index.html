@@ -1460,8 +1460,12 @@ function updateNowPlaying(){
     if(nowShow !=""){nowShow+=" &nbsp; ";}
     nowDj=nowShow+"DJ: "+nowData.dj;  
 
-    if(state.ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
+    if(state.ios){
+      //nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);
+      dbuga('updateNowPlaying() is ios');
+      }
     }
+  dbuga('updateNowPlaying() completed ok');
   }
 var nowDj="";
 function dateTimeToTime(theDateTime){
