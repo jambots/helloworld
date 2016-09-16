@@ -1460,7 +1460,7 @@ function updateNowPlaying(){
     if(nowShow !=""){nowShow+=" &nbsp; ";}
     nowDj=nowShow+"DJ: "+nowData.dj;  
 
-    if(ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
+    if(state.ios){nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);}
     }
   }
 var nowDj="";
