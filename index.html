@@ -279,7 +279,7 @@ function processEvents(){
   state.errorPause=true;
 
   if(eventStack.length>0){
-      dbuga('processEvents() '+eventStack.join('|'));
+    dbuga('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
@@ -289,7 +289,7 @@ function processEvents(){
     eventStack=[];
     for (var e=0; e<eventStash.length; e++){
       var evt=eventStash[e];
-      mediaEvent(evt);
+      ////mediaEvent(evt);
      
       if(evt.indexOf("audio stalled")>-1){
         // stall from control center then resume leaves streamCreated false. Odd but no harm.
@@ -384,7 +384,7 @@ function processEvents(){
         if(audioNum==state.audioCount){
           state.remotePaused=false;
           evt+=" - current";
-          dbuga('processEvents so streamPlaying=true '+evt)
+          dbuga('  processEvents so streamPlaying=true '+evt)
           state.streamPlaying=true;
           window.clearTimeout(waitTimeout);
           if(state.internet==false){
@@ -411,19 +411,16 @@ function processEvents(){
         dbuga(' - in ui play 2 ' + state.streamCreated);
 
         if(state.streamCreated){
-          dbuga(' - in ui play 3 ' + state.streamCreated);
           playStream();
           evt+=" - playStream()"; 
           dbuga(' - in ui play 4 ' + state.streamCreated);
           }
         else{
-          dbuga(' - in ui play 5 ' + state.streamCreated);
           var url=createStream();
           evt+=" - createStream() "+url; 
           dbuga(' - in ui play 6 ' + state.streamCreated);
 
           }
-        dbuga(' - in ui play 8');
 
         e=eventStash.length; //cease in case of twitchy user 
         }
