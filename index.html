@@ -59,7 +59,7 @@ var stream={};
       stream.playing = null;
 */
 
-var debugging=true;
+var debugging=false;
 var waitEvents=0;
 var waitTimeout;
 
@@ -512,13 +512,12 @@ function processEvents(){
         }
         
       staleStack.unshift(evt);
-        dbuga(evt);
-
+      dbuga(" - evt:"+evt);
       }
     staleStack.unshift(" ");
 
     //dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
-    dbuga('end of processEvents() '+nowPlaying)
+    dbuga('end of processEvents() ')
     }//end if event stack
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying;
   document.getElementById('page_listen_content_djDiv').innerHTML=nowDj;
@@ -1464,7 +1463,7 @@ function updateNowPlaying(){
       //dbuga('updateNowPlaying() is ios');
       }
     }
-  dbuga('updateNowPlaying() completed ok '+nowPlaying);
+  //dbuga('updateNowPlaying() completed ok '+nowPlaying);
   }
 var nowDj="";
 function dateTimeToTime(theDateTime){
@@ -2047,7 +2046,7 @@ function populateContainer(){
     bCtx=bCanv.getContext('2d');
     bCanv.width=grid*12;
     bCanv.height=grid*12;
-    bCanv.style.backgroundColor="rgba(255,255,0,.3)";
+    //bCanv.style.backgroundColor="rgba(255,255,0,.3)";
     }
   else{
     bCanv=document.getElementById("bufferingCanvas");
