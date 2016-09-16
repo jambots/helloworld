@@ -517,7 +517,7 @@ function processEvents(){
 
     //dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
     }//end if event stack
-  //dbuga('end of processEvents() '+nowPlaying)
+  dbuga('end of processEvents() '+nowPlaying)
   document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying;
   document.getElementById('page_listen_content_djDiv').innerHTML=nowDj;
   state.errorPause=false;
@@ -532,7 +532,7 @@ function pauseStream(){
     }
   }
 function playStream(){
-  dbuga('playStream()');
+    dbuga('playStream()');
   if (typeof stream.play == 'function'){
     if(state.ios){stream.play();}
     if(state.android){stream.play();}
