@@ -289,8 +289,8 @@ function processEvents(){
     eventStack=[];
     for (var e=0; e<eventStash.length; e++){
       var evt=eventStash[e];
-      ////mediaEvent(evt);
-     
+      mediaEvent(evt);
+      ////
       if(evt.indexOf("audio stalled")>-1){
         // stall from control center then resume leaves streamCreated false. Odd but no harm.
         var parts=evt.split(" ");
