@@ -140,10 +140,10 @@ var pages=[
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
     {"name":"events", "top":9, "left":6.5, "height":11, "width":11},
-    {"name":"rcp", "top":41, "left":6.5, "height":11, "width":11},
     {"name":"inst", "top":9, "left":30.5, "height":11, "width":11},
     {"name":"rks", "top":25, "left":6.5, "height":11, "width":11},
-    {"name":"wrs", "top":25, "left":18.5, "height":11, "width":11},
+    {"name":"wrs", "top":25, "left":30.5, "height":11, "width":11},
+    {"name":"rcp", "top":41, "left":6.5, "height":11, "width":11},
     {"name":"whl", "top":41, "left":30.5, "height":11, "width":11},
   ],
   "contents":[
