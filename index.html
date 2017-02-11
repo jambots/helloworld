@@ -130,7 +130,7 @@ var recentSongs={};
 var singMedia;
 
 var instDownloads=[];
-var totdDownloads=[];
+var rksDownloads=[];
 var wrsDownloads=[];
 var rcpDownloads=[];
 var whlDownloads=[];
@@ -1072,12 +1072,12 @@ function getDownloads(){
   dbuga("getDownloads() 0");
   getCalendarJson();
 
-  totdDownloads=[];
+  rksDownloads=[];
   wrsDownloads=[];
   rcpDownloads=[];
   whlDownloads=[];
-  document.getElementById('totdHolder').style.width=grid*48+'px'; 
-  document.getElementById('totdHolder').style.height="100%"; 
+  document.getElementById('rksHolder').style.width=grid*48+'px'; 
+  document.getElementById('rksHolder').style.height="100%"; 
   document.getElementById('wrsHolder').style.width=grid*48+'px'; 
   document.getElementById('wrsHolder').style.height="100%"; 
   document.getElementById('rcpHolder').style.width=grid*48+'px'; 
@@ -1099,9 +1099,9 @@ function getDownloads(){
   dbuga("getDownloads() 2");
 
   $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Ftotd",
+    url: "http://www.radiok.org/tools/packages/radiok/new/k-sessions.php",
     dataType: "xml",        
-    success: function(xml) {parseDownloads(xml, "Track of the Day");}
+    success: function(xml) {parseDownloads(xml, "K Sessions");}
     });
   dbuga("getDownloads() 3");
 
@@ -1124,11 +1124,12 @@ function getDownloads(){
 var wrsObject={}
 function parseDownloads(theXml, source){
   dbuga("parseDownloads() "+source);
-  if(source=="Track of the Day"){
-    var totdObj=xmlToJson(theXml);
-    var itemsArray=totdObj.rss.channel.item;
+  if(source=="K Sessions"){
+    var rksObj=xmlToJson(theXml);
+    var itemsArray=rksObj.rss.channel.item;
     dbuga('itemsArray.length='+itemsArray.length);
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
+/*
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
       var parts=dateStr.split(" ");
@@ -1153,9 +1154,10 @@ function parseDownloads(theXml, source){
         "description":song, 
         "link":thisObj["enclosure"]["@attributes"]["url"]
         };
-      totdDownloads.push(item);
+      rksDownloads.push(item);
+*/
       }
-    updateTotdDownloads();
+    updateRksDownloads();
     }
   if(source=="Weekly Release Spotlight"){
     wrsObj=xmlToJson(theXml);
@@ -1337,9 +1339,9 @@ function updateWrsDownloads(){
 
 var squareShrink=95;
 
-function updateTotdDownloads(){
-  //dbuga('updateTotdDownloads()');
-  var sortedDownloads=totdDownloads.sort(function(a, b){
+function updateRksDownloads(){
+  dbuga('updateRksDownloads()');
+  var sortedDownloads=rksDownloads.sort(function(a, b){
       // furthest to nearest
       return b.sort-a.sort
     });
@@ -1350,10 +1352,10 @@ function updateTotdDownloads(){
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
     if(d==0){
-      document.getElementById("page_extras_button_totd").style.backgroundImage='url('+downloadItem.image+')';
-      document.getElementById("page_extras_button_totd_on").style.backgroundColor='#333';
-      document.getElementById("page_extras_button_totd_on").style.backgroundImage='url('+downloadItem.image+')';
-      document.getElementById("page_extras_button_totd_on").style.backgroundSize=squareShrink+'%';
+      document.getElementById("page_extras_button_rks").style.backgroundImage='url('+downloadItem.image+')';
+      document.getElementById("page_extras_button_rks_on").style.backgroundColor='#333';
+      document.getElementById("page_extras_button_rks_on").style.backgroundImage='url('+downloadItem.image+')';
+      document.getElementById("page_extras_button_rks_on").style.backgroundSize=squareShrink+'%';
 
       document.getElementById("page_extras_button_events_on").style.backgroundColor='#333';
       document.getElementById("page_extras_button_events_on").style.backgroundSize=squareShrink+'%';
@@ -1368,10 +1370,10 @@ function updateTotdDownloads(){
     htmlBlock+=  downloadItem.title+' - <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     }
-  document.getElementById('totdScroller').innerHTML=htmlBlock;
-  document.getElementById('totdHolder').style.width=grid*48+'px'; 
-  document.getElementById('totdHolder').style.height="100%"; 
-  //totdScrollerTimeout=window.setTimeout("refreshTotdHolderScroll()", 100);
+  document.getElementById('rksScroller').innerHTML=htmlBlock;
+  document.getElementById('rksHolder').style.width=grid*48+'px'; 
+  document.getElementById('rksHolder').style.height="100%"; 
+  //rksScrollerTimeout=window.setTimeout("refreshRksHolderScroll()", 100);
   }
 
 function updateRcpDownloads(){
@@ -2064,12 +2066,12 @@ function populateContainer(){
   resultsHolderScroll=new iScroll('resultsHolder');
   playlistHolderScroll=new iScroll('playlistHolder');
   calendarHolderScroll=new iScroll('calendarHolder');
-  totdHolderScroll=new iScroll('totdHolder');
+  rksHolderScroll=new iScroll('rksHolder');
   wrsHolderScroll=new iScroll('wrsHolder');
   */
   //dbuga('populateContainer 8');
 
-  var scrollIdArray=["resultsHolder", "playlistHolder", "calendarHolder", "totdHolder", "wrsHolder", "rcpHolder", "whlHolder", "instHolder"];
+  var scrollIdArray=["resultsHolder", "playlistHolder", "calendarHolder", "rksHolder", "wrsHolder", "rcpHolder", "whlHolder", "instHolder"];
   for (var s=0; s<scrollIdArray.length; s++){
     new ScrollFix(document.getElementById(scrollIdArray[s]));
     }
@@ -2540,9 +2542,9 @@ function handleButton(pageName, buttonName){
       buttonOn("extras", "events");
       window.setTimeout('buttonOff("extras", "events"); selectPage("events");', navDelay);
       }
-    if(buttonName=="totd"){
-      buttonOn("extras", "totd");
-      window.setTimeout('buttonOff("extras", "totd"); selectPage("totd");', navDelay);
+    if(buttonName=="rks"){
+      buttonOn("extras", "rks");
+      window.setTimeout('buttonOff("extras", "rks"); selectPage("rks");', navDelay);
       }
     if(buttonName=="wrs"){
       buttonOn("extras", "wrs");
@@ -2564,14 +2566,10 @@ function handleButton(pageName, buttonName){
       }
 
     }
-  if(pageName=="totd"){
+  if(pageName=="rks"){
     if(buttonName=="done"){
-      buttonOn("totd", "done");
-      window.setTimeout('buttonOff("totd", "done"); selectPage("extras");', navDelay);
-      }
-    if(buttonName=="stotd"){
-      buttonOn("totd", "stotd");
-      window.setTimeout('buttonOff("totd", "stotd"); remoteLink("https://itunes.apple.com/us/podcast/radio-ks-track-of-the-day/id389816740?mt=2");', navDelay);
+      buttonOn("rks", "done");
+      window.setTimeout('buttonOff("rks", "done"); selectPage("extras");', navDelay);
       }
     }
   if(pageName=="rcp"){
@@ -2819,7 +2817,7 @@ function touchStart(event){
   }
 
 function touchMove(event){
-  if((currentPage !="totd")&&(currentPage !="wrs")&&(currentPage !="rcp")&&(currentPage !="whl")&&(currentPage !="inst")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
+  if((currentPage !="rks")&&(currentPage !="wrs")&&(currentPage !="rcp")&&(currentPage !="whl")&&(currentPage !="inst")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
     event.preventDefault();
     }
   if(currentPage =="alarm"){

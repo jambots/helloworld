@@ -131,9 +131,10 @@ var pages=[
 {"name":"extras", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[
     {"name":"eventsBox", "top":8.5, "left":6, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"rcpBox", "top":40.5, "left":6, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
     {"name":"instBox", "top":8.5, "left":30, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"wrsBox", "top":24.5, "left":18, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"rksBox", "top":24.5, "left":6, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"wrsBox", "top":24.5, "left":30, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"rcpBox", "top":40.5, "left":6, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
     {"name":"whlBox", "top":40.5, "left":30, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
   ],
   "buttons":[
@@ -141,6 +142,7 @@ var pages=[
     {"name":"events", "top":9, "left":6.5, "height":11, "width":11},
     {"name":"rcp", "top":41, "left":6.5, "height":11, "width":11},
     {"name":"inst", "top":9, "left":30.5, "height":11, "width":11},
+    {"name":"rks", "top":25, "left":6.5, "height":11, "width":11},
     {"name":"wrs", "top":25, "left":18.5, "height":11, "width":11},
     {"name":"whl", "top":41, "left":30.5, "height":11, "width":11},
   ],
@@ -148,18 +150,18 @@ var pages=[
     {"name":"eventsDesc", "top":21, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','events');\">EVENTS</a>"},
     {"name":"rcpDesc", "top":53, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','rcp');\">REAL COLLEGE PODCAST</a>"},
     {"name":"instDesc", "top":21, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','inst');\">IN-STUDIOS</a>"},
-    {"name":"wrsDesc", "top":37, "left":12.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">WEEKLY RELEASE SPOTLIGHT</a>"},
+    {"name":"rksDesc", "top":37, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">K SESSIONS</a>"},
+    {"name":"wrsDesc", "top":37, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','wrs');\">WEEKLY RELEASE SPOTLIGHT</a>"},
     {"name":"whlDesc", "top":53, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('extras','whl');\">WEEKEND HIT LIST</a>"},
   ]
 },
-{"name":"totd", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+{"name":"rks", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
-    {"name":"done", "top":0, "left":39, "height":7, "width":9},
-    {"name":"stotd", "top":0, "left":0, "height":7, "width":12},
+    {"name":"done", "top":0, "left":39, "height":7, "width":9}
   ],
   "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="totdHolder"><div id="totdScroller"></div></div>'}
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="rksHolder"><div id="rksScroller"></div></div>'}
   ]
 },
 {"name":"wrs", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
@@ -212,7 +214,7 @@ var pages=[
 }];
 var monToMM={"Jan":"01", "Feb":"02", "Mar":"03", "Apr":"04", "May":"05", "Jun":"06", "Jul":"07", "Aug":"08", "Sep":"09", "Oct":"10", "Nov":"11", "Dec":"12"};
 var monToMonth={"Jan":"January", "Feb":"February", "Mar":"March", "Apr":"April", "May":"May", "Jun":"June", "Jul":"July", "Aug":"August", "Sep":"September", "Oct":"October", "Nov":"November", "Dec":"December"};
-/* extras
+/* extras for ref
     {"name":"totdBox", "top":24.5, "left":6, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
 
     {"name":"totd", "top":25, "left":6.5, "height":11, "width":11},
