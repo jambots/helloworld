@@ -1090,19 +1090,22 @@ function getDownloads(){
 
   dbuga("getDownloads() 1");
 
-  $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F",
-    dataType: "xml",        
-    success: function(xml) {parseDownloads(xml, "Weekly Release Spotlight");}
-    });
    
-  dbuga("getDownloads() 2");
 
   $.ajax({
     url: "http://www.radiok.org/tools/packages/radiok/new/k-sessions.php",
     dataType: "xml",        
     success: function(xml) {parseDownloads(xml, "K Sessions");}
     });
+
+  dbuga("getDownloads() 2");
+
+  $.ajax({
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F",
+    dataType: "xml",        
+    success: function(xml) {parseDownloads(xml, "Weekly Release Spotlight");}
+    });
+
   dbuga("getDownloads() 3");
 
   $.ajax({
@@ -1129,7 +1132,7 @@ function parseDownloads(theXml, source){
     var itemsArray=rksObj.rss.channel.item;
     dbuga('itemsArray.length='+itemsArray.length);
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
-/*
+      dbuga('i:'+i)
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
       var parts=dateStr.split(" ");
@@ -1141,21 +1144,22 @@ function parseDownloads(theXml, source){
       var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
       var sortNum=yyyy+mm+dd+hhmmss;
       var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
-      var bandSong=thisObj.title["#text"];
-      var parts=bandSong.split(" - ");
-      var band=parts[0];
-      var song=parts[1];
+      var title=thisObj.title["#text"];
+      var description=thisObj.description["#text"];
+      var link=thisObj.link["#text"];
+      dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
       var item={
         "sort":sortNum, 
         "source":source, 
         "date":dispDate, 
         "image":thisObj["itunes:image"]["@attributes"]["href"], 
-        "title":band,
-        "description":song, 
-        "link":thisObj["enclosure"]["@attributes"]["url"]
+        "title":title,
+        "description":description, 
+        "link":link
         };
-      rksDownloads.push(item);
-*/
+      rcpDownloads.push(item);
+      dbuga('RksDownloads.length='+rksDownloads.length);
+
       }
     updateRksDownloads();
     }
