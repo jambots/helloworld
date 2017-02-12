@@ -1145,7 +1145,7 @@ function parseDownloads(theXml, source){
       var sortNum=yyyy+mm+dd+hhmmss;
       var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
       var title=thisObj.title["#text"];
-      var description=thisObj.description["#cdata-section"];
+      var description=thisObj.guid["#text"];
       var link=thisObj.link["#text"];
       dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
       var item={
@@ -1157,8 +1157,8 @@ function parseDownloads(theXml, source){
         "description":description, 
         "link":link
         };
-      rcpDownloads.push(item);
-      dbuga('RksDownloads.length='+rksDownloads.length);
+      rksDownloads.push(item);
+      dbuga('rksDownloads.length='+rksDownloads.length);
 
       }
     updateRksDownloads();
@@ -1198,7 +1198,7 @@ function parseDownloads(theXml, source){
   if(source=="Real College Podcast"){
     rcpObj=xmlToJson(theXml);
     var itemsArray=rcpObj.rss.channel.item;
-    dbuga(' RCP itemsArray.length='+itemsArray.length);
+    //dbuga(' RCP itemsArray.length='+itemsArray.length);
 
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       dbuga('i:'+i)
@@ -1216,7 +1216,7 @@ function parseDownloads(theXml, source){
       var title=thisObj.title["#text"];
       var description=thisObj.description["#text"];
       var link=thisObj.link["#text"];
-      dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
+      //dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
       var item={
         "sort":sortNum, 
         "source":source, 
@@ -1227,7 +1227,7 @@ function parseDownloads(theXml, source){
         "link":link
         };
       rcpDownloads.push(item);
-      dbuga('rcpDownloads.length='+rcpDownloads.length);
+      //dbuga('rcpDownloads.length='+rcpDownloads.length);
 
       }
 
@@ -1266,7 +1266,7 @@ function parseDownloads(theXml, source){
 
     updateWhlDownloads();
     }
-  dbuga('parse completed');
+  //dbuga('parse completed');
   }
 
 
@@ -1360,10 +1360,6 @@ function updateRksDownloads(){
       document.getElementById("page_extras_button_rks_on").style.backgroundColor='#333';
       document.getElementById("page_extras_button_rks_on").style.backgroundImage='url('+downloadItem.image+')';
       document.getElementById("page_extras_button_rks_on").style.backgroundSize=squareShrink+'%';
-
-      document.getElementById("page_extras_button_events_on").style.backgroundColor='#333';
-      document.getElementById("page_extras_button_events_on").style.backgroundSize=squareShrink+'%';
-
       }
     //dbuga(downloadItem.link);
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
