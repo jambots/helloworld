@@ -1124,7 +1124,7 @@ function getDownloads(){
   dbuga('getDownloads completed');
   }
 // remove errors on publish
-var wrsObject={}
+
 function parseDownloads(theXml, source){
   dbuga("parseDownloads() "+source);
   if(source=="K Sessions"){
@@ -1145,7 +1145,7 @@ function parseDownloads(theXml, source){
       var sortNum=yyyy+mm+dd+hhmmss;
       var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
       var title=thisObj.title["#text"];
-      var description=thisObj.description["#text"];
+      var description=thisObj.description["#cdata-section"];
       var link=thisObj.link["#text"];
       dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
       var item={
