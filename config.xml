@@ -3,8 +3,8 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "com.radiok.kuom"
-        versionCode="44" 
-        version   = "3.0.44">
+        versionCode="45" 
+        version   = "3.0.45">
 
 <preference name="phonegap-version" value="cli-6.5.0" />
     <name>Radio K - KUOM</name>/Users/admin/android/radiok/helloworld/index.html
@@ -20,6 +20,8 @@
 <gap:plugin name="nl.kingsquare.background-audio" version="1.0.0" />
 <plugin name="cordova-plugin-audio-background-mode" spec="0.0.1" source="npm" />
 -->
+<plugin name="cordova-plugin-insomnia" version="4.1.0" source="npm" />
+
 <plugin name="nl.kingsquare.cordova.background-audio" source="npm" />
 <plugin name="cordova-plugin-statusbar"      source="npm" spec="2.1.3" />
 <plugin name="cordova-plugin-media"          source="npm" spec="3.0.0" />
