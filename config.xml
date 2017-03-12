@@ -48,10 +48,11 @@
     <allow-navigation href="*" />
     <allow-intent href="*" />
     <access origin="*" /> 
-
+<!--
 <gap:config-file platform="android" parent="/manifest">
      <application android:debuggable="true" />
 </gap:config-file>
+-->
 <gap:splash src="res/splash.png" />
 
 <icon src="res/ldpi.png" platform="android" qualifier="ldpi" />
