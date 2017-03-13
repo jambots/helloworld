@@ -106,7 +106,7 @@ var mouseY=0;
 var mouseStartX=0;
 var mouseStartY=0;
 var alarmFailsafeTimeout;
-/*
+
 //official
 var urlByQuality={
   "low":"http://radiokstreams.cce.umn.edu:8056/;", 
@@ -115,24 +115,23 @@ var urlByQuality={
   "higher":"http://radiokstreams.cce.umn.edu:8256/;", 
   "broken":"http://radiokstreams.cce.umn.edu:8168/;"
 };
-*/
 
 /*
 // test FAIL on android
 var urlByQuality={
-  "medium":"http://radiokstreams.cce.umn.edu:8128/;", 
-  "higher":"http://radiokstreams.cce.umn.edu:8256/listen.m3u?sid=1;"
+  "medium":"http://radiokstreams.cce.umn.edu:8128/;", //ok
+  "higher":"http://radiokstreams.cce.umn.edu:8256/listen.m3u?sid=1;" //fail
 };
 // test android sources failed
 var urlByQuality={
   "medium":"http://radiokstreams.cce.umn.edu:8256/listen.pls?sid=1;", 
   "higher":"http://radiokstreams.cce.umn.edu:8256/listen.asx?sid=1;"
 };
-*/
-var urlByQuality={
+var urlByQuality={// fail droid
   "medium":"http://radiokstreams.cce.umn.edu:8256/listen.xspf?sid=1;", 
   "higher":"http://radiokstreams.cce.umn.edu:8256/listen.qtl?sid=1;"
 };
+*/
 
 //http://somafm.com/dronezone.pls
 //http://wtbu.bu.edu:1800/listen.m3u
