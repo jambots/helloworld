@@ -561,9 +561,7 @@ function playStream(){
 var singTimeout;
 
 function createStream(){
-  
-  state.loop=false;
- 
+  state.loop=false; 
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
   dbuga('createStream() '+myStreamUrl);
   if((state.waitEvents>2)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
@@ -598,23 +596,10 @@ function createStream(){
     }
   // url figured out now go
   if(state.playerType=="audio"){
-
     if(state.streamCreated){
       stream.pause();
       }    
     
-/*
-    stream.abort = null;
-    stream.emptied = null;
-    stream.error = null;
-    stream.pause = null;
-    stream.seeking = null;
-    stream.ended = null;
-    stream.stalled = null;
-    stream.waiting = null;
-    stream.play = null;
-    stream.playing = null;
-*/
     stream = null;
     eventStack.push("stream nullified"); 
     stream = new Audio(myStreamUrl);
@@ -638,9 +623,6 @@ function createStream(){
          dbuga('audio error '+event.target.audioNum);
          }
     }, false);
-
-
-
 
     stream.addEventListener('error', function failed(e) {
    // audio playback failed - show a message saying why
@@ -706,7 +688,7 @@ function createStream(){
     }(audioCount), false);
 
 
-    }
+    }// end of playerType audio
 
   if(state.playerType=="media"){
     //stream = null;
@@ -714,26 +696,24 @@ function createStream(){
     state.audioCount++;
 
     //stream.audioNum=state.audioCount;
-      dbuga('createStream() 4b'); 
+    dbuga('createStream() media 4a'); 
 
     if(state.streamPlaying){
-      dbuga('streamPlaying so 4c stop()'); 
+      dbuga('streamPlaying so 4b stop()'); 
       stream.stop();
-      stream.release();
-      state.streamCreated=false;
       }
     if(state.streamCreated){
       dbuga('streamCreated so 4c release()'); 
       stream.release();
       state.streamCreated=false;
       }
-    //dbuga('createStream() 4d'); 
+    dbuga('createStream() 4d'); 
 
     //dbuga("createStream() android "+myStreamUrl);
     stream = new Media(myStreamUrl, mediaSuccess, mediaError, mediaStatus);  
       dbuga('createStream() new Media 4e'); 
     }
-  //dbuga('createStream() 5'); 
+  dbuga('createStream() 5'); 
   state.streamCreated=true;
   eventStack.push("stream created");
   return myStreamUrl;
