@@ -716,21 +716,24 @@ function createStream(){
     //stream.audioNum=state.audioCount;
       dbuga('createStream() 4b'); 
 
-    if(state.streamCreated){
-      //dbuga('createStream() 4c'); 
-
+    if(state.streamPlaying){
+      dbuga('streamPlaying so 4c stop()'); 
       stream.stop();
       stream.release();
+      state.streamCreated=false;
+      }
+    if(state.streamCreated){
+      dbuga('streamCreated so 4c release()'); 
+      stream.release();
+      state.streamCreated=false;
       }
     //dbuga('createStream() 4d'); 
 
     //dbuga("createStream() android "+myStreamUrl);
     stream = new Media(myStreamUrl, mediaSuccess, mediaError, mediaStatus);  
-      dbuga('createStream() 4e'); 
-
+      dbuga('createStream() new Media 4e'); 
     }
   //dbuga('createStream() 5'); 
-
   state.streamCreated=true;
   eventStack.push("stream created");
   return myStreamUrl;
