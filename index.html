@@ -739,7 +739,7 @@ function mediaStatus(theStatus){
   }
 
 function mediaError(er){
-  eventStack.push("mediaError "+er);
+  eventStack.push("mediaError "+JSON.stringify(er));
   }
 function mediaSuccess(){
   eventStack.push("mediaSuccess");
