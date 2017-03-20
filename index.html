@@ -549,22 +549,29 @@ function processEvents(){
 
   }
 function pauseStream(){ 
+  dbuga('pauseStream() 0')
   window.clearTimeout(waitTimeout);
   state.streamPlaying=false;
   if (typeof stream.pause == 'function'){
+    dbuga(' - pauseStream() 1')
     if(state.ios){stream.pause();}
     if(state.android){stream.pause();}
+    dbuga(' - pauseStream() 2')
     }
 
   if (typeof stream.release == 'function'){
+    dbuga(' - pauseStream() 3')
     if(playerType=="media"){
+      dbuga(' -- stream.release() 3.1')
       stream.release();
-      dbuga('stream.release()')
+      dbuga(' -- stream.release() 3.2')
       }
     }
   else{
     dbuga('no release()');
     }
+  dbuga(' - pauseStream() 4')
+
   }
 function playStream(){
     dbuga('playStream()');
