@@ -449,12 +449,16 @@ function processEvents(){
         }
       if(evt=="ui pause"){
         bufferEnd();
+        console.log('ui pause 1');
         nowPlaying="";
         nowDj="";
         pauseStream();
+        console.log('ui pause 2');
         state.streamCreated=false;
         evt+=" - set streamCreated=false"; 
+        console.log('ui pause 4');
         e=eventStash.length; //cease in case of twitchy user 
+        console.log('ui pause 5');
         }
         
 
@@ -549,10 +553,16 @@ function pauseStream(){
   if (typeof stream.pause == 'function'){
     if(state.ios){stream.pause();}
     if(state.android){stream.pause();}
+    }
+
+  if (typeof stream.release == 'function'){
     if(playerType=="media"){
       stream.release();
       console.log('stream.release()')
       }
+    }
+  else{
+    console.log('no release()');
     }
   }
 function playStream(){
