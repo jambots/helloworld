@@ -448,18 +448,18 @@ function processEvents(){
         e=eventStash.length; //cease in case of twitchy user 
         }
       if(evt=="ui pause"){
-        console.log('ui pause 0');
+        dbuga('ui pause 0');
         bufferEnd();
-        console.log('ui pause 1');
+        dbuga('ui pause 1');
         nowPlaying="";
         nowDj="";
         pauseStream();
-        console.log('ui pause 2');
+        dbuga('ui pause 2');
         state.streamCreated=false;
         evt+=" - set streamCreated=false"; 
-        console.log('ui pause 4');
+        dbuga('ui pause 4');
         e=eventStash.length; //cease in case of twitchy user 
-        console.log('ui pause 5');
+        dbuga('ui pause 5');
         }
         
 
@@ -559,11 +559,11 @@ function pauseStream(){
   if (typeof stream.release == 'function'){
     if(playerType=="media"){
       stream.release();
-      console.log('stream.release()')
+      dbuga('stream.release()')
       }
     }
   else{
-    console.log('no release()');
+    dbuga('no release()');
     }
   }
 function playStream(){
@@ -763,7 +763,7 @@ function mediaSuccess(){
 
 function togglePlaying(){
   //dbuga('togglePlaying');
-  //console.log('togglePlaying');
+  //dbuga('togglePlaying');
 
   if(state.uiPlaying==true){
     state.uiPlaying=false;
@@ -853,7 +853,7 @@ function getInst(){
     url: feedUrl,
     dataType: "text",        // < new bit
     success: function(data) {
-      //console.log(data);
+      //dbuga(data);
       parseInst(data);
       }
     });
@@ -921,7 +921,7 @@ function updateInstDownloads(){
 
 function populateInst(){
   var htmlString="";
-  //console.log(inst);
+  //dbuga(inst);
 
 /*
   for (var f=0; f<inst.length; f++){
@@ -1018,7 +1018,7 @@ function epochToTime(s){
   var d=new Date(s*1000);
   var t=d.toLocaleTimeString();
 
-  //console.log(d+"|"+t);
+  //dbuga(d+"|"+t);
   var parts=t.split(" ");
   var hhmmss=parts[0];
   var parts=hhmmss.split(":");
@@ -1532,7 +1532,7 @@ function getLocalFaqs(){
     dataType: "text",        // < new bit
     
     success: function(data) {
-      //console.log(data);
+      //dbuga(data);
       parseFaqs(data);
       getWebFaqs();
       }
@@ -1549,7 +1549,7 @@ function getWebFaqs(){
     dataType: "text",        // < new bit
     
     success: function(data) {
-      //console.log(data);
+      //dbuga(data);
       parseFaqs(data);
       }
     });
@@ -1607,7 +1607,7 @@ title: "Caspian with O'Brother"
 venue: "Triple Rock Social Club"
 */
 function parseCalendarJson(theJson){
-  //console.log('parseCalendarJson()');
+  //dbuga('parseCalendarJson()');
   calendarEvents=theJson.events;
   calendarJson=[];
 
@@ -1664,7 +1664,7 @@ function getCalendar(){
  
 var calendar=[];
 function parseCalendarRss(theRss){
-  //console.log('parseCalendarRss()');
+  //dbuga('parseCalendarRss()');
   calendar=[];
     $(theRss).find('item').each(function() {
      var $this = $(this);
@@ -1920,7 +1920,7 @@ function populateContainer(){
   imagePath="images_large";//ipad retina 1536, viewport 768 down to iphone6+
   if(ww<414){imagePath="images_medium";}// 
   //imagePath="images_medium";// force test lo res iphone5
-  //console.log(ww+" "+imagePath);
+  //dbuga(ww+" "+imagePath);
   
   //dbuga('populateContainer() 2 ' +imagePath);
   var wAspect=ww/wh;
