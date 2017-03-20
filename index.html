@@ -465,7 +465,7 @@ function processEvents(){
         }
 
       if(evt.indexOf('setting')>-1){
-        if(state.streamPlaying){stream.pause();}
+        if(state.streamPlaying){pauseStream();}// was stream.pause
         if(state.uiPlaying){
           state.streamCreated=false;
           state.streamPlaying=false;
@@ -549,6 +549,10 @@ function pauseStream(){
   if (typeof stream.pause == 'function'){
     if(state.ios){stream.pause();}
     if(state.android){stream.pause();}
+    if(playerType=="media"){
+      stream.release();
+      console.log('stream.release()')
+      }
     }
   }
 function playStream(){
@@ -597,7 +601,7 @@ function createStream(){
   // url figured out now go
   if(state.playerType=="audio"){
     if(state.streamCreated){
-      stream.pause();
+      pauseStream();// was stream.pause
       }    
     
     stream = null;
