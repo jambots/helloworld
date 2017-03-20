@@ -448,6 +448,7 @@ function processEvents(){
         e=eventStash.length; //cease in case of twitchy user 
         }
       if(evt=="ui pause"){
+        console.log('ui pause 0');
         bufferEnd();
         console.log('ui pause 1');
         nowPlaying="";
@@ -2109,11 +2110,14 @@ function bufferStart(){
   bufferTick(); 
   }
 function bufferEnd(){
-  dbuga('bufferEnd');
+  dbuga('bufferEnd 1');
   state.buffering=false;
   bufferMs=0;
+    dbuga('bufferEnd 2');
+
   //bufferTick(); 
   bCanv.width=Math.floor(grid*12);
+  dbuga('bufferEnd 3');
   }
 function bufferTick(){
   //dbuga('bufferTick 1');
