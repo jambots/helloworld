@@ -561,7 +561,7 @@ function pauseStream(){
 
   if (typeof stream.release == 'function'){
     dbuga(' - pauseStream() 3')
-    if(playerType=="media"){
+    if(state.playerType=="media"){
       dbuga(' -- stream.release() 3.1')
       stream.release();
       dbuga(' -- stream.release() 3.2')
