@@ -157,7 +157,7 @@ var nowPlaying="";
 
 //// state changing functions
 function checkInternet(){
-  dbuga('checkInternet() '+state.online);
+  //dbuga('checkInternet() '+state.online);
   if(state.online==false){
     state.internet=false;
     return false;
@@ -236,7 +236,7 @@ function onDeviceReady(){
   checkInternet();
   //dbuga("onDeviceReady() 7");
   resumeInit();
-  dbuga("onDeviceReady()8");
+  //dbuga("onDeviceReady()8");
 
   }
 function appResumed(){
@@ -448,18 +448,18 @@ function processEvents(){
         e=eventStash.length; //cease in case of twitchy user 
         }
       if(evt=="ui pause"){
-        dbuga('ui pause 0');
+        //dbuga('ui pause 0');
         bufferEnd();
-        dbuga('ui pause 1');
+        //dbuga('ui pause 1');
         nowPlaying="";
         nowDj="";
         pauseStream();
-        dbuga('ui pause 2');
+        //dbuga('ui pause 2');
         state.streamCreated=false;
         evt+=" - set streamCreated=false"; 
-        dbuga('ui pause 4');
+        //dbuga('ui pause 4');
         e=eventStash.length; //cease in case of twitchy user 
-        dbuga('ui pause 5');
+        //dbuga('ui pause 5');
         }
         
 
@@ -536,7 +536,7 @@ function processEvents(){
         }
         
       staleStack.unshift(evt);
-      dbuga(" - evt:"+evt);
+      //dbuga(" - evt:"+evt);
       }
     staleStack.unshift(" ");
 
@@ -553,18 +553,18 @@ function pauseStream(){
   window.clearTimeout(waitTimeout);
   state.streamPlaying=false;
   if (typeof stream.pause == 'function'){
-    dbuga(' - pauseStream() 1')
+    //dbuga(' - pauseStream() 1')
     if(state.ios){stream.pause();}
     if(state.android){stream.pause();}
-    dbuga(' - pauseStream() 2')
+    //dbuga(' - pauseStream() 2')
     }
 
   if (typeof stream.release == 'function'){
-    dbuga(' - pauseStream() 3')
+    //dbuga(' - pauseStream() 3')
     if(state.playerType=="media"){
-      dbuga(' -- stream.release() 3.1')
+      //dbuga(' -- stream.release() 3.1')
       stream.release();
-      dbuga(' -- stream.release() 3.2')
+      //dbuga(' -- stream.release() 3.2')
       }
     }
   else{
