@@ -93,8 +93,7 @@ var pages=[
   "buttons":[
     {"name":"done", "top":0, "left":39, "height":7, "width":9},
     {"name":"medium", "top":14, "left":9, "height":6, "width":30},
-    {"name":"higher", "top":21, "left":9, "height":6, "width":30},
-    {"name":"test", "top":30, "left":9, "height":6, "width":30},
+    {"name":"higher", "top":21, "left":9, "height":6, "width":30}
   ],
   "contents":[
   ]

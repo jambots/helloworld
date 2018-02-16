@@ -109,15 +109,25 @@ var mouseStartX=0;
 var mouseStartY=0;
 var alarmFailsafeTimeout;
 
-//official
+//new test urls
+
+var urlByQuality={
+  "low":"http://128.101.73.38:8056/;", 
+  "medium":"http://128.101.73.38:8128/;", 
+  "high":"http://128.101.73.38:8256/;", 
+  "higher":"http://128.101.73.38:8256/;", 
+  "broken":"http://128.101.73.38:8168/;"
+};
+/*
+//previous
 var urlByQuality={
   "low":"http://radiokstreams.cce.umn.edu:8056/;", 
   "medium":"http://radiokstreams.cce.umn.edu:8128/;", 
   "high":"http://radiokstreams.cce.umn.edu:8256/;", 
   "higher":"http://radiokstreams.cce.umn.edu:8256/;", 
-  "broken":"http://radiokstreams.cce.umn.edu:8168/;",
-  "test":"http://128.101.73.38:8256/;"
+  "broken":"http://radiokstreams.cce.umn.edu:8168/;"
 };
+*/
 //http://128.101.73.38:8256/
 /*
 // test FAIL on android
@@ -2655,14 +2665,14 @@ function handleButton(pageName, buttonName){
       eventStack.push("setting medium");
       buttonOn("settings", "medium");
       buttonOff("settings", "higher");
-      buttonOff("settings", "test");
+      //buttonOff("settings", "test");
       genericSet("quality", "medium");
       }
     if(buttonName=="higher"){
       eventStack.push("setting higher");
       buttonOff("settings", "medium");
       buttonOn("settings", "higher");
-      buttonOff("settings", "test");
+      //buttonOff("settings", "test");
       genericSet("quality", "higher");
 
       }
@@ -2670,7 +2680,7 @@ function handleButton(pageName, buttonName){
       eventStack.push("setting higher");
       buttonOff("settings", "medium");
       buttonOff("settings", "higher");
-      buttonOn("settings", "test");
+      //buttonOn("settings", "test");
       genericSet("quality", "test");
 
       }
