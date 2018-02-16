@@ -1,9 +1,11 @@
-<!DOCTYPE HTML>
+n <!DOCTYPE HTML>
 <html>
 <head>
 <title>KUOM Radio K</title>
 <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.01,minimal-ui">
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
 
 <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' *; connect-src *">
 
@@ -113,9 +115,10 @@ var urlByQuality={
   "medium":"http://radiokstreams.cce.umn.edu:8128/;", 
   "high":"http://radiokstreams.cce.umn.edu:8256/;", 
   "higher":"http://radiokstreams.cce.umn.edu:8256/;", 
-  "broken":"http://radiokstreams.cce.umn.edu:8168/;"
+  "broken":"http://radiokstreams.cce.umn.edu:8168/;",
+  "test":"http://128.101.73.38:8256/;"
 };
-
+//http://128.101.73.38:8256/
 /*
 // test FAIL on android
 var urlByQuality={
@@ -2654,9 +2657,6 @@ function handleButton(pageName, buttonName){
       buttonOff("settings", "higher");
       //buttonOff("settings", "broken");
       genericSet("quality", "medium");
-      
-      
-
       }
     if(buttonName=="higher"){
       eventStack.push("setting higher");
@@ -2664,6 +2664,14 @@ function handleButton(pageName, buttonName){
       buttonOn("settings", "higher");
       //buttonOff("settings", "broken");
       genericSet("quality", "higher");
+
+      }
+    if(buttonName=="test"){
+      eventStack.push("setting higher");
+      buttonOff("settings", "medium");
+      buttonoff("settings", "higher");
+      buttonOn("settings", "test");
+      genericSet("quality", "test");
 
       }
     if(buttonName=="broken"){
