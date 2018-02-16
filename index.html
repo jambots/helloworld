@@ -2655,36 +2655,25 @@ function handleButton(pageName, buttonName){
       eventStack.push("setting medium");
       buttonOn("settings", "medium");
       buttonOff("settings", "higher");
-      //buttonOff("settings", "broken");
+      buttonOff("settings", "test");
       genericSet("quality", "medium");
       }
     if(buttonName=="higher"){
       eventStack.push("setting higher");
       buttonOff("settings", "medium");
       buttonOn("settings", "higher");
-      //buttonOff("settings", "broken");
+      buttonOff("settings", "test");
       genericSet("quality", "higher");
 
       }
     if(buttonName=="test"){
       eventStack.push("setting higher");
       buttonOff("settings", "medium");
-      buttonoff("settings", "higher");
+      buttonOff("settings", "higher");
       buttonOn("settings", "test");
       genericSet("quality", "test");
 
       }
-    if(buttonName=="broken"){
-      eventStack.push("setting broken");
-      buttonOff("settings", "medium");
-      buttonOff("settings", "higher");
-      buttonOn("settings", "broken");
-
-      genericSet("quality", "broken");
-
-
-      }
-
     }
   if(pageName=="faqs"){
     if(buttonName=="done"){
