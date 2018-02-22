@@ -1,6 +1,8 @@
 
 function handleButton(pageName, buttonName){
   console.log("handleButton("+pageName+", "+buttonName+")");
+  if(buttonName != "events"){buttonOff("footnav", "events");}
+  if(buttonName != "playlist"){buttonOff("footnav", "playlist");}
 
   if(buttonName=="home"){
     buttonOn(currentPage, "home");
