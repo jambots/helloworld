@@ -66,8 +66,8 @@ function handleButton(pageName, buttonName){
     if(buttonName=="timeset"){
       mouseStartX=mouseX;
       mouseStartY=mouseY;
-      var buttLeft=pages[3].buttons[1].left*grid+leftOffset;
-      var buttWidth=pages[3].buttons[1].width*grid;
+      var buttLeft=pages[numOfPage('alarm')].buttons[1].left*grid+leftOffset;
+      var buttWidth=pages[numOfPage('alarm')].buttons[1].width*grid;
       deltaX=mouseX-buttLeft;
       var xFrac=deltaX/buttWidth;
       touchingDial=1;

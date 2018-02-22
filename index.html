@@ -1734,10 +1734,19 @@ function dialTick(){
     updateAlarmDisplay();
     }
   }
+function numOfPage(pageName){
+  var pageNum=-1;
+  for (var p=0; p<pages.length; p++){
+    if(pages[p].name==pageName){
+      pageNum=p;
+      }
+    }
+  return pageNum;
+  }
 function updateAlarmDisplay(){
   var pMod=genericGet("alarmMinuteOfDay");
   //dbug("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
-  var lineHeight=Math.floor(pages[3].contents[0].lineHeight*grid);
+  var lineHeight=Math.floor(pages[numOfPage('alarm')].contents[0].lineHeight*grid);
   var nowDate=new Date();
   var nowMod=nowDate.getHours()*60+nowDate.getMinutes();
   if(touchingDial>-1){
@@ -1788,8 +1797,8 @@ function populateDials(){
 
   var mod=genericGet("alarmMinuteOfDay");
   dials=[];
-  for (var d=0; d<pages[3].contents.length; d++){
-    var pane=pages[3].contents[d];
+  for (var d=0; d<pages[numOfPage('alarm')].contents.length; d++){
+    var pane=pages[numOfPage('alarm')].contents[d];
     var dial={"name":pane.name+"Dial", "touchStart":0, "initVal":0, "atVal":0, "destVal":0, "maxVal":0, "speed":0, "prog":0, "history":initHistory, "max":0}; 
     dials.push(dial);
     }
