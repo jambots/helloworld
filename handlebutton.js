@@ -1,6 +1,17 @@
 
 function handleButton(pageName, buttonName){
   console.log("handleButton("+pageName+", "+buttonName+")");
+
+  if(buttonName=="home"){
+    buttonOn(currentPage, "home");
+    window.setTimeout('buttonOff("'+currentPage+'", "home"); selectPage("home");', navDelay);
+    }
+  if(buttonName=="menu"){
+    buttonOn(currentPage, "menu");
+    window.setTimeout('buttonOff("'+currentPage+'", "menu"); selectPage("menu");', navDelay);
+    }
+
+
   if(pageName=="footnav"){
     if(buttonName=="events"){
       selectPage("events");
