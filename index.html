@@ -167,7 +167,7 @@ var instDownloads=[];
 var rksDownloads=[];
 var wrsDownloads=[];
 var rcpDownloads=[];
-var whlDownloads=[];
+
 //new
 var nowPlaying="";
 
@@ -1125,15 +1125,12 @@ function getDownloads(){
   rksDownloads=[];
   wrsDownloads=[];
   rcpDownloads=[];
-  whlDownloads=[];
   document.getElementById('rksHolder').style.width=grid*48+'px'; 
   document.getElementById('rksHolder').style.height="100%"; 
-  document.getElementById('wrsHolder').style.width=grid*48+'px'; 
-  document.getElementById('wrsHolder').style.height="100%"; 
   document.getElementById('rcpHolder').style.width=grid*48+'px'; 
   document.getElementById('rcpHolder').style.height="100%"; 
-  document.getElementById('whlHolder').style.width=grid*48+'px'; 
-  document.getElementById('whlHolder').style.height="100%"; 
+  document.getElementById('wrsHolder').style.width=grid*48+'px'; 
+  document.getElementById('wrsHolder').style.height="100%"; 
 
     
 
@@ -1164,12 +1161,6 @@ function getDownloads(){
     success: function(xml) {parseDownloads(xml, "Real College Podcast");}
     });
   dbuga("getDownloads() 4");
-
-  $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Fweekendhitlist",
-    dataType: "xml",        
-    success: function(xml) {parseDownloads(xml, "Weekend Hit List");}
-    });
 
   dbuga('getDownloads completed');
   }
@@ -1282,39 +1273,6 @@ function parseDownloads(theXml, source){
       }
 
     updateRcpDownloads();
-    }
-  if(source=="Weekend Hit List"){
-    whlObj=xmlToJson(theXml);
-    var itemsArray=whlObj.rss.channel.item;
-    //dbuga(source+' itemsArray.length='+itemsArray.length);
-    for (var i=0; (i<itemsArray.length)&&(i<14); i++){
-      var thisObj=itemsArray[i];
-      var dateStr=thisObj.pubDate["#text"];
-      var parts=dateStr.split(" ");
-      var yyyy=parts[3];
-      var mm=monToMM[parts[2]];
-      var dd=parts[1];
-      var timeCode=parts[4];
-      var timeParts=timeCode.split(":");
-      var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
-      var sortNum=yyyy+mm+dd+hhmmss;
-      var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
-      var title=thisObj.title["#text"];
-      var description=thisObj.description["#text"];
-      var link=thisObj.link["#text"];
-      var item={
-        "sort":sortNum, 
-        "source":source, 
-        "date":dispDate, 
-        "image":thisObj["itunes:image"]["@attributes"]["href"], 
-        "title":title,
-        "description":description, 
-        "link":link
-        };
-      whlDownloads.push(item);
-      }
-
-    updateWhlDownloads();
     }
   //dbuga('parse completed');
   }
@@ -1458,39 +1416,6 @@ function updateRcpDownloads(){
   document.getElementById('rcpScroller').innerHTML=htmlBlock;
   document.getElementById('rcpHolder').style.width=grid*48+'px'; 
   document.getElementById('rcpHolder').style.height="100%"; 
-  }
-function updateWhlDownloads(){
-  //dbuga('updateWhlDownloads()');
-  var sortedDownloads=whlDownloads.sort(function(a, b){
-      // furthest to nearest
-      return b.sort-a.sort
-    });
-
-  var gradStyle=returnGradStyle();
-  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
-  var htmlBlock="";
-  for(var d=0; d<sortedDownloads.length; d++){
-    var downloadItem=sortedDownloads[d];
-    if(d==0){
-      document.getElementById("page_ondemand_button_whl").style.backgroundImage='url('+downloadItem.image+')';
-
-      document.getElementById("page_ondemand_button_whl_on").style.backgroundColor='#333';
-      document.getElementById("page_ondemand_button_whl_on").style.backgroundImage='url('+downloadItem.image+')';
-      document.getElementById("page_ondemand_button_whl_on").style.backgroundSize=squareShrink+'%';
-
-      }
-    //dbuga(downloadItem.link);
-    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
-    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
-    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
-    if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
-    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+'</a>';
-    htmlBlock+='</div></div>';
-    }
-  document.getElementById('whlScroller').innerHTML=htmlBlock;
-  document.getElementById('whlHolder').style.width=grid*48+'px'; 
-  document.getElementById('whlHolder').style.height="100%"; 
   }
 
 
@@ -2123,7 +2048,7 @@ function populateContainer(){
   */
   //dbuga('populateContainer 8');
 
-  var scrollIdArray=["resultsHolder", "playlistHolder", "calendarHolder", "rksHolder", "wrsHolder", "rcpHolder", "whlHolder", "instHolder"];
+  var scrollIdArray=["resultsHolder", "playlistHolder", "calendarHolder", "rksHolder", "wrsHolder", "rcpHolder", "instHolder"];
   for (var s=0; s<scrollIdArray.length; s++){
     new ScrollFix(document.getElementById(scrollIdArray[s]));
     }
@@ -2522,7 +2447,7 @@ function touchStart(event){
   }
 
 function touchMove(event){
-  if((currentPage !="rks")&&(currentPage !="wrs")&&(currentPage !="rcp")&&(currentPage !="whl")&&(currentPage !="inst")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
+  if((currentPage !="rks")&&(currentPage !="wrs")&&(currentPage !="rcp")&&(currentPage !="inst")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
     event.preventDefault();
     }
   if(currentPage =="alarm"){

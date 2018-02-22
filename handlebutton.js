@@ -194,10 +194,6 @@ function handleButton(pageName, buttonName){
       buttonOn("ondemand", "done");
       ////window.setTimeout('buttonOff("ondemand", "done"); buttonOn("footnav", "home"); selectPage("home");', navDelay);
       }
-    if(buttonName=="events"){
-      buttonOn("ondemand", "events");
-      window.setTimeout('buttonOff("ondemand", "events"); selectPage("events");', navDelay);
-      }
     if(buttonName=="rks"){
       buttonOn("ondemand", "rks");
       window.setTimeout('buttonOff("ondemand", "rks"); selectPage("rks");', navDelay);
@@ -209,10 +205,6 @@ function handleButton(pageName, buttonName){
     if(buttonName=="rcp"){
       buttonOn("ondemand", "rcp");
       window.setTimeout('buttonOff("ondemand", "rcp"); selectPage("rcp");', navDelay);
-      }
-    if(buttonName=="whl"){
-      buttonOn("ondemand", "whl");
-      window.setTimeout('buttonOff("ondemand", "whl"); selectPage("whl");', navDelay);
       }
     if(buttonName=="inst"){
       instPage=1;
@@ -240,16 +232,6 @@ function handleButton(pageName, buttonName){
     if(buttonName=="srcp"){
       buttonOn("rcp", "srcp");
       window.setTimeout('buttonOff("rcp", "srcp"); remoteLink("https://itunes.apple.com/us/podcast/real-college-podcast/id1018935053?mt=2");', navDelay);
-      }
-    }
-  if(pageName=="whl"){
-    if(buttonName=="done"){
-      buttonOn("whl", "done");
-      window.setTimeout('buttonOff("whl", "done"); selectPage("ondemand");', navDelay);
-      }
-    if(buttonName=="swhl"){
-      buttonOn("whl", "swhl");
-      window.setTimeout('buttonOff("whl", "swhl"); remoteLink("https://itunes.apple.com/us/podcast/weekend-hit-list/id1019774674?mt=2");', navDelay);
       }
     }
 

@@ -1,14 +1,4 @@
 var pages=[
-{"name":"footnav", "vAlign":"bottom", "hideLeft":0, "hideTop":0,  "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":1, "height":64,
-   "boxes":[],
-   "buttons":[
-    {"name":"events", "top":-6, "left":0, "height":6, "width":16},
-    {"name":"playlist", "top":-6, "left":16, "height":6, "width":16},
-    {"name":"donate", "top":-6, "left":32, "height":6, "width":16}
-  ],
-  "contents":[
-  ]
-},
 {"name":"home", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":1, "height":58,
   "boxes":[],
   "buttons":[
@@ -23,6 +13,38 @@ var pages=[
     {"name":"djDiv", "top":51, "left":1, "width":46, "height":8, "lineHeight":2.5, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":""}
   ]
 },
+{"name":"footnav", "vAlign":"bottom", "hideLeft":0, "hideTop":0,  "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":1, "height":64,
+   "boxes":[],
+   "buttons":[
+    {"name":"events", "top":-6, "left":0, "height":6, "width":16},
+    {"name":"playlist", "top":-6, "left":16, "height":6, "width":16},
+    {"name":"donate", "top":-6, "left":32, "height":6, "width":16}
+  ],
+  "contents":[
+  ]
+},
+{"name":"events", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
+  "buttons":[
+    {"name":"home", "top":0, "left":40, "height":8, "width":8},
+    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
+  ],
+  "contents":[
+    {"name":"events", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="calendarHolder"><div id="calendarScroller"></div></div>'}
+  ]
+},
+{"name":"playlist", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
+  "buttons":[
+    {"name":"refresh", "top":0, "left":0, "height":7, "width":12},
+    {"name":"home", "top":0, "left":40, "height":8, "width":8}
+
+  ],
+  "contents":[
+    {"name":"playlist", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="playlistHolder"><div id="playlistScroller"></div></div>'}
+  ]
+},
+
 {"name":"menu", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
   "boxes":[],
   "buttons":[
@@ -37,6 +59,68 @@ var pages=[
   "contents":[
   ]
 },
+{"name":"ondemand", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[
+    {"name":"instBox", "top":8.5, "left":30, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"rksBox", "top":24.5, "left":6, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"wrsBox", "top":24.5, "left":30, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"rcpBox", "top":40.5, "left":6, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+  ],
+  "buttons":[
+    {"name":"home", "top":0, "left":40, "height":8, "width":8},
+    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
+    {"name":"events", "top":9, "left":6.5, "height":11, "width":11},
+    {"name":"inst", "top":9, "left":30.5, "height":11, "width":11},
+    {"name":"rcp", "top":41, "left":6.5, "height":11, "width":11},
+    {"name":"rks", "top":25, "left":6.5, "height":11, "width":11},
+    {"name":"wrs", "top":25, "left":30.5, "height":11, "width":11},
+  ],
+  "contents":[
+    {"name":"rcpDesc", "top":53, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','rcp');\">REAL COLLEGE PODCAST</a>"},
+    {"name":"instDesc", "top":21, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','inst');\">IN-STUDIOS</a>"},
+    {"name":"rksDesc", "top":37, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','rks');\">K SESSIONS</a>"},
+    {"name":"wrsDesc", "top":37, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','wrs');\">WEEKLY RELEASE SPOTLIGHT</a>"},
+  ]
+},
+{"name":"inst", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
+  "buttons":[
+    {"name":"home", "top":0, "left":39, "height":7, "width":9},
+  ],
+  "contents":[
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="instHolder"><div id="instScroller"></div></div>'}
+  ]
+},
+{"name":"rcp", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
+  "buttons":[
+    {"name":"home", "top":0, "left":39, "height":7, "width":9},
+    {"name":"srcp", "top":0, "left":0, "height":7, "width":12},
+  ],
+  "contents":[
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="rcpHolder"><div id="rcpScroller"></div></div>'}
+  ]
+},
+{"name":"rks", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
+  "buttons":[
+    {"name":"home", "top":0, "left":39, "height":7, "width":9},
+    {"name":"srks", "top":0, "left":0, "height":7, "width":12}
+  ],
+  "contents":[
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="rksHolder"><div id="rksScroller"></div></div>'}
+  ]
+},
+{"name":"wrs", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+  "boxes":[],
+  "buttons":[
+    {"name":"home", "top":0, "left":39, "height":7, "width":9},
+  ],
+  "contents":[
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="wrsHolder"><div id="wrsScroller"></div></div>'}
+  ]
+},
+
 {"name":"alarm", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
   "boxes":[],
   "buttons":[
@@ -73,6 +157,41 @@ var pages=[
     {"name":"nowAmPm", "top":34, "left":39, "width":8, "height":7, "lineHeight":4, "fontSize":2.9, "fontFamily":"akzilight", "color":"#fff", "textAlign":"center", "defaultText":"AM"}
   ]
 },
+{"name":"quality", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
+  "boxes":[],
+  "buttons":[
+    {"name":"home", "top":0, "left":40, "height":8, "width":8},
+    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
+    {"name":"medium", "top":14, "left":9, "height":6, "width":30},
+    {"name":"higher", "top":21, "left":9, "height":6, "width":30}
+  ],
+  "contents":[
+  ]
+},
+{"name":"faqs", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
+  "boxes":[],
+  "buttons":[
+    {"name":"home", "top":0, "left":40, "height":8, "width":8},
+    {"name":"menu", "top":0, "left":0, "height":8, "width":8}
+  ],
+  "contents":[
+    {"name":"faqsDiv", "top":7.5, "left":0, "height":45.5, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":"How do I become a rich and<br>famous Radio K DJ?"},
+    {"name":"regentsDiv", "top":53, "left":0, "height":5, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":"How do I become a rich and<br>famous Radio K DJ?"}
+  ]
+},
+{"name":"contact", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
+  "boxes":[],
+  "buttons":[
+    {"name":"home", "top":0, "left":40, "height":8, "width":8},
+    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
+    {"name":"phone", "top":11, "left":9, "height":6, "width":30},
+    {"name":"email", "top":18, "left":9, "height":6, "width":30},
+    {"name":"tweet", "top":25, "left":9, "height":6, "width":30},
+    {"name":"radiok", "top":33, "left":8, "height":20, "width":32}
+  ],
+  "contents":[
+  ]
+},
 {"name":"shop", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
   "boxes":[],
   "buttons":[
@@ -93,138 +212,8 @@ var pages=[
   "contents":[
     {"name":"shopStatusDiv", "top":20, "left":1, "width":46, "height":8, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"Sorry... this track not found in iTunes Store."},  ]
 },
-{"name":"quality", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
-  "boxes":[],
-  "buttons":[
-    {"name":"home", "top":0, "left":40, "height":8, "width":8},
-    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
-    {"name":"medium", "top":14, "left":9, "height":6, "width":30},
-    {"name":"higher", "top":21, "left":9, "height":6, "width":30}
-  ],
-  "contents":[
-  ]
-},
-{"name":"contact", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
-  "boxes":[],
-  "buttons":[
-    {"name":"home", "top":0, "left":40, "height":8, "width":8},
-    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
-    {"name":"phone", "top":11, "left":9, "height":6, "width":30},
-    {"name":"email", "top":18, "left":9, "height":6, "width":30},
-    {"name":"tweet", "top":25, "left":9, "height":6, "width":30},
-    {"name":"radiok", "top":33, "left":8, "height":20, "width":32}
-  ],
-  "contents":[
-  ]
-},
-{"name":"playlist", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "boxes":[],
-  "buttons":[
-    {"name":"refresh", "top":0, "left":0, "height":7, "width":12},
-    {"name":"home", "top":0, "left":40, "height":8, "width":8}
 
-  ],
-  "contents":[
-    {"name":"playlist", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="playlistHolder"><div id="playlistScroller"></div></div>'}
-  ]
-},
-{"name":"events", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "boxes":[],
-  "buttons":[
-    {"name":"home", "top":0, "left":40, "height":8, "width":8},
-    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
-  ],
-  "contents":[
-    {"name":"events", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="calendarHolder"><div id="calendarScroller"></div></div>'}
-  ]
-},
-{"name":"ondemand", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "boxes":[
-    {"name":"eventsBox", "top":8.5, "left":6, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"instBox", "top":8.5, "left":30, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"rksBox", "top":24.5, "left":6, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"wrsBox", "top":24.5, "left":30, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"rcpBox", "top":40.5, "left":6, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"whlBox", "top":40.5, "left":30, "width":12, "height":12, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-  ],
-  "buttons":[
-    {"name":"home", "top":0, "left":40, "height":8, "width":8},
-    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
-    {"name":"events", "top":9, "left":6.5, "height":11, "width":11},
-    {"name":"inst", "top":9, "left":30.5, "height":11, "width":11},
-    {"name":"rks", "top":25, "left":6.5, "height":11, "width":11},
-    {"name":"wrs", "top":25, "left":30.5, "height":11, "width":11},
-    {"name":"rcp", "top":41, "left":6.5, "height":11, "width":11},
-    {"name":"whl", "top":41, "left":30.5, "height":11, "width":11},
-  ],
-  "contents":[
-    {"name":"eventsDesc", "top":21, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','events');\">EVENTS</a>"},
-    {"name":"rcpDesc", "top":53, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','rcp');\">REAL COLLEGE PODCAST</a>"},
-    {"name":"instDesc", "top":21, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','inst');\">IN-STUDIOS</a>"},
-    {"name":"rksDesc", "top":37, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','rks');\">K SESSIONS</a>"},
-    {"name":"wrsDesc", "top":37, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','wrs');\">WEEKLY RELEASE SPOTLIGHT</a>"},
-    {"name":"whlDesc", "top":53, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','whl');\">WEEKEND HIT LIST</a>"},
-  ]
-},
-{"name":"rks", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "boxes":[],
-  "buttons":[
-    {"name":"home", "top":0, "left":39, "height":7, "width":9},
-    {"name":"srks", "top":0, "left":0, "height":7, "width":12}
-  ],
-  "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="rksHolder"><div id="rksScroller"></div></div>'}
-  ]
-},
-{"name":"wrs", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "boxes":[],
-  "buttons":[
-    {"name":"home", "top":0, "left":39, "height":7, "width":9},
-  ],
-  "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="wrsHolder"><div id="wrsScroller"></div></div>'}
-  ]
-},
-{"name":"rcp", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "boxes":[],
-  "buttons":[
-    {"name":"home", "top":0, "left":39, "height":7, "width":9},
-    {"name":"srcp", "top":0, "left":0, "height":7, "width":12},
-  ],
-  "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="rcpHolder"><div id="rcpScroller"></div></div>'}
-  ]
-},
-{"name":"whl", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "boxes":[],
-  "buttons":[
-    {"name":"home", "top":0, "left":39, "height":7, "width":9},
-    {"name":"swhl", "top":0, "left":0, "height":7, "width":12},
-  ],
-  "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="whlHolder"><div id="whlScroller"></div></div>'}
-  ]
-},
-{"name":"inst", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
-  "boxes":[],
-  "buttons":[
-    {"name":"home", "top":0, "left":39, "height":7, "width":9},
-  ],
-  "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="instHolder"><div id="instScroller"></div></div>'}
-  ]
-},
-{"name":"faqs", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":58,
-  "boxes":[],
-  "buttons":[
-    {"name":"home", "top":0, "left":40, "height":8, "width":8},
-    {"name":"menu", "top":0, "left":0, "height":8, "width":8}
-  ],
-  "contents":[
-    {"name":"faqsDiv", "top":7.5, "left":0, "height":45.5, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":"How do I become a rich and<br>famous Radio K DJ?"},
-    {"name":"regentsDiv", "top":53, "left":0, "height":5, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":"How do I become a rich and<br>famous Radio K DJ?"}
-  ]
-}];
+];
 var monToMM={"Jan":"01", "Feb":"02", "Mar":"03", "Apr":"04", "May":"05", "Jun":"06", "Jul":"07", "Aug":"08", "Sep":"09", "Oct":"10", "Nov":"11", "Dec":"12"};
 var monToMonth={"Jan":"January", "Feb":"February", "Mar":"March", "Apr":"April", "May":"May", "Jun":"June", "Jul":"July", "Aug":"August", "Sep":"September", "Oct":"October", "Nov":"November", "Dec":"December"};
 /* extras for ref
