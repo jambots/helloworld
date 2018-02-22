@@ -369,7 +369,7 @@ function processEvents(){
             state.uiPlaying=false;
             
             nowPlaying+=".";
-            buttonOff('listen', 'playpause');
+            buttonOff('home', 'playpause');
             evt+=" - remotePaused"; 
             }
           else{
@@ -498,7 +498,7 @@ function processEvents(){
         state.retryAttempts=0;
         state.waitEvents=0;
         state.uiPlaying=true;
-        buttonOn("listen", "playpause");
+        buttonOn("home", "playpause");
         checkInternet();
         var url=createStream();
         evt+=" - test internet then createStream() "+url; 
@@ -556,8 +556,8 @@ function processEvents(){
     //dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
     dbuga('end of processEvents() ')
     }//end if event stack
-  document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying;
-  document.getElementById('page_listen_content_djDiv').innerHTML=nowDj;
+  document.getElementById('page_home_content_nowPlayingDiv').innerHTML=nowPlaying;
+  document.getElementById('page_home_content_djDiv').innerHTML=nowDj;
   state.errorPause=false;
 
   }
@@ -756,7 +756,7 @@ function createStream(){
 function playingFunction(audioCount){
        state.streamPlaying=true;
        state.uiPlaying=true;
-       buttonOn('listen', 'playpause');
+       buttonOn('home', 'playpause');
        eventStack.push('audio playing '+audioCount);
        updateNowPlaying();
 
@@ -788,12 +788,12 @@ function togglePlaying(){
   if(state.uiPlaying==true){
     state.uiPlaying=false;
     eventStack.push('ui pause');
-    buttonOff("listen", "playpause");
+    buttonOff("home", "playpause");
     }
   else{
     state.uiPlaying=true;
     eventStack.push('ui play');
-    buttonOn("listen", "playpause");
+    buttonOn("home", "playpause");
     }
   }
 
@@ -825,7 +825,7 @@ function genericGet(itemName){
 
 function resumeInit(){
   dbuga('resumeInit 0.0');
-  currentPage="listen";
+  currentPage="home";
   
   populateContainer();
   //dbuga('resumeInit 1');
@@ -833,8 +833,8 @@ function resumeInit(){
   genericDefault("sleepMinutesDefault", 10);
   genericDefault("quality", "higher");
   //dbuga('resumeInit 2');
-  buttonOn("settings", genericGet("quality"));
-  buttonOn("footnav", "listen");
+  buttonOn("quality", genericGet("quality"));
+  ////buttonOn("footnav", "home");
   //dbuga(' resumeInit 3');
   clearInterval(minuteInterval);
   minuteInterval=setInterval('minuteTick()', minuteMs);
@@ -852,7 +852,7 @@ function resumeInit(){
   //dbuga(' init 5');
   //retryInterval=window.setInterval("retryTick()", 15000);    
 
-  selectPage("listen");
+  selectPage("home");
   getRecentSongJson();
 
   document.addEventListener("offline", onOffline, false);
@@ -928,11 +928,11 @@ function updateInstDownloads(){
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
   var spotlightImage=inst[0].imageSrc;
 
-  document.getElementById("page_extras_button_inst").style.backgroundImage='url('+spotlightImage+')';
+  document.getElementById("page_ondemand_button_inst").style.backgroundImage='url('+spotlightImage+')';
 
-  document.getElementById("page_extras_button_inst_on").style.backgroundColor='#333';
-  document.getElementById("page_extras_button_inst_on").style.backgroundImage='url('+spotlightImage+')';
-  document.getElementById("page_extras_button_inst_on").style.backgroundSize=squareShrink+'%';
+  document.getElementById("page_ondemand_button_inst_on").style.backgroundColor='#333';
+  document.getElementById("page_ondemand_button_inst_on").style.backgroundImage='url('+spotlightImage+')';
+  document.getElementById("page_ondemand_button_inst_on").style.backgroundSize=squareShrink+'%';
 
 
   var htmlBlock="";
@@ -1367,11 +1367,11 @@ function updateWrsDownloads(){
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
   var spotlightImage=sortedDownloads[0].image;
   //dbuga("spotlightImage="+spotlightImage);
-  document.getElementById("page_extras_button_wrs").style.backgroundImage='url('+spotlightImage+')';
+  document.getElementById("page_ondemand_button_wrs").style.backgroundImage='url('+spotlightImage+')';
 
-  document.getElementById("page_extras_button_wrs_on").style.backgroundColor='#333';
-  document.getElementById("page_extras_button_wrs_on").style.backgroundImage='url('+spotlightImage+')';
-  document.getElementById("page_extras_button_wrs_on").style.backgroundSize=squareShrink+'%';
+  document.getElementById("page_ondemand_button_wrs_on").style.backgroundColor='#333';
+  document.getElementById("page_ondemand_button_wrs_on").style.backgroundImage='url('+spotlightImage+')';
+  document.getElementById("page_ondemand_button_wrs_on").style.backgroundSize=squareShrink+'%';
 
   var htmlBlock="";
   for(var d=0; d<sortedDownloads.length; d++){
@@ -1405,10 +1405,10 @@ function updateRksDownloads(){
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
     if(d==0){
-      document.getElementById("page_extras_button_rks").style.backgroundImage='url('+downloadItem.image+')';
-      document.getElementById("page_extras_button_rks_on").style.backgroundColor='#333';
-      document.getElementById("page_extras_button_rks_on").style.backgroundImage='url('+downloadItem.image+')';
-      document.getElementById("page_extras_button_rks_on").style.backgroundSize=squareShrink+'%';
+      document.getElementById("page_ondemand_button_rks").style.backgroundImage='url('+downloadItem.image+')';
+      document.getElementById("page_ondemand_button_rks_on").style.backgroundColor='#333';
+      document.getElementById("page_ondemand_button_rks_on").style.backgroundImage='url('+downloadItem.image+')';
+      document.getElementById("page_ondemand_button_rks_on").style.backgroundSize=squareShrink+'%';
       }
     //dbuga(downloadItem.link);
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
@@ -1438,11 +1438,11 @@ function updateRcpDownloads(){
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
     if(d==0){
-      document.getElementById("page_extras_button_rcp").style.backgroundImage='url('+downloadItem.image+')';
+      document.getElementById("page_ondemand_button_rcp").style.backgroundImage='url('+downloadItem.image+')';
 
-      document.getElementById("page_extras_button_rcp_on").style.backgroundColor='#333';
-      document.getElementById("page_extras_button_rcp_on").style.backgroundImage='url('+downloadItem.image+')';
-      document.getElementById("page_extras_button_rcp_on").style.backgroundSize=squareShrink+'%';
+      document.getElementById("page_ondemand_button_rcp_on").style.backgroundColor='#333';
+      document.getElementById("page_ondemand_button_rcp_on").style.backgroundImage='url('+downloadItem.image+')';
+      document.getElementById("page_ondemand_button_rcp_on").style.backgroundSize=squareShrink+'%';
 
       }
     dbuga(downloadItem.link);
@@ -1471,11 +1471,11 @@ function updateWhlDownloads(){
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
     if(d==0){
-      document.getElementById("page_extras_button_whl").style.backgroundImage='url('+downloadItem.image+')';
+      document.getElementById("page_ondemand_button_whl").style.backgroundImage='url('+downloadItem.image+')';
 
-      document.getElementById("page_extras_button_whl_on").style.backgroundColor='#333';
-      document.getElementById("page_extras_button_whl_on").style.backgroundImage='url('+downloadItem.image+')';
-      document.getElementById("page_extras_button_whl_on").style.backgroundSize=squareShrink+'%';
+      document.getElementById("page_ondemand_button_whl_on").style.backgroundColor='#333';
+      document.getElementById("page_ondemand_button_whl_on").style.backgroundImage='url('+downloadItem.image+')';
+      document.getElementById("page_ondemand_button_whl_on").style.backgroundSize=squareShrink+'%';
 
       }
     //dbuga(downloadItem.link);
@@ -1745,7 +1745,7 @@ function secondTick(){
 
       //dbuga('alarm');
       nowPlaying="Alarming";
-      document.getElementById('page_listen_content_djDiv').innerHTML="";
+      document.getElementById('page_home_content_djDiv').innerHTML="";
       eventStack.push("alarm fired");
       selectPage("wakeup");
       }
@@ -2043,9 +2043,11 @@ function populateContainer(){
         htmlString+='</div>'
         }
       else{
+        var pageName=page.name;
+        if((button.name=="home")||(button.name=="menu")){pageName="*";}
         buttonMap.push({"page":page.name, "name":button.name, "left":grid*button.left, "right":grid*button.left+grid*button.width, "top":top, "bottom":top+grid*button.height});
-        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'" class="buttons" style="background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_off.png); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:'+ grid*button.left +'px; top:'+ top +'px;">';
-        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'_on" class="buttons" style="opacity:0; background-image:url('+imagePath+'/page_'+page.name+'_button_'+button.name+'_on.png); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:0px; top:0px;">';
+        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'" class="buttons" style="background-image:url('+imagePath+'/page_'+pageName+'_button_'+button.name+'_off.png); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:'+ grid*button.left +'px; top:'+ top +'px;">';
+        htmlString+='<div id="page_'+page.name+'_button_'+button.name+'_on" class="buttons" style="opacity:0; background-image:url('+imagePath+'/page_'+pageName+'_button_'+button.name+'_on.png); width:'+ grid*button.width +'px; height:'+ grid*button.height +'px; left:0px; top:0px;">';
         htmlString+='</div>'
         htmlString+='</div>'
         }
@@ -2091,7 +2093,7 @@ function populateContainer(){
   document.getElementById('container').innerHTML=htmlString;
 
   if(state.ios){
-    // sept 15 2016//document.getElementById("page_listen_content_bufferingDiv").style.display="none";
+    // sept 15 2016//document.getElementById("page_home_content_bufferingDiv").style.display="none";
     //dbuga('populateContainer() 7 ios ');
     bCanv=document.getElementById("bufferingCanvas");
     bCtx=bCanv.getContext('2d');
@@ -2175,7 +2177,7 @@ function bufferTick(){
       message='<span class="black">.</span>'+message+"."; 
       }
     nowPlaying=message;
-    document.getElementById('page_listen_content_nowPlayingDiv').innerHTML=nowPlaying;
+    document.getElementById('page_home_content_nowPlayingDiv').innerHTML=nowPlaying;
     document.getElementById('debugDiv').innerHTML+=".";
     if(deltaMs>30000){bufferMs+=15;}
     if(deltaMs>45000){bufferMs+=30;}
@@ -2298,9 +2300,11 @@ function endDialTouch(){
   }
 
 function buttonOn(thePage, theButton){
+  console.log('page_'+thePage+'_button_'+theButton+'_on');
   document.getElementById('page_'+thePage+'_button_'+theButton+'_on').style.opacity="1";
   }
 function buttonOff(thePage, theButton){
+  console.log('page_'+thePage+'_button_'+theButton+'_on');
   document.getElementById('page_'+thePage+'_button_'+theButton+'_on').style.opacity="0";
   }
 
@@ -2379,7 +2383,7 @@ function remoteLink(theUrl){
   
   if(theUrl.indexOf('mp3')>-1){
     state.uiPlaying=false;
-    buttonOff("listen", "playpause");
+    buttonOff("home", "playpause");
     if(state.streamPlaying){pauseStream();}
     }
   var ref = window.open(theUrl, "_system");
@@ -2467,11 +2471,11 @@ function handleButton(pageName, buttonName){
       state.streamCreated=false;
       pauseStream();
       
-      buttonOff("listen", "playpause");
+      buttonOff("home", "playpause");
       }
     if(buttonName=="cancel"){
       buttonOn("alarm", "cancel");
-      window.setTimeout('buttonOff("alarm", "cancel"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
+      ////window.setTimeout('buttonOff("alarm", "cancel"); buttonOn("footnav", "home"); selectPage("home");', navDelay);
       }
     //dbuga('handleButton('+pageName+', '+buttonName+')');
     }
@@ -2479,12 +2483,12 @@ function handleButton(pageName, buttonName){
     if(buttonName=="alarmoff"){
 
       state.uiPlaying=false;
-      buttonOff("listen", "playpause");
+      buttonOff("home", "playpause");
       state.streamCreated=false;
       state.alarmTriggered=false;
       pauseStream();
       buttonOn("wakeup", "alarmoff");
-      window.setTimeout('buttonOff("wakeup", "alarmoff"); selectPage("listen");', navDelay);
+      window.setTimeout('buttonOff("wakeup", "alarmoff"); selectPage("home");', navDelay);
       }
     if(buttonName=="snooze"){
       var nowDate=new Date();
@@ -2498,7 +2502,7 @@ function handleButton(pageName, buttonName){
       window.plugins.insomnia.keepAwake();
       state.uiPlaying=false;
       pauseStream();
-      buttonOff("listen", "playpause");
+      buttonOff("home", "playpause");
       buttonOn("wakeup", "snooze");
       window.setTimeout('buttonOff("wakeup", "snooze"); selectPage("armed");', navDelay);
       }
@@ -2511,14 +2515,14 @@ function handleButton(pageName, buttonName){
       }
     }
   if(pageName=="footnav"){
-    if(buttonName=="listen"){
-      selectPage("listen");
-      buttonOn("footnav", "listen");
+    if(buttonName=="home"){
+      selectPage("home");
+      ////buttonOn("footnav", "home");
       buttonOff("footnav", "request");
       }
     if(buttonName=="request"){
       selectPage("request");
-      buttonOff("footnav", "listen");
+      ////buttonOff("footnav", "home");
       buttonOn("footnav", "request");
       }
     if(buttonName=="donate"){
@@ -2528,21 +2532,21 @@ function handleButton(pageName, buttonName){
       window.setTimeout("remoteLink('http://www.radiok.org/donate/')", navDelay);
       }
     }
-  if(pageName=="listen"){
-    if(buttonName=="settings"){
-      buttonOff("footnav", "listen");
-      buttonOn("listen", "settings");
-      window.setTimeout('buttonOff("listen", "settings"); selectPage("settings");', navDelay);
+  if(pageName=="home"){
+    if(buttonName=="quality"){
+      ////buttonOff("footnav", "home");
+      buttonOn("home", "quality");
+      window.setTimeout('buttonOff("home", "quality"); selectPage("quality");', navDelay);
       }
     if(buttonName=="more"){
-      buttonOff("footnav", "listen");
-      buttonOn("listen", "more");
-      window.setTimeout('buttonOff("listen", "more"); selectPage("more");', navDelay);
+      ////buttonOff("footnav", "home");
+      buttonOn("home", "more");
+      window.setTimeout('buttonOff("home", "more"); selectPage("more");', navDelay);
       }
     if(buttonName=="playlist"){
-      buttonOff("footnav", "listen");
-      buttonOn("listen", "playlist");
-      window.setTimeout('buttonOff("listen", "playlist"); selectPage("playlist");', navDelay);
+      ////buttonOff("footnav", "home");
+      buttonOn("home", "playlist");
+      window.setTimeout('buttonOff("home", "playlist"); selectPage("playlist");', navDelay);
       getRecentSongsJson();
       }
     if(buttonName=="playpause"){
@@ -2552,25 +2556,25 @@ function handleButton(pageName, buttonName){
   if(pageName=="more"){
     if(buttonName=="done"){
       buttonOn("more", "done");
-      window.setTimeout('buttonOff("more", "done"); selectPage("listen");', navDelay);
+      window.setTimeout('buttonOff("more", "done"); selectPage("home");', navDelay);
       }
-    if(buttonName=="extras"){
-      buttonOff("footnav", "listen");
-      buttonOn("more", "extras");
-      window.setTimeout('buttonOff("more", "extras"); getDownloads(); selectPage("extras");', navDelay);
+    if(buttonName=="ondemand"){
+      ////buttonOff("footnav", "home");
+      buttonOn("more", "ondemand");
+      window.setTimeout('buttonOff("more", "ondemand"); getDownloads(); selectPage("ondemand");', navDelay);
       }
     if(buttonName=="alarm"){
-      buttonOff("footnav", "listen");
+      ////buttonOff("footnav", "home");
       buttonOn("more", "alarm");
       window.setTimeout('buttonOff("more", "alarm"); selectPage("alarm");', navDelay);
       }
-    if(buttonName=="settings"){
-      buttonOff("footnav", "listen");
-      buttonOn("more", "settings");
-      window.setTimeout('buttonOff("more", "settings"); selectPage("settings");', navDelay);
+    if(buttonName=="quality"){
+      ////buttonOff("footnav", "home");
+      buttonOn("more", "quality");
+      window.setTimeout('buttonOff("more", "quality"); selectPage("quality");', navDelay);
       }
     if(buttonName=="faqs"){
-      buttonOff("footnav", "listen");
+      ////buttonOff("footnav", "home");
       buttonOn("more", "faqs");
       window.setTimeout('buttonOff("more", "faqs"); selectPage("faqs");', navDelay);
       }
@@ -2579,52 +2583,52 @@ function handleButton(pageName, buttonName){
   if(pageName=="shop"){
     if(buttonName=="done"){
       buttonOn("shop", "done");
-      window.setTimeout('buttonOff("shop", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
+      ////window.setTimeout('buttonOff("shop", "done"); buttonOn("footnav", "home"); selectPage("home");', navDelay);
       }
     }
   if(pageName=="shopempty"){
     if(buttonName=="done"){
       buttonOn("shopempty", "done");
-      window.setTimeout('buttonOff("shopempty", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
+      ////window.setTimeout('buttonOff("shopempty", "done"); buttonOn("footnav", "home"); selectPage("home");', navDelay);
       }
     }
-  if(pageName=="extras"){
+  if(pageName=="ondemand"){
     if(buttonName=="done"){
-      buttonOn("extras", "done");
-      window.setTimeout('buttonOff("extras", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
+      buttonOn("ondemand", "done");
+      ////window.setTimeout('buttonOff("ondemand", "done"); buttonOn("footnav", "home"); selectPage("home");', navDelay);
       }
     if(buttonName=="events"){
-      buttonOn("extras", "events");
-      window.setTimeout('buttonOff("extras", "events"); selectPage("events");', navDelay);
+      buttonOn("ondemand", "events");
+      window.setTimeout('buttonOff("ondemand", "events"); selectPage("events");', navDelay);
       }
     if(buttonName=="rks"){
-      buttonOn("extras", "rks");
-      window.setTimeout('buttonOff("extras", "rks"); selectPage("rks");', navDelay);
+      buttonOn("ondemand", "rks");
+      window.setTimeout('buttonOff("ondemand", "rks"); selectPage("rks");', navDelay);
       }
     if(buttonName=="wrs"){
-      buttonOn("extras", "wrs");
-      window.setTimeout('buttonOff("extras", "wrs"); selectPage("wrs");', navDelay);
+      buttonOn("ondemand", "wrs");
+      window.setTimeout('buttonOff("ondemand", "wrs"); selectPage("wrs");', navDelay);
       }
     if(buttonName=="rcp"){
-      buttonOn("extras", "rcp");
-      window.setTimeout('buttonOff("extras", "rcp"); selectPage("rcp");', navDelay);
+      buttonOn("ondemand", "rcp");
+      window.setTimeout('buttonOff("ondemand", "rcp"); selectPage("rcp");', navDelay);
       }
     if(buttonName=="whl"){
-      buttonOn("extras", "whl");
-      window.setTimeout('buttonOff("extras", "whl"); selectPage("whl");', navDelay);
+      buttonOn("ondemand", "whl");
+      window.setTimeout('buttonOff("ondemand", "whl"); selectPage("whl");', navDelay);
       }
     if(buttonName=="inst"){
       instPage=1;
       getInst();
-      buttonOn("extras", "inst");
-      window.setTimeout('buttonOff("extras", "inst"); selectPage("inst");', navDelay);
+      buttonOn("ondemand", "inst");
+      window.setTimeout('buttonOff("ondemand", "inst"); selectPage("inst");', navDelay);
       }
 
     }
   if(pageName=="rks"){
     if(buttonName=="done"){
       buttonOn("rks", "done");
-      window.setTimeout('buttonOff("rks", "done"); selectPage("extras");', navDelay);
+      window.setTimeout('buttonOff("rks", "done"); selectPage("ondemand");', navDelay);
       }
     if(buttonName=="srks"){
       buttonOn("rks", "srks");
@@ -2634,7 +2638,7 @@ function handleButton(pageName, buttonName){
   if(pageName=="rcp"){
     if(buttonName=="done"){
       buttonOn("rcp", "done");
-      window.setTimeout('buttonOff("rcp", "done"); selectPage("extras");', navDelay);
+      window.setTimeout('buttonOff("rcp", "done"); selectPage("ondemand");', navDelay);
       }
     if(buttonName=="srcp"){
       buttonOn("rcp", "srcp");
@@ -2644,7 +2648,7 @@ function handleButton(pageName, buttonName){
   if(pageName=="whl"){
     if(buttonName=="done"){
       buttonOn("whl", "done");
-      window.setTimeout('buttonOff("whl", "done"); selectPage("extras");', navDelay);
+      window.setTimeout('buttonOff("whl", "done"); selectPage("ondemand");', navDelay);
       }
     if(buttonName=="swhl"){
       buttonOn("whl", "swhl");
@@ -2655,44 +2659,44 @@ function handleButton(pageName, buttonName){
   if(pageName=="wrs"){
     if(buttonName=="done"){
       buttonOn("wrs", "done");
-      window.setTimeout('buttonOff("wrs", "done"); selectPage("extras");', navDelay);
+      window.setTimeout('buttonOff("wrs", "done"); selectPage("ondemand");', navDelay);
       }
     }
   if(pageName=="inst"){
     if(buttonName=="done"){
       buttonOn("inst", "done");
-      window.setTimeout('buttonOff("inst", "done"); selectPage("extras");', navDelay);
+      window.setTimeout('buttonOff("inst", "done"); selectPage("ondemand");', navDelay);
       }
     }
-  if(pageName=="settings"){
+  if(pageName=="quality"){
     if(buttonName=="faqs"){
-      buttonOn("settings", "faqs");
-      window.setTimeout('buttonOff("settings", "faqs"); selectPage("faqs");', navDelay);
+      buttonOn("quality", "faqs");
+      window.setTimeout('buttonOff("quality", "faqs"); selectPage("faqs");', navDelay);
       }
     if(buttonName=="done"){
-      buttonOn("settings", "done");
-      window.setTimeout('buttonOff("settings", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
+      buttonOn("quality", "done");
+     //// window.setTimeout('buttonOff("quality", "done"); buttonOn("footnav", "home"); selectPage("home");', navDelay);
       }
     if(buttonName=="medium"){
       eventStack.push("setting medium");
-      buttonOn("settings", "medium");
-      buttonOff("settings", "higher");
-      //buttonOff("settings", "test");
+      buttonOn("quality", "medium");
+      buttonOff("quality", "higher");
+      //buttonOff("quality", "test");
       genericSet("quality", "medium");
       }
     if(buttonName=="higher"){
       eventStack.push("setting higher");
-      buttonOff("settings", "medium");
-      buttonOn("settings", "higher");
-      //buttonOff("settings", "test");
+      buttonOff("quality", "medium");
+      buttonOn("quality", "higher");
+      //buttonOff("quality", "test");
       genericSet("quality", "higher");
 
       }
     if(buttonName=="test"){
       eventStack.push("setting higher");
-      buttonOff("settings", "medium");
-      buttonOff("settings", "higher");
-      //buttonOn("settings", "test");
+      buttonOff("quality", "medium");
+      buttonOff("quality", "higher");
+      //buttonOn("quality", "test");
       genericSet("quality", "test");
 
       }
@@ -2700,19 +2704,19 @@ function handleButton(pageName, buttonName){
   if(pageName=="faqs"){
     if(buttonName=="done"){
       buttonOn("faqs", "done");
-      window.setTimeout('buttonOff("faqs", "done"); buttonOn("footnav", "listen"); selectPage("listen");', navDelay);
+      ////window.setTimeout('buttonOff("faqs", "done"); buttonOn("footnav", "home"); selectPage("home");', navDelay);
       }
     }
   if(pageName=="events"){
     if(buttonName=="done"){
       buttonOn("events", "done");
-      window.setTimeout('buttonOff("events", "done"); buttonOn("footnav", "listen"); selectPage("extras");', navDelay);
+      ////window.setTimeout('buttonOff("events", "done"); buttonOn("footnav", "home"); selectPage("ondemand");', navDelay);
       }
     }
   if(pageName=="request"){
     if(buttonName=="done"){
       buttonOn("request", "done");
-      window.setTimeout('buttonOff("request", "done"); buttonOn("footnav", "listen");  buttonOff("footnav", "request"); selectPage("listen");', navDelay);
+      ////window.setTimeout('buttonOff("request", "done"); buttonOn("footnav", "home");  buttonOff("footnav", "request"); selectPage("home");', navDelay);
       }
     if(buttonName=="faqs"){
       buttonOn("request", "faqs");
