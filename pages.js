@@ -1,4 +1,14 @@
 var pages=[
+{"name":"footnav", "vAlign":"bottom", "hideLeft":0, "hideTop":0,  "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":1, "height":64,
+   "boxes":[],
+   "buttons":[
+    {"name":"events", "top":-6, "left":0, "height":6, "width":16},
+    {"name":"playlist", "top":-6, "left":16, "height":6, "width":16},
+    {"name":"donate", "top":-6, "left":32, "height":6, "width":16}
+  ],
+  "contents":[
+  ]
+},
 {"name":"home", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":1, "height":58,
   "boxes":[],
   "buttons":[
@@ -11,16 +21,6 @@ var pages=[
     {"name":"nowPlayingDiv", "top":29.5, "left":1, "width":46, "height":8, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":""},
     {"name":"bufferDiv", "top":38, "left":18, "height":12, "width":12, "lineHeight":2.5, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":'<canvas id="bufferingCanvas"></canvas>'},
     {"name":"djDiv", "top":51, "left":1, "width":46, "height":8, "lineHeight":2.5, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":""}
-  ]
-},
-{"name":"footnav", "vAlign":"bottom", "hideLeft":0, "hideTop":0,  "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":1, "height":64,
-   "boxes":[],
-   "buttons":[
-    {"name":"events", "top":-6, "left":0, "height":6, "width":16},
-    {"name":"playlist", "top":-6, "left":16, "height":6, "width":16},
-    {"name":"donate", "top":-6, "left":32, "height":6, "width":16}
-  ],
-  "contents":[
   ]
 },
 {"name":"events", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
