@@ -13,7 +13,6 @@ function handleButton(pageName, buttonName){
     window.setTimeout('buttonOff("'+currentPage+'", "menu"); selectPage("menu");', navDelay);
     }
 
-
   if(pageName=="footnav"){
     if(buttonName=="events"){
       selectPage("events");
@@ -27,7 +26,6 @@ function handleButton(pageName, buttonName){
       window.setTimeout('selectPage("playlist");', navDelay);
       getRecentSongsJson();
       }
-
     if(buttonName=="donate"){
       buttonOn("footnav", "donate");
       window.setTimeout('buttonOff("footnav", "donate")', navDelay*2);
@@ -36,21 +34,33 @@ function handleButton(pageName, buttonName){
     }
 
   if(pageName=="home"){
-    if(buttonName=="quality"){
-      ////buttonOff("footnav", "home");
-      buttonOn("home", "quality");
-      window.setTimeout('buttonOff("home", "quality"); selectPage("quality");', navDelay);
-      }
-    if(buttonName=="more"){
-      ////buttonOff("footnav", "home");
-      buttonOn("home", "more");
-      window.setTimeout('buttonOff("home", "more"); selectPage("more");', navDelay);
-      }
     if(buttonName=="playpause"){
       togglePlaying();
       }
     }
 
+  if(pageName=="menu"){
+    if(buttonName=="ondemand"){
+      buttonOn("menu", "ondemand");
+      window.setTimeout('buttonOff("menu", "ondemand"); getDownloads(); selectPage("ondemand");', navDelay);
+      }
+    if(buttonName=="alarm"){
+      buttonOn("menu", "alarm");
+      window.setTimeout('buttonOff("menu", "alarm"); selectPage("alarm");', navDelay);
+      }
+    if(buttonName=="quality"){
+      buttonOn("menu", "quality");
+      window.setTimeout('buttonOff("menu", "quality"); selectPage("quality");', navDelay);
+      }
+    if(buttonName=="faqs"){
+      buttonOn("menu", "faqs");
+      window.setTimeout('buttonOff("menu", "faqs"); selectPage("faqs");', navDelay);
+      }
+    if(buttonName=="contact"){
+      buttonOn("menu", "contact");
+      window.setTimeout('buttonOff("menu", "contact"); selectPage("contact");', navDelay);
+      }
+    }
 
   if(pageName=="alarm"){
     if(buttonName=="timeset"){
@@ -164,32 +174,6 @@ function handleButton(pageName, buttonName){
       buttonOn("armed", "cancelalarm");
       window.setTimeout('buttonOff("armed", "cancelalarm"); state.alarmSet=false; selectPage("alarm");', navDelay);
       window.plugins.insomnia.allowSleepAgain();
-      }
-    }
-  if(pageName=="more"){
-    if(buttonName=="done"){
-      buttonOn("more", "done");
-      window.setTimeout('buttonOff("more", "done"); selectPage("home");', navDelay);
-      }
-    if(buttonName=="ondemand"){
-      ////buttonOff("footnav", "home");
-      buttonOn("more", "ondemand");
-      window.setTimeout('buttonOff("more", "ondemand"); getDownloads(); selectPage("ondemand");', navDelay);
-      }
-    if(buttonName=="alarm"){
-      ////buttonOff("footnav", "home");
-      buttonOn("more", "alarm");
-      window.setTimeout('buttonOff("more", "alarm"); selectPage("alarm");', navDelay);
-      }
-    if(buttonName=="quality"){
-      ////buttonOff("footnav", "home");
-      buttonOn("more", "quality");
-      window.setTimeout('buttonOff("more", "quality"); selectPage("quality");', navDelay);
-      }
-    if(buttonName=="faqs"){
-      ////buttonOff("footnav", "home");
-      buttonOn("more", "faqs");
-      window.setTimeout('buttonOff("more", "faqs"); selectPage("faqs");', navDelay);
       }
     }
 
