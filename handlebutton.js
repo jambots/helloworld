@@ -15,6 +15,7 @@ function handleButton(pageName, buttonName){
 
   if(pageName=="footnav"){
     if(buttonName=="events"){
+      getCalendarJson();
       selectPage("events");
       buttonOn("footnav", "events");
       buttonOff("footnav", "playlist");
@@ -287,21 +288,8 @@ function handleButton(pageName, buttonName){
       }
     }
   if(pageName=="events"){
-    if(buttonName=="done"){
-      buttonOn("events", "done");
-      ////window.setTimeout('buttonOff("events", "done"); buttonOn("footnav", "home"); selectPage("ondemand");', navDelay);
-      }
     }
   if(pageName=="request"){
-    if(buttonName=="done"){
-      buttonOn("request", "done");
-      ////window.setTimeout('buttonOff("request", "done"); buttonOn("footnav", "home");  buttonOff("footnav", "request"); selectPage("home");', navDelay);
-      }
-    if(buttonName=="faqs"){
-      buttonOn("request", "faqs");
-      buttonOff("footnav", "request");
-      window.setTimeout('buttonOff("request", "faqs"); selectPage("faqs");', navDelay);
-      }
     if(buttonName=="phone"){
       buttonOn("request", "phone");
       window.setTimeout('buttonOff("request", "phone")', navDelay*2);
