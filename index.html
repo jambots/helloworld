@@ -1845,9 +1845,9 @@ function populateDials(){
 function selectPage(selectedPage){
   //dbuga("selectPage "+selectedPage);
   currentPage=selectedPage;
-  if(state.alarmSet==true){hidePage(pageArray[0]);}
-  for(var p=1; p<pageArray.length; p++){
-    if(pageArray[p] != selectedPage){
+  if(state.alarmSet==true){hidePage('footnav');}
+  for(var p=0; p<pageArray.length; p++){
+    if((pageArray[p] != selectedPage)&&(pageArray[p]!= 'footnav')){
       hidePage(pageArray[p]);
       }
     }
@@ -1860,12 +1860,13 @@ function showPage(thePage){
   pageStyle.display="block";
   }
 function hidePage(thePage){
+  console.log('hidePage '+thePage);
   var pageStyle=document.getElementById('page_'+thePage).style;  
   pageStyle.display="none";
   }
 
 function hideTick(){
-  if(state.alarmSet==false){showPage(pageArray[0]);}
+  if(state.alarmSet==false){showPage('footnav');}
   for(var p=1; p<pageArray.length; p++){
     if(pageArray[p]==currentPage){
       showPage(pageArray[p]);
