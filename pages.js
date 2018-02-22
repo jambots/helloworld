@@ -75,8 +75,8 @@ var pages=[
     {"name":"wrs", "top":33, "left":27.5, "height":17, "width":17},
   ],
   "contents":[
-    {"name":"instDesc", "top":27, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','rcp');\">REAL COLLEGE PODCAST</a>"},
-    {"name":"rcpDesc", "top":27, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','inst');\">IN-STUDIOS</a>"},
+    {"name":"instDesc", "top":27, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','inst');\">REAL COLLEGE PODCAST</a>"},
+    {"name":"rcpDesc", "top":27, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','rcp');\">IN-STUDIOS</a>"},
     {"name":"rksDesc", "top":51, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','rks');\">K SESSIONS</a>"},
     {"name":"wrsDesc", "top":51, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','wrs');\">WEEKLY RELEASE SPOTLIGHT</a>"},
   ]
@@ -84,7 +84,8 @@ var pages=[
 {"name":"inst", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
-    {"name":"home", "top":0, "left":39, "height":7, "width":9},
+    {"name":"home", "top":0, "left":40, "height":8, "width":8},
+    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
   ],
   "contents":[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="instHolder"><div id="instScroller"></div></div>'}
@@ -93,8 +94,8 @@ var pages=[
 {"name":"rcp", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
-    {"name":"home", "top":0, "left":39, "height":7, "width":9},
-    {"name":"srcp", "top":0, "left":0, "height":7, "width":12},
+    {"name":"home", "top":0, "left":40, "height":8, "width":8},
+    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
   ],
   "contents":[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="rcpHolder"><div id="rcpScroller"></div></div>'}
@@ -103,8 +104,8 @@ var pages=[
 {"name":"rks", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
-    {"name":"home", "top":0, "left":39, "height":7, "width":9},
-    {"name":"srks", "top":0, "left":0, "height":7, "width":12}
+    {"name":"home", "top":0, "left":40, "height":8, "width":8},
+    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
   ],
   "contents":[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="rksHolder"><div id="rksScroller"></div></div>'}
@@ -113,7 +114,8 @@ var pages=[
 {"name":"wrs", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
-    {"name":"home", "top":0, "left":39, "height":7, "width":9},
+    {"name":"home", "top":0, "left":40, "height":8, "width":8},
+    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
   ],
   "contents":[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="wrsHolder"><div id="wrsScroller"></div></div>'}
