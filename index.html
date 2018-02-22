@@ -1867,7 +1867,7 @@ function hidePage(thePage){
 
 function hideTick(){
   if(state.alarmSet==false){showPage('footnav');}
-  for(var p=1; p<pageArray.length; p++){
+  for(var p=0; p<pageArray.length; p++){
     if(pageArray[p]==currentPage){
       showPage(pageArray[p]);
       }

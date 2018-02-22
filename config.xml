@@ -34,7 +34,7 @@
 <preference name="fullscreen" value="true" />
 <preference name="orientation" value="portrait" />
 
-<preference name="StatusBarOverlaysWebView" value="true" />
+<preference name="StatusBarOverlaysWebView" value="false" />
 <gap:config-file platform="ios" parent="UIStatusBarHidden">
     <true/>
 </gap:config-file>
