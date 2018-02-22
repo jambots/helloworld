@@ -1459,7 +1459,7 @@ function dateTimeToTime(theDateTime){
   }
 
 function populateCalendar(){
-  //dbuga('populateCalendar() '+calendar.length);
+  console.log('populateCalendar() '+calendar.length);
 
   var gradStyle=returnGradStyle();
 
@@ -1843,7 +1843,7 @@ function populateDials(){
 
 
 function selectPage(selectedPage){
-  //dbuga("selectPage "+selectedPage);
+  console.log("selectPage "+selectedPage);
   currentPage=selectedPage;
   if(state.alarmSet==true){hidePage('footnav');}
   for(var p=0; p<pageArray.length; p++){
@@ -1856,12 +1856,12 @@ function selectPage(selectedPage){
   }
 
 function showPage(thePage){
-  console.log('showPage '+thePage);
+  //console.log('showPage '+thePage);
   var pageStyle=document.getElementById('page_'+thePage).style;  
   pageStyle.display="block";
   }
 function hidePage(thePage){
-  console.log('hidePage '+thePage);
+  //console.log('hidePage '+thePage);
   var pageStyle=document.getElementById('page_'+thePage).style;  
   pageStyle.display="none";
   }
