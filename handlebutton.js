@@ -11,7 +11,10 @@ function handleButton(pageName, buttonName){
       selectPage("playlist");
       buttonOff("footnav", "events");
       buttonOn("footnav", "playlist");
+      window.setTimeout('selectPage("playlist");', navDelay);
+      getRecentSongsJson();
       }
+
     if(buttonName=="donate"){
       buttonOn("footnav", "donate");
       window.setTimeout('buttonOff("footnav", "donate")', navDelay*2);
@@ -29,12 +32,6 @@ function handleButton(pageName, buttonName){
       ////buttonOff("footnav", "home");
       buttonOn("home", "more");
       window.setTimeout('buttonOff("home", "more"); selectPage("more");', navDelay);
-      }
-    if(buttonName=="playlist"){
-      ////buttonOff("footnav", "home");
-      buttonOn("home", "playlist");
-      window.setTimeout('buttonOff("home", "playlist"); selectPage("playlist");', navDelay);
-      getRecentSongsJson();
       }
     if(buttonName=="playpause"){
       togglePlaying();

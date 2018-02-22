@@ -119,7 +119,9 @@ var pages=[
 {"name":"playlist", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
-    {"name":"refresh", "top":0, "left":36, "height":7, "width":12},
+    {"name":"refresh", "top":0, "left":0, "height":7, "width":12},
+    {"name":"home", "top":0, "left":40, "height":8, "width":8}
+
   ],
   "contents":[
     {"name":"playlist", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="playlistHolder"><div id="playlistScroller"></div></div>'}
@@ -128,7 +130,8 @@ var pages=[
 {"name":"events", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
-    {"name":"home", "top":0, "left":39, "height":7, "width":9},
+    {"name":"home", "top":0, "left":40, "height":8, "width":8},
+    {"name":"menu", "top":0, "left":0, "height":8, "width":8},
   ],
   "contents":[
     {"name":"events", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="calendarHolder"><div id="calendarScroller"></div></div>'}
