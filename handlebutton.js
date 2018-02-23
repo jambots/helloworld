@@ -51,7 +51,7 @@ function handleButton(pageName, buttonName){
       }
     if(buttonName=="quality"){
       buttonOn("menu", "quality");
-      window.setTimeout('buttonOff("menu", "quality"); selectPage("quality");', navDelay);
+      window.setTimeout('buttonOff("menu", "quality"); selectPage("quality");   buttonOn("quality", genericGet("quality"));', navDelay);
       }
     if(buttonName=="faqs"){
       buttonOn("menu", "faqs");
@@ -67,8 +67,8 @@ function handleButton(pageName, buttonName){
     if(buttonName=="timeset"){
       mouseStartX=mouseX;
       mouseStartY=mouseY;
-      var buttLeft=pages[numOfPage('alarm')].buttons[1].left*grid+leftOffset;
-      var buttWidth=pages[numOfPage('alarm')].buttons[1].width*grid;
+      var buttLeft=pages[numOfPage('alarm')].buttons[numOfButton("alarm", "timeset")].left*grid+leftOffset;
+      var buttWidth=pages[numOfPage('alarm')].buttons[numOfButton("alarm", "timeset")].width*grid;
       deltaX=mouseX-buttLeft;
       var xFrac=deltaX/buttWidth;
       touchingDial=1;
@@ -249,63 +249,38 @@ function handleButton(pageName, buttonName){
       }
     }
   if(pageName=="quality"){
-    if(buttonName=="faqs"){
-      buttonOn("quality", "faqs");
-      window.setTimeout('buttonOff("quality", "faqs"); selectPage("faqs");', navDelay);
-      }
-    if(buttonName=="done"){
-      buttonOn("quality", "done");
-     //// window.setTimeout('buttonOff("quality", "done"); buttonOn("footnav", "home"); selectPage("home");', navDelay);
-      }
     if(buttonName=="medium"){
       eventStack.push("setting medium");
       buttonOn("quality", "medium");
       buttonOff("quality", "higher");
-      //buttonOff("quality", "test");
       genericSet("quality", "medium");
       }
     if(buttonName=="higher"){
       eventStack.push("setting higher");
       buttonOff("quality", "medium");
       buttonOn("quality", "higher");
-      //buttonOff("quality", "test");
       genericSet("quality", "higher");
-
-      }
-    if(buttonName=="test"){
-      eventStack.push("setting higher");
-      buttonOff("quality", "medium");
-      buttonOff("quality", "higher");
-      //buttonOn("quality", "test");
-      genericSet("quality", "test");
-
       }
     }
   if(pageName=="faqs"){
-    if(buttonName=="done"){
-      buttonOn("faqs", "done");
-      ////window.setTimeout('buttonOff("faqs", "done"); buttonOn("footnav", "home"); selectPage("home");', navDelay);
-      }
     }
   if(pageName=="events"){
     }
-  if(pageName=="request"){
+  if(pageName=="contact"){
     if(buttonName=="phone"){
-      buttonOn("request", "phone");
-      window.setTimeout('buttonOff("request", "phone")', navDelay*2);
+      buttonOn("contact", "phone");
+      window.setTimeout('buttonOff("contact", "phone")', navDelay*2);
       //window.location='tel:+16126264770';
       window.setTimeout("remoteLink('tel:+16126264770')", navDelay);
       }
     if(buttonName=="email"){
-      buttonOn("request", "email");
-      window.setTimeout('buttonOff("request", "email")', navDelay*2);
-      //window.location='mailto:request@radiok.org?subject=Request from Radio K app';
+      buttonOn("contact", "email");
+      window.setTimeout('buttonOff("contact", "email")', navDelay*2);
       window.setTimeout("remoteLink('mailto:radiokdj@umn.edu?subject=Request from Radio K app')", navDelay);
       }
     if(buttonName=="tweet"){
-      buttonOn("request", "tweet");
-      window.setTimeout('buttonOff("request", "tweet")', navDelay*2);
-      //window.location='https://twitter.com/intent/tweet?source=webclient&text=%40RadioK+%23Request';
+      buttonOn("contact", "tweet");
+      window.setTimeout('buttonOff("contact", "tweet")', navDelay*2);
       window.setTimeout("remoteLink('https://twitter.com/intent/tweet?source=webclient&text=%40RadioK+%23Request')", navDelay);
       }
     }

@@ -1745,10 +1745,38 @@ function numOfPage(pageName){
     }
   return pageNum;
   }
+function numOfButton(pageName, buttonName){
+  var buttonNum=-1;
+  for (var p=0; p<pages.length; p++){
+    if(pages[p].name==pageName){
+      var buttons=pages[p].buttons;
+      for (var b=0; b<buttons.length; b++){
+        if(buttons[b].name==buttonName){
+          buttonNum=b;
+          }
+        }
+      }
+    }
+  return buttonNum;
+  }
+function numOfContent(pageName, contentName){
+  var contentNum=-1;
+  for (var p=0; p<pages.length; p++){
+    if(pages[p].name==pageName){
+      var contents=pages[p].contents;
+      for (var c=0; c<contents.length; c++){
+        if(contents[c].name==contentName){
+          contentNum=c;
+          }
+        }
+      }
+    }
+  return contentNum;
+  }
 function updateAlarmDisplay(){
   var pMod=genericGet("alarmMinuteOfDay");
   //dbug("touchingDial "+touchingDial +" "+minuteOfDayToHour(pMod)+":"+minuteOfDayToMM(pMod)+" "+minuteOfDayToAmPm(pMod));
-  var lineHeight=Math.floor(pages[numOfPage('alarm')].contents[0].lineHeight*grid);
+  var lineHeight=Math.floor(pages[numOfPage('alarm')].contents[numOfContent("alarm", "alarmTimeHour")].lineHeight*grid);
   var nowDate=new Date();
   var nowMod=nowDate.getHours()*60+nowDate.getMinutes();
   if(touchingDial>-1){
@@ -1975,8 +2003,6 @@ function populateContainer(){
     var buttons=page.buttons;
     for(var b=0; b<buttons.length; b++){
       var button=buttons[b];
-      //dbuga(' - '+b+' - '+button.name);
-
       var top=grid*button.top;
       if((top>0)&&(page.vAlign=="middle")){top+=contentPad};
       if(page.vAlign=="bottom"){
@@ -2452,6 +2478,8 @@ function mousemove(e){
   mouseY=e.pageY;
   }
 function touchStart(event){
+  console.log(Math.floor(event.touches[0].pageX)+" "+Math.floor(event.touches[0].pageY));
+
   if(event.touches.length>2){
     //dbuga('');
     debugCount++;
@@ -2467,8 +2495,9 @@ function touchStart(event){
   }
 
 function touchMove(event){
+  console.log(Math.floor(event.touches[0].pageX)+" "+Math.floor(event.touches[0].pageY));
   if((currentPage !="rks")&&(currentPage !="wrs")&&(currentPage !="rcp")&&(currentPage !="inst")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
-    event.preventDefault();
+    ////event.preventDefault();
     }
   if(currentPage =="alarm"){
     mouseX=event.touches[0].pageX;
@@ -2476,7 +2505,7 @@ function touchMove(event){
     //dbuga(mouseX+" "+mouseY);
     }
   if(lastTouchId.indexOf("page_")>-1){
-    event.preventDefault();
+    ////event.preventDefault();
     }
   }
 
