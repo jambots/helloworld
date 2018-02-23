@@ -835,6 +835,8 @@ function resumeInit(){
   genericDefault("sleepMinutesDefault", 10);
   genericDefault("quality", "higher");
   //dbuga('resumeInit 2');
+  
+  console.log("quality is "+ genericGet("quality"));
   buttonOn("quality", genericGet("quality"));
   buttonOn("home", "home");
   //dbuga(' resumeInit 3');
@@ -1883,11 +1885,17 @@ function populateContainer(){
   hideByPage={};
   buttonMap=[];
   pageArray=[];
-  ww=window.innerWidth;
-  wh=window.innerHeight;
+  if(window.innerWidth<window.innerHeight){
+    ww=window.innerWidth;
+    wh=window.innerHeight;
+    }
+  else{
+    wh=window.innerWidth;
+    ww=window.innerHeight;
+    }
 
   imagePath="images_large";//ipad retina 1536, viewport 768 down to iphone6+
-  if(ww<414){imagePath="images_medium";}// 
+  //if(ww<414){imagePath="images_medium";}// 
   //imagePath="images_medium";// force test lo res iphone5
   //dbuga(ww+" "+imagePath);
   
@@ -2249,7 +2257,8 @@ function buttonOff(thePage, theButton){
 function shop(artist, album, song){
   //dbuga("shop("+artist+", "+album+", "+song+")");
   if(state.android){
-    var keywords=artist+" "+album+" "+song;
+    var keywords=artist+" "+album;
+    //+" "+song;
     var shopUrl="http://www.amazon.com/s?ie=UTF8&keywords="+keywords+"&index=music&link_code=qs";
     window.setTimeout("remoteLink('"+shopUrl+"')", navDelay);
     }

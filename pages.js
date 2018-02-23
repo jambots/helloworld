@@ -75,8 +75,8 @@ var pages=[
     {"name":"wrs", "top":33, "left":27.5, "height":17, "width":17},
   ],
   "contents":[
-    {"name":"instDesc", "top":27, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','inst');\">REAL COLLEGE PODCAST</a>"},
-    {"name":"rcpDesc", "top":27, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','rcp');\">IN-STUDIOS</a>"},
+    {"name":"instDesc", "top":27, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','inst');\">IN-STUDIOS</a>"},
+    {"name":"rcpDesc", "top":27, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','rcp');\">REAL COLLEGE PODCAST</a>"},
     {"name":"rksDesc", "top":51, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','rks');\">K SESSIONS</a>"},
     {"name":"wrsDesc", "top":51, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','wrs');\">WEEKLY RELEASE SPOTLIGHT</a>"},
   ]
