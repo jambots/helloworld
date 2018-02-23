@@ -3,8 +3,8 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "com.radiok.kuom"
-        versionCode="50" 
-        version   = "3.0.50">
+        versionCode="51" 
+        version   = "3.0.51">
 
 <preference name="phonegap-version" value="cli-6.5.0" />
     <name>Radio K - KUOM</name>/Users/admin/android/radiok/helloworld/index.html
@@ -31,7 +31,7 @@
 <plugin name="cordova-plugin-network-information" source="npm" spec="1.2.1" />
 <plugin name="cordova-plugin-inappbrowser"   source="npm" spec="1.4.0" />
 <plugin name="cordova-plugin-whitelist"      source="npm" spec="1.2.2" />
-<preference name="fullscreen" value="all" />
+<preference name="fullscreen" value="false" />
 <preference name="orientation" value="portrait" />
 
 <preference name="StatusBarOverlaysWebView" value="false" />
