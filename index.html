@@ -2427,9 +2427,9 @@ function handleTouchEvent(e){
         area=buttonMap[m];
         if((px>area.left)&&(px<area.right)&&(py>area.top)&&(py<area.bottom)){
           //dbuga("py=" +py +" heightsByPage["+currentPage+"]="+heightsByPage[currentPage]);
-          ////if((currentPage==area.page)||(py>heightsByPage[currentPage])){// on page or footnav
-          if((currentPage==area.page)){// on page or footnav
-            //dbuga('page:'+area.page+' name:'+area.name);
+          if((currentPage==area.page)||(py>heightsByPage[currentPage]+contentPad/grid)){// on page or footnav
+
+            console.log('touchstart page:'+area.page+' name:'+area.name+' currentPage:'+currentPage);
             if(area.name.indexOf('timeset')>-1){
               var mid=(area.top+area.bottom)/2;
               var tenth=Math.floor(10*(px-area.left)/(area.right-area.left));

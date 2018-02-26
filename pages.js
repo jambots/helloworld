@@ -50,11 +50,11 @@ var pages=[
   "buttons":[
     {"name":"menu", "top":0, "left":0, "height":8, "width":8},
     {"name":"home", "top":0, "left":40, "height":8, "width":8},
-    {"name":"ondemand", "top":18, "left":9, "height":6, "width":30},
-    {"name":"alarm", "top":25, "left":9, "height":6, "width":30},
-    {"name":"quality", "top":32, "left":9, "height":6, "width":30},
-    {"name":"faqs", "top":39, "left":9, "height":6, "width":30},
-    {"name":"contact", "top":46, "left":9, "height":6, "width":30},
+    {"name":"ondemand", "top":12, "left":9, "height":6, "width":30},
+    {"name":"alarm", "top":19, "left":9, "height":6, "width":30},
+    {"name":"quality", "top":26, "left":9, "height":6, "width":30},
+    {"name":"faqs", "top":33, "left":9, "height":6, "width":30},
+    {"name":"contact", "top":40, "left":9, "height":6, "width":30},
   ],
   "contents":[
   ]
