@@ -257,8 +257,10 @@ function onDeviceReady(){
   }
 function appResumed(){
   state.appActive=true;
-  dbuga("App resumed");
+  console.log("App resumed");
   eventStack.push("App resumed");
+  if(state.uiPlaying==true){buttonOn("home", "playpause");}
+  StatusBar.hide();
   }
 function appPaused(){
   state.appActive=false;
