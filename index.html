@@ -1514,6 +1514,10 @@ function getWebFaqs(){
     success: function(data) {
       //dbuga(data);
       parseFaqs(data);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr.status);
+        alert(thrownError);
       }
     });
   //dbuga('getWebFaqs() completed');

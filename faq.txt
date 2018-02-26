@@ -4175,6 +4175,11 @@ $(function(){ccmSlideShowHelper16870.init();});
 </div>
 
 <div class="faq_item">
+	<div class="faq_heading"><h2>Seeing the old feed?</h2></div>
+	<div class="faq_content"><p>Yes, this is the FAQs page that was packaged with the app.</p></div>
+</div>
+
+<div class="faq_item">
 	<div class="faq_heading"><h2>How can I contact Radio K?</h2></div>
 	<div class="faq_content"><p>Email: <a href="mailto:radiok@umn.edu">radiok@umn.edu</a><br /><br />Phone: <a href="tel:+16126253500">612-625-3500</a><br /><br />Web: <a href="http://www.radiok.org/">www.radiok.org</a><br /><br />Mobile:<br /><a href="http://twitter.com/radiok"><img src="social/twitter.png" alt="" width="socialSize" height="socialSize" /></a> <a href="https://www.facebook.com/20658369592"><img src="social/facebook.png" alt="" width="socialSize" height="socialSize" /></a> <a href="http://www.youtube.com/user/RadioK770?feature=watch"><img src="social/youtube.png" alt="" width="socialSize" height="socialSize" /></a> <a href="https://plus.google.com/u/0/106019319997650127214/about"><img src="social/googleplus.png" alt="" width="socialSize" height="socialSize" /></a> <!--<a href="http://www.radiok.org/blogs/new/tag/track%20of%20the%20day"><img src="social/rss.png" alt="" width="socialSize" height="socialSize" /></a>--></p></div>
 </div>
