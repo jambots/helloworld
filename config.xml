@@ -3,10 +3,10 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "com.radiok.kuom"
-        versionCode="52" 
-        version   = "3.0.52">
+        versionCode="53" 
+        version   = "3.0.53">
 
-<preference name="phonegap-version" value="cli-6.5.0" />
+<preference name="phonegap-version" value="cli-7.1.0" />
     <name>Radio K - KUOM</name>/Users/admin/android/radiok/helloworld/index.html
     <description>Radio K, the award-winning radio station of the University of Minnesota.</description>
 <gap:platform name="ios" />
@@ -72,6 +72,12 @@
 <!-- Define app icon for each platform. -->
 <icon src="res/android_icon.png" />
 <!-- iOS 7+ -->
+
+<!-- uh... -->
+<icon src="res/icon-small-40.png" width="40" height="40"/>
+<icon src="res/icon-small-40@2x.png" width="80" height="80"/>
+<icon src="res/icon-small-40@3x.png" width="120" height="120"/>
+
 <!-- iPhone 6 / 6+ -->
 <icon src="res/icon-60@3x.png" gap:platform="ios" width="180" height="180" />
 
@@ -92,6 +98,8 @@
 <icon src="res/icon-72.png" gap:platform="ios" width="72" height="72" />
 <icon src="res/icon-72@2x.png" gap:platform="ios" width="144" height="144" />
 
+<!-- app store icon -->
+<icon src="res/icon-1024.png" width="1024" height="1024" />
 
 <!-- Define app splash screen for each platform. -->
 <!-- iPhone and iPod touch -->
