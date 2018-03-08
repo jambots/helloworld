@@ -64,7 +64,7 @@ var stream={};
       stream.playing = null;
 */
 
-var debugging=false;
+var debugging=true;
 var waitEvents=0;
 var waitTimeout;
 
@@ -829,7 +829,7 @@ function genericGet(itemName){
   }
 
 function resumeInit(){
-  dbuga('resumeInit 0.0');
+  dbug('resumeInit 0.0');
   currentPage="home";
   
   populateContainer();
