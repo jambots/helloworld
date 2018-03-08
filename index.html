@@ -1121,7 +1121,7 @@ function getDownloads(){
   document.getElementById('rcpHolder').style.height="100%"; 
   document.getElementById('wrsHolder').style.width=grid*48+'px'; 
   document.getElementById('wrsHolder').style.height="100%"; 
-  window.setTimeout('getRksDownloads()', 500);
+  window.setTimeout('getRksDownloads()', 1000);
   }
 
 function getRksDownloads(){
@@ -1133,7 +1133,7 @@ function getRksDownloads(){
     dataType: "xml",        
     success: function(xml) {
       parseDownloads(xml, "K Sessions");
-      window.setTimeout('getWrsDownloads()', 500);
+      window.setTimeout('getWrsDownloads()', 1000);
       }
     });
   }
@@ -1144,7 +1144,7 @@ function getWrsDownloads(){
     dataType: "xml",        
     success: function(xml) {
       parseDownloads(xml, "Weekly Release Spotlight");
-      window.setTimeout('getRcpDownloads()', 500);
+      window.setTimeout('getRcpDownloads()', 1000);
       }
     });
   }
