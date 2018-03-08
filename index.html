@@ -183,27 +183,12 @@ function checkInternet(){
     dataType: "xml",        
     success: function(xml) {state.internet=true; dbuga('ajax worked');}
     });
-/*
-  var xhr = new  XMLHttpRequest;
-  var status;
-  xhr.open( "GET", 'http://www.google-analytics.com/__utm.gif', false );
-
-  try {
-    xhr.send();
-    state.internet=true;
-    dbuga('xhr returned');
-  } catch (error) {
-    dbuga('xhr fail:');
-    dbuga(JSON.stringify(error));
-    state.internet=false;
-  }
-*/
 }
 function checkConnection() {
   var con=navigator.connection.type;
   //var con="wifi";// web testing only!
-  dbuga("checkConnection() ...");
-  dbuga("navigator.connection.type="+con);
+  //dbuga("checkConnection() ...");
+  //dbuga("navigator.connection.type="+con);
   if((con=="connection.NONE")||(con=="connection.UNKNOWN")){
     state.online=false;
     }
@@ -214,7 +199,7 @@ function checkConnection() {
   
 
 function init(){
-  dbuga('init()');
+  //dbuga('init()');
   // onDeviceReady(); // web testing only!!
   }
 
@@ -223,7 +208,7 @@ var androidWaitMs=120000;
 var iosWaitMs=20000;
 var waitMs=iosWaitMs;
 function onDeviceReady(){
-  dbuga("onDeviceReady()");
+  //dbuga("onDeviceReady()");
   eventStack.push('device ready');
   //document.addEventListener("offline", onOffline, false);
   //document.addEventListener("online", onOnline, false);
@@ -274,7 +259,7 @@ function stateTick(){
   }
 
 function mediaEvent(evt){
-  dbuga('mediaEvent('+evt+')');
+  //dbuga('mediaEvent('+evt+')');
       //'media none', 'media starting', 'media running', 'media paused', 'media stopped';
       if(evt=="media none"){
         nowPlaying="no media?";
@@ -316,7 +301,7 @@ function processEvents(){
   state.errorPause=true;
 
   if(eventStack.length>0){
-    dbuga('processEvents() '+eventStack.join('|'));
+    //dbuga('processEvents() '+eventStack.join('|'));
     var staleString=staleStack.join('<br />');
     var eventStash=[];
     for (var e=0; e<eventStack.length; e++){
@@ -422,7 +407,7 @@ function processEvents(){
         if(audioNum==state.audioCount){
           state.remotePaused=false;
           evt+=" - current";
-          dbuga('  processEvents so streamPlaying=true '+evt)
+          //dbuga('  processEvents so streamPlaying=true '+evt)
           bufferEnd();
           state.streamPlaying=true;
           getRecentSongJson();
@@ -559,7 +544,7 @@ function processEvents(){
     staleStack.unshift(" ");
 
     //dbuga('<span id="stale" style="color:red; display inline-block;">'+staleString+'</span>');
-    dbuga('end of processEvents() ')
+    //dbuga('end of processEvents() ')
     }//end if event stack
   document.getElementById('page_home_content_nowPlayingDiv').innerHTML=nowPlaying;
   document.getElementById('page_home_content_djDiv').innerHTML=nowDj;
@@ -567,7 +552,7 @@ function processEvents(){
 
   }
 function pauseStream(){ 
-  dbuga('pauseStream() 0')
+  //dbuga('pauseStream() 0')
   window.clearTimeout(waitTimeout);
   state.streamPlaying=false;
   if (typeof stream.pause == 'function'){
@@ -586,13 +571,13 @@ function pauseStream(){
       }
     }
   else{
-    dbuga('no release()');
+    //dbuga('no release()');
     }
-  dbuga(' - pauseStream() 4')
+  //dbuga(' - pauseStream() 4')
 
   }
 function playStream(){
-    dbuga('playStream()');
+    //dbuga('playStream()');
   if (typeof stream.play == 'function'){
     if(state.ios){stream.play();}
     if(state.android){stream.play();}
@@ -603,7 +588,7 @@ var singTimeout;
 function createStream(){
   state.loop=false; 
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
-  dbuga('createStream() '+myStreamUrl);
+  //dbuga('createStream() '+myStreamUrl);
   if((state.waitEvents>2)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
     if(state.waitEvents>2){
       nowPlaying="Timed out, no stream";
@@ -660,7 +645,7 @@ function createStream(){
     stream.addEventListener("error", function() {
        if(state.streamPlaying==false){// may be called by ghosts
          //eventStack.push('audio error '+event.target.audioNum);
-         dbuga('audio error '+event.target.audioNum);
+         //dbuga('audio error '+event.target.audioNum);
          }
     }, false);
 
@@ -669,19 +654,19 @@ function createStream(){
    // to get the source of the audio element use $(this).src
    switch (e.target.error.code) {
      case e.target.error.MEDIA_ERR_ABORTED:
-       dbuga('You aborted the video playback.');
+       //dbuga('You aborted the video playback.');
        break;
      case e.target.error.MEDIA_ERR_NETWORK:
-       dbuga('A network error caused the audio download to fail.');
+       //dbuga('A network error caused the audio download to fail.');
        break;
      case e.target.error.MEDIA_ERR_DECODE:
-       dbuga('The audio playback was aborted due to a corruption problem or because the video used features your browser did not support.');
+       //dbuga('The audio playback was aborted due to a corruption problem or because the video used features your browser did not support.');
        break;
      case e.target.error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-       dbuga('The video audio not be loaded, either because the server or network failed or because the format is not supported.');
+       //dbuga('The video audio not be loaded, either because the server or network failed or because the format is not supported.');
        break;
      default:
-       dbuga('An unknown error occurred.');
+       //dbuga('An unknown error occurred.');
        break;
    }
  }, true);
@@ -736,24 +721,24 @@ function createStream(){
     state.audioCount++;
 
     //stream.audioNum=state.audioCount;
-    dbuga('createStream() media 4a'); 
+    //dbuga('createStream() media 4a'); 
 
     if(state.streamPlaying){
-      dbuga('streamPlaying so 4b stop()'); 
+      //dbuga('streamPlaying so 4b stop()'); 
       stream.stop();
       }
     if(state.streamCreated){
-      dbuga('streamCreated so 4c release()'); 
+      //dbuga('streamCreated so 4c release()'); 
       stream.release();
       state.streamCreated=false;
       }
-    dbuga('createStream() 4d'); 
+    //dbuga('createStream() 4d'); 
 
     //dbuga("createStream() android "+myStreamUrl);
     stream = new Media(myStreamUrl, mediaSuccess, mediaError, mediaStatus);  
-      dbuga('createStream() new Media 4e'); 
+      //dbuga('createStream() new Media 4e'); 
     }
-  dbuga('createStream() 5'); 
+  //dbuga('createStream() 5'); 
   state.streamCreated=true;
   eventStack.push("stream created");
   return myStreamUrl;
@@ -869,7 +854,7 @@ function resumeInit(){
   //if(ios){createStream();}
   getCalendarJson();
   StatusBar.hide();
-  dbuga('resume init okay');
+  //dbuga('resume init okay');
   //window.setInterval("hostReachable('')", 10000);
   }
 /*
@@ -985,13 +970,13 @@ function populateInst(){
 
 
 function onOffline() {
-  dbuga('onOffline()');
+  //dbuga('onOffline()');
   state.online=false;
   state.internet=false;
   eventStack.push("online false");
   }
 function onOnline() {
-  dbuga('onOnline()');
+  //dbuga('onOnline()');
   state.online=true;
   checkInternet();
   eventStack.push("online true");
@@ -1136,38 +1121,44 @@ function getDownloads(){
   document.getElementById('rcpHolder').style.height="100%"; 
   document.getElementById('wrsHolder').style.width=grid*48+'px'; 
   document.getElementById('wrsHolder').style.height="100%"; 
+  window.setTimeout('getRksDownloads()', 500);
+  }
 
-    
+function getRksDownloads(){
 
-
-  dbuga("getDownloads() 1");
-
-   
+  dbuga("getRksDownloads()");
 
   $.ajax({
     url: "http://www.radiok.org/tools/packages/radiok/new/k-sessions.php",
     dataType: "xml",        
-    success: function(xml) {parseDownloads(xml, "K Sessions");}
+    success: function(xml) {
+      parseDownloads(xml, "K Sessions");
+      window.setTimeout('getWrsDownloads()', 500);
+      }
     });
-
-  dbuga("getDownloads() 2");
-
+  }
+function getWrsDownloads(){
+  dbuga("getWrsDownloads()");
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F",
     dataType: "xml",        
-    success: function(xml) {parseDownloads(xml, "Weekly Release Spotlight");}
+    success: function(xml) {
+      parseDownloads(xml, "Weekly Release Spotlight");
+      window.setTimeout('getRcpDownloads()', 500);
+      }
     });
-
-  dbuga("getDownloads() 3");
-
+  }
+function getRcpDownloads(){
+  dbuga("getRcpDownloads()");
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
     dataType: "xml",        
-    success: function(xml) {parseDownloads(xml, "Real College Podcast");}
-    });
-  dbuga("getDownloads() 4");
+    success: function(xml) {
+      parseDownloads(xml, "Real College Podcast");
+      dbuga('getDownloads completed');
 
-  dbuga('getDownloads completed');
+      }
+    });
   }
 // remove errors on publish
 
