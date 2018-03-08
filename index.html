@@ -64,7 +64,7 @@ var stream={};
       stream.playing = null;
 */
 
-var debugging=true;
+var debugging=false;
 var waitEvents=0;
 var waitTimeout;
 
@@ -295,7 +295,7 @@ function mediaEvent(evt){
 
 function processEvents(){
   if(state.errorPause){
-    dbuga('errorPause');
+    //dbuga('errorPause');
     return false;
     }
   state.errorPause=true;
@@ -1167,9 +1167,9 @@ function parseDownloads(theXml, source){
   if(source=="K Sessions"){
     var rksObj=xmlToJson(theXml);
     var itemsArray=rksObj.rss.channel.item;
-    dbuga('itemsArray.length='+itemsArray.length);
+    //dbuga('itemsArray.length='+itemsArray.length);
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
-      dbuga('i:'+i)
+      //dbuga('i:'+i)
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
       var parts=dateStr.split(" ");
@@ -1184,7 +1184,7 @@ function parseDownloads(theXml, source){
       var title=thisObj.title["#text"];
       var description=thisObj.guid["#text"];
       var link=thisObj.link["#text"];
-      dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
+      //dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
       var item={
         "sort":sortNum, 
         "source":source, 
@@ -1195,7 +1195,7 @@ function parseDownloads(theXml, source){
         "link":link
         };
       rksDownloads.push(item);
-      dbuga('rksDownloads.length='+rksDownloads.length);
+      //dbuga('rksDownloads.length='+rksDownloads.length);
 
       }
     updateRksDownloads();
@@ -1238,7 +1238,7 @@ function parseDownloads(theXml, source){
     //dbuga(' RCP itemsArray.length='+itemsArray.length);
 
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
-      dbuga('i:'+i)
+      //dbuga('i:'+i)
       var thisObj=itemsArray[i];
       var dateStr=thisObj.pubDate["#text"];
       var parts=dateStr.split(" ");
@@ -1400,7 +1400,7 @@ function updateRcpDownloads(){
       document.getElementById("page_ondemand_button_rcp_on").style.backgroundSize=squareShrink+'%';
 
       }
-    dbuga(downloadItem.link);
+    //dbuga(downloadItem.link);
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
@@ -1903,7 +1903,7 @@ var containerHeight=1000;
 var originalHeight=1000;
 var contentPad=0;
 function populateContainer(){
-  dbuga('populateContainer()');
+  //dbuga('populateContainer()');
   hideByPage={};
   buttonMap=[];
   pageArray=[];
@@ -1930,7 +1930,7 @@ function populateContainer(){
   originalHeight=grid*58;
   contentPad=(containerHeight-originalHeight-grid*6)/2;
   //dbuga('populateContainer() 3 ');
-  document.getElementById('debugDiv').style.top=grid*0+"px";
+  document.getElementById('debugDiv').style.top=grid*4+"px";
   document.getElementById('wrapper').style.backgroundSize=grid*4+"px";
   document.getElementById('container').style.width=ww+"px";
   document.getElementById('container').style.height=containerHeight+"px";
@@ -2101,7 +2101,7 @@ var bCanv;
 var bCtx;
 
 function bufferStart(){
-  dbuga('bufferStart 1');
+  //dbuga('bufferStart 1');
   state.buffering=true;
   var d = new Date();
   bufferMs = d.getTime();
@@ -2109,14 +2109,14 @@ function bufferStart(){
   bufferTick(); 
   }
 function bufferEnd(){
-  dbuga('bufferEnd 1');
+  //dbuga('bufferEnd 1');
   state.buffering=false;
   bufferMs=0;
-    dbuga('bufferEnd 2');
+    //dbuga('bufferEnd 2');
 
   //bufferTick(); 
   bCanv.width=Math.floor(grid*12);
-  dbuga('bufferEnd 3');
+  //dbuga('bufferEnd 3');
   }
 function bufferTick(){
   //dbuga('bufferTick 1');
@@ -2517,17 +2517,17 @@ function moused(e){}
 
 // utilities
 function dbuga(theString){
-  if(debugging){
+  //if(debugging){
     document.getElementById('debugDiv').style.display="block";
     document.getElementById('debugDiv').innerHTML+="<br />"+theString;
-    }
+  //  }
   }
 
 function dbug(theString){
-  if(debugging){
+  //if(debugging){
     document.getElementById('debugDiv').style.display="block";
     document.getElementById('debugDiv').innerHTML=theString;
-    }
+  //  }
   }
 var pi=Math.PI;
 function graphState(){
