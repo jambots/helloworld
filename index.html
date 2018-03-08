@@ -181,7 +181,7 @@ function checkInternet(){
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
     dataType: "xml",        
-    success: function(xml) {state.internet=true; dbuga('ajax worked');}
+    success: function(xml) {state.internet=true; //dbuga('ajax worked');}
     });
 }
 function checkConnection() {
@@ -1497,7 +1497,7 @@ function getWebFaqs(){
   faqs=[];
   var feedUrl="http://www.radiok.org/app-faq/";
   //var feedUrl="faq.txt";
-  //dbuga('getWebFaqs()');
+  dbuga('getWebFaqs()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
@@ -1512,7 +1512,7 @@ function getWebFaqs(){
 var faqs=[];
 function parseFaqs(theScrape){
   var faqBlocks=theScrape.split('<div class="faq_item">');
-  //dbuga('parseFaqs faqBlocks.length=' +faqBlocks.length);
+  dbuga('parseFaqs faqBlocks.length=' +faqBlocks.length);
   if(faqBlocks.length>1){
     faqs=[];
     for (var s=1; s<faqBlocks.length; s++){
@@ -1930,7 +1930,7 @@ function populateContainer(){
   originalHeight=grid*58;
   contentPad=(containerHeight-originalHeight-grid*6)/2;
   //dbuga('populateContainer() 3 ');
-  document.getElementById('debugDiv').style.top=grid*4+"px";
+  document.getElementById('debugDiv').style.top=grid*8+"px";
   document.getElementById('wrapper').style.backgroundSize=grid*4+"px";
   document.getElementById('container').style.width=ww+"px";
   document.getElementById('container').style.height=containerHeight+"px";
@@ -2091,7 +2091,7 @@ function populateContainer(){
   for (var s=0; s<scrollIdArray.length; s++){
     new ScrollFix(document.getElementById(scrollIdArray[s]));
     }
-  dbuga('populateContainer ran ok so populateFaqs()');
+  //dbuga('populateContainer ran ok so populateFaqs()');
   populateFaqs();
   }
 var bufferTimeout;
