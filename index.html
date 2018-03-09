@@ -1010,6 +1010,7 @@ function getDownloads(){
   rksDownloads=[];
   wrsDownloads=[];
   rcpDownloads=[];
+/*
   document.getElementById('instHolder').style.width=grid*48+'px'; 
   document.getElementById('instHolder').style.height="100%"; 
   document.getElementById('rcpHolder').style.width=grid*48+'px'; 
@@ -1018,6 +1019,7 @@ function getDownloads(){
   document.getElementById('rksHolder').style.height="100%"; 
   document.getElementById('wrsHolder').style.width=grid*48+'px'; 
   document.getElementById('wrsHolder').style.height="100%"; 
+*/
   window.setTimeout('getInstDownloads()', dlDelay);
   }
 
@@ -1078,7 +1080,7 @@ function getRcpDownloads(){
 function parseDownloads(theXml, source){
   dbuga("parseDownloads() "+source);
   if(source=="In-Studios"){
-    var instBlocks=theScrape.split('<div class="instudio_list_item');
+    var instBlocks=theXml.split('<div class="instudio_list_item');
     //dbug('parseInst instBlocks.length=' +instBlocks.length);
 
     if(instBlocks.length>1){
