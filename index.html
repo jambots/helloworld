@@ -1036,10 +1036,21 @@ function getInstDownloads(){
       //dbuga(data);
       //parseInst(data);
       parseDownloads(data, "In-Studios");
-      window.setTimeout('getRksDownloads()', dlDelay);
+      window.setTimeout('getRcpDownloads()', dlDelay);
       }
     });
   //dbuga('getInst() completed');
+  }
+function getRcpDownloads(){
+  dbuga("getRcpDownloads()");
+  $.ajax({
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
+    dataType: "xml",        
+    success: function(xml) {
+      parseDownloads(xml, "Real College Podcast");
+      window.setTimeout('getRksDownloads()', dlDelay);
+      }
+    });
   }
 
 function getRksDownloads(){
@@ -1060,17 +1071,6 @@ function getWrsDownloads(){
     dataType: "xml",        
     success: function(xml) {
       parseDownloads(xml, "Weekly Release Spotlight");
-      window.setTimeout('getRcpDownloads()', dlDelay);
-      }
-    });
-  }
-function getRcpDownloads(){
-  dbuga("getRcpDownloads()");
-  $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
-    dataType: "xml",        
-    success: function(xml) {
-      parseDownloads(xml, "Real College Podcast");
       dbuga('getDownloads completed');
       }
     });
