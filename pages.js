@@ -36,7 +36,7 @@ var pages=[
 {"name":"playlist", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
-    {"name":"refresh", "top":0, "left":0, "height":7, "width":12},
+    {"name":"refresh", "top":0, "left":0, "height":8, "width":8},
     {"name":"home", "top":0, "left":40, "height":8, "width":8}
 
   ],
