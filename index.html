@@ -1630,6 +1630,8 @@ function secondTick(){
   var nowText=minuteOfDayToHour(nowMod)+":"+minuteOfDayToMM(nowMod)+":"+sec;//+" "+minuteOfDayToAmPm(nowMod);
   var amPmText=minuteOfDayToAmPm(nowMod);
   if(currentPage=="armed"){
+    dbug('nowText:'+nowText);
+    dbuga('amPmText:'+amPmText);
     if(sleepSeconds>0){
       sleepSeconds--;
       var SS=sleepSeconds%60;
@@ -1653,7 +1655,6 @@ function secondTick(){
   document.getElementById("page_wakeup_content_nowtime").innerHTML=nowText;
   document.getElementById("page_wakeup_content_nowAmPm").innerHTML=amPmText;
   if((ww!=window.innerWidth)||(wh!=window.innerHeight)){
-    clearInterval(secondInterval);
     dbuga('dimension changed so populateContainer()');
 
     populateContainer();
