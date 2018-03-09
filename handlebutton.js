@@ -285,11 +285,6 @@ StatusBar.hide();
       }
     }
   if(pageName=="playlist"){
-    if(buttonName=="refresh"){
-      buttonOn("playlist", "refresh");
-      window.setTimeout('buttonOff("playlist", "refresh")', navDelay*2);
-      getRecentSongsJson();
-      }
     }
   }
 
