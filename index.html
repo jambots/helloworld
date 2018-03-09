@@ -71,7 +71,6 @@ var waitTimeout;
 var retryInterval;
 var bufferTimeout;
 var minuteInterval;
-var dimensionInterval;
 var songs=[];
 
 var hideTimeout;
@@ -814,11 +813,11 @@ function genericGet(itemName){
   }
 
 function resumeInit(){
-  dbug('resumeInit 0.0');
+  dbug('resumeInit so populateContainer');
   currentPage="home";
   
   populateContainer();
-  //dbuga('resumeInit 1');
+  dbuga('resumeInit 1');
   genericDefault("alarmMinuteOfDay", 11*60+30);
   genericDefault("sleepMinutesDefault", 10);
   genericDefault("quality", "higher");
@@ -833,8 +832,6 @@ function resumeInit(){
   dialInterval=setInterval('dialTick()', 25);
   stateInterval=setInterval('stateTick()', 1000);
   clearInterval(secondInterval);
-  clearInterval(dimensionInterval);
-  dimensionInterval=setInterval('dimensionTick()', 1000);
   secondInterval=setInterval('secondTick()', 1000);
 
   getLocalFaqs();
@@ -1657,15 +1654,10 @@ function secondTick(){
   document.getElementById("page_wakeup_content_nowAmPm").innerHTML=amPmText;
   if((ww!=window.innerWidth)||(wh!=window.innerHeight)){
     clearInterval(secondInterval);
+    dbuga('dimension changed so populateContainer()');
+
     populateContainer();
     }
-  }
-function dimensionTick(){
-  if((ww!=window.innerWidth)||(wh!=window.innerHeight)){
-    clearInterval(dimensionInterval);
-    populateContainer();
-    }
-  //stateTick();
   }
 
 function selectCurrentPage(){
@@ -1927,7 +1919,6 @@ function populateContainer(){
 
 
   var htmlString="";
-  //dbuga('populateContainer() 5 ');
 
   for(var p=0; p<pages.length; p++){
 
