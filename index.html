@@ -920,10 +920,10 @@ function updateInstDownloads(){
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
   var spotlightImage=inst[0].imageSrc;
 
-  document.getElementById("page_ondemand_button_inst").style.backgroundImage='url('+spotlightImage+')';
+  ////document.getElementById("page_ondemand_button_inst").style.backgroundImage='url('+spotlightImage+')';
 
   document.getElementById("page_ondemand_button_inst_on").style.backgroundColor='#333';
-  document.getElementById("page_ondemand_button_inst_on").style.backgroundImage='url('+spotlightImage+')';
+  ////document.getElementById("page_ondemand_button_inst_on").style.backgroundImage='url('+spotlightImage+')';
   document.getElementById("page_ondemand_button_inst_on").style.backgroundSize=squareShrink+'%';
 
 
@@ -1322,10 +1322,10 @@ function updateWrsDownloads(){
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
   var spotlightImage=sortedDownloads[0].image;
   //dbuga("spotlightImage="+spotlightImage);
-  document.getElementById("page_ondemand_button_wrs").style.backgroundImage='url('+spotlightImage+')';
+  ////document.getElementById("page_ondemand_button_wrs").style.backgroundImage='url('+spotlightImage+')';
 
   document.getElementById("page_ondemand_button_wrs_on").style.backgroundColor='#333';
-  document.getElementById("page_ondemand_button_wrs_on").style.backgroundImage='url('+spotlightImage+')';
+  ////document.getElementById("page_ondemand_button_wrs_on").style.backgroundImage='url('+spotlightImage+')';
   document.getElementById("page_ondemand_button_wrs_on").style.backgroundSize=squareShrink+'%';
 
   var htmlBlock="";
@@ -1360,9 +1360,9 @@ function updateRksDownloads(){
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
     if(d==0){
-      document.getElementById("page_ondemand_button_rks").style.backgroundImage='url('+downloadItem.image+')';
+      ////document.getElementById("page_ondemand_button_rks").style.backgroundImage='url('+downloadItem.image+')';
       document.getElementById("page_ondemand_button_rks_on").style.backgroundColor='#333';
-      document.getElementById("page_ondemand_button_rks_on").style.backgroundImage='url('+downloadItem.image+')';
+      ////document.getElementById("page_ondemand_button_rks_on").style.backgroundImage='url('+downloadItem.image+')';
       document.getElementById("page_ondemand_button_rks_on").style.backgroundSize=squareShrink+'%';
       }
     //dbuga(downloadItem.link);
@@ -1393,10 +1393,10 @@ function updateRcpDownloads(){
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
     if(d==0){
-      document.getElementById("page_ondemand_button_rcp").style.backgroundImage='url('+downloadItem.image+')';
+      ////document.getElementById("page_ondemand_button_rcp").style.backgroundImage='url('+downloadItem.image+')';
 
       document.getElementById("page_ondemand_button_rcp_on").style.backgroundColor='#333';
-      document.getElementById("page_ondemand_button_rcp_on").style.backgroundImage='url('+downloadItem.image+')';
+      ////document.getElementById("page_ondemand_button_rcp_on").style.backgroundImage='url('+downloadItem.image+')';
       document.getElementById("page_ondemand_button_rcp_on").style.backgroundSize=squareShrink+'%';
 
       }
