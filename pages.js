@@ -176,7 +176,7 @@ var pages=[
     {"name":"menu", "top":0, "left":0, "height":8, "width":8}
   ],
   "contents":[
-    {"name":"faqsDiv", "top":8, "left":0, "height":45, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":"How do I become a rich and<br>famous Radio K DJ?"},
+    {"name":"faqsDiv", "top":8, "left":0, "height":45, "width":48, "lineHeight":2.6, "fontSize":1.8, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":"How do I become a rich and<br>famous Radio K DJ?"},
     {"name":"regentsDiv", "top":53, "left":0, "height":5, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":"How do I become a rich and<br>famous Radio K DJ?"}
   ]
 },
