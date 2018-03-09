@@ -169,7 +169,7 @@ var pages=[
   "contents":[
   ]
 },
-{"name":"faqs", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":6o,
+{"name":"faqs", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0, "height":60,
   "boxes":[],
   "buttons":[
     {"name":"home", "top":0, "left":40, "height":8, "width":8},
