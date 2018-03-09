@@ -817,7 +817,7 @@ function resumeInit(){
   currentPage="home";
   
   populateContainer();
-  dbuga('resumeInit 1');
+  //dbuga('resumeInit 1');
   genericDefault("alarmMinuteOfDay", 11*60+30);
   genericDefault("sleepMinutesDefault", 10);
   genericDefault("quality", "higher");
@@ -1005,7 +1005,7 @@ var onDemandsLoaded=false;
 function getDownloads(){
   if(onDemandsLoaded){return false;}
   onDemandsLoaded=true;
-  dbuga("getDownloads() 0");
+  //dbuga("getDownloads() 0");
   instDownloads=[];
   rksDownloads=[];
   wrsDownloads=[];
@@ -1025,7 +1025,7 @@ function getDownloads(){
 
 
 function getInstDownloads(){
-  faqs=[];
+  //faqs=[];
   var feedUrl="http://www.radiok.org/instudios/page/"+instPage+"/";
   //var feedUrl="app-faq.txt";
   //dbuga('getInst()');
@@ -1042,7 +1042,7 @@ function getInstDownloads(){
   //dbuga('getInst() completed');
   }
 function getRcpDownloads(){
-  dbuga("getRcpDownloads()");
+  //dbuga("getRcpDownloads()");
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
     dataType: "xml",        
@@ -1054,7 +1054,7 @@ function getRcpDownloads(){
   }
 
 function getRksDownloads(){
-  dbuga("getRksDownloads()");
+  //dbuga("getRksDownloads()");
   $.ajax({
     url: "http://www.radiok.org/tools/packages/radiok/new/k-sessions.php",
     dataType: "xml",        
@@ -1065,20 +1065,20 @@ function getRksDownloads(){
     });
   }
 function getWrsDownloads(){
-  dbuga("getWrsDownloads()");
+  //dbuga("getWrsDownloads()");
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F",
     dataType: "xml",        
     success: function(xml) {
       parseDownloads(xml, "Weekly Release Spotlight");
-      dbuga('getDownloads completed');
+      //dbuga('getDownloads completed');
       }
     });
   }
 // remove errors on publish
 
 function parseDownloads(theXml, source){
-  dbuga("parseDownloads() "+source);
+  //dbuga("parseDownloads() "+source);
   if(source=="In-Studios"){
     var instBlocks=theXml.split('<div class="instudio_list_item');
     //dbug('parseInst instBlocks.length=' +instBlocks.length);
@@ -1249,7 +1249,7 @@ function updateInstDownloads(){
   }
 
 function updateRcpDownloads(){
-  dbuga('updateRcpDownloads()');
+  //dbuga('updateRcpDownloads()');
   var sortedDownloads=rcpDownloads.sort(function(a, b){
       // furthest to nearest
       return b.sort-a.sort
@@ -1281,7 +1281,7 @@ function updateRcpDownloads(){
   }
 
 function updateRksDownloads(){
-  dbuga('updateRksDownloads()');
+  //dbuga('updateRksDownloads()');
   var sortedDownloads=rksDownloads.sort(function(a, b){
       // furthest to nearest
       return b.sort-a.sort
@@ -1453,7 +1453,7 @@ function populateCalendar(){
   }
 
 function getLocalFaqs(){
-  faqs=[];
+  //faqs=[];
   //var feedUrl="http://www.radiok.org/app-faq/";
   var feedUrl="faq.txt";
   //dbuga('getLocalFaqs()');
@@ -1470,7 +1470,7 @@ function getLocalFaqs(){
   //dbuga('getLocalFaqs() completed');
   }
 function getWebFaqs(){
-  faqs=[];
+  //faqs=[];
   var feedUrl="http://www.radiok.org/app-faq/";
   //var feedUrl="faq.txt";
   dbuga('getWebFaqs()');
@@ -1504,7 +1504,7 @@ function parseFaqs(theScrape){
       var contentText=contentParts[0];
       var thisEntry={"q":headingText, "a":contentText};
       faqs.push(thisEntry);
-      //dbuga('<h2>'+headingText+'</h2><p>'+contentText+'</p>');
+      dbuga('H:'+headingText+' C:'+contentText+'');
       }
     }
   populateFaqs();
@@ -2122,7 +2122,7 @@ function bufferTick(){
   //dbuga('bufferTick  completed');
   }
 function populateFaqs(){
-  //dbuga('populateFaqs()');
+  dbuga('populateFaqs() '+faqs.length);
   var htmlString="";
   var answersString="";
   for (var f=0; f<faqs.length; f++){
@@ -2336,7 +2336,7 @@ function rememberButton(pageName, buttonName){
   }
 
 function minuteTick(){
-  dbuga('minuteTick currentPage='+currentPage);
+  //dbuga('minuteTick currentPage='+currentPage);
   //eventStack.push("minuteTick()");
   if(currentPage=="playlist"){
     getRecentSongsJson();
