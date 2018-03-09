@@ -2142,13 +2142,20 @@ function populateFaqs(){
     var grad="background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0%, #232323), color-stop(2%, #232323), color-stop(3%, #181818), color-stop(100%, #000));";
 
     a=a.replace(/socialSize/g, (7*grid)+"px");
-    htmlString+='<div id="question_'+f+'" class="questionHolder" style="width:'+48*grid+'px; max-height:'+10*grid+'px; '+grad+'">';
+    htmlString+='<div id="question_'+f+'" class="questionHolder" style="width:'+48*grid+'px; max-height:'+10*grid+'px; height:auto; display:block; '+grad+'">';
     htmlString+=  '<div id="twistie_'+f+'" class="twistie" style="padding-top:'+1.1*grid+'px; padding-bottom:'+1.1*grid+'px; width:'+40*grid+'px; ';
     htmlString+=  'padding-left:'+grid*3+'px; padding-right:'+grid*6+'px; line-height:'+2.4*grid+'px; font-size:'+1.9*grid+'px; ';
     htmlString+=  'background-image:url('+imagePath+'/page_faqs_button_twistie_on.png); background-size:'+7*grid+'px '+7*grid+'px;">'+q+'</div>'; 
     htmlString+='</div>'
     answersString+='<div id="answer_'+f+'" class="answer"  style="width:'+40*grid+'px; margin-left:'+grid*3+'px; top:'+grid*10+'px; line-height:'+2.6*grid+'px; font-size:'+2*grid+'px;">'+a+'</div>';
     }
+
+/*
+
+      thisQuestion.style.maxHeight=10*grid+'px'; 
+      thisQuestion.style.height='auto'; 
+*/
+
   document.getElementById('page_faqs_content_faqsDiv').innerHTML=htmlString+answersString;
   
 
@@ -2166,19 +2173,21 @@ function populateFaqs(){
 
 
 function selectTwistie(theTwistie){
-  //dbuga('selectTwistie('+theTwistie+')');
+  console.log('selectTwistie('+theTwistie+')');
   selectedTwistie=theTwistie;
   if(theTwistie==-1){
     //reveal all questions, hide all answers
+/*
     for (q=0; q<faqs.length; q++){
       var thisQuestion=document.getElementById('question_'+q)
       var thisTwistie=document.getElementById('twistie_'+q)
       var thisAnswer=document.getElementById('answer_'+q)
-      thisQuestion.style.maxHeight=10*grid+'px'; 
-      thisQuestion.style.height='auto'; 
+      thisQuestion.style.display='block'; 
       thisTwistie.style.backgroundImage='url('+imagePath+'/page_faqs_button_twistie_on.png)';
       thisAnswer.style.display="none";
       }
+*/
+    populateFaqs();
     }
   else{
     for (q=0; q<faqs.length; q++){
@@ -2187,18 +2196,15 @@ function selectTwistie(theTwistie){
       var thisAnswer=document.getElementById('answer_'+q)
       if(q==theTwistie){
         //reveal selected question and answer
-        thisQuestion.style.maxHeight=10*grid+'px'; 
-        thisQuestion.style.height='auto'; 
-        //thisTwistie.style.maxHeight=10*grid+'px'; 
+        thisQuestion.style.display='block'; 
         thisTwistie.style.backgroundImage='url('+imagePath+'/page_faqs_button_twistie_off.png)';
         thisAnswer.style.display="block";
         }
       else{
         // hide all other q&a 
-        thisQuestion.style.height=0*grid+'px'; 
-        //thisTwistie.style.maxHeight=0*grid+'px'; 
+        thisQuestion.style.display='none'; 
         thisTwistie.style.backgroundImage='url('+imagePath+'/page_faqs_button_twistie_on.png)';
-      thisAnswer.style.display="none";
+        thisAnswer.style.display="none";
         }
       }
     }
