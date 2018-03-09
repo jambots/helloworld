@@ -64,7 +64,7 @@ var stream={};
       stream.playing = null;
 */
 
-var debugging=false;
+var debugging=true;
 var waitEvents=0;
 var waitTimeout;
 
@@ -1846,7 +1846,7 @@ function populateDials(){
 
 
 function selectPage(selectedPage){
-  console.log("selectPage "+selectedPage);
+  dbuga("selectPage "+selectedPage);
   currentPage=selectedPage;
   if(state.alarmSet==true){hidePage('footnav');}
   for(var p=0; p<pageArray.length; p++){
@@ -2344,6 +2344,7 @@ function rememberButton(pageName, buttonName){
   }
 
 function minuteTick(){
+  dbuga('minuteTick currentPage='+currentPage);
   //eventStack.push("minuteTick()");
   if(currentPage==""){
     getRecentSongsJson();
