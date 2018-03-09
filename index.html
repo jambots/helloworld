@@ -1,4 +1,4 @@
-n <!DOCTYPE HTML>
+<!DOCTYPE HTML>
 <html>
 <head>
 <title>KUOM Radio K</title>
@@ -837,12 +837,7 @@ function resumeInit(){
   dimensionInterval=setInterval('dimensionTick()', 1000);
   secondInterval=setInterval('secondTick()', 1000);
 
-    //dbuga(' resumeInit 4');
-  //minuteTick();
   getLocalFaqs();
-  getInst();
-  //dbuga(' init 5');
-  //retryInterval=window.setInterval("retryTick()", 15000);    
 
   selectPage("home");
   getRecentSongJson();
@@ -857,116 +852,6 @@ function resumeInit(){
   //dbuga('resume init okay');
   //window.setInterval("hostReachable('')", 10000);
   }
-/*
-http://www.radiok.org/events.json
-http://www.radiok.org/tools/packages/radiok/new/k-sessions.php
-http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast
-http://www.radiok.org/instudios/page/1/
-
-http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F
-
-http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Fweekendhitlist
-*/
-
-function getInst(){
-  faqs=[];
-  var feedUrl="http://www.radiok.org/instudios/page/"+instPage+"/";
-  //var feedUrl="app-faq.txt";
-  //dbuga('getInst()');
-  $.ajax({
-    url: feedUrl,
-    dataType: "text",        // < new bit
-    success: function(data) {
-      //dbuga(data);
-      parseInst(data);
-      }
-    });
-  //dbuga('getInst() completed');
-  }
-var returnFalse=" void(0);";
-var inst=[];
-var instPage=1;
-function parseInst(theScrape){
-  var instBlocks=theScrape.split('<div class="instudio_list_item');
-  //dbug('parseInst instBlocks.length=' +instBlocks.length);
-
-  if(instBlocks.length>1){
-    inst=[];
-      
-    for (var i=1; i<instBlocks.length; i++){
-      var instBlock=instBlocks[i];
-      var quoteParts=instBlock.split('"');
-      var linkUrl=quoteParts[8];
-      var imageSrc=quoteParts[12];
-      var artist=quoteParts[14];	//ok
-      var dateStr=quoteParts[19];	//ok
-      var paraParts=dateStr.split("<p>");
-      var dateStr=paraParts[1];
-      var brParts=dateStr.split("<br");
-      var dateStr=brParts[0];
-
-      var thisEntry={"artist":artist, "dateStr":dateStr, "linkUrl":"http://www.radiok.org"+linkUrl, "imageSrc":"http://www.radiok.org"+imageSrc};
-      inst.push(thisEntry);
-      //dbuga(JSON.stringify(thisEntry));
-      }
-    }
-  //populateInst();
-  updateInstDownloads();
-  }
-function updateInstDownloads(){
-  //dbuga('updateInstDownloads()');
-
-  var gradStyle=returnGradStyle();
-  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
-  var spotlightImage=inst[0].imageSrc;
-
-  ////document.getElementById("page_ondemand_button_inst").style.backgroundImage='url('+spotlightImage+')';
-
-  document.getElementById("page_ondemand_button_inst_on").style.backgroundColor='#333';
-  ////document.getElementById("page_ondemand_button_inst_on").style.backgroundImage='url('+spotlightImage+')';
-  document.getElementById("page_ondemand_button_inst_on").style.backgroundSize=squareShrink+'%';
-
-
-  var htmlBlock="";
-  for(var d=0; d<inst.length; d++){
-    var downloadItem=inst[d];
-    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.linkUrl+'\');'+returnFalse+'"><img src="'+downloadItem.imageSrc+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
-    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
-    htmlBlock+=  '<br /><a href="javascript:remoteLink(\''+downloadItem.linkUrl+'\');'+returnFalse+'">'+downloadItem.artist+'</a>';
-    htmlBlock+=  '<br />'+downloadItem.dateStr+' ';
-    htmlBlock+='</div></div>';
-    }
-  document.getElementById('instScroller').innerHTML=htmlBlock;
-  document.getElementById('instHolder').style.width=grid*48+'px'; 
-  document.getElementById('instHolder').style.height="100%"; 
-  //wrsScrollerTimeout=window.setTimeout("refreshInstHolderScroll()", 100);
-  }
-
-function populateInst(){
-  var htmlString="";
-  //dbuga(inst);
-
-/*
-  for (var f=0; f<inst.length; f++){
-    var q=faqs[f].q;
-    var a=faqs[f].a;
-
-    var quoteParts=a.split('"');
-    for(var p=0; p<quoteParts.length; p++){
-      var thisPart= quoteParts[p];
-      if(thisPart.indexOf('http')>-1){
-        quoteParts[p]='javascript:remoteLink(\''+thisPart+'\');'+returnFalse;
-        }
-      }
-    a=quoteParts.join('"');
-    }
-
-  document.getElementById('page_inst_content_regentsDiv').innerHTML=htmlString;
-*/
-  }
-
-
 
 
 function onOffline() {
@@ -1109,31 +994,60 @@ function parseRecentSongsJson(theData){
   }
 
 
+/*
+http://www.radiok.org/events.json
+http://www.radiok.org/instudios/page/1/
+http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast
+http://www.radiok.org/tools/packages/radiok/new/k-sessions.php
+http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F
+*/
+
+
+var dlDelay=1000;
 function getDownloads(){
   dbuga("getDownloads() 0");
-
+  instDownloads=[];
   rksDownloads=[];
   wrsDownloads=[];
   rcpDownloads=[];
-  document.getElementById('rksHolder').style.width=grid*48+'px'; 
-  document.getElementById('rksHolder').style.height="100%"; 
+  document.getElementById('instHolder').style.width=grid*48+'px'; 
+  document.getElementById('instHolder').style.height="100%"; 
   document.getElementById('rcpHolder').style.width=grid*48+'px'; 
   document.getElementById('rcpHolder').style.height="100%"; 
+  document.getElementById('rksHolder').style.width=grid*48+'px'; 
+  document.getElementById('rksHolder').style.height="100%"; 
   document.getElementById('wrsHolder').style.width=grid*48+'px'; 
   document.getElementById('wrsHolder').style.height="100%"; 
-  window.setTimeout('getRksDownloads()', 10000);
+  window.setTimeout('getInstDownloads()', dlDelay);
+  }
+
+
+function getInstDownloads(){
+  faqs=[];
+  var feedUrl="http://www.radiok.org/instudios/page/"+instPage+"/";
+  //var feedUrl="app-faq.txt";
+  //dbuga('getInst()');
+  $.ajax({
+    url: feedUrl,
+    dataType: "text",        // < new bit
+    success: function(data) {
+      //dbuga(data);
+      //parseInst(data);
+      parseDownloads(data, "In-Studios");
+      window.setTimeout('getRksDownloads()', dlDelay);
+      }
+    });
+  //dbuga('getInst() completed');
   }
 
 function getRksDownloads(){
-
   dbuga("getRksDownloads()");
-
   $.ajax({
     url: "http://www.radiok.org/tools/packages/radiok/new/k-sessions.php",
     dataType: "xml",        
     success: function(xml) {
       parseDownloads(xml, "K Sessions");
-      window.setTimeout('getWrsDownloads()', 10000);
+      window.setTimeout('getWrsDownloads()', dlDelay);
       }
     });
   }
@@ -1144,7 +1058,7 @@ function getWrsDownloads(){
     dataType: "xml",        
     success: function(xml) {
       parseDownloads(xml, "Weekly Release Spotlight");
-      window.setTimeout('getRcpDownloads()', 10000);
+      window.setTimeout('getRcpDownloads()', dlDelay);
       }
     });
   }
@@ -1156,7 +1070,6 @@ function getRcpDownloads(){
     success: function(xml) {
       parseDownloads(xml, "Real College Podcast");
       dbuga('getDownloads completed');
-
       }
     });
   }
@@ -1164,6 +1077,33 @@ function getRcpDownloads(){
 
 function parseDownloads(theXml, source){
   dbuga("parseDownloads() "+source);
+  if(source=="In-Studios"){
+    var instBlocks=theScrape.split('<div class="instudio_list_item');
+    //dbug('parseInst instBlocks.length=' +instBlocks.length);
+
+    if(instBlocks.length>1){
+      inst=[];
+      
+      for (var i=1; i<instBlocks.length; i++){
+        var instBlock=instBlocks[i];
+        var quoteParts=instBlock.split('"');
+        var linkUrl=quoteParts[8];
+        var imageSrc=quoteParts[12];
+        var artist=quoteParts[14];	//ok
+        var dateStr=quoteParts[19];	//ok
+        var paraParts=dateStr.split("<p>");
+        var dateStr=paraParts[1];
+        var brParts=dateStr.split("<br");
+        var dateStr=brParts[0];
+
+        var thisEntry={"artist":artist, "dateStr":dateStr, "linkUrl":"http://www.radiok.org"+linkUrl, "imageSrc":"http://www.radiok.org"+imageSrc};
+        inst.push(thisEntry);
+        //dbuga(JSON.stringify(thisEntry));
+        }
+      }
+    updateInstDownloads();
+    }
+
   if(source=="K Sessions"){
     var rksObj=xmlToJson(theXml);
     var itemsArray=rksObj.rss.channel.item;
@@ -1274,6 +1214,142 @@ function parseDownloads(theXml, source){
   }
 
 
+var returnFalse=" void(0);";
+var inst=[];
+var instPage=1;
+
+function updateInstDownloads(){
+  //dbuga('updateInstDownloads()');
+
+  var gradStyle=returnGradStyle();
+  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
+  var spotlightImage=inst[0].imageSrc;
+
+  window.setTimeout('document.getElementById("page_ondemand_button_inst").style.backgroundImage='url('+spotlightImage+')'", dlDelay/4);
+  window.setTimeout('document.getElementById("page_ondemand_button_inst_on").style.backgroundImage='url('+spotlightImage+')'", dlDelay/2);
+  document.getElementById("page_ondemand_button_inst_on").style.backgroundColor='#333';
+  document.getElementById("page_ondemand_button_inst_on").style.backgroundSize=squareShrink+'%';
+
+
+  var htmlBlock="";
+  for(var d=0; d<inst.length; d++){
+    var downloadItem=inst[d];
+    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.linkUrl+'\');'+returnFalse+'"><img src="'+downloadItem.imageSrc+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
+    htmlBlock+=  '<br /><a href="javascript:remoteLink(\''+downloadItem.linkUrl+'\');'+returnFalse+'">'+downloadItem.artist+'</a>';
+    htmlBlock+=  '<br />'+downloadItem.dateStr+' ';
+    htmlBlock+='</div></div>';
+    }
+  document.getElementById('instScroller').innerHTML=htmlBlock;
+  document.getElementById('instHolder').style.width=grid*48+'px'; 
+  document.getElementById('instHolder').style.height="100%"; 
+  }
+
+function updateRcpDownloads(){
+  dbuga('updateRcpDownloads()');
+  var sortedDownloads=rcpDownloads.sort(function(a, b){
+      // furthest to nearest
+      return b.sort-a.sort
+    });
+
+  var gradStyle=returnGradStyle();
+  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
+  var htmlBlock="";
+  for(var d=0; d<sortedDownloads.length; d++){
+    var downloadItem=sortedDownloads[d];
+    if(d==0){
+      window.setTimeout('document.getElementById("page_ondemand_button_rcp").style.backgroundImage='url('+downloadItem.image+')'", dlDelay/4);
+      window.setTimeout('document.getElementById("page_ondemand_button_rcp_on").style.backgroundImage='url('+downloadItem.image+')'", dlDelay/2);
+      document.getElementById("page_ondemand_button_rcp_on").style.backgroundColor='#333';
+      document.getElementById("page_ondemand_button_rcp_on").style.backgroundSize=squareShrink+'%';
+      }
+    //dbuga(downloadItem.link);
+    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
+    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
+    if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
+    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+'</a>';
+    htmlBlock+='</div></div>';
+    }
+  document.getElementById('rcpScroller').innerHTML=htmlBlock;
+  document.getElementById('rcpHolder').style.width=grid*48+'px'; 
+  document.getElementById('rcpHolder').style.height="100%"; 
+  }
+
+function updateRksDownloads(){
+  dbuga('updateRksDownloads()');
+  var sortedDownloads=rksDownloads.sort(function(a, b){
+      // furthest to nearest
+      return b.sort-a.sort
+    });
+
+  var gradStyle=returnGradStyle();
+  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
+  var htmlBlock="";
+  for(var d=0; d<sortedDownloads.length; d++){
+    var downloadItem=sortedDownloads[d];
+    if(d==0){
+      window.setTimeout('document.getElementById("page_ondemand_button_rks").style.backgroundImage='url('+downloadItem.image+')'", dlDelay/4);
+      window.setTimeout('document.getElementById("page_ondemand_button_rks_on").style.backgroundImage='url('+downloadItem.image+')'", dlDelay/2);
+      document.getElementById("page_ondemand_button_rks_on").style.backgroundColor='#333';
+      document.getElementById("page_ondemand_button_rks_on").style.backgroundSize=squareShrink+'%';
+      }
+    //dbuga(downloadItem.link);
+    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
+    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
+    if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
+    htmlBlock+=  downloadItem.title+' - <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
+    htmlBlock+='</div></div>';
+    }
+  document.getElementById('rksScroller').innerHTML=htmlBlock;
+  document.getElementById('rksHolder').style.width=grid*48+'px'; 
+  document.getElementById('rksHolder').style.height="100%"; 
+  //rksScrollerTimeout=window.setTimeout("refreshRksHolderScroll()", 100);
+  }
+
+function updateWrsDownloads(){
+  //dbuga('updateWrsDownloads()');
+  var sortedDownloads=wrsDownloads.sort(function(a, b){
+      // furthest to nearest
+      return b.sort-a.sort
+    });
+
+  var gradStyle=returnGradStyle();
+  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
+  var spotlightImage=sortedDownloads[0].image;
+  //dbuga("spotlightImage="+spotlightImage);
+  window.setTimeout('document.getElementById("page_ondemand_button_wrs").style.backgroundImage='url('+spotlightImage+')'", dlDelay/4);
+  window.setTimeout('document.getElementById("page_ondemand_button_wrs_on").style.backgroundImage='url('+spotlightImage+')'", dlDelay/2);
+  document.getElementById("page_ondemand_button_wrs_on").style.backgroundColor='#333';
+  document.getElementById("page_ondemand_button_wrs_on").style.backgroundSize=squareShrink+'%';
+
+  var htmlBlock="";
+  for(var d=0; d<sortedDownloads.length; d++){
+    var downloadItem=sortedDownloads[d];
+    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
+    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
+    if(downloadItem.date != "skip"){htmlBlock+=  '<br />'+downloadItem.date+' ';}
+    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+' - '+downloadItem.description+'</a>';
+    htmlBlock+='</div></div>';
+    }
+  document.getElementById('wrsScroller').innerHTML=htmlBlock;
+  document.getElementById('wrsHolder').style.width=grid*48+'px'; 
+  document.getElementById('wrsHolder').style.height="100%"; 
+  //wrsScrollerTimeout=window.setTimeout("refreshWrsHolderScroll()", 100);
+  }
+
+
+
+
+
+var squareShrink=95;
+
 function xmlToJson(xml) {
   
   // Create the return object
@@ -1311,108 +1387,6 @@ function xmlToJson(xml) {
   }
   return obj;
 };
-function updateWrsDownloads(){
-  //dbuga('updateWrsDownloads()');
-  var sortedDownloads=wrsDownloads.sort(function(a, b){
-      // furthest to nearest
-      return b.sort-a.sort
-    });
-
-  var gradStyle=returnGradStyle();
-  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
-  var spotlightImage=sortedDownloads[0].image;
-  //dbuga("spotlightImage="+spotlightImage);
-  ////document.getElementById("page_ondemand_button_wrs").style.backgroundImage='url('+spotlightImage+')';
-
-  document.getElementById("page_ondemand_button_wrs_on").style.backgroundColor='#333';
-  ////document.getElementById("page_ondemand_button_wrs_on").style.backgroundImage='url('+spotlightImage+')';
-  document.getElementById("page_ondemand_button_wrs_on").style.backgroundSize=squareShrink+'%';
-
-  var htmlBlock="";
-  for(var d=0; d<sortedDownloads.length; d++){
-    var downloadItem=sortedDownloads[d];
-    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
-    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
-    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
-    if(downloadItem.date != "skip"){htmlBlock+=  '<br />'+downloadItem.date+' ';}
-    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+' - '+downloadItem.description+'</a>';
-    htmlBlock+='</div></div>';
-    }
-  document.getElementById('wrsScroller').innerHTML=htmlBlock;
-  document.getElementById('wrsHolder').style.width=grid*48+'px'; 
-  document.getElementById('wrsHolder').style.height="100%"; 
-  //wrsScrollerTimeout=window.setTimeout("refreshWrsHolderScroll()", 100);
-  }
-
-var squareShrink=95;
-
-function updateRksDownloads(){
-  dbuga('updateRksDownloads()');
-  var sortedDownloads=rksDownloads.sort(function(a, b){
-      // furthest to nearest
-      return b.sort-a.sort
-    });
-
-  var gradStyle=returnGradStyle();
-  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
-  var htmlBlock="";
-  for(var d=0; d<sortedDownloads.length; d++){
-    var downloadItem=sortedDownloads[d];
-    if(d==0){
-      ////document.getElementById("page_ondemand_button_rks").style.backgroundImage='url('+downloadItem.image+')';
-      document.getElementById("page_ondemand_button_rks_on").style.backgroundColor='#333';
-      ////document.getElementById("page_ondemand_button_rks_on").style.backgroundImage='url('+downloadItem.image+')';
-      document.getElementById("page_ondemand_button_rks_on").style.backgroundSize=squareShrink+'%';
-      }
-    //dbuga(downloadItem.link);
-    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
-    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
-    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
-    if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
-    htmlBlock+=  downloadItem.title+' - <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
-    htmlBlock+='</div></div>';
-    }
-  document.getElementById('rksScroller').innerHTML=htmlBlock;
-  document.getElementById('rksHolder').style.width=grid*48+'px'; 
-  document.getElementById('rksHolder').style.height="100%"; 
-  //rksScrollerTimeout=window.setTimeout("refreshRksHolderScroll()", 100);
-  }
-
-function updateRcpDownloads(){
-  dbuga('updateRcpDownloads()');
-  var sortedDownloads=rcpDownloads.sort(function(a, b){
-      // furthest to nearest
-      return b.sort-a.sort
-    });
-
-  var gradStyle=returnGradStyle();
-  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
-  var htmlBlock="";
-  for(var d=0; d<sortedDownloads.length; d++){
-    var downloadItem=sortedDownloads[d];
-    if(d==0){
-      ////document.getElementById("page_ondemand_button_rcp").style.backgroundImage='url('+downloadItem.image+')';
-
-      document.getElementById("page_ondemand_button_rcp_on").style.backgroundColor='#333';
-      ////document.getElementById("page_ondemand_button_rcp_on").style.backgroundImage='url('+downloadItem.image+')';
-      document.getElementById("page_ondemand_button_rcp_on").style.backgroundSize=squareShrink+'%';
-
-      }
-    //dbuga(downloadItem.link);
-    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+downloadItem.image+'" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
-    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
-    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
-    if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
-    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+'</a>';
-    htmlBlock+='</div></div>';
-    }
-  document.getElementById('rcpScroller').innerHTML=htmlBlock;
-  document.getElementById('rcpHolder').style.width=grid*48+'px'; 
-  document.getElementById('rcpHolder').style.height="100%"; 
-  }
 
 
 function returnGradStyle(){
