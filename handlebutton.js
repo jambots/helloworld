@@ -210,7 +210,6 @@ StatusBar.hide();
       }
     if(buttonName=="inst"){
       instPage=1;
-      getInst();
       buttonOn("ondemand", "inst");
       window.setTimeout('buttonOff("ondemand", "inst"); selectPage("inst");', navDelay);
       }
