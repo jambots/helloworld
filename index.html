@@ -1090,18 +1090,21 @@ function parseDownloads(theXml, source){
       for (var i=1; i<instBlocks.length; i++){
         var instBlock=instBlocks[i];
         var quoteParts=instBlock.split('"');
-        var linkUrl=quoteParts[8];
-        var imageSrc=quoteParts[12];
-        var artist=quoteParts[14];	//ok
-        var dateStr=quoteParts[19];	//ok
-        var paraParts=dateStr.split("<p>");
-        var dateStr=paraParts[1];
-        var brParts=dateStr.split("<br");
-        var dateStr=brParts[0];
+        //alert('quoteParts.length='+quoteParts.length);
+        if(quoteParts.length<23){//skip if quotes in title. 
+          var linkUrl=quoteParts[8];
+          var imageSrc=quoteParts[12];
+          var artist=quoteParts[14];	//ok
+          var dateStr=quoteParts[19];	//ok
+          var paraParts=dateStr.split("<p>");
+          var dateStr=paraParts[1];
+          var brParts=dateStr.split("<br");
+          var dateStr=brParts[0];
 
-        var thisEntry={"artist":artist, "dateStr":dateStr, "linkUrl":"http://www.radiok.org"+linkUrl, "imageSrc":"http://www.radiok.org"+imageSrc};
-        inst.push(thisEntry);
-        //dbuga(JSON.stringify(thisEntry));
+          var thisEntry={"artist":artist, "dateStr":dateStr, "linkUrl":"http://www.radiok.org"+linkUrl, "imageSrc":"http://www.radiok.org"+imageSrc};
+          inst.push(thisEntry);
+          //dbuga(JSON.stringify(thisEntry));
+          }
         }
       }
     updateInstDownloads();
