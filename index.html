@@ -1085,6 +1085,7 @@ function parseDownloads(theXml, source){
     for (var i=0; (i<itemsArray.length)&&(i<14); i++){
       //dbuga('i:'+i)
       var thisObj=itemsArray[i];
+      console.log(thisObj);
       var dateStr=thisObj.pubDate["#text"];
       var parts=dateStr.split(" ");
       var yyyy=parts[3];
@@ -1096,14 +1097,14 @@ function parseDownloads(theXml, source){
       var sortNum=yyyy+mm+dd+hhmmss;
       var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
       var title=thisObj.title["#text"];
-      var description=thisObj.guid["#text"];
+      var description="A curated bi-weekly mix of 10 tracks we think you should have.";//thisObj.guid["#text"];
       var link=thisObj.link["#text"];
       //dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
       var item={
         "sort":sortNum, 
         "source":source, 
-        "date":dispDate, 
-        "image":thisObj["itunes:image"]["@attributes"]["href"], 
+        "date":"", 
+        "image":"images_large/page_ondemand_button_ksc_off.png", 
         "title":title,
         "description":description, 
         "link":link
@@ -1250,9 +1251,8 @@ function updateKscDownloads(){
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+imagePath+'/page_ondemand_button_ksc_on.png" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
-    if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
-    if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
-    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+'</a>';
+    htmlBlock+=  ''+downloadItem.title+'<br />';
+    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     }
   document.getElementById('kscScroller').innerHTML=htmlBlock;

@@ -208,10 +208,9 @@ StatusBar.hide();
       buttonOn("ondemand", "rcp");
       window.setTimeout('buttonOff("ondemand", "rcp"); selectPage("rcp");', navDelay);
       }
-    if(buttonName=="inst"){
-      instPage=1;
-      buttonOn("ondemand", "inst");
-      window.setTimeout('buttonOff("ondemand", "inst"); selectPage("inst");', navDelay);
+    if(buttonName=="ksc"){
+      buttonOn("ondemand", "ksc");
+      window.setTimeout('buttonOff("ondemand", "ksc"); selectPage("ksc");', navDelay);
       }
 
     }
@@ -242,10 +241,10 @@ StatusBar.hide();
       window.setTimeout('buttonOff("wrs", "done"); selectPage("ondemand");', navDelay);
       }
     }
-  if(pageName=="inst"){
+  if(pageName=="ksc"){
     if(buttonName=="done"){
-      buttonOn("inst", "done");
-      window.setTimeout('buttonOff("inst", "done"); selectPage("ondemand");', navDelay);
+      buttonOn("ksc", "done");
+      window.setTimeout('buttonOff("ksc", "done"); selectPage("ondemand");', navDelay);
       }
     }
   if(pageName=="quality"){
