@@ -61,34 +61,34 @@ var pages=[
 },
 {"name":"ondemand", "vAlign":"middle", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[
-    {"name":"kscBox", "top":8.5, "left":3, "width":18, "height":18, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"instBox", "top":8.5, "left":3, "width":18, "height":18, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
     {"name":"rcpBox", "top":8.5, "left":27, "width":18, "height":18, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
-    {"name":"rksBox", "top":32.5, "left":3, "width":18, "height":18, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
+    {"name":"kscBox", "top":32.5, "left":3, "width":18, "height":18, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
     {"name":"wrsBox", "top":32.5, "left":27, "width":18, "height":18, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":" "},
   ],
   "buttons":[
     {"name":"home", "top":0, "left":40, "height":8, "width":8},
     {"name":"menu", "top":0, "left":0, "height":8, "width":8},
-    {"name":"ksc", "top":9, "left":3.5, "height":17, "width":17},
+    {"name":"inst", "top":9, "left":3.5, "height":17, "width":17},
     {"name":"rcp", "top":9, "left":27.5, "height":17, "width":17},
-    {"name":"rks", "top":33, "left":3.5, "height":17, "width":17},
+    {"name":"ksc", "top":33, "left":3.5, "height":17, "width":17},
     {"name":"wrs", "top":33, "left":27.5, "height":17, "width":17},
   ],
   "contents":[
-    {"name":"kscDesc", "top":27, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','ksc');\">K SINGLES CLUB</a>"},
+    {"name":"instDesc", "top":27, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','inst');\">In-Studios</a>"},
     {"name":"rcpDesc", "top":27, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','rcp');\">REAL COLLEGE PODCAST</a>"},
-    {"name":"rksDesc", "top":51, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','rks');\">K SESSIONS</a>"},
+    {"name":"kscDesc", "top":51, "left":.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','ksc');\">K SINGLES CLUB</a>"},
     {"name":"wrsDesc", "top":51, "left":24.5, "width":23, "height":2, "lineHeight":2, "fontSize":1.5, "fontFamily":"akzibold", "color":"white", "textAlign":"center", "defaultText":"<a href=\"javascript:handleButton('ondemand','wrs');\">WEEKLY RELEASE SPOTLIGHT</a>"},
   ]
 },
-{"name":"ksc", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+{"name":"inst", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
     {"name":"home", "top":0, "left":40, "height":8, "width":8},
     {"name":"menu", "top":0, "left":0, "height":8, "width":8},
   ],
   "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="kscHolder"><div id="kscScroller"></div></div>'}
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="instHolder"><div id="instScroller"></div></div>'}
   ]
 },
 {"name":"rcp", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
@@ -101,14 +101,14 @@ var pages=[
     {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="rcpHolder"><div id="rcpScroller"></div></div>'}
   ]
 },
-{"name":"rks", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
+{"name":"ksc", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,
   "boxes":[],
   "buttons":[
     {"name":"home", "top":0, "left":40, "height":8, "width":8},
     {"name":"menu", "top":0, "left":0, "height":8, "width":8},
   ],
   "contents":[
-    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="rksHolder"><div id="rksScroller"></div></div>'}
+    {"name":"downloads", "top":7, "left":0, "height":51, "width":48, "lineHeight":2.6, "fontSize":2, "fontFamily":"akzibold", "color":"white", "textAlign":"left", "defaultText":'<div id="kscHolder"><div id="kscScroller"></div></div>'}
   ]
 },
 {"name":"wrs", "vAlign":"top", "hideLeft":0, "hideTop":0, "hideLeftMargin":0, "hideTopMargin":0, "hideOpac":0,  "height":58,

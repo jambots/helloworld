@@ -163,8 +163,8 @@ var recentSongs={};
 var singMedia;
 
 var kscDownloads=[];
-
-var rksDownloads=[];
+var instDownloads=[];
+//var rksDownloads=[];
 var wrsDownloads=[];
 var rcpDownloads=[];
 
@@ -1010,8 +1010,9 @@ function getDownloads(){
   if(onDemandsLoaded){return false;}
   onDemandsLoaded=true;
   //dbuga("getDownloads() 0");
+  instDownloads=[];
   kscDownloads=[];
-  rksDownloads=[];
+  //rksDownloads=[];
   wrsDownloads=[];
   rcpDownloads=[];
 /*
@@ -1024,9 +1025,26 @@ function getDownloads(){
   document.getElementById('wrsHolder').style.width=grid*48+'px'; 
   document.getElementById('wrsHolder').style.height="100%"; 
 */
-  window.setTimeout('getKscDownloads()', dlDelay);
+  window.setTimeout('getInstDownloads()', dlDelay);
   }
 
+function getInstDownloads(){
+  //faqs=[];
+  var feedUrl="http://www.radiok.org/instudios/page/"+instPage+"/";
+  //var feedUrl="app-faq.txt";
+  //dbuga('getInst()');
+  $.ajax({
+    url: feedUrl,
+    dataType: "text",        // < new bit
+    success: function(data) {
+      //dbuga(data);
+      //parseInst(data);
+      parseDownloads(data, "In-Studios");
+      window.setTimeout('getKscDownloads()', dlDelay);
+      }
+    });
+  //dbuga('getInst() completed');
+  }
 
 function getKscDownloads(){
 
@@ -1078,6 +1096,36 @@ function getWrsDownloads(){
 
 function parseDownloads(theXml, source){
   console.log("parseDownloads() "+source);
+
+  if(source=="In-Studios"){
+    var instBlocks=theXml.split('<div class="instudio_list_item');
+    //dbug('parseInst instBlocks.length=' +instBlocks.length);
+    if(instBlocks.length>1){
+      inst=[];
+      
+      for (var i=1; i<instBlocks.length; i++){
+        var instBlock=instBlocks[i];
+        var quoteParts=instBlock.split('"');
+        //alert('quoteParts.length='+quoteParts.length);
+        if(quoteParts.length<23){//skip if quotes in title. 
+          var linkUrl=quoteParts[8];
+          var imageSrc=quoteParts[12];
+          var artist=quoteParts[14];	//ok
+          var dateStr=quoteParts[19];	//ok
+          var paraParts=dateStr.split("<p>");
+          var dateStr=paraParts[1];
+          var brParts=dateStr.split("<br");
+          var dateStr=brParts[0];
+          var thisEntry={"artist":artist, "dateStr":dateStr, "linkUrl":"http://www.radiok.org"+linkUrl, "imageSrc":"http://www.radiok.org"+imageSrc};
+          inst.push(thisEntry);
+          //dbuga(JSON.stringify(thisEntry));
+          }
+        }
+      }
+    updateInstDownloads();
+    }
+
+
   if(source=="K Singles Club"){
     var kscObj=xmlToJson(theXml);
     var itemsArray=kscObj.rss.channel.item;
@@ -1225,9 +1273,32 @@ function parseDownloads(theXml, source){
   //dbuga('parse completed');
   }
 
-
+var inst=[];
+var instPage=1;
 var returnFalse=" void(0);";
-
+function updateInstDownloads(){
+  //dbuga('updateInstDownloads()');
+  var gradStyle=returnGradStyle();
+  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
+  var spotlightImage=inst[0].imageSrc;
+  window.setTimeout('document.getElementById("page_ondemand_button_inst").style.backgroundImage="url('+spotlightImage+')"', dlDelay/4);
+  window.setTimeout('document.getElementById("page_ondemand_button_inst_on").style.backgroundImage="url('+spotlightImage+')"', dlDelay/2);
+  document.getElementById("page_ondemand_button_inst_on").style.backgroundColor='#333';
+  document.getElementById("page_ondemand_button_inst_on").style.backgroundSize=squareShrink+'%';
+  var htmlBlock="";
+  for(var d=0; d<inst.length; d++){
+    var downloadItem=inst[d];
+    htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.linkUrl+'\');'+returnFalse+'"><img src="'+imagePath+'/page_ondemand_button_inst_on.png" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
+    htmlBlock+=  '<br /><a href="javascript:remoteLink(\''+downloadItem.linkUrl+'\');'+returnFalse+'">'+downloadItem.artist+'</a>';
+    htmlBlock+=  '<br />'+downloadItem.dateStr+' ';
+    htmlBlock+='</div></div>';
+    }
+  document.getElementById('instScroller').innerHTML=htmlBlock;
+  document.getElementById('instHolder').style.width=grid*48+'px'; 
+  document.getElementById('instHolder').style.height="100%"; 
+  }
 
 function updateKscDownloads(){
   console.log('updateKscDownloads()');
@@ -1291,7 +1362,7 @@ function updateRcpDownloads(){
   document.getElementById('rcpHolder').style.width=grid*48+'px'; 
   document.getElementById('rcpHolder').style.height="100%"; 
   }
-
+/*
 function updateRksDownloads(){
   //dbuga('updateRksDownloads()');
   var sortedDownloads=rksDownloads.sort(function(a, b){
@@ -1324,7 +1395,7 @@ function updateRksDownloads(){
   document.getElementById('rksHolder').style.height="100%"; 
   //rksScrollerTimeout=window.setTimeout("refreshRksHolderScroll()", 100);
   }
-
+*/
 function updateWrsDownloads(){
   //dbuga('updateWrsDownloads()');
   var sortedDownloads=wrsDownloads.sort(function(a, b){
@@ -2070,7 +2141,7 @@ function populateContainer(){
   */
   //dbuga('populateContainer 8');
 
-  var scrollIdArray=["resultsHolder", "playlistHolder", "calendarHolder", "rksHolder", "wrsHolder", "rcpHolder", "kscHolder"];
+  var scrollIdArray=["resultsHolder", "playlistHolder", "calendarHolder", "instHolder", "wrsHolder", "rcpHolder", "kscHolder"];//"rksHolder"
   for (var s=0; s<scrollIdArray.length; s++){
     new ScrollFix(document.getElementById(scrollIdArray[s]));
     }
@@ -2486,7 +2557,8 @@ function touchStart(event){
 
 function touchMove(event){
   console.log(Math.floor(event.touches[0].pageX)+" "+Math.floor(event.touches[0].pageY));
-  if((currentPage !="rks")&&(currentPage !="wrs")&&(currentPage !="rcp")&&(currentPage !="ksc")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
+  if((currentPage !="inst")&&(currentPage !="wrs")&&(currentPage !="rcp")&&(currentPage !="ksc")&&(currentPage !="playlist")&&(currentPage !="events")&&(currentPage !="shop")){
+    //(currentPage !="rks")
     event.preventDefault();
     }
   if(currentPage =="alarm"){

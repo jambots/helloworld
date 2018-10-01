@@ -196,10 +196,12 @@ StatusBar.hide();
       buttonOn("ondemand", "done");
       ////window.setTimeout('buttonOff("ondemand", "done"); buttonOn("footnav", "home"); selectPage("home");', navDelay);
       }
+/*
     if(buttonName=="rks"){
       buttonOn("ondemand", "rks");
       window.setTimeout('buttonOff("ondemand", "rks"); selectPage("rks");', navDelay);
       }
+*/
     if(buttonName=="wrs"){
       buttonOn("ondemand", "wrs");
       window.setTimeout('buttonOff("ondemand", "wrs"); selectPage("wrs");', navDelay);
@@ -212,8 +214,20 @@ StatusBar.hide();
       buttonOn("ondemand", "ksc");
       window.setTimeout('buttonOff("ondemand", "ksc"); selectPage("ksc");', navDelay);
       }
+    if(buttonName=="inst"){
+      instPage=1;
+      buttonOn("ondemand", "inst");
+      window.setTimeout('buttonOff("ondemand", "inst"); selectPage("inst");', navDelay);
+      }
 
     }
+  if(pageName=="inst"){
+    if(buttonName=="done"){
+      buttonOn("inst", "done");
+      window.setTimeout('buttonOff("inst", "done"); selectPage("ondemand");', navDelay);
+      }
+    }
+/*
   if(pageName=="rks"){
     if(buttonName=="done"){
       buttonOn("rks", "done");
@@ -224,6 +238,7 @@ StatusBar.hide();
       window.setTimeout('buttonOff("rks", "srks"); remoteLink("https://itunes.apple.com/us/podcast/radio-k-k-sessions/id1183916920?mt=2");', navDelay);
       }
     }
+*/
   if(pageName=="rcp"){
     if(buttonName=="done"){
       buttonOn("rcp", "done");
