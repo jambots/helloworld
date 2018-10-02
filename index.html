@@ -1133,41 +1133,44 @@ function parseDownloads(theXml, source){
 
   if(source=="K Singles Club"){
     var kscObj=xmlToJson(theXml);
-    var itemsArray=kscObj.rss.channel.item;
-    console.log('itemsArray.length='+itemsArray.length);
-    for (var i=0; (i<itemsArray.length)&&(i<14); i++){
-      //dbuga('i:'+i)
-      var thisObj=itemsArray[i];
-      console.log(thisObj);
-      var dateStr=thisObj.pubDate["#text"];
-      var parts=dateStr.split(" ");
-      var yyyy=parts[3];
-      var mm=monToMM[parts[2]];
-      var dd=parts[1];
-      var timeCode=parts[4];
-      var timeParts=timeCode.split(":");
-      var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
-      var sortNum=yyyy+mm+dd+hhmmss;
-      var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
-      var title=thisObj.title["#text"];
-      var description="A curated bi-weekly mix of 10 tracks we think you should have.";//thisObj.guid["#text"];
-      var link=thisObj.link["#text"];
-      //dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
-      var item={
-        "sort":sortNum, 
-        "source":source, 
-        "date":"", 
-        "image":"images_large/page_ondemand_button_ksc_off.png", 
-        "title":title,
-        "description":description, 
-        "link":link
+    if(kscObj.hasOwnProperty("rss")){
+    
+      var itemsArray=kscObj.rss.channel.item;
+      console.log('itemsArray.length='+itemsArray.length);
+      for (var i=0; (i<itemsArray.length)&&(i<14); i++){
+        //dbuga('i:'+i)
+        var thisObj=itemsArray[i];
+        console.log(thisObj);
+        var dateStr=thisObj.pubDate["#text"];
+        var parts=dateStr.split(" ");
+        var yyyy=parts[3];
+        var mm=monToMM[parts[2]];
+        var dd=parts[1];
+        var timeCode=parts[4];
+        var timeParts=timeCode.split(":");
+        var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
+        var sortNum=yyyy+mm+dd+hhmmss;
+        var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
+        var title=thisObj.title["#text"];
+        var description="A curated bi-weekly mix of 10 tracks we think you should have.";
+        //this Obj.guid["#text"];
+        var link=thisObj.link["#text"];
+        //dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
+        var item={
+          "sort":sortNum, 
+          "source":source, 
+          "date":"", 
+          "image":"images_large/page_ondemand_button_ksc_off.png", 
+          "title":title,
+          "description":description, 
+          "link":link
         };
-      kscDownloads.push(item);
-      dbuga('kscDownloads.length='+kscDownloads.length);
-
+        kscDownloads.push(item);
+        dbuga('kscDownloads.length='+kscDownloads.length);
       }
-    updateKscDownloads();
+      updateKscDownloads();
     }
+  }
 
   if(source=="K Sessions"){
     var rksObj=xmlToJson(theXml);
