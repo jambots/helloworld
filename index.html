@@ -1070,11 +1070,11 @@ function getRcpDownloads(){
     dataType: "xml",        
     success: function(xml) {
       parseDownloads(xml, "Real College Podcast");
-      window.setTimeout('getRksDownloads()', dlDelay);
+      window.setTimeout('getWrsDownloads()', dlDelay);
       }
     });
   }
-
+/*
 function getRksDownloads(){
   //dbuga("getRksDownloads()");
   $.ajax({
@@ -1086,6 +1086,7 @@ function getRksDownloads(){
       }
     });
   }
+*/
 function getWrsDownloads(){
   //dbuga("getWrsDownloads()");
   $.ajax({
