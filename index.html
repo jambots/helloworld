@@ -1051,14 +1051,10 @@ function getKscDownloads(){
   var broken="http://www.radiok.org/tools/packages/page_list_teasers/rss?bID=20304&cID=5324&arHandle=Main";
   var fixed="http://www.radiok.org/tools/packages/page_list_teasers/rss?bID=20326&cID=5324&arHandle=Main";
   $.ajax({
-    url: broken,
+    url: fixed,
     dataType: "xml",        
     success: function(xml) {
       parseDownloads(xml, "K Singles Club");
-      window.setTimeout('getRcpDownloads()', dlDelay);
-      },
-    error: function(xhr){
-      alert('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);
       window.setTimeout('getRcpDownloads()', dlDelay);
     }
     });
