@@ -992,16 +992,6 @@ function parseRecentSongsJson(theData){
   }
 
 
-/*
-http://www.radiok.org/events.json
-http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast 5794px *89
-http://www.radiok.org/tools/packages/radiok/new/k-sessions.php 500px
-http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F 700px/1200px/2000px * 122 items
-
-
-http://www.radiok.org/tools/packages/page_list_teasers/rss?bID=20304&cID=5324&arHandle=Main
-*/
-
 
 var dlDelay=400;
 var onDemandsLoaded=false;
@@ -1030,9 +1020,7 @@ function getDownloads(){
 
 function getInstDownloads(){
   //faqs=[];
-  var feedUrl="http://www.radiok.org/instudios/page/"+instPage+"/";
-  //var feedUrl="app-faq.txt";
-  //dbuga('getInst()');
+  var feedUrl="http://www.radiok.org/tools/packages/radiok/instudios_rss.php";
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
@@ -1050,8 +1038,9 @@ function getKscDownloads(){
   //dbuga("getKscDownloads()");
   var broken="http://www.radiok.org/tools/packages/page_list_teasers/rss?bID=20304&cID=5324&arHandle=Main";
   var fixed="http://www.radiok.org/tools/packages/page_list_teasers/rss?bID=20326&cID=5324&arHandle=Main";
+  var updated="http://www.radiok.org/tools/packages/page_list_teasers/rss_by_path?path=%2Ffeatures%2Fk-singles-club";
   $.ajax({
-    url: fixed,
+    url: updated,
     dataType: "xml",        
     success: function(xml) {
       parseDownloads(xml, "K Singles Club");
@@ -1078,7 +1067,7 @@ function getRksDownloads(){
     dataType: "xml",        
     success: function(xml) {
       parseDownloads(xml, "K Sessions");
-      window.setTimeout('getWrsDownloads()', dlDelay);
+      window.setTimeout('getRksDownloads()', dlDelay);
       }
     });
   }
@@ -1086,7 +1075,7 @@ function getRksDownloads(){
 function getWrsDownloads(){
   //dbuga("getWrsDownloads()");
   $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight%2F",
+    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight",
     dataType: "xml",        
     success: function(xml) {
       parseDownloads(xml, "Weekly Release Spotlight");
@@ -1100,32 +1089,45 @@ function parseDownloads(theXml, source){
   console.log("parseDownloads() "+source);
 
   if(source=="In-Studios"){
-    var instBlocks=theXml.split('<div class="instudio_list_item');
-    //dbug('parseInst instBlocks.length=' +instBlocks.length);
-    if(instBlocks.length>1){
-      inst=[];
-      
-      for (var i=1; i<instBlocks.length; i++){
-        var instBlock=instBlocks[i];
-        var quoteParts=instBlock.split('"');
-        //alert('quoteParts.length='+quoteParts.length);
-        if(quoteParts.length<23){//skip if quotes in title. 
-          var linkUrl=quoteParts[8];
-          var imageSrc=quoteParts[12];
-          var artist=quoteParts[14];	//ok
-          var dateStr=quoteParts[19];	//ok
-          var paraParts=dateStr.split("<p>");
-          var dateStr=paraParts[1];
-          var brParts=dateStr.split("<br");
-          var dateStr=brParts[0];
-          var thisEntry={"artist":artist, "dateStr":dateStr, "linkUrl":"http://www.radiok.org"+linkUrl, "imageSrc":"http://www.radiok.org"+imageSrc};
-          inst.push(thisEntry);
-          //dbuga(JSON.stringify(thisEntry));
-          }
-        }
+    var instObj=xmlToJson(theXml);
+    if(instObj.hasOwnProperty("rss")){
+    
+      var itemsArray=instObj.rss.channel.item;
+      console.log('itemsArray.length='+itemsArray.length);
+      for (var i=0; (i<itemsArray.length)&&(i<14); i++){
+        //dbuga('i:'+i)
+        var thisObj=itemsArray[i];
+        console.log(thisObj);
+        var dateStr=thisObj.pubDate["#text"];
+        var parts=dateStr.split(" ");
+        var yyyy=parts[3];
+        var mm=monToMM[parts[2]];
+        var dd=parts[1];
+        var timeCode=parts[4];
+        var timeParts=timeCode.split(":");
+        var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
+        var sortNum=yyyy+mm+dd+hhmmss;
+        var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
+        var title=thisObj.title["#text"];
+        var description="";
+        //this Obj.guid["#text"];
+        var link=thisObj.link["#text"];
+        //dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
+        var item={
+          "sort":sortNum, 
+          "source":source, 
+          "date":"", 
+          "image":"images_large/page_ondemand_button_inst_off.png", 
+          "title":title,
+          "description":description, 
+          "link":link
+        };
+        instDownloads.push(item);
+        dbuga('instDownloads.length='+instDownloads.length);
       }
-    updateInstDownloads();
+      updateInstDownloads();
     }
+  }
 
 
   if(source=="K Singles Club"){
