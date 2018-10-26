@@ -1099,6 +1099,7 @@ function parseDownloads(theXml, source){
         var thisObj=itemsArray[i];
         console.log(thisObj);
         var dateStr=thisObj.pubDate["#text"];
+        console.log(dateStr);
         // others Mon, 25 Jun 2018 18:30:00 -0500
         // this Oct 12, 2018
         var parts=dateStr.split(" ");
@@ -1118,7 +1119,7 @@ function parseDownloads(theXml, source){
         var item={
           "sort":sortNum, 
           "source":source, 
-          "date":"", 
+          "date":dispDate, 
           "image":"images_large/page_ondemand_button_inst_off.png", 
           "title":title,
           "description":description, 
@@ -1287,22 +1288,31 @@ var inst=[];
 var instPage=1;
 var returnFalse=" void(0);";
 function updateInstDownloads(){
-  //dbuga('updateInstDownloads()');
+  //console.log('updateKscDownloads()');
+  var sortedDownloads=instDownloads.sort(function(a, b){
+      // furthest to nearest
+      return b.sort-a.sort
+    });
+
   var gradStyle=returnGradStyle();
   var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
-  ////var spotlightImage=inst[0].imageSrc;
-  ////window.setTimeout('document.getElementById("page_ondemand_button_inst").style.backgroundImage="url('+spotlightImage+')"', dlDelay/4);
-  ////window.setTimeout('document.getElementById("page_ondemand_button_inst_on").style.backgroundImage="url('+spotlightImage+')"', dlDelay/2);
-  document.getElementById("page_ondemand_button_inst_on").style.backgroundColor='#333';
-  document.getElementById("page_ondemand_button_inst_on").style.backgroundSize=squareShrink+'%';
   var htmlBlock="";
-  for(var d=0; d<inst.length; d++){
-    var downloadItem=inst[d];
+  for(var d=0; d<sortedDownloads.length; d++){
+    var downloadItem=sortedDownloads[d];
+/*
+    if(d==0){
+      window.setTimeout('document.getElementById("page_ondemand_button_inst").style.backgroundImage="url('+downloadItem.image+')"', dlDelay/4);
+      window.setTimeout('document.getElementById("page_ondemand_button_inst_on").style.backgroundImage="url('+downloadItem.image+')"', dlDelay/2);
+      document.getElementById("page_ondemand_button_inst_on").style.backgroundColor='#333';
+      document.getElementById("page_ondemand_button_inst_on").style.backgroundSize=squareShrink+'%';
+      }
+*/
+    //dbuga(downloadItem.link);
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.linkUrl+'\');'+returnFalse+'"><img src="'+imagePath+'/page_ondemand_button_inst_on.png" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+imagePath+'/page_ondemand_button_inst_on.png" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
-    htmlBlock+=  '<br /><a href="javascript:remoteLink(\''+downloadItem.linkUrl+'\');'+returnFalse+'">'+downloadItem.artist+'</a>';
-    htmlBlock+=  '<br />'+downloadItem.dateStr+' ';
+    htmlBlock+=  ''+downloadItem.title+'<br />';
+    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     }
   document.getElementById('instScroller').innerHTML=htmlBlock;
