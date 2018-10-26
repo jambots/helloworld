@@ -1099,20 +1099,17 @@ function parseDownloads(theXml, source){
         var thisObj=itemsArray[i];
         console.log(thisObj);
         var dateStr=thisObj.pubDate["#text"];
-        console.log(dateStr);
-        // others Mon, 25 Jun 2018 18:30:00 -0500
-        // this Oct 12, 2018
         var parts=dateStr.split(" ");
-        var yyyy=parts[2];
-        var mm=monToMM[parts[0]];
+        var yyyy=parts[3];
+        var mm=monToMM[parts[2]];
         var dd=parts[1];
-        //var timeCode=parts[4];
-        //var timeParts=timeCode.split(":");
-        //var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
-        var sortNum=yyyy+mm+dd; // +hhmmss;
-        var dispDate=dateStr;   //  monToMonth[parts[2]]+" "+Number(parts[1]);
+        var timeCode=parts[4];
+        var timeParts=timeCode.split(":");
+        var hhmmss=timeParts[0]+timeParts[1]+timeParts[2];
+        var sortNum=yyyy+mm+dd+hhmmss;
+        var dispDate=monToMonth[parts[2]]+" "+Number(parts[1]);
         var title=thisObj.title["#text"];
-        var description="";
+        var description=thisObj.description["#text"].split("Website: ")[1];
         //this Obj.guid["#text"];
         var link=thisObj.link["#text"];
         //dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
@@ -1120,7 +1117,7 @@ function parseDownloads(theXml, source){
           "sort":sortNum, 
           "source":source, 
           "date":dispDate, 
-          "image":"images_large/page_ondemand_button_inst_off.png", 
+          "image":thisObj["image"]["url"], 
           "title":title,
           "description":description, 
           "link":link
