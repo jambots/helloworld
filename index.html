@@ -834,6 +834,7 @@ function resumeInit(){
   stateInterval=setInterval('stateTick()', 1000);
   clearInterval(secondInterval);
   secondInterval=setInterval('secondTick()', 1000);
+  imageInterval=setInterval('imageTick()', 1000);
 
   getLocalFaqs();
 
@@ -1117,7 +1118,7 @@ function parseDownloads(theXml, source){
           "sort":sortNum, 
           "source":source, 
           "date":dispDate, 
-          "image":thisObj["image"]["url"], 
+          "image":thisObj["image"].url["#text"], 
           "title":title,
           "description":description, 
           "link":link
@@ -1284,6 +1285,21 @@ function parseDownloads(theXml, source){
 var inst=[];
 var instPage=1;
 var returnFalse=" void(0);";
+
+var imageQueue=[];
+var imageInterval;
+function imageTick(){
+  if(imageQueue.length>0){
+    var thisImage=imageQueue.shift();
+  
+    if(document.getElementById('wrapper')!==null){
+      document.getElementById(thisImage.id).style.backgroundImage="url('+thisImage.url+')";
+    }else{
+      document.getElementById("").style.backgroundImage="url('+downloadItem.image+')";
+    }
+  }
+}
+
 function updateInstDownloads(){
   //console.log('updateKscDownloads()');
   var sortedDownloads=instDownloads.sort(function(a, b){
@@ -1296,21 +1312,26 @@ function updateInstDownloads(){
   var htmlBlock="";
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
-/*
+
     if(d==0){
       window.setTimeout('document.getElementById("page_ondemand_button_inst").style.backgroundImage="url('+downloadItem.image+')"', dlDelay/4);
       window.setTimeout('document.getElementById("page_ondemand_button_inst_on").style.backgroundImage="url('+downloadItem.image+')"', dlDelay/2);
       document.getElementById("page_ondemand_button_inst_on").style.backgroundColor='#333';
       document.getElementById("page_ondemand_button_inst_on").style.backgroundSize=squareShrink+'%';
       }
-*/
+
     //dbuga(downloadItem.link);
+    imageQueue.push({id:"instThumb"+d, url:downloadItem.image});
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+imagePath+'/page_ondemand_button_inst_on.png" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img id="instThumb'+d+'" src="'+imagePath+'/page_ondemand_button_inst_on.png" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
-    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+'</a>';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+'</a>';
     htmlBlock+=  '<br />'+downloadItem.date;
-    //htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
+    var label=downloadItem.description;
+    label=label.replace("https://","");
+    label=label.replace("http://","");
+    label=label.replace("www.","");
+    htmlBlock+=  ' <br /> <a href="javascript:remoteLink(\''+downloadItem.description+'\');'+returnFalse+'">'+label+'</a>';
     htmlBlock+='</div></div>';
     }
   document.getElementById('instScroller').innerHTML=htmlBlock;
