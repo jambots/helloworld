@@ -1311,8 +1311,9 @@ function updateInstDownloads(){
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+imagePath+'/page_ondemand_button_inst_on.png" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
-    htmlBlock+=  ''+downloadItem.title+'<br />';
-    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
+    htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.title+'</a>';
+    htmlBlock+=  '<br />'+downloadItem.date;
+    //htmlBlock+=  ' <a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'">'+downloadItem.description+'</a>';
     htmlBlock+='</div></div>';
     }
   document.getElementById('instScroller').innerHTML=htmlBlock;
