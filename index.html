@@ -1302,17 +1302,20 @@ function imageTick(){
 }
 function queueInstImages(){
   var sortedDownloads=instDownloads.sort(function(a, b){
-      // furthest to nearest
       return b.sort-a.sort
     });
-
-  var gradStyle=returnGradStyle();
-  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
-  var htmlBlock="";
   for(var d=0; d<sortedDownloads.length; d++){
     var downloadItem=sortedDownloads[d];
-    //dbuga(downloadItem.link);
     imageQueue.push({id:"instThumb"+d, url:downloadItem.image});
+  }
+}
+function queueWrsImages(){
+  var sortedDownloads=wrsDownloads.sort(function(a, b){
+      return b.sort-a.sort
+    });
+  for(var d=0; d<sortedDownloads.length; d++){
+    var downloadItem=sortedDownloads[d];
+    imageQueue.push({id:"wrsThumb"+d, url:downloadItem.image});
   }
 }
 function updateInstDownloads(){
@@ -1986,6 +1989,9 @@ function selectPage(selectedPage){
     }
   hideTimeout=setTimeout('hideTick()', navDelay);
   hideTick();
+  if(selectedPage=="wrs"){
+    queueWrsImages();
+    }  
   if(selectedPage=="inst"){
     queueInstImages();
     }  
