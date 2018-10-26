@@ -1291,17 +1291,32 @@ var imageInterval;
 function imageTick(){
   if(imageQueue.length>0){
     var thisImage=imageQueue.shift();
-  
-    if(document.getElementById('wrapper')!==null){
-      document.getElementById(thisImage.id).style.backgroundImage="url('+thisImage.url+')";
+    var thisId=thisImage.id;
+    var test=document.getElementById(thisId);
+    if(test){
+      console.log('imageTick() '+thisId+' '+thisImage.url);
+      test.src=thisImage.url;
     }else{
-      document.getElementById("").style.backgroundImage="url('+downloadItem.image+')";
     }
   }
 }
+function queueInstImages(){
+  var sortedDownloads=instDownloads.sort(function(a, b){
+      // furthest to nearest
+      return b.sort-a.sort
+    });
 
+  var gradStyle=returnGradStyle();
+  var textStyle='padding-top:'+grid*1.8+'px; width:'+ grid*48 +'px; min-height:'+ grid*8 +'px;  line-height:'+ grid*2.5 +'px;'
+  var htmlBlock="";
+  for(var d=0; d<sortedDownloads.length; d++){
+    var downloadItem=sortedDownloads[d];
+    //dbuga(downloadItem.link);
+    imageQueue.push({id:"instThumb"+d, url:downloadItem.image});
+  }
+}
 function updateInstDownloads(){
-  //console.log('updateKscDownloads()');
+  console.log('updateInstDownloads()');
   var sortedDownloads=instDownloads.sort(function(a, b){
       // furthest to nearest
       return b.sort-a.sort
@@ -1321,7 +1336,7 @@ function updateInstDownloads(){
       }
 
     //dbuga(downloadItem.link);
-    imageQueue.push({id:"instThumb"+d, url:downloadItem.image});
+    //imageQueue.push({id:"instThumb"+d, url:downloadItem.image});
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img id="instThumb'+d+'" src="'+imagePath+'/page_ondemand_button_inst_on.png" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
@@ -1961,7 +1976,7 @@ function populateDials(){
 
 
 function selectPage(selectedPage){
-  dbuga("selectPage "+selectedPage);
+  console.log("selectPage "+selectedPage);
   currentPage=selectedPage;
   if(state.alarmSet==true){hidePage('footnav');}
   for(var p=0; p<pageArray.length; p++){
@@ -1971,6 +1986,15 @@ function selectPage(selectedPage){
     }
   hideTimeout=setTimeout('hideTick()', navDelay);
   hideTick();
+  if(selectedPage=="inst"){
+    queueInstImages();
+    }  
+  if(selectedPage=="home"){
+    imageQueue=[];
+    }  
+  if(selectedPage=="menu"){
+    imageQueue=[];
+    }  
   }
 
 function showPage(thePage){
