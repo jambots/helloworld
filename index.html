@@ -1300,6 +1300,15 @@ function imageTick(){
     }
   }
 }
+function queueRcpImages(){
+  var sortedDownloads=rcpDownloads.sort(function(a, b){
+      return b.sort-a.sort
+    });
+  for(var d=0; d<sortedDownloads.length; d++){
+    var downloadItem=sortedDownloads[d];
+    imageQueue.push({id:"rcpThumb"+d, url:downloadItem.image});
+  }
+}
 function queueInstImages(){
   var sortedDownloads=instDownloads.sort(function(a, b){
       return b.sort-a.sort
@@ -1408,7 +1417,7 @@ function updateRcpDownloads(){
       }
     //dbuga(downloadItem.link);
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
-    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img src="'+imagePath+'/page_ondemand_button_rcp_on.png" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
+    htmlBlock+=  '<a href="javascript:remoteLink(\''+downloadItem.link+'\');'+returnFalse+'"><img id="rcpThumb'+d+'" src="'+imagePath+'/page_ondemand_button_rcp_on.png" style="position:absolute; left:'+grid*1+'px; width:'+grid*7 +'px; height:'+grid*7 +'px;" /></a>';
     htmlBlock+=  '<div style="position:absolute; left:'+grid*10+'px; height:'+grid*8+'px; border:0px solid black; width:'+grid*34+'px; Zbackground-color:blue;">'
     if(downloadItem.source != "skip"){    htmlBlock+=  ''+downloadItem.source+' ';}
     if(downloadItem.date != "skip"){htmlBlock+=  ' - '+downloadItem.date+'<br />';}
@@ -1989,6 +1998,9 @@ function selectPage(selectedPage){
     }
   hideTimeout=setTimeout('hideTick()', navDelay);
   hideTick();
+  if(selectedPage=="rcp"){
+    queueRcpImages();
+    }  
   if(selectedPage=="wrs"){
     queueWrsImages();
     }  
