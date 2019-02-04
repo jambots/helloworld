@@ -202,15 +202,15 @@ function onDeviceReady(){
   document.addEventListener("pause", appPaused, false);
   //dbuga("onDeviceReady() 2");
 
-  if (device.platform == "Android") {
-    state.android=true;
-    state.playerType="media";
-    waitMs=androidWaitMs;
-    }
   if (device.platform == "iOS") {
     state.ios=true;
     state.playerType="audio";
     waitMs=iosWaitMs;
+    }
+  else{//if (device.platform == "Android") {
+    state.android=true;
+    state.playerType="media";
+    waitMs=androidWaitMs;
     }
   //dbuga("onDeviceReady() 3");
 
