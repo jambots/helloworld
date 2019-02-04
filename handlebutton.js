@@ -31,7 +31,7 @@ StatusBar.hide();
     if(buttonName=="donate"){
       buttonOn("footnav", "donate");
       window.setTimeout('buttonOff("footnav", "donate")', navDelay*2);
-      window.setTimeout("remoteLink('http://www.radiok.org/donate/')", navDelay);
+      window.setTimeout("remoteLink('https://www.radiok.org/donate/')", navDelay);
       }
     }
 
@@ -107,7 +107,7 @@ StatusBar.hide();
       dials[0].history=initHistory;
       dials[1].history=initHistory;
       dials[2].history=initHistory;
-        
+
       }
     if(buttonName=="sleepset"){
       mouseStartX=mouseX;
@@ -135,7 +135,7 @@ StatusBar.hide();
       state.uiPlaying=false;
       state.streamCreated=false;
       pauseStream();
-      
+
       buttonOff("home", "playpause");
       }
     if(buttonName=="cancel"){
@@ -162,7 +162,7 @@ StatusBar.hide();
       document.getElementById("page_armed_content_alarmtext").innerHTML="Alarm is set for <br />"+textTime+"<br />(do not close)";
       state.streamCreated=false;
       state.alarmTriggered=false;
-      state.alarmSet=true; 
+      state.alarmSet=true;
       window.plugins.insomnia.keepAwake();
       state.uiPlaying=false;
       pauseStream();
@@ -301,4 +301,3 @@ StatusBar.hide();
   if(pageName=="playlist"){
     }
   }
-

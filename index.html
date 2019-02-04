@@ -114,21 +114,23 @@ var alarmFailsafeTimeout;
 //new test urls
 
 var urlByQuality={
-  "low":"http://128.101.73.38:8056/;", 
-  "medium":"http://128.101.73.38:8128/;", 
+  "low":"http://128.101.73.38:8056/;",
+  "medium":"http://128.101.73.38:8128/;",
   "high":"http://128.101.73.38:8256/;", 
-  "higher":"http://128.101.73.38:8256/;", 
+  "higher":"http://128.101.73.38:8256/;",
   "broken":"http://128.101.73.38:8168/;"
 };
+/*
+texas test passed
 var urlByQuality={
-  "low":"http://peridot.streamguys.com:7810/live-mp3", 
-  "medium":"http://peridot.streamguys.com:7810/live-mp3", 
-  "high":"http://peridot.streamguys.com:7810/live-mp3", 
-  "higher":"http://peridot.streamguys.com:7810/live-mp3", 
+  "low":"http://peridot.streamguys.com:7810/live-mp3",
+  "medium":"http://peridot.streamguys.com:7810/live-mp3",
+  "high":"http://peridot.streamguys.com:7810/live-mp3",
+  "higher":"http://peridot.streamguys.com:7810/live-mp3",
   "broken":"http://peridot.streamguys.com:7810/live-mp3"
 };
 //http://peridot.streamguys.com:7810/live-mp3
-
+*//
 //http://128.101.73.38:8256/
 
 
@@ -164,7 +166,7 @@ function checkInternet(){
     }
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
-    dataType: "xml",        
+    dataType: "xml",
     success: function(xml) {state.internet=true;}
     });
 }
@@ -180,7 +182,7 @@ function checkConnection() {
     state.online=true;
     }
   }
-  
+
 
 function init(){
   //dbuga('init()');
@@ -199,7 +201,7 @@ function onDeviceReady(){
   document.addEventListener("resume", appResumed, false);
   document.addEventListener("pause", appPaused, false);
   //dbuga("onDeviceReady() 2");
-  
+
   if (device.platform == "Android") {
     state.android=true;
     state.playerType="media";
@@ -230,7 +232,7 @@ function appResumed(){
   eventStack.push("App resumed");
   if(state.uiPlaying==true){buttonOn("home", "playpause");}
   StatusBar.hide();
-  populateFaqs(); 
+  populateFaqs();
   }
 function appPaused(){
   state.appActive=false;
@@ -249,8 +251,8 @@ function mediaEvent(evt){
         nowPlaying="no media?";
         state.retryAttempts++;
         var url=createStream();
-        evt+=" - createStream() "+url; 
-        }  
+        evt+=" - createStream() "+url;
+        }
       if(evt=="media starting"){
         if(state.loop==false){
           //nowPlaying="Connecting...";
@@ -259,22 +261,22 @@ function mediaEvent(evt){
           window.clearTimeout(waitTimeout);
           waitTimeout=window.setTimeout("eventStack.push('wait timeout')", waitMs);
           }
-        }  
+        }
       if(evt=="media running"){
         bufferEnd();
         state.streamPlaying=true;
         getRecentSongJson();
         window.clearTimeout(waitTimeout);
-        }  
+        }
       if(evt=="media paused"){
         nowPlaying="";
         window.clearTimeout(waitTimeout);
-        }  
+        }
       if(evt=="media stopped"){
         //nowPlaying="Stopped";
         if(state.loop){stream.play();}
         window.clearTimeout(waitTimeout);
-        }  
+        }
   }
 
 function processEvents(){
@@ -308,7 +310,7 @@ function processEvents(){
           //already delayed 5000
           //checkInternet();
           //state.streamPlaying=false;
-          evt+=" - current, ignore anyways"; 
+          evt+=" - current, ignore anyways";
 /*
           if(state.uiPlaying){
             nowPlaying="Stalled.";
@@ -317,15 +319,15 @@ function processEvents(){
               }
             if((state.online==false)){
               nowPlaying+=" No Connection.";
-              } 
+              }
             if((state.internet==true)&&(state.online==true)){
               nowPlaying+=" Internet but no stream.";
               }
-            } 
+            }
 */
           }
         else{
-          evt+=" - IGNORE"; 
+          evt+=" - IGNORE";
           }
         }
       if(evt.indexOf("audio pause")>-1){
@@ -341,20 +343,20 @@ function processEvents(){
             state.streamCreated=false;
             state.streamPlaying=false;
             state.uiPlaying=false;
-            
+
             nowPlaying+=".";
             buttonOff('home', 'playpause');
-            evt+=" - remotePaused"; 
+            evt+=" - remotePaused";
             }
           else{
-            evt+=" - normal"; 
+            evt+=" - normal";
             nowPlaying="";
             state.streamPlaying=false;
             }
-          evt+=" - current"; 
+          evt+=" - current";
           }
         else{
-          evt+=" - IGNORE"; 
+          evt+=" - IGNORE";
           }
         }
       if(evt.indexOf("audio error")>-1){
@@ -363,7 +365,7 @@ function processEvents(){
         if(audioNum==state.audioCount){
           state.retryAttempts++;
           var url=createStream();
-          evt+=" - MATCH createStream() "+url; 
+          evt+=" - MATCH createStream() "+url;
           }
         else{
           evt+=" - IGNORE old object";
@@ -401,7 +403,7 @@ function processEvents(){
             }
 
           updateNowPlaying();
-          e=eventStash.length; //cease in case immediate play 
+          e=eventStash.length; //cease in case immediate play
           }
         else{
           evt+=" - IGNORE old object";
@@ -422,17 +424,17 @@ function processEvents(){
 
         if(state.streamCreated){
           playStream();
-          evt+=" - playStream()"; 
+          evt+=" - playStream()";
           //dbuga(' - in ui play 4 ' + state.streamCreated);
           }
         else{
           var url=createStream();
-          evt+=" - createStream() "+url; 
+          evt+=" - createStream() "+url;
           //dbuga(' - in ui play 6 ' + state.streamCreated);
 
           }
 
-        e=eventStash.length; //cease in case of twitchy user 
+        e=eventStash.length; //cease in case of twitchy user
         }
       if(evt=="ui pause"){
         //dbuga('ui pause 0');
@@ -443,12 +445,12 @@ function processEvents(){
         pauseStream();
         //dbuga('ui pause 2');
         state.streamCreated=false;
-        evt+=" - set streamCreated=false"; 
+        evt+=" - set streamCreated=false";
         //dbuga('ui pause 4');
-        e=eventStash.length; //cease in case of twitchy user 
+        e=eventStash.length; //cease in case of twitchy user
         //dbuga('ui pause 5');
         }
-        
+
 
 
       if((evt=="stream created")&&(state.uiPlaying)){
@@ -466,7 +468,7 @@ function processEvents(){
         }
 
       if(evt=="alarm fired"){
-        state.alarmSet=false; 
+        state.alarmSet=false;
         window.plugins.insomnia.allowSleepAgain();
         state.alarmTriggered=true;
         state.retryAttempts=0;
@@ -475,7 +477,7 @@ function processEvents(){
         buttonOn("home", "playpause");
         checkInternet();
         var url=createStream();
-        evt+=" - test internet then createStream() "+url; 
+        evt+=" - test internet then createStream() "+url;
         }
       if(evt=="sing timeout"){
         //state.retryAttempts++;
@@ -485,10 +487,10 @@ function processEvents(){
         if(state.uiPlaying){
           checkInternet();
           var url=createStream();
-          evt+=" - test internet then createStream() "+url; 
+          evt+=" - test internet then createStream() "+url;
           }
         }
-        
+
       if(evt=="wait timeout"){
         if(state.streamPlaying==false){
           nowPlaying="Retrying...";
@@ -496,7 +498,7 @@ function processEvents(){
           state.waitEvents++;
           checkInternet();
           var url=createStream();
-          evt+=" - test internet then createStream() "+url; 
+          evt+=" - test internet then createStream() "+url;
           }
         }
 
@@ -506,7 +508,7 @@ function processEvents(){
       if(evt=="online true"){
         if(state.uiPlaying){
           var url=createStream();
-          evt+=" - createStream() "+url; 
+          evt+=" - createStream() "+url;
           }
         }
       if(evt=="online false"){
@@ -521,7 +523,7 @@ function processEvents(){
 
 
         }
-        
+
       staleStack.unshift(evt);
       //dbuga(" - evt:"+evt);
       }
@@ -535,7 +537,7 @@ function processEvents(){
   state.errorPause=false;
 
   }
-function pauseStream(){ 
+function pauseStream(){
   //dbuga('pauseStream() 0')
   window.clearTimeout(waitTimeout);
   state.streamPlaying=false;
@@ -570,7 +572,7 @@ function playStream(){
 var singTimeout;
 
 function createStream(){
-  state.loop=false; 
+  state.loop=false;
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
   //dbuga('createStream() '+myStreamUrl);
   if((state.waitEvents>2)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
@@ -581,7 +583,7 @@ function createStream(){
 
     state.retryAttempts=0;
     state.waitEvents=0;
-    if(state.android){ 
+    if(state.android){
       myStreamUrl="/android_asset/www/sounds/singing.mp3";
       }
     if(state.ios){
@@ -600,17 +602,17 @@ function createStream(){
       }
     }
   else{// try stream
-    //nowPlaying="Connecting..."; 
+    //nowPlaying="Connecting...";
     nowDj="";
     }
   // url figured out now go
   if(state.playerType=="audio"){
     if(state.streamCreated){
       pauseStream();// was stream.pause
-      }    
-    
+      }
+
     stream = null;
-    eventStack.push("stream nullified"); 
+    eventStack.push("stream nullified");
     stream = new Audio(myStreamUrl);
     state.audioCount++;
     var audioCount=state.audioCount;
@@ -705,24 +707,24 @@ function createStream(){
     state.audioCount++;
 
     //stream.audioNum=state.audioCount;
-    //dbuga('createStream() media 4a'); 
+    //dbuga('createStream() media 4a');
 
     if(state.streamPlaying){
-      //dbuga('streamPlaying so 4b stop()'); 
+      //dbuga('streamPlaying so 4b stop()');
       stream.stop();
       }
     if(state.streamCreated){
-      //dbuga('streamCreated so 4c release()'); 
+      //dbuga('streamCreated so 4c release()');
       stream.release();
       state.streamCreated=false;
       }
-    //dbuga('createStream() 4d'); 
+    //dbuga('createStream() 4d');
 
     //dbuga("createStream() android "+myStreamUrl);
-    stream = new Media(myStreamUrl, mediaSuccess, mediaError, mediaStatus);  
-      //dbuga('createStream() new Media 4e'); 
+    stream = new Media(myStreamUrl, mediaSuccess, mediaError, mediaStatus);
+      //dbuga('createStream() new Media 4e');
     }
-  //dbuga('createStream() 5'); 
+  //dbuga('createStream() 5');
   state.streamCreated=true;
   eventStack.push("stream created");
   return myStreamUrl;
@@ -793,21 +795,21 @@ function genericGet(itemName){
   else{
     //dbuga(itemName+" is a String");
     }
-  
+
   return value;
   }
 
 function resumeInit(){
   dbug('resumeInit so populateContainer');
   currentPage="home";
-  
+
   populateContainer();
   //dbuga('resumeInit 1');
   genericDefault("alarmMinuteOfDay", 11*60+30);
   genericDefault("sleepMinutesDefault", 10);
   genericDefault("quality", "higher");
   //dbuga('resumeInit 2');
-  
+
   console.log("quality is "+ genericGet("quality"));
   buttonOn("quality", genericGet("quality"));
   buttonOn("home", "home");
@@ -828,7 +830,7 @@ function resumeInit(){
   document.addEventListener("offline", onOffline, false);
   document.addEventListener("online", onOnline, false);
   myStreamUrl = urlByQuality[genericGet("quality")]+"";
-  
+
   //if(ios){createStream();}
   getCalendarJson();
   StatusBar.hide();
@@ -849,7 +851,7 @@ function onOnline() {
   checkInternet();
   eventStack.push("online true");
   }
-  
+
 
 
 
@@ -915,7 +917,7 @@ function epochToTime(s){
   var hhmmss=parts[0];
   var parts=hhmmss.split(":");
   var junk=parts.pop();
-  
+
   return parts.join(":");
   }
 function updatePlaylistJson(){
@@ -940,7 +942,7 @@ function updatePlaylistJson(){
 
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+='<b>'+artist+'</b><br>&quot;'+song+'&quot;<br />';
-    htmlBlock+='<a id="shopLink" href="javascript:shop(\''+artistClean+'\', \''+albumClean+'\', \''+songClean+'\');"><i>'+album+'</i></a>'; 
+    htmlBlock+='<a id="shopLink" href="javascript:shop(\''+artistClean+'\', \''+albumClean+'\', \''+songClean+'\');"><i>'+album+'</i></a>';
     htmlBlock+='<br /><span style="font-family:akziregular;">'+epochToTime(time)+'</span>';
     htmlBlock+='</div>';
     }
@@ -954,20 +956,20 @@ function updatePlaylistJson(){
   else{
     htmlBlock+='<div class="playlistItem" style="'+textStyle+' '+gradStyle+'">';
     htmlBlock+=  '<br />';
-    htmlBlock+=  '<a href="javascript:remoteLink(\'http://www.radiok.org/playlist/\');">';
+    htmlBlock+=  '<a href="javascript:remoteLink(\'https://www.radiok.org/playlist/\');">';
     htmlBlock+=  'More at RadioK.org</a>';
     htmlBlock+='</div>';
     }
 
-  document.getElementById('playlistScroller').innerHTML=htmlBlock; 
-  document.getElementById('playlistHolder').style.width=grid*48+'px'; 
-  document.getElementById('playlistHolder').style.height='100%'; 
+  document.getElementById('playlistScroller').innerHTML=htmlBlock;
+  document.getElementById('playlistHolder').style.width=grid*48+'px';
+  document.getElementById('playlistHolder').style.height='100%';
   //dbuga('updatePlaylistJson completed ');
   //playlistScrollerTimeout=window.setTimeout("refreshPlaylistHolderScroll()", 100);
   }
 
 function parseRecentSongsJson(theData){
-  
+
   recentSongs=theData.songs;
   //dbuga('parseRecentSongsJson '+recentSongs.length);
   if(theData.songs.length>0){
@@ -991,14 +993,14 @@ function getDownloads(){
   wrsDownloads=[];
   rcpDownloads=[];
 /*
-  document.getElementById('kscHolder').style.width=grid*48+'px'; 
-  document.getElementById('kscHolder').style.height="100%"; 
-  document.getElementById('rcpHolder').style.width=grid*48+'px'; 
-  document.getElementById('rcpHolder').style.height="100%"; 
-  document.getElementById('rksHolder').style.width=grid*48+'px'; 
-  document.getElementById('rksHolder').style.height="100%"; 
-  document.getElementById('wrsHolder').style.width=grid*48+'px'; 
-  document.getElementById('wrsHolder').style.height="100%"; 
+  document.getElementById('kscHolder').style.width=grid*48+'px';
+  document.getElementById('kscHolder').style.height="100%";
+  document.getElementById('rcpHolder').style.width=grid*48+'px';
+  document.getElementById('rcpHolder').style.height="100%";
+  document.getElementById('rksHolder').style.width=grid*48+'px';
+  document.getElementById('rksHolder').style.height="100%";
+  document.getElementById('wrsHolder').style.width=grid*48+'px';
+  document.getElementById('wrsHolder').style.height="100%";
 */
   window.setTimeout('getInstDownloads()', dlDelay);
   }
@@ -1025,7 +1027,7 @@ function getKscDownloads(){
   var updated="http://www.radiok.org/tools/packages/page_list_teasers/rss_by_path?path=%2Ffeatures%2Fk-singles-club";
   $.ajax({
     url: updated,
-    dataType: "xml",        
+    dataType: "xml",
     success: function(xml) {
       parseDownloads(xml, "K Singles Club");
       window.setTimeout('getRcpDownloads()', dlDelay);
@@ -1036,7 +1038,7 @@ function getRcpDownloads(){
   //dbuga("getRcpDownloads()");
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
-    dataType: "xml",        
+    dataType: "xml",
     success: function(xml) {
       parseDownloads(xml, "Real College Podcast");
       window.setTimeout('getWrsDownloads()', dlDelay);
@@ -1048,7 +1050,7 @@ function getRksDownloads(){
   //dbuga("getRksDownloads()");
   $.ajax({
     url: "http://www.radiok.org/tools/packages/radiok/new/k-sessions.php",
-    dataType: "xml",        
+    dataType: "xml",
     success: function(xml) {
       parseDownloads(xml, "K Sessions");
       window.setTimeout('getRksDownloads()', dlDelay);
@@ -1060,7 +1062,7 @@ function getWrsDownloads(){
   //dbuga("getWrsDownloads()");
   $.ajax({
     url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight",
-    dataType: "xml",        
+    dataType: "xml",
     success: function(xml) {
       parseDownloads(xml, "Weekly Release Spotlight");
       //dbuga('getDownloads completed');
@@ -1076,7 +1078,7 @@ function parseDownloads(theXml, source){
     var instObj=xmlToJson(theXml);
     console.log(instObj);
     if(instObj.hasOwnProperty("rss")){
-    
+
       var itemsArray=instObj.rss.channel.item;
       console.log('itemsArray.length='+itemsArray.length);
       for (var i=0; (i<itemsArray.length)&&(i<14); i++){
@@ -1099,12 +1101,12 @@ function parseDownloads(theXml, source){
         var link=thisObj.link["#text"];
         //dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
         var item={
-          "sort":sortNum, 
-          "source":source, 
-          "date":dispDate, 
-          "image":thisObj["image"].url["#text"], 
+          "sort":sortNum,
+          "source":source,
+          "date":dispDate,
+          "image":thisObj["image"].url["#text"],
           "title":title,
-          "description":description, 
+          "description":description,
           "link":link
         };
         console.log(item);
@@ -1119,7 +1121,7 @@ function parseDownloads(theXml, source){
   if(source=="K Singles Club"){
     var kscObj=xmlToJson(theXml);
     if(kscObj.hasOwnProperty("rss")){
-    
+
       var itemsArray=kscObj.rss.channel.item;
       //console.log('itemsArray.length='+itemsArray.length);
       for (var i=0; (i<itemsArray.length)&&(i<14); i++){
@@ -1142,12 +1144,12 @@ function parseDownloads(theXml, source){
         var link=thisObj.link["#text"];
         //dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
         var item={
-          "sort":sortNum, 
-          "source":source, 
-          "date":"", 
-          "image":"images_large/page_ondemand_button_ksc_off.png", 
+          "sort":sortNum,
+          "source":source,
+          "date":"",
+          "image":"images_large/page_ondemand_button_ksc_off.png",
           "title":title,
-          "description":description, 
+          "description":description,
           "link":link
         };
         kscDownloads.push(item);
@@ -1179,12 +1181,12 @@ function parseDownloads(theXml, source){
       var link=thisObj.link["#text"];
       //dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
       var item={
-        "sort":sortNum, 
-        "source":source, 
-        "date":dispDate, 
-        "image":thisObj["itunes:image"]["@attributes"]["href"], 
+        "sort":sortNum,
+        "source":source,
+        "date":dispDate,
+        "image":thisObj["itunes:image"]["@attributes"]["href"],
         "title":title,
-        "description":description, 
+        "description":description,
         "link":link
         };
       rksDownloads.push(item);
@@ -1213,12 +1215,12 @@ function parseDownloads(theXml, source){
       var album=thisObj.description["#text"];
       var link=thisObj.link["#text"];
       var item={
-        "sort":sortNum, 
-        "source":source, 
-        "date":dispDate, 
-        "image":thisObj["itunes:image"]["@attributes"]["href"], 
+        "sort":sortNum,
+        "source":source,
+        "date":dispDate,
+        "image":thisObj["itunes:image"]["@attributes"]["href"],
         "title":band,
-        "description":album, 
+        "description":album,
         "link":link
         };
       wrsDownloads.push(item);
@@ -1248,12 +1250,12 @@ function parseDownloads(theXml, source){
       var link=thisObj.link["#text"];
       //dbuga(i+' okay '+' '+sortNum+' '+dispDate+' '+title+' '+description+' '+link);
       var item={
-        "sort":sortNum, 
-        "source":source, 
-        "date":dispDate, 
-        "image":thisObj["itunes:image"]["@attributes"]["href"], 
+        "sort":sortNum,
+        "source":source,
+        "date":dispDate,
+        "image":thisObj["itunes:image"]["@attributes"]["href"],
         "title":title,
-        "description":description, 
+        "description":description,
         "link":link
         };
       rcpDownloads.push(item);
@@ -1346,8 +1348,8 @@ function updateInstDownloads(){
     htmlBlock+='</div></div>';
     }
   document.getElementById('instScroller').innerHTML=htmlBlock;
-  document.getElementById('instHolder').style.width=grid*48+'px'; 
-  document.getElementById('instHolder').style.height="100%"; 
+  document.getElementById('instHolder').style.width=grid*48+'px';
+  document.getElementById('instHolder').style.height="100%";
   }
 
 function updateKscDownloads(){
@@ -1377,8 +1379,8 @@ function updateKscDownloads(){
     htmlBlock+='</div></div>';
     }
   document.getElementById('kscScroller').innerHTML=htmlBlock;
-  document.getElementById('kscHolder').style.width=grid*48+'px'; 
-  document.getElementById('kscHolder').style.height="100%"; 
+  document.getElementById('kscHolder').style.width=grid*48+'px';
+  document.getElementById('kscHolder').style.height="100%";
   }
 
 function updateRcpDownloads(){
@@ -1409,8 +1411,8 @@ function updateRcpDownloads(){
     htmlBlock+='</div></div>';
     }
   document.getElementById('rcpScroller').innerHTML=htmlBlock;
-  document.getElementById('rcpHolder').style.width=grid*48+'px'; 
-  document.getElementById('rcpHolder').style.height="100%"; 
+  document.getElementById('rcpHolder').style.width=grid*48+'px';
+  document.getElementById('rcpHolder').style.height="100%";
   }
 /*
 function updateRksDownloads(){
@@ -1441,8 +1443,8 @@ function updateRksDownloads(){
     htmlBlock+='</div></div>';
     }
   document.getElementById('rksScroller').innerHTML=htmlBlock;
-  document.getElementById('rksHolder').style.width=grid*48+'px'; 
-  document.getElementById('rksHolder').style.height="100%"; 
+  document.getElementById('rksHolder').style.width=grid*48+'px';
+  document.getElementById('rksHolder').style.height="100%";
   //rksScrollerTimeout=window.setTimeout("refreshRksHolderScroll()", 100);
   }
 */
@@ -1474,8 +1476,8 @@ function updateWrsDownloads(){
     htmlBlock+='</div></div>';
     }
   document.getElementById('wrsScroller').innerHTML=htmlBlock;
-  document.getElementById('wrsHolder').style.width=grid*48+'px'; 
-  document.getElementById('wrsHolder').style.height="100%"; 
+  document.getElementById('wrsHolder').style.width=grid*48+'px';
+  document.getElementById('wrsHolder').style.height="100%";
   //wrsScrollerTimeout=window.setTimeout("refreshWrsHolderScroll()", 100);
   }
 
@@ -1486,7 +1488,7 @@ function updateWrsDownloads(){
 var squareShrink=95;
 
 function xmlToJson(xml) {
-  
+
   // Create the return object
   var obj = {};
 
@@ -1534,11 +1536,11 @@ function updateNowPlaying(){
   //dbuga('updateNowPlaying() '+nowPlaying);
   if((state.online)&&(state.internet)&&(state.uiPlaying)&&(state.loop==false)){
     //eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
-    
-    nowPlaying="<b>"+nowData.artist+"</b><br>&quot;"+nowData.song+"&quot;<br /><i>"+nowData.album+"</i>"; 
-    var nowShow=nowData.show; 
+
+    nowPlaying="<b>"+nowData.artist+"</b><br>&quot;"+nowData.song+"&quot;<br /><i>"+nowData.album+"</i>";
+    var nowShow=nowData.show;
     if(nowShow !=""){nowShow+=" &nbsp; ";}
-    nowDj=nowShow+"DJ: "+nowData.dj;  
+    nowDj=nowShow+"DJ: "+nowData.dj;
 
     if(state.ios){
       //nowPlaying.updateMetas(nowData.artist,nowData.song,nowData.dj);
@@ -1580,20 +1582,20 @@ function populateCalendar(){
     htmlBlock+='</div>';
     }
 
-  document.getElementById('calendarScroller').innerHTML=htmlBlock; 
-  document.getElementById('calendarHolder').style.width=grid*48+'px'; 
-  document.getElementById('calendarHolder').style.height="100%"; 
+  document.getElementById('calendarScroller').innerHTML=htmlBlock;
+  document.getElementById('calendarHolder').style.width=grid*48+'px';
+  document.getElementById('calendarHolder').style.height="100%";
   }
 
 function getLocalFaqs(){
   //faqs=[];
-  //var feedUrl="http://www.radiok.org/app-faq/";
+  //var feedUrl="https://www.radiok.org/app-faq/";
   var feedUrl="faq.txt";
   //dbuga('getLocalFaqs()');
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
-    
+
     success: function(data) {
       //dbuga(data);
       parseFaqs(data);
@@ -1610,7 +1612,7 @@ function getWebFaqs(){
   $.ajax({
     url: feedUrl,
     dataType: "text",        // < new bit
-    
+
     success: function(data) {
       //dbuga(data);
       parseFaqs(data);
@@ -1685,11 +1687,11 @@ function parseCalendarJson(theJson){
       "performers":calendarEvents[c].title,
       "venue":calendarEvents[c].venue,
       "url":calendarEvents[c].path
-      }; 
+      };
     calendarJson.push(rowObj);
     }
   populateCalendarJson();
-  
+
   }
 function populateCalendarJson(){
   //dbuga('populateCalendar() '+calendar.length);
@@ -1708,9 +1710,9 @@ function populateCalendarJson(){
     htmlBlock+='</div>';
     }
 
-  document.getElementById('calendarScroller').innerHTML=htmlBlock; 
-  document.getElementById('calendarHolder').style.width=grid*48+'px'; 
-  document.getElementById('calendarHolder').style.height="100%"; 
+  document.getElementById('calendarScroller').innerHTML=htmlBlock;
+  document.getElementById('calendarHolder').style.width=grid*48+'px';
+  document.getElementById('calendarHolder').style.height="100%";
   }
 
 // old calendar
@@ -1724,7 +1726,7 @@ function getCalendar(){
     });
   //dbuga('getCalendar() completed');
   }
- 
+
 var calendar=[];
 function parseCalendarRss(theRss){
   //dbuga('parseCalendarRss()');
@@ -1740,14 +1742,14 @@ function parseCalendarRss(theRss){
      var hms=parts.pop();
      var year=parts.pop();
      var date=parts.join(" ");
-     
+
      var rowObj={
        "date":date,
        "time":hms,
        "performers":title,
        "venue":$this.find("description").text(),
        "url":$this.find("link").text()
-       }; 
+       };
     calendar.push(rowObj);
     }
   );
@@ -1928,7 +1930,7 @@ function populateDials(){
   dials=[];
   for (var d=0; d<pages[numOfPage('alarm')].contents.length; d++){
     var pane=pages[numOfPage('alarm')].contents[d];
-    var dial={"name":pane.name+"Dial", "touchStart":0, "initVal":0, "atVal":0, "destVal":0, "maxVal":0, "speed":0, "prog":0, "history":initHistory, "max":0}; 
+    var dial={"name":pane.name+"Dial", "touchStart":0, "initVal":0, "atVal":0, "destVal":0, "maxVal":0, "speed":0, "prog":0, "history":initHistory, "max":0};
     dials.push(dial);
     }
   dials[0].initVal=(minuteOfDayToHour(mod)+11)%12;
@@ -1984,29 +1986,29 @@ function selectPage(selectedPage){
   hideTick();
   if(selectedPage=="rcp"){
     queueRcpImages();
-    }  
+    }
   if(selectedPage=="wrs"){
     queueWrsImages();
-    }  
+    }
   if(selectedPage=="inst"){
     queueInstImages();
-    }  
+    }
   if(selectedPage=="home"){
     imageQueue=[];
-    }  
+    }
   if(selectedPage=="menu"){
     imageQueue=[];
-    }  
+    }
   }
 
 function showPage(thePage){
   //console.log('showPage '+thePage);
-  var pageStyle=document.getElementById('page_'+thePage).style;  
+  var pageStyle=document.getElementById('page_'+thePage).style;
   pageStyle.display="block";
   }
 function hidePage(thePage){
   //console.log('hidePage '+thePage);
-  var pageStyle=document.getElementById('page_'+thePage).style;  
+  var pageStyle=document.getElementById('page_'+thePage).style;
   pageStyle.display="none";
   }
 
@@ -2037,10 +2039,10 @@ function populateContainer(){
     }
 
   imagePath="images_large";//ipad retina 1536, viewport 768 down to iphone6+
-  //if(ww<414){imagePath="images_medium";}// 
+  //if(ww<414){imagePath="images_medium";}//
   //imagePath="images_medium";// force test lo res iphone5
   //dbuga(ww+" "+imagePath);
-  
+
   //dbuga('populateContainer() 2 ' +imagePath);
   var wAspect=ww/wh;
   leftOffset=0;
@@ -2225,7 +2227,7 @@ function bufferStart(){
   var d = new Date();
   bufferMs = d.getTime();
   bufferSec= Math.floor(bufferMs/400);
-  bufferTick(); 
+  bufferTick();
   }
 function bufferEnd(){
   //dbuga('bufferEnd 1');
@@ -2233,7 +2235,7 @@ function bufferEnd(){
   bufferMs=0;
     //dbuga('bufferEnd 2');
 
-  //bufferTick(); 
+  //bufferTick();
   bCanv.width=Math.floor(grid*12);
   //dbuga('bufferEnd 3');
   }
@@ -2258,7 +2260,7 @@ function bufferTick(){
     bufferTimeout=window.setTimeout("bufferTick()", 60);
     var message="Connecting";
     for(var e=0; e<deltaSec; e++){
-      message='<span class="black">.</span>'+message+"."; 
+      message='<span class="black">.</span>'+message+".";
       }
     nowPlaying=message;
     document.getElementById('page_home_content_nowPlayingDiv').innerHTML=nowPlaying;
@@ -2293,19 +2295,19 @@ function populateFaqs(){
     htmlString+='<div id="question_'+f+'" class="questionHolder" style="width:'+48*grid+'px; max-height:'+10*grid+'px; height:auto; display:block; '+grad+'">';
     htmlString+=  '<div id="twistie_'+f+'" class="twistie" style="padding-top:'+1.1*grid+'px; padding-bottom:'+1.1*grid+'px; width:'+40*grid+'px; ';
     htmlString+=  'padding-left:'+grid*3+'px; padding-right:'+grid*6+'px; line-height:'+2.4*grid+'px; font-size:'+1.8*grid+'px; ';
-    htmlString+=  'background-image:url('+imagePath+'/page_faqs_button_twistie_on.png); background-size:'+7*grid+'px '+7*grid+'px;">'+q+'</div>'; 
+    htmlString+=  'background-image:url('+imagePath+'/page_faqs_button_twistie_on.png); background-size:'+7*grid+'px '+7*grid+'px;">'+q+'</div>';
     htmlString+='</div>'
     answersString+='<div id="answer_'+f+'" class="answer"  style="width:'+40*grid+'px; margin-left:'+grid*3+'px; top:'+grid*10+'px; line-height:'+2.6*grid+'px; font-size:'+2*grid+'px;">'+a+'</div>';
     }
 
 /*
 
-      thisQuestion.style.maxHeight=10*grid+'px'; 
-      thisQuestion.style.height='auto'; 
+      thisQuestion.style.maxHeight=10*grid+'px';
+      thisQuestion.style.height='auto';
 */
 
   document.getElementById('page_faqs_content_faqsDiv').innerHTML=htmlString+answersString;
-  
+
 
 
   var htmlString="";
@@ -2314,7 +2316,7 @@ function populateFaqs(){
   htmlString+=  'padding-bottom:'+1*grid+'px; width:'+44*grid+'px; ';
   htmlString+=  'padding-left:'+grid*3+'px; padding-right:'+grid*2+'px; ';
   htmlString+=  'line-height:'+1.8*grid+'px; font-size:'+1.6*grid+'px; text-align:center;">';
-  htmlString+=  '&copy; Regents of the University of Minnesota 2018.<br>All rights reserved. Developed by Jambots.com'; 
+  htmlString+=  '&copy; Regents of the University of Minnesota 2018.<br>All rights reserved. Developed by Jambots.com';
   htmlString+='</div></div>'
   document.getElementById('page_faqs_content_regentsDiv').innerHTML=htmlString;
   }
@@ -2330,7 +2332,7 @@ function selectTwistie(theTwistie){
       var thisQuestion=document.getElementById('question_'+q)
       var thisTwistie=document.getElementById('twistie_'+q)
       var thisAnswer=document.getElementById('answer_'+q)
-      thisQuestion.style.display='block'; 
+      thisQuestion.style.display='block';
       thisTwistie.style.backgroundImage='url('+imagePath+'/page_faqs_button_twistie_on.png)';
       thisAnswer.style.display="none";
       }
@@ -2344,13 +2346,13 @@ function selectTwistie(theTwistie){
       var thisAnswer=document.getElementById('answer_'+q)
       if(q==theTwistie){
         //reveal selected question and answer
-        thisQuestion.style.display='block'; 
+        thisQuestion.style.display='block';
         thisTwistie.style.backgroundImage='url('+imagePath+'/page_faqs_button_twistie_off.png)';
         thisAnswer.style.display="block";
         }
       else{
-        // hide all other q&a 
-        thisQuestion.style.display='none'; 
+        // hide all other q&a
+        thisQuestion.style.display='none';
         thisTwistie.style.backgroundImage='url('+imagePath+'/page_faqs_button_twistie_on.png)';
         thisAnswer.style.display="none";
         }
@@ -2404,7 +2406,7 @@ function shop(artist, album, song){
   if(state.android){
     var keywords=artist+" "+album;
     //+" "+song;
-    var shopUrl="http://www.amazon.com/s?ie=UTF8&keywords="+keywords+"&index=music&link_code=qs";
+    var shopUrl="https://www.amazon.com/s?ie=UTF8&keywords="+keywords+"&index=music&link_code=qs";
     window.setTimeout("remoteLink('"+shopUrl+"')", navDelay);
     }
   else{
@@ -2459,8 +2461,8 @@ function parseItunesResults(theData){
       htmlBlock+='</div>';
       }
     document.getElementById('resultsScroller').innerHTML=htmlBlock;
-    document.getElementById('resultsHolder').style.width=grid*48+'px'; 
-    document.getElementById('resultsHolder').style.height="100%"; 
+    document.getElementById('resultsHolder').style.width=grid*48+'px';
+    document.getElementById('resultsHolder').style.height="100%";
     }
   else{
     //dbuga('shop empty')
@@ -2471,7 +2473,7 @@ function parseItunesResults(theData){
 
 function remoteLink(theUrl){
   //dbuga("remoteLink "+theUrl);
-  
+
   if(theUrl.indexOf('mp3')>-1){
     state.uiPlaying=false;
     buttonOff("home", "playpause");
@@ -2526,10 +2528,10 @@ function handleTouchEvent(e){
   if(e.type=="touchstart"){
     if(e.touches.length==3){dbug('');}
     px=e.touches[0].pageX-leftOffset;
-    py=e.touches[0].pageY-topOffset; 
+    py=e.touches[0].pageY-topOffset;
     //dbuga('px:'+px+' py:'+py);
     var target=e.touches[0].target;
-    var targetId=target.id; 
+    var targetId=target.id;
     lastTouchId=targetId;
     //var targetType=typeof target;
     //dbuga(currentPage+' &nbsp; target='+target+' target.id='+targetId);
@@ -2576,17 +2578,17 @@ function handleTouchEvent(e){
 
 
 function gestureStart(event) {
-  event.preventDefault(); 
+  event.preventDefault();
   }
 function gestureChange(event) {
-  event.preventDefault(); 
+  event.preventDefault();
   }
 function gestureEnd(event) {
-  event.preventDefault(); 
+  event.preventDefault();
   }
 
 function touchCancel(event){
-  event.preventDefault(); 
+  event.preventDefault();
   }
 var debugCount=0;
 function mouseup(e){
@@ -2628,7 +2630,7 @@ function touchMove(event){
     }
   if(currentPage =="alarm"){
     mouseX=event.touches[0].pageX;
-    mouseY=event.touches[0].pageY; 
+    mouseY=event.touches[0].pageY;
     //dbuga(mouseX+" "+mouseY);
     }
   if(lastTouchId.indexOf("page_")>-1){
@@ -2669,7 +2671,7 @@ function graphState(){
     return false;
     }
   canv.style.display="block";
-    
+
   canv.height=Math.floor(wh*.75);
   canv.style.top=wh*.125+"px";
   canv.style.backgroundColor="rgba(50,50,50,.5)";
@@ -2706,7 +2708,7 @@ function graphState(){
         }
       ctx.fillStyle = textColor;
       ctx.fillText(thisVal,pad,stepPx*n+stepPx/2);
-      } 
+      }
     if(typeof thisVal=="string"){
       if(thisVal != ""){
         textColor="#fff";
@@ -2714,7 +2716,7 @@ function graphState(){
         }
       ctx.fillStyle = textColor;
       ctx.fillText(thisVal,0,stepPx*n+stepPx/2);
-      } 
+      }
     ctx.fillStyle = textColor;
     ctx.fillText(thisKey,stepPx*1.5,stepPx*n+stepPx/2);
     }

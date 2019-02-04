@@ -3,8 +3,8 @@
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "com.radiok.kuom"
-        versionCode="9" 
-        version   = "3.0.90">
+        versionCode="10"
+        version   = "3.0.91">
 
 <preference name="phonegap-version" value="cli-7.1.0" />
     <name>Radio K - KUOM</name>/Users/admin/android/radiok/helloworld/index.html
@@ -53,7 +53,7 @@
 -->
     <allow-navigation href="*" />
     <allow-intent href="*" />
-    <access origin="*" /> 
+    <access origin="*" />
 <!--
 <gap:config-file platform="android" parent="/manifest">
      <application android:debuggable="true" />
