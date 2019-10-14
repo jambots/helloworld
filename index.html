@@ -584,13 +584,18 @@ function playStream(){
     }
   }
 var singTimeout;
+function gbug(category, action){
+  var platform="browser";
+  if(state.android){platform="android";}
+  if(state.ios){platform="ios";}
 
+  ga('send','event',{'eventCategory':category,'eventAction':action,'eventLabel':'Platform','eventValue':platform});
+}
 function createStream(){
   nowPlaying="Create Stream";
   state.loop=false;
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
-  alert('createStream() '+myStreamUrl);
-  ga('send','event',{'eventCategory':'Debug','eventAction':'createStream','eventLabel':'Event_Label','eventValue':11});  
+
   if((state.waitEvents>4)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
     if(state.waitEvents>4){
       nowPlaying="Timed out, no stream";
@@ -616,16 +621,7 @@ function createStream(){
       nowPlaying="No Connection";
       nowDj="";
       }
-    var platform="browser";
-    if(state.android){platform="android";}
-    if(state.ios){platform="ios";}
-    ga('send','event',{
-      'eventCategory':'Media',
-      'eventAction':nowPlaying,
-      'eventLabel':'platform',
-      'eventValue':platform
-      });
-
+    gbug('createStream', nowPlaying)
 
     }
   else{// try stream
@@ -653,29 +649,13 @@ function createStream(){
     stream.addEventListener("emptied", function() {
        state.streamPlaying=false;
        eventStack.push('audio emptied');
-       var platform="browser";
-       if(state.android){platform="android";}
-       if(state.ios){platform="ios";}
-       ga('send','event',{
-         'eventCategory':'Media',
-         'eventAction':'audioEmptied',
-         'eventLabel':'platform',
-         'eventValue':platform
-         });
+       gbug('createStream', 'audioEmptied')
     }, false);
 
     stream.addEventListener("error", function() {
        if(state.streamPlaying==false){// may be called by ghosts
          //eventStack.push('audio error '+event.target.audioNum);
-         var platform="browser";
-         if(state.android){platform="android";}
-         if(state.ios){platform="ios";}
-         ga('send','event',{
-           'eventCategory':'Media',
-           'eventAction':'audio error '+event.target.audioNum,
-           'eventLabel':'platform',
-           'eventValue':platform
-           });
+         gbug('createStream', 'audioError '+event.target.audioNum);
 
        }
     }, false);
@@ -712,10 +692,12 @@ function createStream(){
     stream.addEventListener("seeking", function() {
        state.streamPlaying=false;
        eventStack.push('audio seeking');
+       gbug('createStream', 'audio seeking ');
     }, false);
     stream.addEventListener("ended", function() {
        state.streamPlaying=false;
        eventStack.push('audio ended');
+       gbug('createStream', 'audio ended ');
     }, false);
 
 
@@ -727,10 +709,14 @@ function createStream(){
     stream.addEventListener("waiting", function() {
        state.streamPlaying=false;
        eventStack.push('audio wait');
+       gbug('createStream', 'audio wait ');
+
     }, false);
     stream.addEventListener("play", function() {
        state.streamPlaying=false;
        eventStack.push('audio play');
+       gbug('createStream', 'audio play ');
+
     }, false);
 
 /*
@@ -740,13 +726,18 @@ function createStream(){
 */
 
     stream.addEventListener("playing", function(theVar) {
-      return function(){playingFunction(theVar)};
+      return function(){
+        playingFunction(theVar)
+        gbug('createStream', 'audio playing ');
+      };
     }(audioCount), false);
 
 
     }// end of playerType audio
 
   if(state.playerType=="media"){
+    gbug('createStream', 'playerType media ');
+
     //stream = null;
     //stream = new Audio(myStreamUrl);
     state.audioCount++;
