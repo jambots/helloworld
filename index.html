@@ -29,7 +29,7 @@ ga('create', 'UA-149845458-1', 'auto');
 ga('set', 'checkProtocolTask', function(){ /* nothing */ });
 ga('set','anonymizeIp',true);
 ga('set','forceSSL',true);
-ga('send', 'pageview');
+ga('send','pageview',{'title':'RadioK','page':'/listen'});
 </script>
 
 <script type="text/javascript">
@@ -618,14 +618,13 @@ function createStream(){
     var platform="browser";
     if(state.android){platform="android";}
     if(state.ios){platform="ios";}
-    ga('send', {
-      hitType: 'event',
-      eventCategory: 'Media',
-      eventAction: nowPlaying,
-      eventLabel: platform
+    ga('send','event',{
+      'eventCategory':'Media',
+      'eventAction':nowPlaying,
+      'eventLabel':'platform',
+      'eventValue':platform
       });
 
-      console.log("ga('send'" +nowPlaying+" "+platform);
 
     }
   else{// try stream
@@ -656,12 +655,12 @@ function createStream(){
        var platform="browser";
        if(state.android){platform="android";}
        if(state.ios){platform="ios";}
-       ga('send', {
-         hitType: 'event',
-         eventCategory: 'Media',
-         eventAction: 'audio emptied',
-         eventLabel: platform
-       });
+       ga('send','event',{
+         'eventCategory':'Media',
+         'eventAction':'audioEmptied',
+         'eventLabel':'platform',
+         'eventValue':platform
+         });
     }, false);
 
     stream.addEventListener("error", function() {
@@ -670,12 +669,13 @@ function createStream(){
          var platform="browser";
          if(state.android){platform="android";}
          if(state.ios){platform="ios";}
-         ga('send', {
-           hitType: 'event',
-           eventCategory: 'Media',
-           eventAction: 'audio error '+event.target.audioNum,
-           eventLabel: platform
-         });
+         ga('send','event',{
+           'eventCategory':'Media',
+           'eventAction':'audio error '+event.target.audioNum,
+           'eventLabel':'platform',
+           'eventValue':platform
+           });
+
        }
     }, false);
 
