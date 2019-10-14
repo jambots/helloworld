@@ -25,7 +25,11 @@
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics_debug.js','ga');
 
-ga('create', 'UA-149845458-1', 'auto');
+  var clientId = ga.getAll()[0].get('clientId');
+   ga('create', 'UA-149845458-1', {
+       'clientId': clientId
+   });
+
 ga('set', 'checkProtocolTask', function(){ /* nothing */ });
 ga('set','anonymizeIp',true);
 ga('set','forceSSL',true);
@@ -259,7 +263,7 @@ function stateTick(){
   }
 
 function mediaEvent(evt){
-  //dbuga('mediaEvent('+evt+')');
+  gbug('mediaEvent',evt);
       //'media none', 'media starting', 'media running', 'media paused', 'media stopped';
       if(evt=="media none"){
         nowPlaying="no media?";
@@ -771,7 +775,6 @@ function playingFunction(audioCount){
        buttonOn('home', 'playpause');
        eventStack.push('audio playing '+audioCount);
        updateNowPlaying();
-
   }
 function stalledFunction(audioCount){
   eventStack.push('stalledFunction '+audioCount);
