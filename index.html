@@ -589,7 +589,8 @@ function createStream(){
   nowPlaying="Create Stream";
   state.loop=false;
   myStreamUrl=urlByQuality[genericGet("quality")]+"";
-  console.log('createStream() '+myStreamUrl);
+  alert('createStream() '+myStreamUrl);
+  ga('send','event',{'eventCategory':'Debug','eventAction':'createStream','eventLabel':'Event_Label','eventValue':11});  
   if((state.waitEvents>4)||(state.retryAttempts>0)||(state.internet==false)||(state.online==false)){
     if(state.waitEvents>4){
       nowPlaying="Timed out, no stream";
