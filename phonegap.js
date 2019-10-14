@@ -1,3 +1,3 @@
 var device={"platform":"browser"};
-window.setTimeout("resumeInit()",400);
-window.setTimeout("selectPage('rcp')",800);
+window.setTimeout("onDeviceReady()",2000);
+window.setTimeout("selectPage('rcp')",3000);
