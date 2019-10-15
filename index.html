@@ -590,11 +590,16 @@ function playStream(){
   }
 var singTimeout;
 function gbug(category, action){
+
   var platform="browser";
   if(state.android){platform="android";}
   if(state.ios){platform="ios";}
 
-  ga('send','event',{'eventCategory':category,'eventAction':action,'eventLabel':'Platform','eventValue':platform});
+
+  ga('send','event',{'eventCategory':platform,'eventAction':action,'eventLabel':'Random','eventValue':rnd(9999)});
+}
+function rnd(range){
+  return Math.floor(Math.random()*range);
 }
 function createStream(){
   nowPlaying="Create Stream";
