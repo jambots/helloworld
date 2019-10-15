@@ -25,15 +25,16 @@
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics_debug.js','ga');
 
-  var clientId = ga.getAll()[0].get('clientId');
+  //var clientId = ga.getAll()[0].get('clientId');
+/*
    ga('create', 'UA-149845458-1', {
        'clientId': clientId
    });
-
+*/
+ga('create', 'UA-149845458-1', 'auto');
 ga('set', 'checkProtocolTask', function(){ /* nothing */ });
 ga('set','anonymizeIp',true);
 ga('set','forceSSL',true);
-ga('send','pageview',{'title':'RadioK','page':'/listen'});
 </script>
 
 <script type="text/javascript">
@@ -653,7 +654,7 @@ function createStream(){
     stream.addEventListener("emptied", function() {
        state.streamPlaying=false;
        eventStack.push('audio emptied');
-       gbug('createStream', 'audioEmptied')
+       gbug('createStream', 'audioEmptied');
     }, false);
 
     stream.addEventListener("error", function() {
@@ -740,7 +741,7 @@ function createStream(){
     }// end of playerType audio
 
   if(state.playerType=="media"){
-    gbug('createStream', 'playerType media ');
+    //gbug('createStream', 'playerType media ');
 
     //stream = null;
     //stream = new Audio(myStreamUrl);
