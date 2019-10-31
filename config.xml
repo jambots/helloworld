@@ -4,9 +4,9 @@
         xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "com.radiok.kuom"
         versionCode="12"
-        version   = "3.0.93">
+        version   = "3.0.94">
 
-<preference name="phonegap-version" value="cli-7.1.0" />
+<preference name="phonegap-version" value="cli-9.0.0" />
     <name>Radio K - KUOM</name>/Users/admin/android/radiok/helloworld/index.html
     <description>Radio K, the award-winning radio station of the University of Minnesota.</description>
 <gap:platform name="android" />
