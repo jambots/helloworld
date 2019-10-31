@@ -184,9 +184,13 @@ function checkInternet(){
     return false;
     }
   $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
+    url: "https://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
     dataType: "xml",
-    success: function(xml) {state.internet=true;}
+    async: false,
+    success: function(xml) {state.internet=true;},
+    error: function (textStatus, errorThrown) {
+                alert(JSON.stringify(textStatus));
+            }
     });
 }
 function checkConnection() {
@@ -885,13 +889,13 @@ function resumeInit(){
 
 
 function onOffline() {
-  //dbuga('onOffline()');
+  dbuga('onOffline()');
   state.online=false;
   state.internet=false;
   eventStack.push("online false");
   }
 function onOnline() {
-  //dbuga('onOnline()');
+  dbuga('onOnline()');
   state.online=true;
   checkInternet();
   eventStack.push("online true");
@@ -909,7 +913,7 @@ function onOnline() {
 function getRecentSongJson(){
   //eventStack.push('getRecentSongJson()');
   //return false;
-  var feedUrl="http://radiok.org/latest.json";
+  var feedUrl="https://radiok.org/latest.json";
       $.ajax({
       url: feedUrl,
       dataType: "json",        //  new bit
@@ -945,7 +949,7 @@ function parseRecentSongJson(theData){
 
 function getRecentSongsJson(){
   //dbuga('getRecentSongsJson()');
-  var feedUrl="http://www.radiok.org/playlist.json";
+  var feedUrl="https://www.radiok.org/playlist.json";
   //var feedUrl="playlist.json";
       $.ajax({
       url: feedUrl,
@@ -1052,7 +1056,7 @@ function getDownloads(){
 
 function getInstDownloads(){
   //faqs=[];
-  var feedUrl="http://www.radiok.org/tools/packages/radiok/instudios_rss.php";
+  var feedUrl="https://www.radiok.org/tools/packages/radiok/instudios_rss.php";
   $.ajax({
     url: feedUrl,
     dataType: "xml",        // < new bit
@@ -1067,9 +1071,9 @@ function getInstDownloads(){
 
 function getKscDownloads(){
   //dbuga("getKscDownloads()");
-  var broken="http://www.radiok.org/tools/packages/page_list_teasers/rss?bID=20304&cID=5324&arHandle=Main";
-  var fixed="http://www.radiok.org/tools/packages/page_list_teasers/rss?bID=20326&cID=5324&arHandle=Main";
-  var updated="http://www.radiok.org/tools/packages/page_list_teasers/rss_by_path?path=%2Ffeatures%2Fk-singles-club";
+  var broken="https://www.radiok.org/tools/packages/page_list_teasers/rss?bID=20304&cID=5324&arHandle=Main";
+  var fixed="https://www.radiok.org/tools/packages/page_list_teasers/rss?bID=20326&cID=5324&arHandle=Main";
+  var updated="https://www.radiok.org/tools/packages/page_list_teasers/rss_by_path?path=%2Ffeatures%2Fk-singles-club";
   $.ajax({
     url: updated,
     dataType: "xml",
@@ -1082,7 +1086,7 @@ function getKscDownloads(){
 function getRcpDownloads(){
   //dbuga("getRcpDownloads()");
   $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
+    url: "https://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
     dataType: "xml",
     success: function(xml) {
       parseDownloads(xml, "Real College Podcast");
@@ -1094,7 +1098,7 @@ function getRcpDownloads(){
 function getRksDownloads(){
   //dbuga("getRksDownloads()");
   $.ajax({
-    url: "http://www.radiok.org/tools/packages/radiok/new/k-sessions.php",
+    url: "https://www.radiok.org/tools/packages/radiok/new/k-sessions.php",
     dataType: "xml",
     success: function(xml) {
       parseDownloads(xml, "K Sessions");
@@ -1106,7 +1110,7 @@ function getRksDownloads(){
 function getWrsDownloads(){
   //dbuga("getWrsDownloads()");
   $.ajax({
-    url: "http://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight",
+    url: "https://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Ffeatures%2Fweekly-release-spotlight",
     dataType: "xml",
     success: function(xml) {
       parseDownloads(xml, "Weekly Release Spotlight");
@@ -1387,7 +1391,7 @@ function updateInstDownloads(){
     htmlBlock+=  '<br />'+downloadItem.date;
     var label=downloadItem.description;
     label=label.replace("https://","");
-    label=label.replace("http://","");
+    label=label.replace("https://","");
     label=label.replace("www.","");
     htmlBlock+=  ' <br /> <a href="javascript:remoteLink(\''+downloadItem.description+'\');'+returnFalse+'">'+label+'</a>';
     htmlBlock+='</div></div>';
@@ -1651,7 +1655,7 @@ function getLocalFaqs(){
   }
 function getWebFaqs(){
   //faqs=[];
-  var feedUrl="http://www.radiok.org/app-faq/";
+  var feedUrl="https://www.radiok.org/app-faq/";
   //var feedUrl="faq.txt";
   dbuga('getWebFaqs()');
   $.ajax({
@@ -1691,7 +1695,7 @@ function parseFaqs(theScrape){
   }
 
 function getCalendarJson(){
-  var feedUrl="http://www.radiok.org/events.json";
+  var feedUrl="https://www.radiok.org/events.json";
   //dbuga('getCalendarJson()');
   $.ajax({
     url: feedUrl,
@@ -1709,7 +1713,7 @@ all_day: 0
 description: ""
 end: "Saturday, February 6, 2016 - 8:00pm"
 more_info_links: Array[0]
-path: "http://www.radiok.org/events/caspian-obrother"
+path: "https://www.radiok.org/events/caspian-obrother"
 special_guests: Array[0]
 start: "Saturday, February 6, 2016 - 8:00pm"
 tags: Array[0]
@@ -1762,7 +1766,7 @@ function populateCalendarJson(){
 
 // old calendar
 function getCalendar(){
-  var feedUrl="http://www.radiok.org/tools/blocks/pro_event_list/rss.php?ctID=&bID=14940&ordering=ASC";
+  var feedUrl="https://www.radiok.org/tools/blocks/pro_event_list/rss.php?ctID=&bID=14940&ordering=ASC";
   //dbuga('getCalendar()');
   $.ajax({
     url: feedUrl,
