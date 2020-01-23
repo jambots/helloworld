@@ -909,15 +909,21 @@ function onOnline() {
 
 
 // new json  playlist and now playing
-
+var recentTemp={};
 function getRecentSongJson(){
-  //eventStack.push('getRecentSongJson()');
+  dbuga('getRecentSongJson()');
   //return false;
-  var feedUrl="https://radiok.org/latest.json";
+  var feedUrl="http://radiok.org/latest.json";
       $.ajax({
       url: feedUrl,
       dataType: "json",        //  new bit
-      success: function(data) {parseRecentSongJson(data);}
+      success: function(data) {
+        recentTemp=data;
+        parseRecentSongJson(data);
+      },
+      error: function (textStatus, errorThrown) {
+                  alert(JSON.stringify(textStatus));
+              }
       });
   }
 function songObjToNowData(songObj){
@@ -1073,7 +1079,7 @@ function getKscDownloads(){
   //dbuga("getKscDownloads()");
   var broken="https://www.radiok.org/tools/packages/page_list_teasers/rss?bID=20304&cID=5324&arHandle=Main";
   var fixed="https://www.radiok.org/tools/packages/page_list_teasers/rss?bID=20326&cID=5324&arHandle=Main";
-  var updated="https://www.radiok.org/tools/packages/page_list_teasers/rss_by_path?path=%2Ffeatures%2Fk-singles-club";
+  var updated="https://www.radiok.org/tools/packages/page_list_teasers/rss_by_path?path=%2Ffeatures%2Fk-singles-club";//ok
   $.ajax({
     url: updated,
     dataType: "xml",
@@ -1582,7 +1588,7 @@ function returnGradStyle(){
   }
 
 function updateNowPlaying(){
-  //dbuga('updateNowPlaying() '+nowPlaying);
+  dbuga('updateNowPlaying() '+nowPlaying);
   if((state.online)&&(state.internet)&&(state.uiPlaying)&&(state.loop==false)){
     //eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
 
