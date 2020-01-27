@@ -3,7 +3,7 @@
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "com.radiok.kuom"
     versionCode = "12"
-    version     = "3.0.98" >
+    version     = "3.0.101" >
     <preference name="phonegap-version" value="cli-9.0.0" />
     <preference name="android-targetSdkVersion" value="28" />
     <preference name="android-minSdkVersion" value="19" />
