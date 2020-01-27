@@ -4,13 +4,17 @@
     id          = "com.radiok.kuom"
     versionCode = "12"
     version     = "3.0.98" >
-    <preference name="phonegap-version" value="cli-9.0.0" />
-    <preference name="android-targetSdkVersion" value="28" />
-    <preference name="android-minSdkVersion" value="19" />
 
 <!-- versionCode is optional and Android only -->
+<preference name="phonegap-version" value="cli-9.0.0" />
+<preference name="android-targetSdkVersion" value="28" />
+<preference name="android-minSdkVersion" value="19" />
 
 <!--
+<preference name="phonegap-version" value="cli-9.0.0" />
+<preference name="android-targetSdkVersion" value="28" />
+<preference name="android-minSdkVersion" value="19" />
+
 <name>Radio K - KUOM</name>/Users/admin/android/radiok/helloworld/index.html
 <description>Radio K, the award-winning radio station of the University of Minnesota.</description>
 <gap:platform name="android" />
