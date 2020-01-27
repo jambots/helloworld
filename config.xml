@@ -6,7 +6,6 @@
     version     = "3.0.98" >
 
 <!-- versionCode is optional and Android only -->
-<preference name="phonegap-version" value="cli-9.0.0" />
 
 <!--
 <preference name="phonegap-version" value="cli-9.0.0" />
