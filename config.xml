@@ -16,11 +16,5 @@
   <author href="https://build.phonegap.com" email="support@phonegap.com">
       Terrance Schubring
   </author>
-  <allow-navigation href="*" />
-  <allow-intent href="*" />
-  <access origin="*" />
 
-<gap:config-file platform="android" parent="/manifest">
-   <application android:debuggable="true" />
-</gap:config-file>
 </widget>
