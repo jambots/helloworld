@@ -3,7 +3,7 @@
     xmlns:gap   = "http://phonegap.com/ns/1.0"
     id          = "com.radiok.kuom"
     versionCode = "12"
-    version     = "3.0.99" >
+    version     = "3.0.100" >
 
 <!-- versionCode is optional and Android only -->
 <name>Radio K - KUOM</name>
