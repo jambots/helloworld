@@ -53,6 +53,7 @@ var state={
 "buffering":false,
 "streamPlaying":false,
 "remotePaused":false,
+"offlinePaused":false,
 "alarmSet":false,
 "alarmTriggered":false,
 "retryAttempts":0,
@@ -189,11 +190,13 @@ function checkInternet(){
     async: false,
     success: function(xml) {
       state.internet=true;
-      if(state.buffering){
-        //2020
 
+      //2020
+      if(offlinePaused){
+        dbuga('checkInternet success so togglePlaying');
         togglePlaying()
       }
+
     },
     error: function (textStatus, errorThrown) {
                 alert(JSON.stringify(textStatus));
@@ -368,18 +371,30 @@ function processEvents(){
           nowPlaying="Paused";
           nowDj="";
           if(state.uiPlaying){// REMOTE PAUSE
-            dbuga('audio pause so remotePaused=true');
-            nowPlaying="Remote Paused";
-            state.remotePaused=true;
-            state.streamCreated=false;
-            state.streamPlaying=false;
-            state.uiPlaying=false;
-
-            nowPlaying+=".";
-            buttonOff('home', 'playpause');
-            evt+=" - remotePaused";
+            //2020
+            if(state.online=="true"){
+              dbuga('online audio pause so remotePaused=true');
+              nowPlaying="Remote Paused";
+              state.remotePaused=true;
+              state.streamCreated=false;
+              state.streamPlaying=false;
+              state.uiPlaying=false;
+              nowPlaying+=".";
+              buttonOff('home', 'playpause');
+              evt+=" - remotePaused";
+            }else{
+              dbuga('offline audio pause so ...');
+              nowPlaying="Offline.";
+              state.offlinePaused=true;
+              state.streamCreated=false;
+              state.streamPlaying=false;
+              state.uiPlaying=false;
+              nowPlaying+=".";
+              buttonOff('home', 'playpause');
+              evt+=" - offlinePaused";
+              }
             }
-          else{
+          else{// not uiPlaying
             evt+=" - normal";
             nowPlaying="";
             state.streamPlaying=false;
@@ -423,6 +438,7 @@ function processEvents(){
         var audioNum=Number(parts[2]);
         if(audioNum==state.audioCount){
           state.remotePaused=false;
+          state.offlinePaused=false;
           evt+=" - current";
           //dbuga('  processEvents so streamPlaying=true '+evt)
           bufferEnd();
@@ -451,6 +467,7 @@ function processEvents(){
         state.retryAttempts=0;
         state.waitEvents=0;
         state.remotePaused=false;
+        state.offlinePaused=false;
         //dbuga(' - in ui play 2 ' + state.streamCreated);
 
         if(state.streamCreated){
@@ -2565,6 +2582,7 @@ function minuteTick(){
     }
   }
 function remoteControlPause(){
+  //2020
   dbuga('remoteControlPause');
   eventStack.push("remote paused");
   state.remotePaused=true;
