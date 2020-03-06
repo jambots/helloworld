@@ -936,7 +936,7 @@ function onOnline() {
 // new json  playlist and now playing
 var recentTemp={};
 function getRecentSongJson(){
-  dbuga('getRecentSongJson()');
+  //dbuga('getRecentSongJson()');
   //return false;
   var feedUrl="http://radiok.org/latest.json";
       $.ajax({
@@ -947,7 +947,7 @@ function getRecentSongJson(){
         parseRecentSongJson(data);
       },
       error: function (textStatus, errorThrown) {
-                  alert(JSON.stringify(textStatus));
+                  dbuga(JSON.stringify(textStatus));
               }
       });
   }
@@ -1613,7 +1613,7 @@ function returnGradStyle(){
   }
 
 function updateNowPlaying(){
-  dbuga('updateNowPlaying() '+nowPlaying);
+  //dbuga('updateNowPlaying() '+nowPlaying);
   if((state.online)&&(state.internet)&&(state.uiPlaying)&&(state.loop==false)){
     //eventStack.push('updateNowPlaying() '+state.online+""+state.internet+" "+state.uiPlaying)
 
