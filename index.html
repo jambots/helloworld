@@ -187,7 +187,12 @@ function checkInternet(){
     url: "https://www.radiok.org/tools/packages/page_list_teasers/podcast_rss?path=%2Frealcollegepodcast",
     dataType: "xml",
     async: false,
-    success: function(xml) {state.internet=true;},
+    success: function(xml) {
+      state.internet=true;
+      if(state.buffering){
+        togglePlaying()
+      }
+    },
     error: function (textStatus, errorThrown) {
                 alert(JSON.stringify(textStatus));
             }
@@ -361,6 +366,7 @@ function processEvents(){
           nowPlaying="Paused";
           nowDj="";
           if(state.uiPlaying){// REMOTE PAUSE
+            dbuga('audio pause so remotePaused=true'
             nowPlaying="Remote Paused";
             state.remotePaused=true;
             state.streamCreated=false;
@@ -2557,6 +2563,7 @@ function minuteTick(){
     }
   }
 function remoteControlPause(){
+  dbuga('remoteControlPause');
   eventStack.push("remote paused");
   state.remotePaused=true;
   }
