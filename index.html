@@ -190,6 +190,8 @@ function checkInternet(){
     success: function(xml) {
       state.internet=true;
       if(state.buffering){
+        //2020
+
         togglePlaying()
       }
     },
@@ -366,7 +368,7 @@ function processEvents(){
           nowPlaying="Paused";
           nowDj="";
           if(state.uiPlaying){// REMOTE PAUSE
-            dbuga('audio pause so remotePaused=true'
+            dbuga('audio pause so remotePaused=true');
             nowPlaying="Remote Paused";
             state.remotePaused=true;
             state.streamCreated=false;
