@@ -179,7 +179,7 @@ var nowPlaying="";
 
 // state changing functions
 function checkInternet(){
-  //dbuga('checkInternet() '+state.online);
+  dbuga('checkInternet() state.online:'+state.online);
   if(state.online==false){
     state.internet=false;
     return false;
@@ -192,7 +192,7 @@ function checkInternet(){
       state.internet=true;
 
       //2020
-      if(offlinePaused){
+      if(state.offlinePaused){
         dbuga('checkInternet success so togglePlaying');
         togglePlaying()
       }
