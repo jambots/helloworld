@@ -1,37 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<widget xmlns   = "http://www.w3.org/ns/widgets"
-    xmlns:gap   = "http://phonegap.com/ns/1.0"
-    id          = "com.radiok.kuom"
-    versionCode = "12"
-    version     = "3.0.103" >
-    <preference name="phonegap-version" value="cli-9.0.0" />
-    <preference name="android-targetSdkVersion" value="28" />
-    <preference name="android-minSdkVersion" value="19" />
-
-<!-- versionCode is optional and Android only -->
-
-  <name>Radio K - KUOM</name>
-  <description>Radio K, the award-winning radio station of the University of Minnesota.</description>
-
-  <author href="https://build.phonegap.com" email="support@phonegap.com">
-      Terrance Schubring
-  </author>
-<!--
-  <allow-navigation href="*" />
-  <allow-intent href="*" />
-  <access origin="*" />
-  <gap:config-file platform="android" parent="/manifest">
-     <application android:debuggable="true" />
-  </gap:config-file>
--->
-</widget>
-<?xml version="1.0" encoding="UTF-8" ?>
     <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         xmlns:android = "http://schemas.android.com/apk/res/android"
         id        = "com.radiok.kuom"
         versionCode="12"
-        version   = "3.0.97">
+        version   = "3.0.104">
     <preference name="phonegap-version" value="cli-9.0.0" />
     <preference name="android-targetSdkVersion" value="28" />
     <preference name="android-minSdkVersion" value="19" />
