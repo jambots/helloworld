@@ -7,12 +7,12 @@ function handleButton(pageName, buttonName){
   if(buttonName=="home"){
     buttonOn(currentPage, "home");
     window.setTimeout('buttonOff("'+currentPage+'", "home"); selectPage("home");', navDelay);
-    StatusBar.hide();
+    if(device.platform != "browser"){StatusBar.hide();}
     }
   if(buttonName=="menu"){
     buttonOn(currentPage, "menu");
     window.setTimeout('buttonOff("'+currentPage+'", "menu"); selectPage("menu");', navDelay);
-StatusBar.hide();
+    if(device.platform != "browser"){StatusBar.hide();}
     }
   if(pageName=="footnav"){
     if(buttonName=="events"){

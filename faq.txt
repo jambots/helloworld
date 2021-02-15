@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0030)http://www.radiok.org/app-faq/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml" class="cufon-active cufon-ready"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+
+<title>Radio K :: App Frequently Asked Questions</title>
+<meta name="description" content="">
+<meta name="generator" content="concrete5 - 5.6.1.2">
+<script type="text/javascript" async="" src="./app-faq_files/ga.js" style=""></script><script id="twitter-wjs" src="./app-faq_files/widgets.js"></script><script type="text/javascript">
+var CCM_DISPATCHER_FILENAME = '/index.php';
+var CCM_CID = 1672;
+var CCM_EDIT_MODE = false;
+var CCM_ARRANGE_MODE = false;
+var CCM_IMAGE_PATH = "/updates/concrete5.6.1.2/concrete/images";
+var CCM_TOOLS_PATH = "/tools/required";
+var CCM_BASE_URL = "http://www.radiok.org";
+var CCM_REL = "";
+
+</script>
+
+	<link rel="shortcut icon" href="http://www.radiok.org/files/8513/8919/0916/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="http://www.radiok.org/files/8513/8919/0916/favicon.ico" type="image/x-icon">
+
+<link rel="stylesheet" type="text/css" href="./app-faq_files/ccm.base.css">
+<script type="text/javascript" src="./app-faq_files/jquery.js"></script>
+<script type="text/javascript" src="./app-faq_files/ccm.base.js"></script>
+<script type="text/javascript" src="./app-faq_files/js"></script><script src="./app-faq_files/main.js" type="text/javascript"></script>
+<style type="text/css"> 
+#blockStyle9166Main452 {background-repeat:no-repeat; } 
+#blockStyle9176Main456 {background-repeat:no-repeat; } 
+#blockStyle9270Main457 {background-repeat:no-repeat; } 
+#blockStyle11740Main528 {background-repeat:no-repeat; left-pad:15px;margin-top:-15px;} 
+#blockStyle11952Main467 {background-repeat:no-repeat; } 
+#blockStyle12035Main460 {background-repeat:no-repeat; } 
+</style>
+<link rel="stylesheet" type="text/css" href="./app-faq_files/view.css">
+<link rel="stylesheet" type="text/css" href="./app-faq_files/site.jquery.ui.css">
+<script type="text/javascript" src="./app-faq_files/site.jquery.ui.js"></script>
+<link rel="stylesheet" type="text/css" href="./app-faq_files/view(1).css">
+	
+	<link rel="stylesheet" media="screen" type="text/css" href="./app-faq_files/reset.css">
+	<link rel="stylesheet" media="screen" type="text/css" href="./app-faq_files/typography.css">
+	<link rel="stylesheet" media="screen" type="text/css" href="./app-faq_files/main.css">
+	
+	<meta name="description" content="The acclaimed college radio station of the University of Minnesota">
+	<meta name="keywords" content="radio music university minnesota minneapolis st. paul college indie alternative rock">
+	<meta name="google-site-verification" content="JXX1IeZvMRP1OnmbUnABDKHTc7WrSxH2oSr1nznZKBU">
+	
+			<script src="./app-faq_files/cufon-yui.js" type="text/javascript"></script><style type="text/css">cufon{text-indent:0!important;}@media screen,projection{cufon{display:inline!important;display:inline-block!important;position:relative!important;vertical-align:middle!important;font-size:1px!important;line-height:1px!important;}cufon cufontext{display:-moz-inline-box!important;display:inline-block!important;width:0!important;height:0!important;text-indent:-10000in!important;}cufon canvas{position:relative!important;}}@media print{cufon{padding:0!important;}cufon canvas{display:none!important;}}</style>
+		<script src="./app-faq_files/font.js" type="text/javascript"></script>
+		<script src="./app-faq_files/effects.js" type="text/javascript"></script>
+		
+		<script src="./app-faq_files/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>
+		<link rel="stylesheet" media="screen" type="text/css" href="./app-faq_files/jquery.fancybox-1.3.4.css">
+		
+		<script type="text/javascript">
+		$(document).ready(function() { 
+			/ * This is basic - uses default settings * / 
+			$("a.fancybox").fancybox();
+			
+			$("a.iframe").fancybox({
+				'width': '75%',
+				'height': '95%',
+				'autoScale': false,
+				'transitionIn': 'none',
+				'transitionOut': 'none',
+				'type': 'iframe'
+			});
+		});
+		</script>
+		
+	<!--[if IE 6]>
+	<script src="/themes/radiok/js/IE8.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="/themes/radiok/css/ie.css" type="text/css" media="screen">
+	<![endif]-->
+<script type="text/javascript" charset="UTF-8" src="./app-faq_files/{common,util,stats}.js"></script><script type="text/javascript" charset="UTF-8" src="./app-faq_files/AuthenticationService.Authenticate"></script></head>
+
+<body data-twttr-rendered="true">
+	<style type="text/css">
+		.cufon-loading h1, .cufon-loading h2, .cufon-loading #carousel h3 {
+			visibility: hidden !important;
+		}
+		.cufon-loading #carousel h3 {
+			font-size: 9px;
+		}
+	</style>
+	<div id="navbar">  	
+		<div class="container">
+			<div style="margin-top:0px;padding-left:40px;padding-right:60px"><a href="http://www.radiok.org/" class="logo"><img src="./app-faq_files/KLOGO.png" alt="Radio K" height="80px"></a></div>
+			<ul>
+			<li><a href="http://www.radiok.org/programming/"><cufon class="cufon cufon-canvas" alt="Schedule" style="width: 77px; height: 18px;"><canvas width="83" height="18" style="width: 83px; height: 18px; top: -1px; left: 0px;"></canvas><cufontext>Schedule</cufontext></cufon></a></li><li><a href="http://www.radiok.org/events/"><cufon class="cufon cufon-canvas" alt="Events" style="width: 57px; height: 18px;"><canvas width="62" height="18" style="width: 62px; height: 18px; top: -1px; left: 0px;"></canvas><cufontext>Events</cufontext></cufon></a></li><li><a href="http://www.radiok.org/playlist/"><cufon class="cufon cufon-canvas" alt="Playlist" style="width: 68px; height: 18px;"><canvas width="74" height="18" style="width: 74px; height: 18px; top: -1px; left: 0px;"></canvas><cufontext>Playlist</cufontext></cufon></a></li><li><a href="http://www.radiok.org/instudios/"><cufon class="cufon cufon-canvas" alt="In-studios" style="width: 85px; height: 18px;"><canvas width="90" height="18" style="width: 90px; height: 18px; top: -1px; left: 0px;"></canvas><cufontext>In-studios</cufontext></cufon></a></li><li><a href="http://www.radiok.org/features/"><cufon class="cufon cufon-canvas" alt="Features" style="width: 75px; height: 18px;"><canvas width="81" height="18" style="width: 81px; height: 18px; top: -1px; left: 0px;"></canvas><cufontext>Features</cufontext></cufon></a></li><li><a href="http://www.radiok.org/support/"><cufon class="cufon cufon-canvas" alt="Ways " style="width: 47px; height: 18px;"><canvas width="58" height="18" style="width: 58px; height: 18px; top: -1px; left: 0px;"></canvas><cufontext>Ways </cufontext></cufon><cufon class="cufon cufon-canvas" alt="to " style="width: 24px; height: 18px;"><canvas width="35" height="18" style="width: 35px; height: 18px; top: -1px; left: 0px;"></canvas><cufontext>to </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Give" style="width: 33px; height: 18px;"><canvas width="39" height="18" style="width: 39px; height: 18px; top: -1px; left: 0px;"></canvas><cufontext>Give</cufontext></cufon></a></li><li><a href="http://www.radiok.org/about/"><cufon class="cufon cufon-canvas" alt="About" style="width: 49px; height: 18px;"><canvas width="56" height="18" style="width: 56px; height: 18px; top: -1px; left: 0px;"></canvas><cufontext>About</cufontext></cufon></a></li>			</ul>
+			<div>
+				<div>
+					<div style="float:left;padding-left:15px;padding-top:10px;margin-left:25px;width:42px;padding-right:5px;"><a href="http://facebook.com/radiok"><img src="./app-faq_files/facebook.png"></a></div>
+					<div style="float:left;padding-top:10px;width:42px;padding-right:0px;"><a href="http://www.twitter.com/radiok"><img src="./app-faq_files/twitter.png"></a></div>
+					<div style="float:left;padding-top:10px;width:42px;padding-right:0px;"><a href="http://www.youtube.com/radiok770"><img src="./app-faq_files/youtube.png"></a></div>
+					<div style="float:left;padding-top:6px;width:42px;padding-right:0px;"><a href="http://www.twitter.com/radiokplaylist"><img src="./app-faq_files/twittermusicicon.png"></a></div>
+				</div>
+				<div style="padding-top:20px;">
+					<form class="search" method="get" action="http://www.radiok.org/search">
+						<input type="text" name="q" class="q" value="Search Radio K">
+						<input type="submit" class="submit" value="Search">
+					</form>
+					<script type="text/javascript">
+						var input = $(".search input.q");
+						input.click(function() {
+							input.val('');
+						});
+						
+						input.blur(function() {
+							if (input.val() == '') {
+								input.val('Search Radio K');
+							}
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+<div id="wrapper_wide" class="clearfix">
+	<div id="left_shadow">
+			<div id="blockStyle9166Main452" class="topbox ccm-block-styles">
+<h2><cufon class="cufon cufon-canvas" alt="Now " style="width: 46px; height: 23px;"><canvas width="61" height="23" style="width: 61px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Now </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Playing" style="width: 71px; height: 23px;"><canvas width="78" height="23" style="width: 78px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Playing</cufontext></cufon><br><cufon class="cufon cufon-canvas" alt="On " style="width: 30px; height: 23px;"><canvas width="44" height="23" style="width: 44px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>On </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Radio " style="width: 56px; height: 23px;"><canvas width="71" height="23" style="width: 71px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Radio </cufontext></cufon><cufon class="cufon cufon-canvas" alt="K" style="width: 12px; height: 23px;"><canvas width="20" height="23" style="width: 20px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>K</cufontext></cufon></h2><div id="nowplaying"><span style="font-size: 190%; margin-left: 0px; padding-left: 0px; color: rgb(0, 0, 0); letter-spacing: -1px; position: relative; "><strong>DJ: Vamsi</strong></span><div class="songblock" style="border:none"><span><strong>Audacity</strong> <br>PIGS</span><br><em>Butter Knife</em></div><div><p><strong><em><a href="http://www.radiok.org/playlists/">View Song Log »</a><br><a href="http://www.radiok.org/request/">Request a Song »</a></em></strong></p></div></div></div>	<div id="blockStyle9270Main457" class="shadowbox ccm-block-styles">
+<h2 style="text-align: left;"><strong><cufon class="cufon cufon-canvas" alt="LISTEN: " style="width: 69px; height: 23px;"><canvas width="84" height="23" style="width: 84px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>LISTEN: </cufontext></cufon><cufon class="cufon cufon-canvas" alt="  " style="width: 5px; height: 23px;"><canvas width="20" height="23" style="width: 20px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>&nbsp; </cufontext></cufon></strong><a style="font-size: 1em;" onclick="javascript: pageTracker._trackPageview(&#39;/listen/128k&#39;);" href="http://radiokstreams.cce.umn.edu:8128/listen.pls"><cufon class="cufon cufon-canvas" alt="128k" style="width: 43px; height: 23px;"><canvas width="51" height="23" style="width: 51px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>128k</cufontext></cufon></a><span style="font-size: 1em;"><cufon class="cufon cufon-canvas" alt=" " style="width: 5px; height: 23px;"><canvas width="20" height="23" style="width: 20px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext> </cufontext></cufon><cufon class="cufon cufon-canvas" alt="   " style="width: 5px; height: 23px;"><canvas width="20" height="23" style="width: 20px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>&nbsp;&nbsp; </cufontext></cufon></span><a style="font-size: 1em;" onclick="javascript: pageTracker._trackPageview(&#39;/listen/256k&#39;);" href="http://radiokstreams.cce.umn.edu:8256/listen.pls"><cufon class="cufon cufon-canvas" alt="256k" style="width: 43px; height: 23px;"><canvas width="51" height="23" style="width: 51px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>256k</cufontext></cufon></a></h2></div>	<div id="blockStyle9176Main456" class="shadowbox ccm-block-styles">
+<h2><strong><cufon class="cufon cufon-canvas" alt="STUDIO " style="width: 68px; height: 23px;"><canvas width="83" height="23" style="width: 83px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>STUDIO </cufontext></cufon><cufon class="cufon cufon-canvas" alt="LINE: " style="width: 47px; height: 23px;"><canvas width="62" height="23" style="width: 62px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>LINE: </cufontext></cufon><cufon class="cufon cufon-canvas" alt="612-626-4770" style="width: 119px; height: 23px;"><canvas width="128" height="23" style="width: 128px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>612-626-4770</cufontext></cufon></strong></h2></div><p><img src="./app-faq_files/grey_bar.jpg" alt="grey_bar.jpg" width="234" height="16"></p><div class="ccm-page-list" style="padding-bottom:15px;padding-left:10px;">
+			<h2><a href="http://www.radiok.org/features/wrs" style="color:#000;"><cufon class="cufon cufon-canvas" alt="RADIO " style="width: 56px; height: 23px;"><canvas width="71" height="23" style="width: 71px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>RADIO </cufontext></cufon><cufon class="cufon cufon-canvas" alt="K " style="width: 16px; height: 23px;"><canvas width="31" height="23" style="width: 31px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>K </cufontext></cufon><cufon class="cufon cufon-canvas" alt="WEEKLY " style="width: 73px; height: 23px;"><canvas width="88" height="23" style="width: 88px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>WEEKLY </cufontext></cufon><cufon class="cufon cufon-canvas" alt="RELEASE " style="width: 80px; height: 23px;"><canvas width="94" height="23" style="width: 94px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>RELEASE </cufontext></cufon><cufon class="cufon cufon-canvas" alt="SPOTLIGHT" style="width: 92px; height: 23px;"><canvas width="101" height="23" style="width: 101px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>SPOTLIGHT</cufontext></cufon></a></h2>
+		<div class="ccm-page-list-description" style="text-align:center;margin-left:-10px;">
+			<a href="http://www.radiok.org/features/weekly-release-spotlight/mogwai/" target="_self">
+			<img class="ccm-output-thumbnail" alt="" src="./app-faq_files/dbe5c6d490f4c454952cfcbdc36f7942_f11443.jpg" width="200" height="200">			<br>
+			</a>
+			<div style="padding-top:10px;">
+			<b>Mogwai</b>
+			<br>
+			<i>Rave Tapes</i>			
+			<br>
+			</div>
+		</div>
+		
+	
+
+	
+</div><!-- end .ccm-page-list -->
+
+
+<p><img src="./app-faq_files/grey_bar.jpg" alt="grey_bar.jpg" width="234" height="16"></p><div class="ccm-page-list" style="padding-bottom:15px;padding-left:10px;">
+			<h2><a href="http://www.radiok.org/features/totd" style="color:#000;"><cufon class="cufon cufon-canvas" alt="RADIO " style="width: 56px; height: 23px;"><canvas width="71" height="23" style="width: 71px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>RADIO </cufontext></cufon><cufon class="cufon cufon-canvas" alt="K" style="width: 12px; height: 23px;"><canvas width="20" height="23" style="width: 20px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>K</cufontext></cufon><br><cufon class="cufon cufon-canvas" alt="TRACK " style="width: 60px; height: 23px;"><canvas width="75" height="23" style="width: 75px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>TRACK </cufontext></cufon><cufon class="cufon cufon-canvas" alt="OF " style="width: 27px; height: 23px;"><canvas width="42" height="23" style="width: 42px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>OF </cufontext></cufon><cufon class="cufon cufon-canvas" alt="THE " style="width: 38px; height: 23px;"><canvas width="52" height="23" style="width: 52px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>THE </cufontext></cufon><cufon class="cufon cufon-canvas" alt="DAY" style="width: 34px; height: 23px;"><canvas width="43" height="23" style="width: 43px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>DAY</cufontext></cufon></a></h2>
+		<div class="ccm-page-list-description" style="text-align:center;margin-left:-10px;">
+			<a href="http://www.radiok.org/features/totd/ben-pearce/" target="_self">
+			<img class="ccm-output-thumbnail" alt="" src="./app-faq_files/81ec3a069ee0776eb8ca4b4b1f1f7575_f11453.jpg" width="200" height="200">			<br>
+			</a>
+			<div style="padding-top:10px;">
+			<b>Ben Pearce</b>
+			<br>
+			<i>What I Might Do</i>			
+			<br>
+			</div>
+		</div>
+		
+	
+
+	
+</div><!-- end .ccm-page-list -->
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+var ccmSlideShowHelper12041 = {
+
+	bID:12041,
+	imgNum:0,
+	
+	init:function(){
+		this.displayWrap=$('#ccm-SlideshowBlock-display'+this.bID); 
+		if(this.imgInfos.length==0){
+			//alert('There are no images in this slideshow');
+			return false;
+		}
+		var maxHeight=0;
+		for(var i=0;i<this.imgInfos.length;i++){
+			this.addImg(i);
+			if(maxHeight==0 || this.imgInfos[i].imgHeight > maxHeight)
+				maxHeight=this.imgInfos[i].imgHeight;
+		}
+		this.displayWrap.css('height',maxHeight);
+
+		
+		//center images
+		for(var i=0;i<this.imgInfos.length;i++){ 
+			if( this.imgInfos[i].imgHeight < maxHeight){
+				var t=((maxHeight - this.imgInfos[i].imgHeight)/2);
+				this.imgEls[i].css('top',t);
+			}
+		}
+		this.nextImg();
+	}, 
+	nextImg:function(){ 
+		if(this.imgNum>=this.imgInfos.length) this.imgNum=0;  
+		this.imgEls[this.imgNum].css('opacity',0);
+		this.imgEls[this.imgNum].css('display','block');
+		this.imgEls[this.imgNum].animate({opacity:1},
+			this.imgInfos[this.imgNum].fadeDuration*1000,'',function(){ccmSlideShowHelper12041.preparefadeOut()});
+		var prevNum=this.imgNum-1;
+		if(prevNum<0) prevNum=this.imgInfos.length-1;
+		if(this.imgInfos.length==1) return;
+		this.imgEls[prevNum].animate({opacity:0},this.imgInfos[this.imgNum].fadeDuration*800,function(){this.style.zIndex=1;});			
+	},
+	preparefadeOut:function(){
+		if(this.imgInfos.length==1) return;
+		var milisecDuration=parseInt(this.imgInfos[this.imgNum].duration)*1000;
+		this.imgEls[this.imgNum].css('z-index',2);
+		setTimeout('ccmSlideShowHelper'+12041+'.nextImg();',milisecDuration);
+		this.imgNum++;
+	},
+	maxHeight:0,
+	imgEls:[],
+	addImg:function(num){
+		var el=document.createElement('div');
+		el.id="slideImgWrap"+num;
+		el.className="slideImgWrap"; 
+		if(this.imgInfos[num].fullFilePath.length>0)
+			 imgURL=this.imgInfos[num].fullFilePath;
+		else imgURL='/files/'+this.imgInfos[num].fileName; 
+		//el.innerHTML='<img src="'+imgURL+'" >';
+		el.innerHTML='<div style="height:'+this.imgInfos[num].imgHeight+'px; background:url(\''+escape(imgURL)+'\') center no-repeat">&nbsp;</div>';
+		//alert(imgURL);
+		if(this.imgInfos[num].url.length>0) {
+			//el.linkURL=this.imgInfos[num].url;
+			var clickEvent='onclick="return ccmSlideShowHelper12041.imgClick( this.href  );"';
+			el.innerHTML='<a href="'+this.imgInfos[num].url+'" '+clickEvent+' >'+el.innerHTML+'</a>';			
+		}
+		el.style.display='none';
+		this.displayWrap.append(el);
+		var jqEl=$(el);
+		this.imgEls.push(jqEl);
+	},
+	imgClick:function(linkURL){
+		//override for custom behavior
+	},
+	imgInfos:[
+				{
+				fileName:"Radio_K_Tile_Ad-page-001_1.jpg",
+				fullFilePath:"/files/5313/9023/1265/Radio_K_Tile_Ad-page-001_1.jpg",
+				duration:5,
+				fadeDuration:2,		
+				url:"http://onetwothreesushi.com/",
+				groupSet:0,
+				imgHeight:60			}
+		,			{
+				fileName:"RadioK1_12.png",
+				fullFilePath:"/files/3913/2936/1658/RadioK1_12.png",
+				duration:5,
+				fadeDuration:2,		
+				url:"http://umabroad.umn.edu/programs.php",
+				groupSet:0,
+				imgHeight:60			}
+		,			{
+				fileName:"234x60-RadioK-Dakota-WebTile.gif",
+				fullFilePath:"/files/1513/5420/6578/234x60-RadioK-Dakota-WebTile.gif",
+				duration:5,
+				fadeDuration:2,		
+				url:"http://www.dakotacooks.com",
+				groupSet:0,
+				imgHeight:60			}
+		,			{
+				fileName:"whole.gif",
+				fullFilePath:"/files/6512/8997/3728/whole.gif",
+				duration:5,
+				fadeDuration:2,		
+				url:"http://www.coffman.umn.edu/whole/",
+				groupSet:0,
+				imgHeight:60			}
+		,			{
+				fileName:"schoolofmusic.jpg",
+				fullFilePath:"/files/3812/8997/3669/schoolofmusic.jpg",
+				duration:5,
+				fadeDuration:2,		
+				url:"http://www.music.umn.edu/",
+				groupSet:0,
+				imgHeight:60			}
+		,			{
+				fileName:"upress.gif",
+				fullFilePath:"/files/3112/8997/3754/upress.gif",
+				duration:5,
+				fadeDuration:2,		
+				url:"http://www.upress.umn.edu/",
+				groupSet:0,
+				imgHeight:60			}
+		,			{
+				fileName:"jambots_234x60.png",
+				fullFilePath:"/files/6313/6034/2543/jambots_234x60.png",
+				duration:5,
+				fadeDuration:2,		
+				url:"https://itunes.apple.com/us/artist/jambots/id431485493",
+				groupSet:0,
+				imgHeight:60			}
+		,			{
+				fileName:"wake.gif",
+				fullFilePath:"/files/5312/8997/3498/wake.gif",
+				duration:5,
+				fadeDuration:2,		
+				url:"http://www.wakemag.org/",
+				groupSet:0,
+				imgHeight:60			}
+		,			{
+				fileName:"MAC_Logo_234x60.jpg",
+				fullFilePath:"/files/1113/8664/1706/MAC_Logo_234x60.jpg",
+				duration:5,
+				fadeDuration:2,		
+				url:"http://www.macphail.org/MCKNIGHT-FELLOWSHIPS/index",
+				groupSet:0,
+				imgHeight:60			}
+		,			{
+				fileName:"vita.JPG",
+				fullFilePath:"/files/1913/8174/4519/vita.JPG",
+				duration:5,
+				fadeDuration:2,		
+				url:"",
+				groupSet:0,
+				imgHeight:60			}
+		,			{
+				fileName:"Radio-K-Online.gif",
+				fullFilePath:"/files/8713/5888/9195/Radio-K-Online.gif",
+				duration:5,
+				fadeDuration:2,		
+				url:"http://www.mndaily.com",
+				groupSet:0,
+				imgHeight:60			}
+			]
+}
+$(function(){ccmSlideShowHelper12041.init();}); 
+//]]>
+</script>
+
+<div id="ccm-SlideshowBlock-display12041" style="height: 60px;" class="ccm-SlideshowBlock-display">
+<div id="ccm-SlideshowBlock-heightSetter12041" class="ccm-SlideshowBlock-heightSetter"></div>
+<div class="ccm-SlideshowBlock-clear"></div>
+<div id="slideImgWrap0" class="slideImgWrap" style="display: block; opacity: 0; z-index: 1;"><a href="http://onetwothreesushi.com/" onclick="return ccmSlideShowHelper12041.imgClick( this.href  );"><div style="height:60px; background:url(&#39;/files/5313/9023/1265/Radio_K_Tile_Ad-page-001_1.jpg&#39;) center no-repeat">&nbsp;</div></a></div><div id="slideImgWrap1" class="slideImgWrap" style="display: block; opacity: 0; z-index: 1;"><a href="http://umabroad.umn.edu/programs.php" onclick="return ccmSlideShowHelper12041.imgClick( this.href  );"><div style="height:60px; background:url(&#39;/files/3913/2936/1658/RadioK1_12.png&#39;) center no-repeat">&nbsp;</div></a></div><div id="slideImgWrap2" class="slideImgWrap" style="display: block; opacity: 0; z-index: 1;"><a href="http://www.dakotacooks.com/" onclick="return ccmSlideShowHelper12041.imgClick( this.href  );"><div style="height:60px; background:url(&#39;/files/1513/5420/6578/234x60-RadioK-Dakota-WebTile.gif&#39;) center no-repeat">&nbsp;</div></a></div><div id="slideImgWrap3" class="slideImgWrap" style="display: block; opacity: 1; z-index: 2;"><a href="http://www.coffman.umn.edu/whole/" onclick="return ccmSlideShowHelper12041.imgClick( this.href  );"><div style="height:60px; background:url(&#39;/files/6512/8997/3728/whole.gif&#39;) center no-repeat">&nbsp;</div></a></div><div id="slideImgWrap4" class="slideImgWrap" style="display: none;"><a href="http://www.music.umn.edu/" onclick="return ccmSlideShowHelper12041.imgClick( this.href  );"><div style="height:60px; background:url(&#39;/files/3812/8997/3669/schoolofmusic.jpg&#39;) center no-repeat">&nbsp;</div></a></div><div id="slideImgWrap5" class="slideImgWrap" style="display: none;"><a href="http://www.upress.umn.edu/" onclick="return ccmSlideShowHelper12041.imgClick( this.href  );"><div style="height:60px; background:url(&#39;/files/3112/8997/3754/upress.gif&#39;) center no-repeat">&nbsp;</div></a></div><div id="slideImgWrap6" class="slideImgWrap" style="display: none;"><a href="https://itunes.apple.com/us/artist/jambots/id431485493" onclick="return ccmSlideShowHelper12041.imgClick( this.href  );"><div style="height:60px; background:url(&#39;/files/6313/6034/2543/jambots_234x60.png&#39;) center no-repeat">&nbsp;</div></a></div><div id="slideImgWrap7" class="slideImgWrap" style="display: none;"><a href="http://www.wakemag.org/" onclick="return ccmSlideShowHelper12041.imgClick( this.href  );"><div style="height:60px; background:url(&#39;/files/5312/8997/3498/wake.gif&#39;) center no-repeat">&nbsp;</div></a></div><div id="slideImgWrap8" class="slideImgWrap" style="display: none;"><a href="http://www.macphail.org/MCKNIGHT-FELLOWSHIPS/index" onclick="return ccmSlideShowHelper12041.imgClick( this.href  );"><div style="height:60px; background:url(&#39;/files/1113/8664/1706/MAC_Logo_234x60.jpg&#39;) center no-repeat">&nbsp;</div></a></div><div id="slideImgWrap9" class="slideImgWrap" style="display: none;"><div style="height:60px; background:url(&#39;/files/1913/8174/4519/vita.JPG&#39;) center no-repeat">&nbsp;</div></div><div id="slideImgWrap10" class="slideImgWrap" style="display: none; opacity: 0; z-index: 1;"><a href="http://www.mndaily.com/" onclick="return ccmSlideShowHelper12041.imgClick( this.href  );"><div style="height:60px; background:url(&#39;/files/8713/5888/9195/Radio-K-Online.gif&#39;) center no-repeat">&nbsp;</div></a></div></div>
+
+<div id="HTMLBlock9963" class="HTMLBlock">
+<img src="./app-faq_files/saved_resource" alt="grey_bar.jpg" width="234" height="16">
+<iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" class="twitter-timeline twitter-timeline-rendered" style="border: none; max-width: 100%; min-width: 180px;" title="Twitter Timeline" width="230" height="250"></iframe>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>	</div>
+	
+	<div id="shadow">
+		<div id="main">
+			<div id="content" class="clearfix">
+				
+<div class="faq_item">
+	<div class="faq_heading"><h2><cufon class="cufon cufon-canvas" alt="What " style="width: 47px; height: 23px;"><canvas width="62" height="23" style="width: 62px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>What </cufontext></cufon><cufon class="cufon cufon-canvas" alt="is " style="width: 18px; height: 23px;"><canvas width="33" height="23" style="width: 33px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>is </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Radio " style="width: 51px; height: 23px;"><canvas width="66" height="23" style="width: 66px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Radio </cufontext></cufon><cufon class="cufon cufon-canvas" alt="K?" style="width: 22px; height: 23px;"><canvas width="31" height="23" style="width: 31px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>K?</cufontext></cufon></h2></div>
+	<div class="faq_content"><p>Real College Radio - Radio K, the award-winning radio station of the University of Minnesota, is nationally recognized as one of the best student-run college radio stations in the country, playing an eclectic variety of independent music both old and new.<br><br>Radio K educates students, breaks ground in musical programming, and provides cutting-edge cultural coverage through our specialty shows, web content and Culture Queue.</p></div>
+</div>
+
+<div class="faq_item">
+	<div class="faq_heading"><h2><cufon class="cufon cufon-canvas" alt="How " style="width: 42px; height: 23px;"><canvas width="57" height="23" style="width: 57px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>How </cufontext></cufon><cufon class="cufon cufon-canvas" alt="can " style="width: 35px; height: 23px;"><canvas width="49" height="23" style="width: 49px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>can </cufontext></cufon><cufon class="cufon cufon-canvas" alt="I " style="width: 9px; height: 23px;"><canvas width="24" height="23" style="width: 24px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>I </cufontext></cufon><cufon class="cufon cufon-canvas" alt="contact " style="width: 65px; height: 23px;"><canvas width="80" height="23" style="width: 80px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>contact </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Radio " style="width: 51px; height: 23px;"><canvas width="66" height="23" style="width: 66px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Radio </cufontext></cufon><cufon class="cufon cufon-canvas" alt="K?" style="width: 22px; height: 23px;"><canvas width="31" height="23" style="width: 31px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>K?</cufontext></cufon></h2></div>
+	<div class="faq_content"><p>Email: <a href="mailto:radiok@umn.edu">radiok@umn.edu</a><br><br>Phone: <a href="tel:+16126253500">612-625-3500</a><br><br>Web: <a href="http://www.radiok.org/">www.radiok.org</a><br><br>Mobile:<br><a href="http://twitter.com/radiok"><img src="./app-faq_files/twitter(1).png" alt="" width="socialSize" height="socialSize"></a> <a href="https://www.facebook.com/20658369592"><img src="./app-faq_files/facebook(1).png" alt="" width="socialSize" height="socialSize"></a> <a href="http://www.youtube.com/user/RadioK770?feature=watch"><img src="./app-faq_files/youtube(1).png" alt="" width="socialSize" height="socialSize"></a> <a href="https://plus.google.com/u/0/106019319997650127214/about"><img src="./app-faq_files/googleplus.png" alt="" width="socialSize" height="socialSize"></a> <a href="http://www.radiok.org/blogs/new/tag/track%20of%20the%20day"><img src="./app-faq_files/rss.png" alt="" width="socialSize" height="socialSize"></a></p></div>
+</div>
+
+<div class="faq_item">
+	<div class="faq_heading"><h2><cufon class="cufon cufon-canvas" alt="How " style="width: 42px; height: 23px;"><canvas width="57" height="23" style="width: 57px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>How </cufontext></cufon><cufon class="cufon cufon-canvas" alt="can " style="width: 35px; height: 23px;"><canvas width="49" height="23" style="width: 49px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>can </cufontext></cufon><cufon class="cufon cufon-canvas" alt="I " style="width: 9px; height: 23px;"><canvas width="24" height="23" style="width: 24px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>I </cufontext></cufon><cufon class="cufon cufon-canvas" alt="keep " style="width: 45px; height: 23px;"><canvas width="60" height="23" style="width: 60px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>keep </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Radio " style="width: 51px; height: 23px;"><canvas width="66" height="23" style="width: 66px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Radio </cufontext></cufon><cufon class="cufon cufon-canvas" alt="K " style="width: 16px; height: 23px;"><canvas width="31" height="23" style="width: 31px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>K </cufontext></cufon><cufon class="cufon cufon-canvas" alt="playing " style="width: 63px; height: 23px;"><canvas width="78" height="23" style="width: 78px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>playing </cufontext></cufon><cufon class="cufon cufon-canvas" alt="music?" style="width: 60px; height: 23px;"><canvas width="69" height="23" style="width: 69px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>music?</cufontext></cufon></h2></div>
+	<div class="faq_content"><p>You can keep your already rad support going by <a href="http://www.radiok.org/donate/">donating</a> to the station and becoming a member. And, we like to keep it chill so donating literally any amount makes you a member. Got a spare $10? Throw it our way and we can keep the CDs spinning.</p></div>
+</div>
+
+<div class="faq_item">
+	<div class="faq_heading"><h2><cufon class="cufon cufon-canvas" alt="How " style="width: 42px; height: 23px;"><canvas width="57" height="23" style="width: 57px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>How </cufontext></cufon><cufon class="cufon cufon-canvas" alt="do " style="width: 25px; height: 23px;"><canvas width="40" height="23" style="width: 40px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>do </cufontext></cufon><cufon class="cufon cufon-canvas" alt="I " style="width: 9px; height: 23px;"><canvas width="24" height="23" style="width: 24px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>I </cufontext></cufon><cufon class="cufon cufon-canvas" alt="get " style="width: 31px; height: 23px;"><canvas width="45" height="23" style="width: 45px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>get </cufontext></cufon><cufon class="cufon cufon-canvas" alt="my " style="width: 31px; height: 23px;"><canvas width="45" height="23" style="width: 45px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>my </cufontext></cufon><cufon class="cufon cufon-canvas" alt="band&#39;s " style="width: 60px; height: 23px;"><canvas width="74" height="23" style="width: 74px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>band's </cufontext></cufon><cufon class="cufon cufon-canvas" alt="music " style="width: 55px; height: 23px;"><canvas width="69" height="23" style="width: 69px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>music </cufontext></cufon><cufon class="cufon cufon-canvas" alt="on " style="width: 25px; height: 23px;"><canvas width="40" height="23" style="width: 40px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>on </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Radio " style="width: 51px; height: 23px;"><canvas width="66" height="23" style="width: 66px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Radio </cufontext></cufon><cufon class="cufon cufon-canvas" alt="K?" style="width: 22px; height: 23px;"><canvas width="31" height="23" style="width: 31px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>K?</cufontext></cufon></h2></div>
+	<div class="faq_content"><p>Head over to <a href="http://www.radiok.org/about/contact-information/music-submissions/">RadioK.org</a></p></div>
+</div>
+
+<div class="faq_item">
+	<div class="faq_heading"><h2><cufon class="cufon cufon-canvas" alt="How " style="width: 42px; height: 23px;"><canvas width="57" height="23" style="width: 57px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>How </cufontext></cufon><cufon class="cufon cufon-canvas" alt="can " style="width: 35px; height: 23px;"><canvas width="49" height="23" style="width: 49px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>can </cufontext></cufon><cufon class="cufon cufon-canvas" alt="I " style="width: 9px; height: 23px;"><canvas width="24" height="23" style="width: 24px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>I </cufontext></cufon><cufon class="cufon cufon-canvas" alt="download " style="width: 85px; height: 23px;"><canvas width="100" height="23" style="width: 100px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>download </cufontext></cufon><cufon class="cufon cufon-canvas" alt="the " style="width: 31px; height: 23px;"><canvas width="45" height="23" style="width: 45px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>the </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Track " style="width: 51px; height: 23px;"><canvas width="65" height="23" style="width: 65px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Track </cufontext></cufon><cufon class="cufon cufon-canvas" alt="of " style="width: 21px; height: 23px;"><canvas width="35" height="23" style="width: 35px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>of </cufontext></cufon><cufon class="cufon cufon-canvas" alt="the " style="width: 31px; height: 23px;"><canvas width="45" height="23" style="width: 45px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>the </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Day?" style="width: 42px; height: 23px;"><canvas width="51" height="23" style="width: 51px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Day?</cufontext></cufon></h2></div>
+	<div class="faq_content"><p>Radio K's Track of the Day can be found <a href="http://www.radiok.org/blogs/new/tag/track%20of%20the%20day">here</a>.</p></div>
+</div>
+
+<div class="faq_item">
+	<div class="faq_heading"><h2><cufon class="cufon cufon-canvas" alt="What " style="width: 47px; height: 23px;"><canvas width="62" height="23" style="width: 62px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>What </cufontext></cufon><cufon class="cufon cufon-canvas" alt="cool " style="width: 38px; height: 23px;"><canvas width="53" height="23" style="width: 53px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>cool </cufontext></cufon><cufon class="cufon cufon-canvas" alt="things " style="width: 55px; height: 23px;"><canvas width="69" height="23" style="width: 69px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>things </cufontext></cufon><cufon class="cufon cufon-canvas" alt="do " style="width: 25px; height: 23px;"><canvas width="40" height="23" style="width: 40px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>do </cufontext></cufon><cufon class="cufon cufon-canvas" alt="you " style="width: 34px; height: 23px;"><canvas width="49" height="23" style="width: 49px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>you </cufontext></cufon><cufon class="cufon cufon-canvas" alt="have " style="width: 44px; height: 23px;"><canvas width="59" height="23" style="width: 59px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>have </cufontext></cufon><cufon class="cufon cufon-canvas" alt="going " style="width: 50px; height: 23px;"><canvas width="65" height="23" style="width: 65px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>going </cufontext></cufon><cufon class="cufon cufon-canvas" alt="on?" style="width: 31px; height: 23px;"><canvas width="40" height="23" style="width: 40px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>on?</cufontext></cufon></h2></div>
+	<div class="faq_content"><p>We love live music even more than we love recorded music—check out our <a href="http://www.radiok.org/events/">Events Calendar</a>.</p></div>
+</div>
+
+<div class="faq_item">
+	<div class="faq_heading"><h2><cufon class="cufon cufon-canvas" alt="When " style="width: 52px; height: 23px;"><canvas width="67" height="23" style="width: 67px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>When </cufontext></cufon><cufon class="cufon cufon-canvas" alt="is " style="width: 18px; height: 23px;"><canvas width="33" height="23" style="width: 33px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>is </cufontext></cufon><cufon class="cufon cufon-canvas" alt="that " style="width: 36px; height: 23px;"><canvas width="51" height="23" style="width: 51px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>that </cufontext></cufon><cufon class="cufon cufon-canvas" alt="awesome " style="width: 86px; height: 23px;"><canvas width="100" height="23" style="width: 100px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>awesome </cufontext></cufon><cufon class="cufon cufon-canvas" alt="local " style="width: 43px; height: 23px;"><canvas width="57" height="23" style="width: 57px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>local </cufontext></cufon><cufon class="cufon cufon-canvas" alt="show," style="width: 50px; height: 23px;"><canvas width="64" height="23" style="width: 64px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>show,</cufontext></cufon><br><cufon class="cufon cufon-canvas" alt="Off " style="width: 28px; height: 23px;"><canvas width="43" height="23" style="width: 43px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Off </cufontext></cufon><cufon class="cufon cufon-canvas" alt="The " style="width: 35px; height: 23px;"><canvas width="50" height="23" style="width: 50px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>The </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Record?" style="width: 68px; height: 23px;"><canvas width="77" height="23" style="width: 77px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Record?</cufontext></cufon></h2></div>
+	<div class="faq_content"><p>Off The Record is every Friday from 3 p.m. to 5 p.m. CST. Local music and local trivia comin' at you for two hours, not to mention an interview and studio session with a local band during each show!</p></div>
+</div>
+
+<div class="faq_item">
+	<div class="faq_heading"><h2><cufon class="cufon cufon-canvas" alt="You " style="width: 36px; height: 23px;"><canvas width="50" height="23" style="width: 50px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>You </cufontext></cufon><cufon class="cufon cufon-canvas" alt="wanna " style="width: 61px; height: 23px;"><canvas width="75" height="23" style="width: 75px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>wanna </cufontext></cufon><cufon class="cufon cufon-canvas" alt="be " style="width: 25px; height: 23px;"><canvas width="40" height="23" style="width: 40px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>be </cufontext></cufon><cufon class="cufon cufon-canvas" alt="a " style="width: 15px; height: 23px;"><canvas width="29" height="23" style="width: 29px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>a </cufontext></cufon><cufon class="cufon cufon-canvas" alt="DJ, " style="width: 31px; height: 23px;"><canvas width="46" height="23" style="width: 46px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>DJ, </cufontext></cufon><cufon class="cufon cufon-canvas" alt="too?" style="width: 36px; height: 23px;"><canvas width="45" height="23" style="width: 45px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>too?</cufontext></cufon></h2></div>
+	<div class="faq_content"><p>University of Minnesota student taking 1 credit or more? If so then just email <a href="mailto:volunteer@radiok.org">volunteer@radiok.org</a> and you'll be on your way to becoming a rich, fabulous, glamorous DJ. (OK, we know those adjectives are, like, kind of an exaggeration but whatever, right?)</p></div>
+</div>
+
+<div class="faq_item">
+	<div class="faq_heading"><h2><cufon class="cufon cufon-canvas" alt="Your " style="width: 42px; height: 23px;"><canvas width="57" height="23" style="width: 57px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Your </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Mom " style="width: 48px; height: 23px;"><canvas width="62" height="23" style="width: 62px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Mom </cufontext></cufon><cufon class="cufon cufon-canvas" alt="listens " style="width: 57px; height: 23px;"><canvas width="72" height="23" style="width: 72px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>listens </cufontext></cufon><cufon class="cufon cufon-canvas" alt="to " style="width: 21px; height: 23px;"><canvas width="35" height="23" style="width: 35px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>to </cufontext></cufon><cufon class="cufon cufon-canvas" alt="commercial " style="width: 101px; height: 23px;"><canvas width="116" height="23" style="width: 116px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>commercial </cufontext></cufon><cufon class="cufon cufon-canvas" alt="radio." style="width: 46px; height: 23px;"><canvas width="60" height="23" style="width: 60px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>radio.</cufontext></cufon><br><cufon class="cufon cufon-canvas" alt="What&#39;s " style="width: 61px; height: 23px;"><canvas width="76" height="23" style="width: 76px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>What's </cufontext></cufon><cufon class="cufon cufon-canvas" alt="the " style="width: 31px; height: 23px;"><canvas width="45" height="23" style="width: 45px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>the </cufontext></cufon><cufon class="cufon cufon-canvas" alt="deal " style="width: 39px; height: 23px;"><canvas width="54" height="23" style="width: 54px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>deal </cufontext></cufon><cufon class="cufon cufon-canvas" alt="with " style="width: 40px; height: 23px;"><canvas width="55" height="23" style="width: 55px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>with </cufontext></cufon><cufon class="cufon cufon-canvas" alt="that?" style="width: 42px; height: 23px;"><canvas width="51" height="23" style="width: 51px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>that?</cufontext></cufon></h2></div>
+	<div class="faq_content"><p>You heard wrong—our moms totally listen to us. They appreciate the fact that we're trying to keep 'em "hip and groovy" (their words, not ours). Real College Radio is for the cutting edge, the risk takers, the people who know that music matters most. That's you. That's us. That's them—'cause we've taught our mothers well.</p></div>
+</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="sidebar_shadow">
+		<div id="sidebar" class="clearfix">
+			
+<div id="HTMLBlock9922" class="HTMLBlock">
+<div id="become-a-member" class="blue clearfix">
+<h2 class="plain"><a href="http://www.radiok.org/donate/" class="plain"><cufon class="cufon cufon-canvas" alt="Donate" style="width: 108px; height: 36px;"><canvas width="122" height="35" style="width: 122px; height: 35px; top: -2px; left: -1px;"></canvas><cufontext>Donate</cufontext></cufon></a></h2>
+</div></div><p><img src="./app-faq_files/grey_bar(1).jpg" alt="grey_bar.jpg" width="304" height="16"></p>	<div id="blockStyle11952Main467" class=" ccm-block-styles">
+<h2><a style="color: #000;" href="http://www.radiok.org/top7/"><cufon class="cufon cufon-canvas" alt="RADIO " style="width: 56px; height: 23px;"><canvas width="71" height="23" style="width: 71px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>RADIO </cufontext></cufon><cufon class="cufon cufon-canvas" alt="K " style="width: 16px; height: 23px;"><canvas width="31" height="23" style="width: 31px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>K </cufontext></cufon><cufon class="cufon cufon-canvas" alt="TOP " style="width: 38px; height: 23px;"><canvas width="52" height="23" style="width: 52px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>TOP </cufontext></cufon><cufon class="cufon cufon-canvas" alt="SEVEN" style="width: 55px; height: 23px;"><canvas width="62" height="23" style="width: 62px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>SEVEN</cufontext></cufon></a></h2></div>
+<div class="ccm-page-list" style="background-color:#fff;">
+
+	<ol><li><b>SALLIE FORD &amp; THE SOUND OUTSIDE </b>- Bumpin</li><li><b> SUN GODS TO GAMMA RAYS </b>- You Thought You Had It All</li><li><b> CAT LE BON </b>- I Can't Help You</li><li><b> FRANCE CAMP </b>- My Warpaint</li><li><b> MIDLAKE </b>- Antiphon</li><li><b> YUPPIES </b>- Easy Nights</li><li><b> CHATHAM RISE </b>- Hollows</li></ol>
+</div><!-- end .ccm-page-list -->	<div id="blockStyle11740Main528" class=" ccm-block-styles">
+<p><strong style="font-size: 14px;"><em><a href="http://www.radiok.org/top7/">Vote for your favorites »</a></em></strong></p></div><p><img src="./app-faq_files/grey_bar(1).jpg" alt="grey_bar.jpg" width="304" height="16"></p>	<div style="padding-left: 15px;">
+	<h2><cufon class="cufon cufon-canvas" alt="In-studios" style="width: 97px; height: 23px;"><canvas width="105" height="23" style="width: 105px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>In-studios</cufontext></cufon></h2>
+	<div style="text-align:center;">
+	<a href="http://www.radiok.org/instudios/dosh-otr/"><img src="./app-faq_files/DOSH.jpg" alt="DOSH" width="270"></a><br><a href="http://www.radiok.org/instudios/dosh-otr/"><h4>DOSH</h4></a>Dec 15, 2013<br></div>	</div>
+	<div style="padding-left:0px !important;">
+	<img src="./app-faq_files/saved_resource(1)" alt="grey_bar.jpg" width="304" height="16">
+	<p></p>
+	</div>
+	<div id="events">
+	<h2><cufon class="cufon cufon-canvas" alt="Events" style="width: 65px; height: 23px;"><canvas width="73" height="23" style="width: 73px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Events</cufontext></cufon></h2>
+	
+	<div class="event"><div class="Ksponsored"></div><div class="info"><strong>1/23</strong> 7PM</div><div class="right" style="width:150px"><div class="performers" style="width:140px"><a href="http://hobt.org/performances/" target="_blank"><strong>Cartoon</strong></a></div><div class="venue">In The Heart Of The Beast Puppet &amp; Mask Theatre</div></div><div class="clear"></div></div><div class="event"><div class="Ksponsored"></div><div class="info"><strong>1/23</strong> 8:30PM</div><div class="right" style="width:150px"><div class="performers" style="width:140px"><a href="http://first-avenue.com/event/2014/01/comedy-oke" target="_blank"><strong>Comedy-Oke Night</strong></a></div><div class="venue">The Turf Club</div></div><div class="clear"></div></div><div class="event"><div class="Ksponsored"></div><div class="info"><strong>1/24</strong> 7PM</div><div class="right" style="width:150px"><div class="performers" style="width:140px"><a href="http://www.thecedar.org/events/2014/01/24/cedar-ave-fire-benefit" target="_blank"><strong>Cedar Ave Fire Benefit</strong></a></div><div class="venue">The Cedar</div></div><div class="clear"></div></div><div class="event"><div class="Ksponsored"><img src="./app-faq_files/kshow.gif" width="8" height="12" alt="Radio K sponsored" class="plain"></div><div class="info"><strong>1/24</strong> 8PM</div><div class="right" style="width:150px"><div class="performers" style="width:140px"><a href="http://www.triplerocksocialclub.com/shows/" target="_blank"><strong>Pony Bwoy, Chiffon, Psymun/K Raydio, &amp; Vacation Dad</strong></a></div><div class="venue">The Triple Rock</div></div><div class="clear"></div></div><div class="event"><div class="Ksponsored"></div><div class="info"><strong>1/24</strong> 10:30PM</div><div class="right" style="width:150px"><div class="performers" style="width:140px"><a href="http://www.icehousempls.com/events/sun-gods-to-gamma-rays-w-dogi/" target="_blank"><strong>SUN GODS TO GAMMA RAYS W/ DOGI</strong></a></div><div class="venue">Ice House</div></div><div class="clear"></div></div><div class="event"><div class="Ksponsored"></div><div class="info"><strong>1/25</strong> 12AM</div><div class="right" style="width:150px"><div class="performers" style="width:140px"><a href="http://hobt.org/performances/" target="_blank"><strong>Cartoon: Special Midnight Show</strong></a></div><div class="venue">In The Heart Of The Beast Puppet &amp; Mask Theatre</div></div><div class="clear"></div></div><div class="event"><div class="Ksponsored"></div><div class="info"><strong>1/25</strong> 7PM</div><div class="right" style="width:150px"><div class="performers" style="width:140px"><a href="http://www.thecedar.org/events/west-africa-west-bank/2014/01/25/bassekou-kouyate-ngoni-ba" target="_blank"><strong>Bassekou Kouyate &amp; Ngoni Ba</strong></a></div><div class="venue">The Cedar</div></div><div class="clear"></div></div>	
+		
+	<p><strong><em><a href="http://www.radiok.org/events/">Events Calendar »</a></em></strong></p>
+</div><p><img src="./app-faq_files/grey_bar(1).jpg" alt="grey_bar.jpg" width="304" height="16"></p>	<div id="blockStyle12035Main460" class="shadowbox ccm-block-styles">
+<h2><cufon class="cufon cufon-canvas" alt="Radio " style="width: 56px; height: 23px;"><canvas width="71" height="23" style="width: 71px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Radio </cufontext></cufon><cufon class="cufon cufon-canvas" alt="K " style="width: 16px; height: 23px;"><canvas width="31" height="23" style="width: 31px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>K </cufontext></cufon><cufon class="cufon cufon-canvas" alt="Newsletter" style="width: 113px; height: 23px;"><canvas width="121" height="23" style="width: 121px; height: 23px; top: -1px; left: -1px;"></canvas><cufontext>Newsletter</cufontext></cufon></h2>
+<p>For exclusive news and offers from the station you love:</p>
+<ul>
+<li>Subscribe to Radio K's monthly newsletter - email <a href="mailto:membership@radiok.org">membership@radiok.org</a></li>
+<li><a href="http://ecommunication.umn.edu/read/archive?id=113990&e=CCE-RADIOK-DJS%40lists%2eumn%2eedu&x=9562a32c" target="_blank">View</a> the current newsletter as a webpage</li>
+</ul></div>		</div>
+	</div>
+</div>
+
+	<div id="footerbg">
+		<div id="footer">  
+			<div id="logos">
+				<akz><p style="font-size:120% !important;color:#FFF !important; line-height:12px !important">
+				Radio K - KUOM is the award-winning student-run radio station of the University of Minnesota, playing an eclectic variety of independent music both old and new.<br>
+				<br>Radio K - KUOM
+				<br>Real College Radio
+				<br>330 21st Ave S, 610 Rarig Center
+				<br>Minneapolis, MN 55455</p><akz>
+				<a href="http://www.umn.edu/"><img src="./app-faq_files/footer-umn.gif" alt="University of Minnesota"></a>
+				<a href="http://cce.umn.edu/"><img src="./app-faq_files/footer-cce.gif" alt="College of Continuing Education"></a>
+				<a href="http://www.ampers.org/"><img src="./app-faq_files/footer-ampers.png" alt="Ampers"></a>
+				<a href="http://www.legacy.leg.mn/"><img src="./app-faq_files/Legacy-logo_BWreverse_horz.png" alt="Minnesota Arts and Cultural Heritage Fund" height="60"></a>
+				<akz><p style="font-family:helvetica;text-align: left; color: #FFF; font-size:80% !important;color:#FFF !important; line-height:12px !important">
+				<br>© 2013 Regents of the University of Minnesota. All rights reserved. <br>
+				The University of Minnesota is an equal opportunity educator and employer</p></akz>
+			</akz></akz></div>
+		</div>
+	</div>
+	<script type="text/javascript"> Cufon.now(); </script>
+	<style type="text/css">h1,h2,h3{ visibility : visible }</style>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-1913996-4']);
+  _gaq.push(['_trackPageview']);
+  _gaq.push(['_trackPageLoadTime']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<div id="fancybox-tmp"></div><div id="fancybox-loading"><div></div></div><div id="fancybox-overlay"></div><div id="fancybox-wrap"><div id="fancybox-outer"><div class="fancybox-bg" id="fancybox-bg-n"></div><div class="fancybox-bg" id="fancybox-bg-ne"></div><div class="fancybox-bg" id="fancybox-bg-e"></div><div class="fancybox-bg" id="fancybox-bg-se"></div><div class="fancybox-bg" id="fancybox-bg-s"></div><div class="fancybox-bg" id="fancybox-bg-sw"></div><div class="fancybox-bg" id="fancybox-bg-w"></div><div class="fancybox-bg" id="fancybox-bg-nw"></div><div id="fancybox-content"></div><a id="fancybox-close"></a><div id="fancybox-title"></div><a href="javascript:;" id="fancybox-left"><span class="fancy-ico" id="fancybox-left-ico"></span></a><a href="javascript:;" id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div></div><iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" style="display: none;"></iframe></body></html>
